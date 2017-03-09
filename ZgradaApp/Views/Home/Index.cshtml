@@ -1,0 +1,17 @@
+﻿
+
+
+
+<div ng-app="angularApp">
+    <div class="panel-group" ng-show="$root.loaderActive">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <img ng-show="$root.loaderActive" src="~/Content/images/ajax-loader.gif" />
+                <label style="color: red">{{errMsg}}</label>
+            </div>
+        </div>
+    </div>
+
+    <div ng-view></div>
+</div>
+

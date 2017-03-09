@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ZgradaDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kompanije">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="OIB" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="Adresa" Type="varchar" MaxLength="100" />
+          <Property Name="Mjesto" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Telefon" Type="varchar" MaxLength="30" />
+          <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="ActivationDate" Type="datetime" />
+          <Property Name="ExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Korisnici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prezime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="UserGuid" Type="varchar" MaxLength="128" />
+          <Property Name="MasterAcc" Type="bit" />
+        </EntityType>
+        <EntityType Name="Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Oznaka" Type="varchar" MaxLength="30" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stanovi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZgradaId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SumaPovrsinaM2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SumaPovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Stanovi_PosebniDijelovi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StanId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DioStanaKoeficijent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Stanovi_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StanId" Type="int" Nullable="false" />
+          <Property Name="PripadakId" Type="int" Nullable="false" />
+          <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Stanovi_Stanari">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="StanId" />
+            <PropertyRef Name="Ime" />
+            <PropertyRef Name="Prezime" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StanId" Type="int" Nullable="false" />
+          <Property Name="Ime" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Prezime" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="OIB" Type="char" MaxLength="11" />
+          <Property Name="Udjel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="UserGuid" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Zgrade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="100" />
+          <Property Name="Adresa" Type="varchar" MaxLength="100" />
+          <Property Name="Mjesto" Type="varchar" MaxLength="100" />
+          <Property Name="Povrsinam2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
+          <End Role="Stanovi" Type="Self.Stanovi" Multiplicity="1" />
+          <End Role="Stanovi_PosebniDijelovi" Type="Self.Stanovi_PosebniDijelovi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanovi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stanovi_PosebniDijelovi">
+              <PropertyRef Name="StanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stanovi_Pripadci_Stanovi">
+          <End Role="Stanovi" Type="Self.Stanovi" Multiplicity="1" />
+          <End Role="Stanovi_Pripadci" Type="Self.Stanovi_Pripadci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanovi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stanovi_Pripadci">
+              <PropertyRef Name="StanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stanovi_Stanari_Stanovi">
+          <End Role="Stanovi" Type="Self.Stanovi" Multiplicity="1" />
+          <End Role="Stanovi_Stanari" Type="Self.Stanovi_Stanari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanovi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stanovi_Stanari">
+              <PropertyRef Name="StanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZgradaDbModelStoreContainer">
+          <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pripadci" EntityType="Self.Pripadci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanovi" EntityType="Self.Stanovi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanovi_Pripadci" EntityType="Self.Stanovi_Pripadci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanovi_Stanari" EntityType="Self.Stanovi_Stanari" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Stanovi_Stanari].[Id] AS [Id], 
+    [Stanovi_Stanari].[StanId] AS [StanId], 
+    [Stanovi_Stanari].[Ime] AS [Ime], 
+    [Stanovi_Stanari].[Prezime] AS [Prezime], 
+    [Stanovi_Stanari].[OIB] AS [OIB], 
+    [Stanovi_Stanari].[Udjel] AS [Udjel], 
+    [Stanovi_Stanari].[Email] AS [Email], 
+    [Stanovi_Stanari].[UserGuid] AS [UserGuid]
+    FROM [dbo].[Stanovi_Stanari] AS [Stanovi_Stanari]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="Self.FK_Stanovi_PosebniDijelovi_Stanovi">
+            <End Role="Stanovi" EntitySet="Stanovi" />
+            <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stanovi_Pripadci_Stanovi" Association="Self.FK_Stanovi_Pripadci_Stanovi">
+            <End Role="Stanovi" EntitySet="Stanovi" />
+            <End Role="Stanovi_Pripadci" EntitySet="Stanovi_Pripadci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stanovi_Stanari_Stanovi" Association="Self.FK_Stanovi_Stanari_Stanovi">
+            <End Role="Stanovi" EntitySet="Stanovi" />
+            <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZgradaDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ZgradaDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
+          <EntitySet Name="Pripadci" EntityType="ZgradaDbModel.Pripadci" />
+          <EntitySet Name="Kompanije" EntityType="ZgradaDbModel.Kompanije" />
+          <EntitySet Name="Korisnici" EntityType="ZgradaDbModel.Korisnici" />
+          <EntitySet Name="Stanovi" EntityType="ZgradaDbModel.Stanovi" />
+          <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" />
+          <EntitySet Name="Stanovi_Pripadci" EntityType="ZgradaDbModel.Stanovi_Pripadci" />
+          <EntitySet Name="Stanovi_Stanari" EntityType="ZgradaDbModel.Stanovi_Stanari" />
+          <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi">
+            <End Role="Stanovi" EntitySet="Stanovi" />
+            <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stanovi_Pripadci_Stanovi" Association="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi">
+            <End Role="Stanovi" EntitySet="Stanovi" />
+            <End Role="Stanovi_Pripadci" EntitySet="Stanovi_Pripadci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stanovi_Stanari_Stanovi" Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi">
+            <End Role="Stanovi" EntitySet="Stanovi" />
+            <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Zgrade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mjesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Povrsinam2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Oznaka" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kompanije">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OIB" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mjesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telefon" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <Property Name="ActivationDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Korisnici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prezime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="MasterAcc" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Stanovi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SumaPovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SumaPovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Stanovi_PosebniDijelovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi" ToRole="Stanovi_PosebniDijelovi" />
+          <NavigationProperty Name="Stanovi_Pripadci" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi" ToRole="Stanovi_Pripadci" />
+          <NavigationProperty Name="Stanovi_Stanari" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi" ToRole="Stanovi_Stanari" />
+        </EntityType>
+        <EntityType Name="Stanovi_PosebniDijelovi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StanId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DioStanaKoeficijent" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi_PosebniDijelovi" ToRole="Stanovi" />
+          <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Stanovi_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StanId" Type="Int32" Nullable="false" />
+          <Property Name="PripadakId" Type="Int32" Nullable="false" />
+          <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi_Pripadci" ToRole="Stanovi" />
+        </EntityType>
+        <EntityType Name="Stanovi_Stanari">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="StanId" />
+            <PropertyRef Name="Ime" />
+            <PropertyRef Name="Prezime" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StanId" Type="Int32" Nullable="false" />
+          <Property Name="Ime" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Prezime" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="OIB" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="Udjel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi_Stanari" ToRole="Stanovi" />
+        </EntityType>
+        <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
+          <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Stanovi_PosebniDijelovi" Role="Stanovi_PosebniDijelovi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanovi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stanovi_PosebniDijelovi">
+              <PropertyRef Name="StanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stanovi_Pripadci_Stanovi">
+          <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Stanovi_Pripadci" Role="Stanovi_Pripadci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanovi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stanovi_Pripadci">
+              <PropertyRef Name="StanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stanovi_Stanari_Stanovi">
+          <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Stanovi_Stanari" Role="Stanovi_Stanari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanovi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stanovi_Stanari">
+              <PropertyRef Name="StanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ZgradaDbModelStoreContainer" CdmEntityContainer="ZgradaDbEntities">
+          <EntitySetMapping Name="Zgrade">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
+              <MappingFragment StoreEntitySet="Zgrade">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Povrsinam2" ColumnName="Povrsinam2" />
+                <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pripadci">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Pripadci">
+              <MappingFragment StoreEntitySet="Pripadci">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kompanije">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Kompanije">
+              <MappingFragment StoreEntitySet="Kompanije">
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="OIB" ColumnName="OIB" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korisnici">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Korisnici">
+              <MappingFragment StoreEntitySet="Korisnici">
+                <ScalarProperty Name="MasterAcc" ColumnName="MasterAcc" />
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanovi">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi">
+              <MappingFragment StoreEntitySet="Stanovi">
+                <ScalarProperty Name="SumaPovrsinaPosto" ColumnName="SumaPovrsinaPosto" />
+                <ScalarProperty Name="SumaPovrsinaM2" ColumnName="SumaPovrsinaM2" />
+                <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
+                <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanovi_PosebniDijelovi">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_PosebniDijelovi">
+              <MappingFragment StoreEntitySet="Stanovi_PosebniDijelovi">
+                <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
+                <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+                <ScalarProperty Name="DioStanaKoeficijent" ColumnName="DioStanaKoeficijent" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="StanId" ColumnName="StanId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanovi_Pripadci">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Pripadci">
+              <MappingFragment StoreEntitySet="Stanovi_Pripadci">
+                <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
+                <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+                <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
+                <ScalarProperty Name="StanId" ColumnName="StanId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanovi_Stanari">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Stanari">
+              <MappingFragment StoreEntitySet="Stanovi_Stanari">
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Udjel" ColumnName="Udjel" />
+                <ScalarProperty Name="OIB" ColumnName="OIB" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="StanId" ColumnName="StanId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

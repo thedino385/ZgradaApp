@@ -1,0 +1,39 @@
+﻿
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="bs-callout bs-callout-danger">
+            <h4>Sifarnik zgrada</h4>
+        </div>
+        <button class="btn btn-info" style="margin-bottom: 10px" ng-click="novaZgrada()">Nova zgrada</button>
+   
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>Adresa</th>
+                    <th>Mjesto</th>
+                    <th>Uredi</th>
+                    <th>Stanovi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="z in zgrade">
+                    <td style="vertical-align: middle">{{z.Naziv}}</td>
+                    <td style="vertical-align: middle">{{z.Adresa}}</td>
+                    <td style="vertical-align: middle">{{z.Mjesto}}</td>
+                    <td style="vertical-align: middle">
+                        <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="edit(z)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <button type="button" class="btn btn-default btn-sm" title="Stanovi" ng-click="goToStanovi(z.Id)">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

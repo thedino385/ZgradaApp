@@ -1,0 +1,65 @@
+﻿
+<div class="modal-dialog modal-lg" style="vertical-align: middle;">
+
+    <div class="modal-header" style="padding-bottom: 8px !important">
+        <h4 class="modal-title">Pripadci</h4>
+    </div>
+
+    <form name="pripadakFrm" ng-submit="save()">
+        <div class="modal-body">
+            <div class='form-horizontal'>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="pripadakId">Vrsta pripadka</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine }">
+                        <select ng-model="item.PripadakId" ng-options="c.Id as c.Naziv for c in pripadci"
+                                name="pripadakId" class="form-control" ng-required></select>
+                        <span style="color: red" ng-show="pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="naziv">Oznaka pripadka</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.naziv.$invalid && !pripadakFrm.naziv.$pristine }">
+                        <input type="text" name="naziv" required ng-min="1" class="form-control" ng-model="item.Naziv" />
+                        <span style="color: red" ng-show="pripadakFrm.naziv.$invalid && !pripadakFrm.naziv.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="povrsinam2">Površina (m2)</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.povrsinam2.$invalid && !pripadakFrm.povrsinam2.$pristine }">
+                        <input type="number" name="povrsinam2" required ng-min="1" class="form-control" ng-model="item.PovrsinaM2" />
+                        <span style="color: red" ng-show="pripadakFrm.povrsinam2.$invalid && !pripadakFrm.povrsinam2.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="povrsinaPosto">Površina (%)</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.povrsinaPosto.$invalid && !pripadakFrm.povrsinaPosto.$pristine }">
+                        <input type="number" name="povrsinaPosto" required ng-min="1" class="form-control" ng-model="item.PovrsinaPosto" />
+                        <span style="color: red" ng-show="pripadakFrm.povrsinaPosto.$invalid && !pripadakFrm.povrsinaPosto.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" value="Cancel" ng-click="cancel()" />
+            <input type="submit" class="btn btn-primary" value="Spremi" ng-disabled="pripadakFrm.$invalid" />
+
+        </div>
+    </form>
+</div>
+

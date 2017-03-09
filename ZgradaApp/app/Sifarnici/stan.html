@@ -1,0 +1,138 @@
+﻿<style>
+    .spacer {
+        margin-top: 15px; /* define margin as you see fit */
+    }
+
+    .row {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="panel-group">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <strong>{{msg}}</strong>
+                </div>
+                <div class="panel-body">
+                    <!--<div class="col-xs-12 col-sm-12">-->
+                    <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label for="naziv">Naziv</label>
+                            </div>
+                            <div class="col-sm-4" ng-class="{ 'has-error' : frm.naziv.$invalid && !frm.naziv.$pristine }">
+                                <input type="text" name="naziv" required class="form-control" ng-model="obj.Naziv" />
+                                <span style="color: red" ng-show="frm.naziv.$invalid && !frm.naziv.$pristine">Obavezno polje</span>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label for="povrsinam2">Površina (m2)</label>
+                            </div>
+                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine }">
+                                <input type="text" name="povrsinam2" required class="form-control" ng-model="obj.Povrsinam2" />
+                                <span style="color: red" ng-show="frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine">Obavezno polje</span>
+                            </div>
+                            
+                            <div class="col-sm-2">
+                                <label for="povrsinaposto">Površina (%)</label>
+                            </div>
+                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.povrsinaposto.$invalid && !frm.povrsinaposto.$pristine }">
+                                <input type="text" name="povrsinam2" required class="form-control" ng-model="obj.PovrsinaPosto" />
+                                <span style="color: red" ng-show="frm.povrsinaposto.$invalid && !frm.povrsinaposto.$pristine">Obavezno polje</span>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label for="sumaPovrsinaM2">Suma površina (m2)</label>
+                            </div>
+                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.sumaPovrsinaM2.$invalid && !frm.sumaPovrsinaM2.$pristine }">
+                                <input type="text" name="sumaPovrsinaM2" required class="form-control" ng-model="obj.SumaPovrsinaM2" />
+                                <span style="color: red" ng-show="frm.sumaPovrsinaM2.$invalid && !frm.sumaPovrsinaM2.$pristine">Obavezno polje</span>
+                            </div>
+                            
+                            <div class="col-sm-2">
+                                <label for="sumaPovrsinaPosto">Suma površina (%)</label>
+                            </div>
+                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.sumaPovrsinaPosto.$invalid && !frm.sumaPovrsinaPosto.$pristine }">
+                                <input type="text" name="sumaPovrsinaPosto" required class="form-control" ng-model="obj.SumaPovrsinaPosto" />
+                                <span style="color: red" ng-show="frm.sumaPovrsinaPosto.$invalid && !frm.sumaPovrsinaPosto.$pristine">Obavezno polje</span>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                        <hr />
+
+                        <!--tabs-->
+                        <div ng-cloak>
+                            <md-content>
+                                <md-tabs md-dynamic-height md-border-bottom>
+                                    <md-tab label="Posebni dijelovi">
+                                        <md-content class="md-padding">
+                                            <a href="" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalDio(newItemDio)">Dodaj dio</a>
+                                            <table class="table table-hover table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Naziv</th>
+                                                        <th>Površina (m2)</th>
+                                                        <th>Površina (%)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="pd in obj.Stanovi_PosebniDijelovi">
+                                                        <td style="vertical-align: middle">{{pd.Naziv}}</td>
+                                                        <td style="vertical-align: middle">{{pd.PovrsinaM2}}</td>
+                                                        <td style="vertical-align: middle">{{pd.PovrsinaPosto}}</td>
+                                                        <td style="vertical-align: middle">
+                                                            <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalDio(pd)">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Pripadci">
+                                        <md-content class="md-padding">
+                                            <h1 class="md-display-2">Tab Two</h1>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
+                                            <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
+                                            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Stanari">
+                                        <md-content class="md-padding">
+                                            <h1 class="md-display-2">Tab Three</h1>
+                                            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                                        </md-content>
+                                    </md-tab>
+                                </md-tabs>
+                            </md-content>
+                        </div>
+                        
+                        <hr />
+
+                        <a href="#!/zgrade" class="btn btn-default pull-right">Odustani</a>&nbsp;
+                        <input type="submit" style="margin-right: 10px" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
+
+
+                    </form>
+                   
+
+                   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
