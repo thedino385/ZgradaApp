@@ -1,11 +1,13 @@
 ﻿// https://angular-ui.github.io/bootstrap/
 
-angularApp.controller('pripadakModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'item', function ($scope, $uibModalInstance, DataService, item) {
+angularApp.controller('pripadakModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'item', 'pripadci',
+    function ($scope, $uibModalInstance, DataService, item, pripadci) {
 
     $scope.item = item;
     console.log(item);
+    console.log(pripadci);
 
-    $scope.pripadci = DataService.listPripadci;
+    $scope.pripadci = pripadci;
 
     $scope.save = function () {
         console.log('save');

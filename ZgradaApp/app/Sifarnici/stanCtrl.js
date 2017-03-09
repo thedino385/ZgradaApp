@@ -6,13 +6,27 @@
 
         var zgradaId = DataService.selectedZgradaId; // iz ove je zgrade
 
+        var pripadci = [];
+        DataService.getPripadci().then(function (result) {
+            pripadci = result;
+            console.log('pripadci: ' + pripadci);
+        });
+        
+
+        //var stanovi = DataService.getStanovi();
+        //console.log('stanovi: ' + stanovi);
+
         if ($routeParams.id > 0) {
             $scope.msg = "Uredi stan";
-            DataService.listStanovi.forEach(function (obj) {
-                if ($routeParams.id == obj.Id) {
-                    $scope.obj = obj;
-                }
-            });
+            DataService.getStanovi().then(
+                function (stanovi) {
+                    stanovi.forEach(function (obj) {
+                        if ($routeParams.id == obj.Id) {
+                            $scope.obj = obj;
+                        }
+                    });
+              }
+          )
         }
         else {
             $scope.msg = "Dodaj stan";
@@ -55,9 +69,10 @@
         // 
         //                  M O D A L I
         // _________________________________________________________________
-        
-        // posebni dio
-        
+
+        // _________________________
+        //      posebni dio
+        // _________________________
         $scope.newItemDio = { Id: 0, StanId: $routeParams.id, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
         $scope.openModalDio = function (item) {
             console.log(item);
@@ -101,7 +116,54 @@
         };
 
 
+        // _________________________
+        //      pripadci
+        // _________________________
+        $scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
+        $scope.openModalPripadak = function (item) {
+            console.log(item);
+            var modalInstance = $uibModal.open({
+                templateUrl: '../app/Sifarnici/modals/pripadakModal.html',
+                //controller: function ($scope, $uibModalInstance, item) {
+                //    $scope.item = item;
+                //},
+                controller: 'pripadakModalCtrl',
+                size: 'lg',
+                resolve: {
+                    item: function () {
+                        return item;
+                    },
+                    pripadci: function () {
+                        //console.log(pripadci);
+                        return pripadci;
+                    }
+                }
+            });
 
+            modalInstance.result.then(function (item) {
+                console.log(item);
+                if (item.Id == 0) {
+                    // add new
+                    var maxId = 0;
+                    $scope.obj.Stanovi_Pripadci.forEach(function (obj) {
+                        if (obj.Id > maxId)
+                            maxId = obj.Id;
+                    });
+                    item.Id = maxId + 1;
+                    $scope.obj.Stanovi_Pripadci.push(item);
+                    console.log($scope.obj.Stanovi_Pripadci);
+                    $scope.newItemDio = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
+                }
+                else {
+                    $scope.obj.Stanovi_Pripadci.forEach(function (dio) {
+                        if (dio.Id == item.Id)
+                            $scope.obj.Stanovi_Pripadci.dio = item;
+                    });
+                }
+            }, function () {
+                //$scope.newItem = { Id: 0, InvoiceId: 0, ProductId: 0, Quantity: 1, Price: 0, Tax: 0, Total: 0 };
+            });
+        };
 
     };
 
