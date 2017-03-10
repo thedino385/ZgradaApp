@@ -5,10 +5,17 @@
             console.log($routeParams.id);
 
             DataService.selectedZgradaId = $routeParams.id;
-            DataService.listZgrade.forEach(function (zgrada) {
-                if (zgrada.Id == $routeParams.id)
-                    $scope.zgrada = zgrada;
+            DataService.getZgrade().then(function (result) {
+                result.forEach(function (zgrada) {
+                    if (zgrada.Id == $routeParams.id)
+                        $scope.zgrada = zgrada;
+                })
             });
+
+            //DataService.listZgrade.forEach(function (zgrada) {
+            //    if (zgrada.Id == $routeParams.id)
+            //        $scope.zgrada = zgrada;
+            //});
 
             //if (DataService.listStanovi.length == 0) {
             //    $rootScope.loaderActive = true;

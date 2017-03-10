@@ -65,6 +65,28 @@
             )
         }
 
+        $scope.backToStanovi = function () {
+            console.log(zgradaId + " stan back to stanovi");
+            $location.path('/stanovi/' + zgradaId);
+        }
+
+        // _________________________________________________________________
+        //
+        //                  D E L E T E FNs
+        // _________________________________________________________________
+        $scope.deleteDio = function (dio) {
+            var index = $scope.obj.Stanovi_PosebniDijelovi.indexOf(dio)
+            $scope.obj.Stanovi_PosebniDijelovi.splice(index, 1);
+        }
+        $scope.deletePripadak = function (pripadak) {
+            $scope.obj.Stanovi_Pripadci.splice($scope.obj.Stanovi_Pripadci.indexOf(pripadak), 1);
+        }
+        $scope.deleteStanar = function (stanar) {
+            $scope.obj.Stanovi_Stanari.splice($scope.obj.Stanovi_Stanari.indexOf(stanar), 1);
+        }
+
+        
+
         // _________________________________________________________________
         // 
         //                  M O D A L I
@@ -75,7 +97,8 @@
         // _________________________
         $scope.newItemDio = { Id: 0, StanId: $routeParams.id, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
         $scope.openModalDio = function (item) {
-            console.log(item);
+            var tempObj = {};
+            angular.copy(item, tempObj);
             var modalInstance = $uibModal.open({
                 templateUrl: '../app/Sifarnici/modals/posebniDioModal.html',
                 //controller: function ($scope, $uibModalInstance, item) {
@@ -104,14 +127,24 @@
                     console.log($scope.obj.Stanovi_PosebniDijelovi);
                     $scope.newItemDio = { Id: 0, StanId: $routeParams.id, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
                 }
-                else {
+                //else {
+                //    $scope.obj.Stanovi_PosebniDijelovi.forEach(function (dio) {
+                //        if (dio.Id == item.Id)
+                //            $scope.obj.Stanovi_PosebniDijelovi.dio = item;
+                //    });
+                //}
+            }, function () {
+                $scope.newItemDio = { Id: 0, StanId: $routeParams.id, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
+                if (item.Id > 0) {
+                    // vrati objekt u prethodno stanje (tempObj)
                     $scope.obj.Stanovi_PosebniDijelovi.forEach(function (dio) {
-                        if (dio.Id == item.Id)
-                            $scope.obj.Stanovi_PosebniDijelovi.dio = item;
+                        if (dio.Id == item.Id) {
+                            dio.Naziv = tempObj.Naziv;
+                            dio.PovrsinaM2 = tempObj.PovrsinaM2;
+                            dio.PovrsinaPosto = tempObj.PovrsinaPosto
+                        }
                     });
                 }
-            }, function () {
-                //$scope.newItem = { Id: 0, InvoiceId: 0, ProductId: 0, Quantity: 1, Price: 0, Tax: 0, Total: 0 };
             });
         };
 
@@ -121,6 +154,8 @@
         // _________________________
         $scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
         $scope.openModalPripadak = function (item) {
+            var tempObj = {};
+            angular.copy(item, tempObj);
             console.log(item);
             var modalInstance = $uibModal.open({
                 templateUrl: '../app/Sifarnici/modals/pripadakModal.html',
@@ -141,7 +176,7 @@
             });
 
             modalInstance.result.then(function (item) {
-                console.log(item);
+                console.log("modal result fn");
                 if (item.Id == 0) {
                     // add new
                     var maxId = 0;
@@ -152,19 +187,87 @@
                     item.Id = maxId + 1;
                     $scope.obj.Stanovi_Pripadci.push(item);
                     console.log($scope.obj.Stanovi_Pripadci);
-                    $scope.newItemDio = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
+                    $scope.openModalPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
                 }
-                else {
+                //else {
+                //    $scope.obj.Stanovi_Pripadci.forEach(function (dio) {
+                //        if (dio.Id == item.Id)
+                //            $scope.obj.Stanovi_Pripadci.dio = item;
+                //    });
+                //}
+            }, function () {
+                // modal dismiss
+                $scope.openModalPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
+                if (item.Id > 0) {
+                    // vrati objekt u prethodno stanje (tempObj)
                     $scope.obj.Stanovi_Pripadci.forEach(function (dio) {
-                        if (dio.Id == item.Id)
-                            $scope.obj.Stanovi_Pripadci.dio = item;
+                        if (dio.Id == item.Id) {
+                            dio.Naziv = tempObj.Naziv;
+                            dio.PovrsinaM2 = tempObj.PovrsinaM2;
+                            dio.PovrsinaPosto = tempObj.PovrsinaPosto
+                        }
+                            
                     });
                 }
-            }, function () {
-                //$scope.newItem = { Id: 0, InvoiceId: 0, ProductId: 0, Quantity: 1, Price: 0, Tax: 0, Total: 0 };
             });
-        };
+        }; // end of pripadak modal
 
-    };
+        // _________________________
+        //       stanari
+        // _________________________
+        $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 }
+        $scope.openModalStanar = function (item) {
+            var tempObj = {};
+            angular.copy(item, tempObj);
+            console.log(item);
+            var modalInstance = $uibModal.open({
+                templateUrl: '../app/Sifarnici/modals/stanarModal.html',
+                //controller: function ($scope, $uibModalInstance, item) {
+                //    $scope.item = item;
+                //},
+                controller: 'stanarModalCtrl',
+                size: 'lg',
+                resolve: {
+                    item: function () {
+                        return item;
+                    },
+                }
+            });
 
+            modalInstance.result.then(function (item) {
+                console.log("modal result fn");
+                if (item.Id == 0) {
+                    // add new
+                    var maxId = 0;
+                    $scope.obj.Stanovi_Stanari.forEach(function (obj) {
+                        if (obj.Id > maxId)
+                            maxId = obj.Id;
+                    });
+                    item.Id = maxId + 1;
+                    $scope.obj.Stanovi_Stanari.push(item);
+                    console.log($scope.obj.Stanovi_Stanari);
+                    $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 }
+                }
+            }, function () {
+                // modal dismiss
+                $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 }
+                if (item.Id > 0) {
+                    // vrati objekt u prethodno stanje (tempObj)
+                    $scope.obj.Stanovi_Stanari.forEach(function (stanar) {
+                        if (stanar.Id == item.Id) {
+                            stanar.Ime = tempObj.Ime;
+                            stanar.Prezime = tempObj.Prezime;
+                            stanar.OIB = tempObj.OIB;
+                            stanar.Email = tempObj.Email;
+                            stanar.Udjel = tempObj.Udjel;
+                        }
+
+                    });
+                }
+            });
+        }; // end of stanar modal
+
+
+
+    }; // if ($routeParams)
 }]);

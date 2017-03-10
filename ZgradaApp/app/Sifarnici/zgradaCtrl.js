@@ -8,11 +8,14 @@
         if ($routeParams.id > 0) {
             $scope.msg = "Uredi zgradu";
             console.log(DataService.listZgrade);
-            DataService.listZgrade.forEach(function (obj) {
-                if($routeParams.id == obj.Id) {
-                    $scope.obj = obj;
-                }
-            });
+            //DataService.listZgrade.forEach(function (obj) {
+            DataService.getZgrade().then(function(zgrade) {
+                zgrade.forEach(function (obj) {
+                    if ($routeParams.id == obj.Id) {
+                        $scope.obj = obj;
+                    }
+                })
+            })
         }
         else {
             $scope.msg = "Dodaj zgradu";

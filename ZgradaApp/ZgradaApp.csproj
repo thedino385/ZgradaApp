@@ -233,6 +233,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AAA.html" />
+    <Content Include="AAA_TODO.txt" />
     <Content Include="app\index.html" />
     <Content Include="app\indexCtrl.js" />
     <Content Include="app\Services\DataService.js" />
@@ -240,6 +242,8 @@
     <Content Include="app\Sifarnici\modals\posebniDioModalCtrl.js" />
     <Content Include="app\Sifarnici\modals\pripadakModal.html" />
     <Content Include="app\Sifarnici\modals\pripadakModalCtrl.js" />
+    <Content Include="app\Sifarnici\modals\stanarModal.html" />
+    <Content Include="app\Sifarnici\modals\stanarModalCtrl.js" />
     <Content Include="app\Sifarnici\pripadak.html" />
     <Content Include="app\Sifarnici\pripadakCtrl.js" />
     <Content Include="app\Sifarnici\pripadci.html" />

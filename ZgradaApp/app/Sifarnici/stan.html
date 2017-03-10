@@ -38,7 +38,7 @@
                                 <input type="text" name="povrsinam2" required class="form-control" ng-model="obj.Povrsinam2" />
                                 <span style="color: red" ng-show="frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine">Obavezno polje</span>
                             </div>
-                            
+
                             <div class="col-sm-2">
                                 <label for="povrsinaposto">Površina (%)</label>
                             </div>
@@ -57,7 +57,7 @@
                                 <input type="text" name="sumaPovrsinaM2" required class="form-control" ng-model="obj.SumaPovrsinaM2" />
                                 <span style="color: red" ng-show="frm.sumaPovrsinaM2.$invalid && !frm.sumaPovrsinaM2.$pristine">Obavezno polje</span>
                             </div>
-                            
+
                             <div class="col-sm-2">
                                 <label for="sumaPovrsinaPosto">Suma površina (%)</label>
                             </div>
@@ -95,6 +95,11 @@
                                                                 <span class="glyphicon glyphicon-edit"></span>
                                                             </button>
                                                         </td>
+                                                        <td style="vertical-align: middle">
+                                                            <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deleteDio(pd)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -123,6 +128,11 @@
                                                                 <span class="glyphicon glyphicon-edit"></span>
                                                             </button>
                                                         </td>
+                                                        <td style="vertical-align: middle">
+                                                            <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deletePripadak(pp)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -130,24 +140,53 @@
                                     </md-tab>
                                     <md-tab label="Stanari">
                                         <md-content class="md-padding">
-                                            <h1 class="md-display-2">Tab Three</h1>
-                                            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                                            <a href="" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalStanar(newItemStanar)">Dodaj stanara</a>
+                                            <table class="table table-hover table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Ime</th>
+                                                        <th>Prezime</th>
+                                                        <th>OIB</th>
+                                                        <th>Email</th>
+                                                        <th>Udio</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="st in obj.Stanovi_Stanari">
+                                                        <td style="vertical-align: middle">{{st.Ime}}</td>
+                                                        <td style="vertical-align: middle">{{st.Prezime}}</td>
+                                                        <td style="vertical-align: middle">{{st.OIB}}</td>
+                                                        <td style="vertical-align: middle">{{st.Email}}</td>
+                                                        <td style="vertical-align: middle">{{st.Udjel}}</td>
+                                                        <td style="vertical-align: middle">
+                                                            <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalStanar(st)">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </button>
+                                                        </td>
+                                                        <td style="vertical-align: middle">
+                                                            <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deleteStanar(st)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </md-content>
                                     </md-tab>
                                 </md-tabs>
                             </md-content>
                         </div>
-                        
+
                         <hr />
 
-                        <a href="#!/stanovi" class="btn btn-default pull-right">Odustani</a>&nbsp;
+                        <a ng-click="backToStanovi()" class="btn btn-default pull-right">Odustani</a>&nbsp;
                         <input type="submit" style="margin-right: 10px" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
 
 
                     </form>
-                   
 
-                   
+
+
 
                 </div>
             </div>

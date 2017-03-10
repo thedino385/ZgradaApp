@@ -6,10 +6,13 @@
 
         if ($routeParams.id > 0) {
             $scope.msg = "Uredi pripdadak";
-            DataService.listPripadci.forEach(function (obj) {
-                if ($routeParams.id == obj.Id) {
-                    $scope.obj = obj;
-                }
+            //DataService.listPripadci.forEach(function (obj) {
+            DataService.getPripadci().then(function (pripadci) {
+                pripadci.forEach(function (obj) {
+                    if ($routeParams.id == obj.Id) {
+                        $scope.obj = obj;
+                    }
+                })
             });
         }
         else {

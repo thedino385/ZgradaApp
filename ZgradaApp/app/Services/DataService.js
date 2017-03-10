@@ -6,8 +6,31 @@
     var selectedZgradaId = null;
 
     // zgrade
-    var getZgrade = function() {
-        return $http.get('../api/data/getzgrade');
+    //var getZgrade = function() {
+    //    return $http.get('../api/data/getzgrade');
+    //}
+    var getZgrade = function () {
+        var defer = $q.defer();
+        if (listZgrade.length == 0) {
+            $rootScope.loaderActive = true;
+            $http.get('../api/data/getzgrade').then(
+                function (result) {
+                    // on success
+                    listZgrade = result.data;
+                    console.log('dataService zgrade, pullilng from the server');
+                    $rootScope.loaderActive = false;
+                    defer.resolve(result.data);
+                },
+                function (result) {
+                    // on error
+                    defer.reject(result.data);
+                    $rootScope.errMsg = result.Message;
+                }
+            )
+        }
+        else
+            defer.resolve(listZgrade);
+        return defer.promise;
     }
 
     var zgradaCreateUpdate = function (zgrada) {
