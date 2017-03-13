@@ -14,8 +14,8 @@
                         <label for="pripadakId">Vrsta pripadka</label>
                     </div>
                     <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine }">
-                        <select ng-model="item.PripadakId" ng-options="c.Id as c.Naziv for c in pripadci"
-                                name="pripadakId" class="form-control" ng-required></select>
+                        <select  ng-model="item.PripadakId" ng-options="c.Id as c.Naziv for c in pripadci"
+                                ng-change="pripadakIdChanged()" name="pripadakId" class="form-control" ng-required></select>
                         <span style="color: red" ng-show="pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine">Obavezno polje</span>
                     </div>
                     <div class="col-sm-4"></div>
@@ -26,7 +26,7 @@
                         <label for="naziv">Oznaka pripadka</label>
                     </div>
                     <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.naziv.$invalid && !pripadakFrm.naziv.$pristine }">
-                        <input type="text" name="naziv" required ng-min="1" class="form-control" ng-model="item.Naziv" />
+                        <input type="text" name="naziv" class="form-control" ng-model="item.Naziv" />
                         <span style="color: red" ng-show="pripadakFrm.naziv.$invalid && !pripadakFrm.naziv.$pristine">Obavezno polje</span>
                     </div>
                     <div class="col-sm-4"></div>
@@ -37,7 +37,7 @@
                         <label for="povrsinam2">Površina (m2)</label>
                     </div>
                     <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.povrsinam2.$invalid && !pripadakFrm.povrsinam2.$pristine }">
-                        <input type="number" name="povrsinam2" required ng-min="1" class="form-control" ng-model="item.PovrsinaM2" />
+                        <input type="number" ng-change="povrsinaChanged()" name="povrsinam2" required ng-min="1" class="form-control" ng-model="item.PovrsinaM2" />
                         <span style="color: red" ng-show="pripadakFrm.povrsinam2.$invalid && !pripadakFrm.povrsinam2.$pristine">Obavezno polje</span>
                     </div>
                     <div class="col-sm-4"></div>
@@ -45,11 +45,10 @@
                 <div class="form-group row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-2">
-                        <label for="povrsinaPosto">Površina (%)</label>
+                        <label for="koeficijent">Koeficijent</label>
                     </div>
-                    <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.povrsinaPosto.$invalid && !pripadakFrm.povrsinaPosto.$pristine }">
-                        <input type="number" name="povrsinaPosto" required ng-min="1" class="form-control" ng-model="item.PovrsinaPosto" />
-                        <span style="color: red" ng-show="pripadakFrm.povrsinaPosto.$invalid && !pripadakFrm.povrsinaPosto.$pristine">Obavezno polje</span>
+                    <div class="col-sm-4" >
+                        <input type="number" name="koeficijent" class="form-control" ng-model="item.Koeficijent" />
                     </div>
                     <div class="col-sm-4"></div>
                 </div>

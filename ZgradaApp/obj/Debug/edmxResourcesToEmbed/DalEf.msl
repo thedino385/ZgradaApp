@@ -51,6 +51,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PosedniDijelovi">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PosedniDijelovi">
+        <MappingFragment StoreEntitySet="PosedniDijelovi">
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Stanovi">
       <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi">
         <MappingFragment StoreEntitySet="Stanovi">
@@ -69,7 +79,7 @@
         <MappingFragment StoreEntitySet="Stanovi_PosebniDijelovi">
           <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
           <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
-          <ScalarProperty Name="DioStanaKoeficijent" ColumnName="DioStanaKoeficijent" />
+          <ScalarProperty Name="Koeficijent" ColumnName="Koeficijent" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
           <ScalarProperty Name="StanId" ColumnName="StanId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -79,8 +89,10 @@
     <EntitySetMapping Name="Stanovi_Pripadci">
       <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Pripadci">
         <MappingFragment StoreEntitySet="Stanovi_Pripadci">
+          <ScalarProperty Name="Koeficijent" ColumnName="Koeficijent" />
           <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
           <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
           <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
           <ScalarProperty Name="StanId" ColumnName="StanId" />
           <ScalarProperty Name="Id" ColumnName="Id" />

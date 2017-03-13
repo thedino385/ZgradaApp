@@ -31,6 +31,15 @@
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
           <Property Name="MasterAcc" Type="bit" />
         </EntityType>
+        <EntityType Name="PosedniDijelovi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Pripadci">
           <Key>
             <PropertyRef Name="Id" />
@@ -59,7 +68,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StanId" Type="int" Nullable="false" />
           <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DioStanaKoeficijent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Koeficijent" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
@@ -70,8 +79,10 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StanId" Type="int" Nullable="false" />
           <Property Name="PripadakId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nchar" MaxLength="10" />
           <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Koeficijent" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -141,6 +152,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
         <EntityContainer Name="ZgradaDbModelStoreContainer">
           <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pripadci" EntityType="Self.Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi" EntityType="Self.Stanovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
@@ -180,6 +192,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <EntitySet Name="Pripadci" EntityType="ZgradaDbModel.Pripadci" />
           <EntitySet Name="Kompanije" EntityType="ZgradaDbModel.Kompanije" />
           <EntitySet Name="Korisnici" EntityType="ZgradaDbModel.Korisnici" />
+          <EntitySet Name="PosedniDijelovi" EntityType="ZgradaDbModel.PosedniDijelovi" />
           <EntitySet Name="Stanovi" EntityType="ZgradaDbModel.Stanovi" />
           <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" />
           <EntitySet Name="Stanovi_Pripadci" EntityType="ZgradaDbModel.Stanovi_Pripadci" />
@@ -196,7 +209,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             <End Role="Stanovi" EntitySet="Stanovi" />
             <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Zgrade">
           <Key>
             <PropertyRef Name="Id" />
@@ -243,6 +256,15 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="MasterAcc" Type="Boolean" />
         </EntityType>
+        <EntityType Name="PosedniDijelovi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Stanovi">
           <Key>
             <PropertyRef Name="Id" />
@@ -265,10 +287,10 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StanId" Type="Int32" Nullable="false" />
           <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DioStanaKoeficijent" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi_PosebniDijelovi" ToRole="Stanovi" />
+          <Property Name="Koeficijent" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi_PosebniDijelovi" ToRole="Stanovi" />
         </EntityType>
         <EntityType Name="Stanovi_Pripadci">
           <Key>
@@ -277,8 +299,10 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StanId" Type="Int32" Nullable="false" />
           <Property Name="PripadakId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Koeficijent" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi_Pripadci" ToRole="Stanovi" />
         </EntityType>
         <EntityType Name="Stanovi_Stanari">
@@ -334,7 +358,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -390,6 +414,16 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PosedniDijelovi">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PosedniDijelovi">
+              <MappingFragment StoreEntitySet="PosedniDijelovi">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Stanovi">
             <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi">
               <MappingFragment StoreEntitySet="Stanovi">
@@ -408,7 +442,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
               <MappingFragment StoreEntitySet="Stanovi_PosebniDijelovi">
                 <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
                 <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
-                <ScalarProperty Name="DioStanaKoeficijent" ColumnName="DioStanaKoeficijent" />
+                <ScalarProperty Name="Koeficijent" ColumnName="Koeficijent" />
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
                 <ScalarProperty Name="StanId" ColumnName="StanId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -418,8 +452,10 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <EntitySetMapping Name="Stanovi_Pripadci">
             <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Pripadci">
               <MappingFragment StoreEntitySet="Stanovi_Pripadci">
+                <ScalarProperty Name="Koeficijent" ColumnName="Koeficijent" />
                 <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
                 <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
                 <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
                 <ScalarProperty Name="StanId" ColumnName="StanId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -440,7 +476,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

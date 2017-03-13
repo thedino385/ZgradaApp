@@ -29,6 +29,7 @@ namespace ZgradaApp
         public virtual DbSet<Pripadci> Pripadci { get; set; }
         public virtual DbSet<Kompanije> Kompanije { get; set; }
         public virtual DbSet<Korisnici> Korisnici { get; set; }
+        public virtual DbSet<PosedniDijelovi> PosedniDijelovi { get; set; }
         public virtual DbSet<Stanovi> Stanovi { get; set; }
         public virtual DbSet<Stanovi_PosebniDijelovi> Stanovi_PosebniDijelovi { get; set; }
         public virtual DbSet<Stanovi_Pripadci> Stanovi_Pripadci { get; set; }

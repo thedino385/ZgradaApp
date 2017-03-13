@@ -5,6 +5,7 @@
     <EntitySet Name="Pripadci" EntityType="ZgradaDbModel.Pripadci" />
     <EntitySet Name="Kompanije" EntityType="ZgradaDbModel.Kompanije" />
     <EntitySet Name="Korisnici" EntityType="ZgradaDbModel.Korisnici" />
+    <EntitySet Name="PosedniDijelovi" EntityType="ZgradaDbModel.PosedniDijelovi" />
     <EntitySet Name="Stanovi" EntityType="ZgradaDbModel.Stanovi" />
     <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" />
     <EntitySet Name="Stanovi_Pripadci" EntityType="ZgradaDbModel.Stanovi_Pripadci" />
@@ -68,6 +69,15 @@
     <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="MasterAcc" Type="Boolean" />
   </EntityType>
+  <EntityType Name="PosedniDijelovi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+  </EntityType>
   <EntityType Name="Stanovi">
     <Key>
       <PropertyRef Name="Id" />
@@ -90,10 +100,10 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="StanId" Type="Int32" Nullable="false" />
     <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="DioStanaKoeficijent" Type="Decimal" Precision="18" Scale="2" />
-    <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi_PosebniDijelovi" ToRole="Stanovi" />
+    <Property Name="Koeficijent" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi_PosebniDijelovi" ToRole="Stanovi" />
   </EntityType>
   <EntityType Name="Stanovi_Pripadci">
     <Key>
@@ -102,8 +112,10 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="StanId" Type="Int32" Nullable="false" />
     <Property Name="PripadakId" Type="Int32" Nullable="false" />
+    <Property Name="Naziv" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Koeficijent" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi_Pripadci" ToRole="Stanovi" />
   </EntityType>
   <EntityType Name="Stanovi_Stanari">

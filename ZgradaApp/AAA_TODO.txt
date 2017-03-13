@@ -7,3 +7,5 @@
 
 - linka na managiranja acc-a vodi van iz angular app-a, povratak nemoguc
 - srediti manage mvc view
+
+- client side unos u type="number" sa decimalnim zarezom i racunanje

@@ -26,6 +26,15 @@
     <Property Name="UserGuid" Type="varchar" MaxLength="128" />
     <Property Name="MasterAcc" Type="bit" />
   </EntityType>
+  <EntityType Name="PosedniDijelovi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Naziv" Type="varchar" MaxLength="50" />
+    <Property Name="Oznaka" Type="varchar" MaxLength="50" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Pripadci">
     <Key>
       <PropertyRef Name="Id" />
@@ -54,7 +63,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StanId" Type="int" Nullable="false" />
     <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="DioStanaKoeficijent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Koeficijent" Type="decimal" Precision="18" Scale="2" />
     <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
     <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
@@ -65,8 +74,10 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StanId" Type="int" Nullable="false" />
     <Property Name="PripadakId" Type="int" Nullable="false" />
+    <Property Name="Naziv" Type="nchar" MaxLength="10" />
     <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
     <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Koeficijent" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -136,6 +147,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
   <EntityContainer Name="ZgradaDbModelStoreContainer">
     <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pripadci" EntityType="Self.Pripadci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stanovi" EntityType="Self.Stanovi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />

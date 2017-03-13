@@ -116,7 +116,17 @@ namespace ZgradaApp.Controllers
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
                 var zgrade = await _db.Zgrade.Where(p => p.CompanyId == companyId).Select(p => p.Id).ToListAsync();
-                return Ok(await _db.Stanovi.Where(p => zgrade.Contains(p.ZgradaId)).ToListAsync());
+                var stanovi = await _db.Stanovi.Where(p => zgrade.Contains(p.ZgradaId)).ToListAsync();
+                var pripadci = await _db.Pripadci.Where(p => p.CompanyId == companyId).ToListAsync();
+                foreach (var item in stanovi)
+                {
+                    foreach (var pripadak in item.Stanovi_Pripadci)
+                    {
+                        pripadak.VrstaNaziv = pripadci.FirstOrDefault(p => p.Id == pripadak.PripadakId).Naziv;
+                    }
+                }
+                return Ok(stanovi);
+
             }
             catch (Exception ex)
             {

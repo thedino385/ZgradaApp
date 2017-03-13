@@ -35,16 +35,15 @@
                                 <label for="povrsinam2">Površina (m2)</label>
                             </div>
                             <div class="col-sm-2" ng-class="{ 'has-error' : frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine }">
-                                <input type="text" name="povrsinam2" required class="form-control" ng-model="obj.Povrsinam2" />
+                                <input type="number" ng-change="PovrsinaStanaChanged()" ng-min="1" name="povrsinam2" required class="form-control" ng-model="obj.PovrsinaM2" />
                                 <span style="color: red" ng-show="frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine">Obavezno polje</span>
                             </div>
 
                             <div class="col-sm-2">
                                 <label for="povrsinaposto">Površina (%)</label>
                             </div>
-                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.povrsinaposto.$invalid && !frm.povrsinaposto.$pristine }">
-                                <input type="text" name="povrsinam2" required class="form-control" ng-model="obj.PovrsinaPosto" />
-                                <span style="color: red" ng-show="frm.povrsinaposto.$invalid && !frm.povrsinaposto.$pristine">Obavezno polje</span>
+                            <div class="col-sm-2" >
+                                <input type="text" name="povrsinam2" ng-readonly="true" class="form-control" ng-model="obj.PovrsinaPosto" />
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
@@ -53,22 +52,60 @@
                             <div class="col-sm-2">
                                 <label for="sumaPovrsinaM2">Suma površina (m2)</label>
                             </div>
-                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.sumaPovrsinaM2.$invalid && !frm.sumaPovrsinaM2.$pristine }">
-                                <input type="text" name="sumaPovrsinaM2" required class="form-control" ng-model="obj.SumaPovrsinaM2" />
-                                <span style="color: red" ng-show="frm.sumaPovrsinaM2.$invalid && !frm.sumaPovrsinaM2.$pristine">Obavezno polje</span>
+                            <div class="col-sm-2">
+                                <input type="text" ng-readonly="true" name="sumaPovrsinaM2" class="form-control" ng-model="obj.SumaPovrsinaM2" />
                             </div>
 
                             <div class="col-sm-2">
                                 <label for="sumaPovrsinaPosto">Suma površina (%)</label>
                             </div>
-                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.sumaPovrsinaPosto.$invalid && !frm.sumaPovrsinaPosto.$pristine }">
-                                <input type="text" name="sumaPovrsinaPosto" required class="form-control" ng-model="obj.SumaPovrsinaPosto" />
-                                <span style="color: red" ng-show="frm.sumaPovrsinaPosto.$invalid && !frm.sumaPovrsinaPosto.$pristine">Obavezno polje</span>
+                            <div class="col-sm-2">
+                                <input type="text" ng-readonly="true" name="sumaPovrsinaPosto"  class="form-control" ng-model="obj.SumaPovrsinaPosto" />
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
 
                         <hr />
+
+                        <!-- ukupno -->
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno površina (m2)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaPovrsinaM2}}</h5>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno suma površina (m2)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaSumaPovrsinaM2}}</h5>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno površina (%)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaPovrsinaPosto}}</h5>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno suna površina (%)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaSumaPOvrsinaPosto}}</h5>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                        
+                        
+
 
                         <!--tabs-->
                         <div ng-cloak>
@@ -83,6 +120,7 @@
                                                         <th>Naziv</th>
                                                         <th>Površina (m2)</th>
                                                         <th>Površina (%)</th>
+                                                        <th>Koeficijent (%)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -90,6 +128,7 @@
                                                         <td style="vertical-align: middle">{{pd.Naziv}}</td>
                                                         <td style="vertical-align: middle">{{pd.PovrsinaM2}}</td>
                                                         <td style="vertical-align: middle">{{pd.PovrsinaPosto}}</td>
+                                                        <td style="vertical-align: middle">{{pd.Koeficijent}}</td>
                                                         <td style="vertical-align: middle">
                                                             <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalDio(pd)">
                                                                 <span class="glyphicon glyphicon-edit"></span>
@@ -107,7 +146,7 @@
                                     </md-tab>
                                     <md-tab label="Pripadci">
                                         <md-content class="md-padding">
-                                            <a href="" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalPripadak(newItemDio)">Dodaj pripadak</a>
+                                            <input type="button" ng-disabled="obj.PovrsinaM2 == 0" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalPripadak(newItemPripadak)" value="Dodaj pripadak"/>
                                             <table class="table table-hover table-striped table-bordered">
                                                 <thead>
                                                     <tr>
@@ -115,14 +154,16 @@
                                                         <th>Naziv</th>
                                                         <th>Površina (m2)</th>
                                                         <th>Površina (%)</th>
+                                                        <th>Koeficijent</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="pp in obj.Stanovi_Pripadci">
-                                                        <td style="vertical-align: middle">{{pp.PripadakId}}</td>
+                                                        <td style="vertical-align: middle">{{pp.VrstaNaziv}}</td>
                                                         <td style="vertical-align: middle">{{pp.Naziv}}</td>
                                                         <td style="vertical-align: middle">{{pp.PovrsinaM2}}</td>
                                                         <td style="vertical-align: middle">{{pp.PovrsinaPosto}}</td>
+                                                        <td style="vertical-align: middle">{{pp.Koeficijent}}</td>
                                                         <td style="vertical-align: middle">
                                                             <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalPripadak(pp)">
                                                                 <span class="glyphicon glyphicon-edit"></span>
@@ -179,8 +220,9 @@
 
                         <hr />
 
-                        <a ng-click="backToStanovi()" class="btn btn-default pull-right">Odustani</a>&nbsp;
-                        <input type="submit" style="margin-right: 10px" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
+                        <input type="submit"  class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
+                        <a ng-click="backToStanovi()" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;
+                        
 
 
                     </form>

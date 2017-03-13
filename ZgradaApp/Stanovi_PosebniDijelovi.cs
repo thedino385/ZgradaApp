@@ -17,7 +17,7 @@ namespace ZgradaApp
         public int Id { get; set; }
         public int StanId { get; set; }
         public string Naziv { get; set; }
-        public Nullable<decimal> DioStanaKoeficijent { get; set; }
+        public Nullable<decimal> Koeficijent { get; set; }
         public Nullable<decimal> PovrsinaM2 { get; set; }
         public Nullable<decimal> PovrsinaPosto { get; set; }
     
