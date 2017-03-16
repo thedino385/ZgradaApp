@@ -89,16 +89,11 @@
           <Property Name="VrijediDoGod" Type="int" />
           <Property Name="VrijediDoMjesec" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Stanovi_Stanari">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="StanId" />
-            <PropertyRef Name="Ime" />
-            <PropertyRef Name="Prezime" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StanId" Type="int" Nullable="false" />
           <Property Name="Ime" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Prezime" Type="varchar" MaxLength="30" Nullable="false" />
@@ -186,20 +181,9 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <EntitySet Name="Stanovi" EntityType="Self.Stanovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi_Pripadci" EntityType="Self.Stanovi_Pripadci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanovi_Stanari" EntityType="Self.Stanovi_Stanari" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Stanovi_Stanari" EntityType="Self.Stanovi_Stanari" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Stanovi_Stanari].[Id] AS [Id], 
-    [Stanovi_Stanari].[StanId] AS [StanId], 
-    [Stanovi_Stanari].[Ime] AS [Ime], 
-    [Stanovi_Stanari].[Prezime] AS [Prezime], 
-    [Stanovi_Stanari].[OIB] AS [OIB], 
-    [Stanovi_Stanari].[Udjel] AS [Udjel], 
-    [Stanovi_Stanari].[Email] AS [Email], 
-    [Stanovi_Stanari].[UserGuid] AS [UserGuid]
-    FROM [dbo].[Stanovi_Stanari] AS [Stanovi_Stanari]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="Self.FK_Stanovi_PosebniDijelovi_Stanovi">
             <End Role="Stanovi" EntitySet="Stanovi" />
             <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
@@ -229,7 +213,6 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <EntitySet Name="Stanovi" EntityType="ZgradaDbModel.Stanovi" />
           <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" />
           <EntitySet Name="Stanovi_Pripadci" EntityType="ZgradaDbModel.Stanovi_Pripadci" />
-          <EntitySet Name="Stanovi_Stanari" EntityType="ZgradaDbModel.Stanovi_Stanari" />
           <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi">
             <End Role="Stanovi" EntitySet="Stanovi" />
             <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
@@ -238,15 +221,16 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             <End Role="Stanovi" EntitySet="Stanovi" />
             <End Role="Stanovi_Pripadci" EntitySet="Stanovi_Pripadci" />
           </AssociationSet>
-          <AssociationSet Name="FK_Stanovi_Stanari_Stanovi" Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi">
-            <End Role="Stanovi" EntitySet="Stanovi" />
-            <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
-          </AssociationSet>
           <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
           <EntitySet Name="Zgrade_Pripadci" EntityType="ZgradaDbModel.Zgrade_Pripadci" />
           <AssociationSet Name="FK_Zgrade_Pripadci_Zgrade" Association="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="Zgrade_Pripadci" EntitySet="Zgrade_Pripadci" />
+          </AssociationSet>
+          <EntitySet Name="Stanovi_Stanari" EntityType="ZgradaDbModel.Stanovi_Stanari" />
+          <AssociationSet Name="FK_Stanovi_Stanari_Stanovi" Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi">
+            <End Role="Stanovi" EntitySet="Stanovi" />
+            <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Pripadci">
@@ -338,23 +322,6 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <Property Name="VrijediDoMjesec" Type="Int32" />
           <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi_Pripadci" ToRole="Stanovi" />
         </EntityType>
-        <EntityType Name="Stanovi_Stanari">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="StanId" />
-            <PropertyRef Name="Ime" />
-            <PropertyRef Name="Prezime" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="StanId" Type="Int32" Nullable="false" />
-          <Property Name="Ime" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Prezime" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="OIB" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
-          <Property Name="Udjel" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi_Stanari" ToRole="Stanovi" />
-        </EntityType>
         <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
           <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
           <End Type="ZgradaDbModel.Stanovi_PosebniDijelovi" Role="Stanovi_PosebniDijelovi" Multiplicity="*" />
@@ -375,18 +342,6 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Stanovi_Pripadci">
-              <PropertyRef Name="StanId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Stanovi_Stanari_Stanovi">
-          <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
-          <End Type="ZgradaDbModel.Stanovi_Stanari" Role="Stanovi_Stanari" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Stanovi">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Stanovi_Stanari">
               <PropertyRef Name="StanId" />
             </Dependent>
           </ReferentialConstraint>
@@ -425,6 +380,32 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             </Principal>
             <Dependent Role="Zgrade_Pripadci">
               <PropertyRef Name="ZgradaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Stanovi_Stanari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StanId" Type="Int32" Nullable="false" />
+          <Property Name="Ime" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Prezime" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="OIB" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="Udjel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi_Stanari" ToRole="Stanovi" />
+        </EntityType>
+        <Association Name="FK_Stanovi_Stanari_Stanovi">
+          <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Stanovi_Stanari" Role="Stanovi_Stanari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanovi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stanovi_Stanari">
+              <PropertyRef Name="StanId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -525,20 +506,6 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Stanovi_Stanari">
-            <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Stanari">
-              <MappingFragment StoreEntitySet="Stanovi_Stanari">
-                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Udjel" ColumnName="Udjel" />
-                <ScalarProperty Name="OIB" ColumnName="OIB" />
-                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
-                <ScalarProperty Name="Ime" ColumnName="Ime" />
-                <ScalarProperty Name="StanId" ColumnName="StanId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Zgrade">
             <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
               <MappingFragment StoreEntitySet="Zgrade">
@@ -560,6 +527,20 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
                 <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
                 <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanovi_Stanari">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Stanari">
+              <MappingFragment StoreEntitySet="Stanovi_Stanari">
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Udjel" ColumnName="Udjel" />
+                <ScalarProperty Name="OIB" ColumnName="OIB" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="StanId" ColumnName="StanId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

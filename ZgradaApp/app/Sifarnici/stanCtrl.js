@@ -303,8 +303,10 @@
                     });
                     item.Id = maxId + 1;
                     $scope.obj.Stanovi_Stanari.push(item);
-                    console.log($scope.obj.Stanovi_Stanari);
+                    item.Status = "a";
                 }
+                else { item.Status = "u"; }
+
             }, function () {
                 // modal dismiss
                 if (item.Id > 0) {

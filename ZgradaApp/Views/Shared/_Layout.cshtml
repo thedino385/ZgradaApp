@@ -38,16 +38,16 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Šifarnici <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#!/pripadci" onclick="Mark('sifarnici')">Pripadci</a></li>
-                                <li role="separator" class="divider"></li>
+                                @*<li role="separator" class="divider"></li>
                                 <li class="dropdown-header"></li>
                                 <li><a href="#!/zgrade" onclick="Mark('sifarnici')">Zgrade</a></li>
-                                <li><a href="#">Neki link kojii ne vodi nigdje</a></li>
+                                <li><a href="#">Neki link kojii ne vodi nigdje</a></li>*@
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pričuva <span class="caret"></span></a>
+                        <li id="zgrade"><a href="#!/zgrade" onclick="Mark('zgrade')">Zgrade</a></li>
+                        <li class="dropdown" id="ob1">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">$$$$ <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
                                 <li><a href="#">Another action</a></li>
                                 <li><a href="#">Something else here</a></li>
                                 <li role="separator" class="divider"></li>
@@ -67,7 +67,9 @@
         </nav>
         if (ViewBag.ExpMsg != null)
         {
-            <h5 style="color: red; text-align:end; margin-right: 50px">@ViewBag.ExpMsg</h5>
+            <div class="alert alert-warning">
+                <h5 style="color: red; text-align:end; margin-right: 50px">@ViewBag.ExpMsg</h5>
+            </div>
         }
 
     }
@@ -105,7 +107,9 @@
     <script src="~/app/Sifarnici/modals/pripadakModalCtrl.js"></script>
     <script src="~/app/Sifarnici/modals/stanarModalCtrl.js"></script>
     <script src="~/app/Sifarnici/modals/pripadakStanCtrl.js"></script>
+    <script src="~/app/Sifarnici/zgradaPregledPripadakaPoStanovimaCtrl.js"></script>
 
+    <script src="~/app/zaduzivanjePoMjCrtl.js"></script>
     <script type="text/javascript">
 
         function Mark(el) {

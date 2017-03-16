@@ -72,22 +72,28 @@
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
+
+
+
+
+
                 <div class="form-group row" ng-show="isPrijenos">
                     <div class="col-sm-2"></div>
-                    <div class="col-sm-6">
-                        <span style="color: red">Pripadak je vezan za stan </span><span>{{prijenosSaStana.Naziv}}</span>
-                        <span style="color: red">.<br>Ako snimite, pripadak ce biti prebacen na ovaj stan, odaberite mjesec od kada ce se poceti obracunavati za ovaj stan.</span>
-                        <hr />
-                        
+                    <div class="col-sm-8">
+                        <div class="alert alert-danger">
+
+                            <span style="color: #ce4844">Pripadak je vezan za stan </span><span>{{prijenosSaStana.Naziv}}</span>
+                            <span style="color: #ce4844">.<br>Ako snimite, pripadak ce biti prebacen na ovaj stan, odaberite mjesec od kada ce se poceti obracunavati za ovaj stan.</span>
+
+                        </div>
                     </div>
-                    <div class="col-sm-4"></div>
+                    <div class="col-sm-2"></div>
                 </div>
                 <div class="form-group row" ng-show="isPrijenos">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-2">Godina</div>
                     <div class="col-sm-2">
                         <select class="form-control" ng-model="vrijediOdGod">
-                            <option value="2016">2016</option>
                             <option value="2017">2017</option>
                             <option value="2018">2018</option>
                             <option value="2019">2019</option>
@@ -120,10 +126,11 @@
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
+
             </div>
         </div>
         <div class="modal-footer">
-            <input type="button" class="btn btn-default" value="Cancel" ng-click="cancel()" />
+            <input type="button" class="btn btn-default" value="Odustani" ng-click="cancel()" />
             <input type="submit" class="btn btn-primary" value="Spremi" ng-disabled="pripadakFrm.$invalid" />
 
         </div>

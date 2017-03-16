@@ -8,7 +8,6 @@
     <EntitySet Name="Stanovi" EntityType="ZgradaDbModel.Stanovi" />
     <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" />
     <EntitySet Name="Stanovi_Pripadci" EntityType="ZgradaDbModel.Stanovi_Pripadci" />
-    <EntitySet Name="Stanovi_Stanari" EntityType="ZgradaDbModel.Stanovi_Stanari" />
     <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi">
       <End Role="Stanovi" EntitySet="Stanovi" />
       <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
@@ -17,15 +16,16 @@
       <End Role="Stanovi" EntitySet="Stanovi" />
       <End Role="Stanovi_Pripadci" EntitySet="Stanovi_Pripadci" />
     </AssociationSet>
-    <AssociationSet Name="FK_Stanovi_Stanari_Stanovi" Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi">
-      <End Role="Stanovi" EntitySet="Stanovi" />
-      <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
-    </AssociationSet>
     <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
     <EntitySet Name="Zgrade_Pripadci" EntityType="ZgradaDbModel.Zgrade_Pripadci" />
     <AssociationSet Name="FK_Zgrade_Pripadci_Zgrade" Association="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade">
       <End Role="Zgrade" EntitySet="Zgrade" />
       <End Role="Zgrade_Pripadci" EntitySet="Zgrade_Pripadci" />
+    </AssociationSet>
+    <EntitySet Name="Stanovi_Stanari" EntityType="ZgradaDbModel.Stanovi_Stanari" />
+    <AssociationSet Name="FK_Stanovi_Stanari_Stanovi" Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi">
+      <End Role="Stanovi" EntitySet="Stanovi" />
+      <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Pripadci">
@@ -117,23 +117,6 @@
     <Property Name="VrijediDoMjesec" Type="Int32" />
     <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi_Pripadci" ToRole="Stanovi" />
   </EntityType>
-  <EntityType Name="Stanovi_Stanari">
-    <Key>
-      <PropertyRef Name="Id" />
-      <PropertyRef Name="StanId" />
-      <PropertyRef Name="Ime" />
-      <PropertyRef Name="Prezime" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="StanId" Type="Int32" Nullable="false" />
-    <Property Name="Ime" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Prezime" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="OIB" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
-    <Property Name="Udjel" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi_Stanari" ToRole="Stanovi" />
-  </EntityType>
   <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
     <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
     <End Type="ZgradaDbModel.Stanovi_PosebniDijelovi" Role="Stanovi_PosebniDijelovi" Multiplicity="*" />
@@ -154,18 +137,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Stanovi_Pripadci">
-        <PropertyRef Name="StanId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Stanovi_Stanari_Stanovi">
-    <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
-    <End Type="ZgradaDbModel.Stanovi_Stanari" Role="Stanovi_Stanari" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Stanovi">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Stanovi_Stanari">
         <PropertyRef Name="StanId" />
       </Dependent>
     </ReferentialConstraint>
@@ -204,6 +175,32 @@
       </Principal>
       <Dependent Role="Zgrade_Pripadci">
         <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Stanovi_Stanari">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StanId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="OIB" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+    <Property Name="Udjel" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi_Stanari" ToRole="Stanovi" />
+  </EntityType>
+  <Association Name="FK_Stanovi_Stanari_Stanovi">
+    <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Stanovi_Stanari" Role="Stanovi_Stanari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stanovi">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stanovi_Stanari">
+        <PropertyRef Name="StanId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

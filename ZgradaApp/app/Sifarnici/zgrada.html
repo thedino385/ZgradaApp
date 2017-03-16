@@ -19,37 +19,41 @@
                     <!--<div class="col-xs-12 col-sm-12">-->
                         <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
                             <div class="form-group row">
-                                <div class="col-sm-3">
-                                    <label for="naziv">Naziv</label>
+                                <div class="col-sm-2"></div>
+                                    <div class="col-sm-2">
+                                        <label for="naziv">Naziv</label>
+                                    </div>
+                                    <div class="col-sm-8" ng-class="{ 'has-error' : frm.naziv.$invalid && !frm.naziv.$pristine }">
+                                        <input type="text" name="naziv" required class="form-control" ng-model="obj.Naziv" />
+                                        <span style="color: red" ng-show="frm.naziv.$invalid && !frm.naziv.$pristine">Obavezno polje</span>
+                                    </div>
                                 </div>
-                                <div class="col-sm-9" ng-class="{ 'has-error' : frm.naziv.$invalid && !frm.naziv.$pristine }">
-                                    <input type="text" name="naziv" required class="form-control" ng-model="obj.Naziv" />
-                                    <span style="color: red" ng-show="frm.naziv.$invalid && !frm.naziv.$pristine">Obavezno polje</span>
-                                </div>
-                            </div>
                             <div class="form-group row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2">
                                     <label for="addr">Adresa</label>
                                 </div>
-                                <div class="col-sm-9" ng-class="{ 'has-error' : frm.addr.$invalid && !frm.addr.$pristine }">
+                                <div class="col-sm-8" ng-class="{ 'has-error' : frm.addr.$invalid && !frm.addr.$pristine }">
                                     <input type="text" name="addr" required class="form-control" ng-model="obj.Adresa" />
                                     <span style="color: red" ng-show="frm.addr.$invalid && !frm.addr.$pristine">Obavezno polje</span>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2">
                                     <label for="mjesto">Mjesto</label>
                                 </div>
-                                <div class="col-sm-9" ng-class="{ 'has-error' : frm.mjesto.$invalid && !frm.mjesto.$pristine }">
+                                <div class="col-sm-8" ng-class="{ 'has-error' : frm.mjesto.$invalid && !frm.mjesto.$pristine }">
                                     <input type="text" name="mjesto" required class="form-control" ng-model="obj.Mjesto" />
                                     <span style="color: red" ng-show="frm.mjesto.$invalid && !frm.mjesto.$pristine">Obavezno polje</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-3">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2">
                                     <label for="povrsina">Površina</label>
                                 </div>
-                                <div class="col-sm-9" ng-class="{ 'has-error' : frm.povrsina.$invalid && !frm.povrsina.$pristine }">
+                                <div class="col-sm-8" ng-class="{ 'has-error' : frm.povrsina.$invalid && !frm.povrsina.$pristine }">
                                     <input type="number" name="povrsina" ng-min="0" class="form-control" ng-model="obj.Povrsinam2" />
                                     <span style="color: red" ng-show="frm.mjesto.povrsina && !frm.povrsina.$pristine">Molimo unesite broj</span>
                                 </div>
@@ -99,10 +103,10 @@
                             <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Vrsta</th>
-                                        <th>Naziv</th>
-                                        <th>Površina (m2)</th>
-                                        <th>Površina (%)</th>
+                                        <th style="text-align: center">Vrsta</th>
+                                        <th style="text-align: center">Naziv</th>
+                                        <th style="text-align: center">Površina (m2)</th>
+                                        <th style="text-align: center">Površina (%)</th>
                                         <!--<th>Napomena</th>-->
                                     </tr>
                                 </thead>
@@ -113,12 +117,12 @@
                                         <td style="vertical-align: middle">{{pp.PovrsinaM2}}</td>
                                         <td style="vertical-align: middle">{{pp.PovrsinaPosto}}</td>
                                         <!--<td style="vertical-align: middle">{{pp.Koeficijent}}</td>-->
-                                        <td style="vertical-align: middle">
+                                        <td style="vertical-align: middle; text-align: center">
                                             <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalPripadak(pp)">
                                                 <span class="glyphicon glyphicon-edit"></span>
                                             </button>
                                         </td>
-                                        <td style="vertical-align: middle">
+                                        <td style="vertical-align: middle; text-align: center">
                                             <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deletePripadak(pp)">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
@@ -128,9 +132,8 @@
                             </table>
 
                             <hr />
-
-                                <a href="#!/zgrade" class="btn btn-default pull-right">Odustani</a>&nbsp;
                                 <input type="submit" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid"/>
+                                <a href="#!/zgrade" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;
                             
                             
                         </form>

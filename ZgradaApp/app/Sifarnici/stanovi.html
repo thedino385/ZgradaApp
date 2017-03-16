@@ -10,15 +10,15 @@
         <table class="table table-hover table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Naziv</th>
-                    <th>Oznaka</th>
+                    <th style="text-align: center">Naziv</th>
+                    <th style="text-align: center">Oznaka</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="s in stanovi">
                     <td style="vertical-align: middle">{{s.Naziv}}</td>
                     <td style="vertical-align: middle">{{s.Oznaka}}</td>
-                    <td style="vertical-align: middle">
+                    <td style="vertical-align: middle; text-align: center">
                         <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="edit(s)">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>

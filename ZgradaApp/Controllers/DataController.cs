@@ -162,9 +162,7 @@ namespace ZgradaApp.Controllers
                             prip.Active = false;
                     }
                 }
-
                 return Ok(stanovi);
-
             }
             catch (Exception ex)
             {
@@ -230,26 +228,31 @@ namespace ZgradaApp.Controllers
                             _db.Stanovi_Pripadci.Remove(pripadak); // smije se obrisati jer se brise samo iz kolekcije na stanovima, pripadak i dalje postoji za zgradu
                         }
 
-                        //if(stan.Stanovi_PrijenosPripadaka != null)
-                        //{
-                        //    foreach (var item in stan.Stanovi_PrijenosPripadaka.ToList())
-                        //    {
-                        //        // iteriraj kroz stanove i kolekcije Stanovi_Pripadci i nadji PripadakIZgradaId
-                        //        var stanovi = await _db.Stanovi.Where(p => p.ZgradaId == stan.ZgradaId).ToListAsync();
-                        //        foreach (var s in stanovi)
-                        //        {
-                        //            foreach (var p in s.Stanovi_Pripadci)
-                        //            {
-                        //                if (p.PripadakIZgradaId == item.PripadakIZgradaId)
-                        //                {
-                        //                    // bingo
-                        //                    p.VrijediDoGod = item.VrijediOdGodina;
-                        //                    p.VrijediDoMjesec = item.VrijediOdMjesec;
-                        //                }
-                        //            }
-                        //        }
-                        //    }
-                        //}
+                        foreach (var stanar in stan.Stanovi_Stanari.ToList())
+                        {
+                            if(stanar.Status == "a")
+                            {
+                                var newStanar = new Stanovi_Stanari {
+                                    StanId = stan.Id, Email = stanar.Email, Ime = stanar.Ime, OIB = stanar.OIB, Prezime = stanar.Prezime,
+                                    Udjel = stanar.Udjel
+                                };
+                                _db.Stanovi_Stanari.Add(newStanar);
+                            }
+                            else if(stanar.Status == "u")
+                            {
+                                var target = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.Id == stanar.Id);
+                                target.Email = stanar.Email;
+                                target.Ime = stanar.Ime;
+                                target.OIB = stanar.OIB;
+                                target.Prezime = stanar.Prezime;
+                                target.StanId = stan.Id;
+                                target.Udjel = stanar.Udjel;
+                            }
+                            else if(stanar.Status == "d")
+                            {
+                                _db.Stanovi_Stanari.Remove(stanar);
+                            }
+                        }
                     }
 
                     if (stan.Stanovi_PrijenosPripadaka != null)

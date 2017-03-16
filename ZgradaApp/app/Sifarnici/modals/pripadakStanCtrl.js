@@ -5,8 +5,8 @@ angularApp.controller('pripadakStanCtrl', ['$scope', '$uibModalInstance', 'DataS
 
         $scope.isPrijenos = false;
         $scope.prijenosSaStana = {};
-        $scope.vrijediOdGod = 2018;// new Date().getFullYear();
-        $scope.vrijediOdMj = new Date().getMonth();
+        $scope.vrijediOdGod = (new Date().getFullYear()).toString();
+        $scope.vrijediOdMj = (new Date().getMonth() + 1).toString();
 
         console.log("modal item");
         console.log(item);

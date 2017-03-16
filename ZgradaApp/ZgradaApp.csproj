@@ -263,8 +263,12 @@
     <Content Include="app\Sifarnici\stanoviCtrl.js" />
     <Content Include="app\Sifarnici\zgradaCtrl.js" />
     <Content Include="app\Sifarnici\zgrada.html" />
+    <Content Include="app\Sifarnici\zgradaPregledPripadakaPoStanovima.html" />
+    <Content Include="app\Sifarnici\zgradaPregledPripadakaPoStanovimaCtrl.js" />
     <Content Include="app\Sifarnici\zgrade.html" />
     <Content Include="app\Sifarnici\zgradeCtrl.js" />
+    <Content Include="app\zaduzivanjePoMj.html" />
+    <Content Include="app\zaduzivanjePoMjCrtl.js" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.layout-attributes.css" />
     <Content Include="Content\angular-material.layout-attributes.min.css" />

@@ -84,16 +84,11 @@
     <Property Name="VrijediDoGod" Type="int" />
     <Property Name="VrijediDoMjesec" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Stanovi_Stanari">
     <Key>
       <PropertyRef Name="Id" />
-      <PropertyRef Name="StanId" />
-      <PropertyRef Name="Ime" />
-      <PropertyRef Name="Prezime" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StanId" Type="int" Nullable="false" />
     <Property Name="Ime" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="Prezime" Type="varchar" MaxLength="30" Nullable="false" />
@@ -181,20 +176,9 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
     <EntitySet Name="Stanovi" EntityType="Self.Stanovi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stanovi_Pripadci" EntityType="Self.Stanovi_Pripadci" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stanovi_Stanari" EntityType="Self.Stanovi_Stanari" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Stanovi_Stanari" EntityType="Self.Stanovi_Stanari" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Stanovi_Stanari].[Id] AS [Id], 
-    [Stanovi_Stanari].[StanId] AS [StanId], 
-    [Stanovi_Stanari].[Ime] AS [Ime], 
-    [Stanovi_Stanari].[Prezime] AS [Prezime], 
-    [Stanovi_Stanari].[OIB] AS [OIB], 
-    [Stanovi_Stanari].[Udjel] AS [Udjel], 
-    [Stanovi_Stanari].[Email] AS [Email], 
-    [Stanovi_Stanari].[UserGuid] AS [UserGuid]
-    FROM [dbo].[Stanovi_Stanari] AS [Stanovi_Stanari]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="Self.FK_Stanovi_PosebniDijelovi_Stanovi">
       <End Role="Stanovi" EntitySet="Stanovi" />
       <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />

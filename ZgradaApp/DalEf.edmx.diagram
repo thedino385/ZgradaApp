@@ -12,13 +12,13 @@
         <EntityTypeShape EntityType="ZgradaDbModel.Stanovi" Width="1.5" PointX="10.375" PointY="3.375" />
         <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" Width="1.5" PointX="12.625" PointY="4" />
         <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_Pripadci" Width="1.5" PointX="12.625" PointY="7.125" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_Stanari" Width="1.5" PointX="12.625" PointY="0.5" />
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" />
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" />
-        <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade" Width="1.5" PointX="5.625" PointY="2.625" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_Pripadci" Width="1.5" PointX="7.875" PointY="2.625" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_Stanari" Width="1.5" PointX="12.625" PointY="0.75" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

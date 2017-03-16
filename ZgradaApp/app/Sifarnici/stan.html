@@ -198,8 +198,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <!--<tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'} | filter:{ Active: '!false'}">-->
-                                                    <tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d', Active: '!false'}">
+                                                    <tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'}">
+                                                    <!--<tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'} }">-->
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).VrstaNaziv}}</td>
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).Naziv}}</td>
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).PovrsinaM2}}</td>
@@ -207,13 +207,13 @@
                                                         <td style="vertical-align: middle">{{pp.Koef}}</td>
                                                         <td style="vertical-align: middle">{{pp.VrijediOdMjesec}}/{{pp.VrijediOdGod}}</td>
                                                         <td style="vertical-align: middle">{{pp.VrijediDoMjesec}}/{{pp.VrijediDoGod}}</td>
-                                                        <td style="vertical-align: middle">
-                                                            <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalPripadak(pp)">
+                                                        <td style="vertical-align: middle; text-align: center">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalPripadak(pp)">
                                                                 <span class="glyphicon glyphicon-edit"></span>
                                                             </button>
                                                         </td>
-                                                        <td style="vertical-align: middle">
-                                                            <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deletePripadak(pp)">
+                                                        <td style="vertical-align: middle" text-align: center">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deletePripadak(pp)">
                                                                 <span class="glyphicon glyphicon-trash"></span>
                                                             </button>
                                                         </td>
@@ -236,19 +236,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="st in obj.Stanovi_Stanari">
+                                                    <tr ng-repeat="st in obj.Stanovi_Stanari | filter:{ Status: '!d'}">
                                                         <td style="vertical-align: middle">{{st.Ime}}</td>
                                                         <td style="vertical-align: middle">{{st.Prezime}}</td>
                                                         <td style="vertical-align: middle">{{st.OIB}}</td>
                                                         <td style="vertical-align: middle">{{st.Email}}</td>
                                                         <td style="vertical-align: middle">{{st.Udjel}}</td>
                                                         <td style="vertical-align: middle">
-                                                            <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalStanar(st)">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalStanar(st)">
                                                                 <span class="glyphicon glyphicon-edit"></span>
                                                             </button>
                                                         </td>
                                                         <td style="vertical-align: middle">
-                                                            <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deleteStanar(st)">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deleteStanar(st)">
                                                                 <span class="glyphicon glyphicon-trash"></span>
                                                             </button>
                                                         </td>
@@ -263,7 +263,7 @@
 
                         <hr />
 
-                        <input type="submit"  class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
+                        <input type="submit" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
                         <a ng-click="backToStanovi()" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;
                         
 

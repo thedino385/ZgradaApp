@@ -58,6 +58,10 @@
     border-left-color: #1b809e;
 }
 
+.bs-callout-ok {
+    border-left-color: #24a800;
+}
+
 .bs-callout + .bs-callout {
     margin-top: -5px;
 }
