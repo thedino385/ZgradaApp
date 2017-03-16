@@ -5,6 +5,18 @@
             console.log($routeParams.id);
 
             DataService.selectedZgradaId = $routeParams.id;
+
+            var zgradaId = $routeParams.id;
+            var stanovi = [];
+            DataService.getStanovi().then(function (result) {
+                result.forEach(function (stan) {
+                    if (stan.ZgradaId == zgradaId)
+                        stanovi.push(stan);
+                });
+                $scope.stanovi = stanovi;
+            });
+            
+
             DataService.getZgrade().then(function (result) {
                 result.forEach(function (zgrada) {
                     if (zgrada.Id == $routeParams.id)
@@ -46,15 +58,7 @@
             //    });
             //}
 
-            var zgradaId = $routeParams.id;
-            var stanovi = [];
-            DataService.getStanovi().then(function (result) {
-                result.forEach(function (stan) {
-                    if (stan.ZgradaId == zgradaId)
-                        stanovi.push(stan);
-                });
-                $scope.stanovi = stanovi;
-            });
+            
 
             $scope.noviStan = function () {
                 $location.path('/stan/0');

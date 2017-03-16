@@ -55,11 +55,15 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ZgradaId" Type="int" Nullable="false" />
+          <Property Name="BrojStana" Type="varchar" MaxLength="20" />
+          <Property Name="Kat" Type="varchar" MaxLength="20" />
           <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
           <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SumaPovrsinaM2" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SumaPovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Stanovi_PosebniDijelovi">
           <Key>
@@ -78,11 +82,12 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StanId" Type="int" Nullable="false" />
-          <Property Name="PripadakId" Type="int" Nullable="false" />
-          <Property Name="Naziv" Type="nchar" MaxLength="10" />
-          <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Koeficijent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PripadakIZgradaId" Type="int" Nullable="false" />
+          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="VrijediOdGod" Type="int" />
+          <Property Name="VrijediOdMjesec" Type="int" />
+          <Property Name="VrijediDoGod" Type="int" />
+          <Property Name="VrijediDoMjesec" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -112,6 +117,18 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <Property Name="Mjesto" Type="varchar" MaxLength="100" />
           <Property Name="Povrsinam2" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zgrade_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZgradaId" Type="int" Nullable="false" />
+          <Property Name="PripadakId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="varchar" MaxLength="1000" />
         </EntityType>
         <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
           <End Role="Stanovi" Type="Self.Stanovi" Multiplicity="1" />
@@ -149,6 +166,18 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Zgrade_Pripadci_Zgrade">
+          <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
+          <End Role="Zgrade_Pripadci" Type="Self.Zgrade_Pripadci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zgrade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Zgrade_Pripadci">
+              <PropertyRef Name="ZgradaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ZgradaDbModelStoreContainer">
           <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
@@ -158,6 +187,7 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi_Pripadci" EntityType="Self.Stanovi_Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi_Stanari" EntityType="Self.Stanovi_Stanari" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Stanovi_Stanari].[Id] AS [Id], 
@@ -182,13 +212,16 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             <End Role="Stanovi" EntitySet="Stanovi" />
             <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
           </AssociationSet>
+          <AssociationSet Name="FK_Zgrade_Pripadci_Zgrade" Association="Self.FK_Zgrade_Pripadci_Zgrade">
+            <End Role="Zgrade" EntitySet="Zgrade" />
+            <End Role="Zgrade_Pripadci" EntitySet="Zgrade_Pripadci" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ZgradaDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ZgradaDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
           <EntitySet Name="Pripadci" EntityType="ZgradaDbModel.Pripadci" />
           <EntitySet Name="Kompanije" EntityType="ZgradaDbModel.Kompanije" />
           <EntitySet Name="Korisnici" EntityType="ZgradaDbModel.Korisnici" />
@@ -209,18 +242,13 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             <End Role="Stanovi" EntitySet="Stanovi" />
             <End Role="Stanovi_Stanari" EntitySet="Stanovi_Stanari" />
           </AssociationSet>
+          <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
+          <EntitySet Name="Zgrade_Pripadci" EntityType="ZgradaDbModel.Zgrade_Pripadci" />
+          <AssociationSet Name="FK_Zgrade_Pripadci_Zgrade" Association="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade">
+            <End Role="Zgrade" EntitySet="Zgrade" />
+            <End Role="Zgrade_Pripadci" EntitySet="Zgrade_Pripadci" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Zgrade">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Mjesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Povrsinam2" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="Pripadci">
           <Key>
             <PropertyRef Name="Id" />
@@ -271,11 +299,15 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+          <Property Name="BrojStana" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Kat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="SumaPovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="SumaPovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Stanovi_PosebniDijelovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi" ToRole="Stanovi_PosebniDijelovi" />
           <NavigationProperty Name="Stanovi_Pripadci" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi" ToRole="Stanovi_Pripadci" />
           <NavigationProperty Name="Stanovi_Stanari" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi" ToRole="Stanovi_Stanari" />
@@ -298,11 +330,12 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StanId" Type="Int32" Nullable="false" />
-          <Property Name="PripadakId" Type="Int32" Nullable="false" />
-          <Property Name="Naziv" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Koeficijent" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PripadakIZgradaId" Type="Int32" Nullable="false" />
+          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VrijediOdGod" Type="Int32" />
+          <Property Name="VrijediOdMjesec" Type="Int32" />
+          <Property Name="VrijediDoGod" Type="Int32" />
+          <Property Name="VrijediDoMjesec" Type="Int32" />
           <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi_Pripadci" ToRole="Stanovi" />
         </EntityType>
         <EntityType Name="Stanovi_Stanari">
@@ -358,24 +391,49 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Zgrade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mjesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Povrsinam2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Zgrade_Pripadci" Relationship="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade" FromRole="Zgrade" ToRole="Zgrade_Pripadci" />
+        </EntityType>
+        <EntityType Name="Zgrade_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+          <Property Name="PripadakId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PovrsinaM2" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade" FromRole="Zgrade_Pripadci" ToRole="Zgrade" />
+        </EntityType>
+        <Association Name="FK_Zgrade_Pripadci_Zgrade">
+          <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Zgrade_Pripadci" Role="Zgrade_Pripadci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zgrade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Zgrade_Pripadci">
+              <PropertyRef Name="ZgradaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ZgradaDbModelStoreContainer" CdmEntityContainer="ZgradaDbEntities">
-          <EntitySetMapping Name="Zgrade">
-            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
-              <MappingFragment StoreEntitySet="Zgrade">
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="Povrsinam2" ColumnName="Povrsinam2" />
-                <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
-                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
-                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Pripadci">
             <EntityTypeMapping TypeName="ZgradaDbModel.Pripadci">
               <MappingFragment StoreEntitySet="Pripadci">
@@ -427,11 +485,15 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <EntitySetMapping Name="Stanovi">
             <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi">
               <MappingFragment StoreEntitySet="Stanovi">
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
                 <ScalarProperty Name="SumaPovrsinaPosto" ColumnName="SumaPovrsinaPosto" />
                 <ScalarProperty Name="SumaPovrsinaM2" ColumnName="SumaPovrsinaM2" />
                 <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
                 <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Kat" ColumnName="Kat" />
+                <ScalarProperty Name="BrojStana" ColumnName="BrojStana" />
                 <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -452,11 +514,12 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
           <EntitySetMapping Name="Stanovi_Pripadci">
             <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Pripadci">
               <MappingFragment StoreEntitySet="Stanovi_Pripadci">
-                <ScalarProperty Name="Koeficijent" ColumnName="Koeficijent" />
-                <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
-                <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
-                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-                <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
+                <ScalarProperty Name="VrijediDoMjesec" ColumnName="VrijediDoMjesec" />
+                <ScalarProperty Name="VrijediDoGod" ColumnName="VrijediDoGod" />
+                <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
+                <ScalarProperty Name="VrijediOdGod" ColumnName="VrijediOdGod" />
+                <ScalarProperty Name="Koef" ColumnName="Koef" />
+                <ScalarProperty Name="PripadakIZgradaId" ColumnName="PripadakIZgradaId" />
                 <ScalarProperty Name="StanId" ColumnName="StanId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -472,6 +535,31 @@ warning 6002: The table/view 'ZgradaDb.dbo.Stanovi_Stanari' does not have a prim
                 <ScalarProperty Name="Prezime" ColumnName="Prezime" />
                 <ScalarProperty Name="Ime" ColumnName="Ime" />
                 <ScalarProperty Name="StanId" ColumnName="StanId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zgrade">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
+              <MappingFragment StoreEntitySet="Zgrade">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Povrsinam2" ColumnName="Povrsinam2" />
+                <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zgrade_Pripadci">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Pripadci">
+              <MappingFragment StoreEntitySet="Zgrade_Pripadci">
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+                <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
+                <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
+                <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

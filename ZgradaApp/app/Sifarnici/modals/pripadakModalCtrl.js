@@ -1,7 +1,7 @@
 ﻿// https://angular-ui.github.io/bootstrap/
 
-angularApp.controller('pripadakModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'item', 'pripadci', 'stanovi', 'currentStan',
-    function ($scope, $uibModalInstance, DataService, item, pripadci, stanovi, currentStan) {
+angularApp.controller('pripadakModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'item', 'pripadci',
+    function ($scope, $uibModalInstance, DataService, item, pripadci) {
 
         $scope.pripadakIdChanged = function () {
             pripadci.forEach(function (p) {

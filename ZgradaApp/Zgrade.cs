@@ -14,11 +14,20 @@ namespace ZgradaApp
     
     public partial class Zgrade
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Zgrade()
+        {
+            this.Zgrade_Pripadci = new HashSet<Zgrade_Pripadci>();
+        }
+    
         public int Id { get; set; }
         public string Naziv { get; set; }
         public string Adresa { get; set; }
         public string Mjesto { get; set; }
         public Nullable<decimal> Povrsinam2 { get; set; }
         public int CompanyId { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Zgrade_Pripadci> Zgrade_Pripadci { get; set; }
     }
 }

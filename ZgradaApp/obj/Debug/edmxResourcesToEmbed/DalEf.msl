@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ZgradaDbModelStoreContainer" CdmEntityContainer="ZgradaDbEntities">
-    <EntitySetMapping Name="Zgrade">
-      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
-        <MappingFragment StoreEntitySet="Zgrade">
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="Povrsinam2" ColumnName="Povrsinam2" />
-          <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
-          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
-          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Pripadci">
       <EntityTypeMapping TypeName="ZgradaDbModel.Pripadci">
         <MappingFragment StoreEntitySet="Pripadci">
@@ -64,11 +52,15 @@
     <EntitySetMapping Name="Stanovi">
       <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi">
         <MappingFragment StoreEntitySet="Stanovi">
+          <ScalarProperty Name="Napomena" ColumnName="Napomena" />
           <ScalarProperty Name="SumaPovrsinaPosto" ColumnName="SumaPovrsinaPosto" />
           <ScalarProperty Name="SumaPovrsinaM2" ColumnName="SumaPovrsinaM2" />
           <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
           <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+          <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Kat" ColumnName="Kat" />
+          <ScalarProperty Name="BrojStana" ColumnName="BrojStana" />
           <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -89,11 +81,12 @@
     <EntitySetMapping Name="Stanovi_Pripadci">
       <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Pripadci">
         <MappingFragment StoreEntitySet="Stanovi_Pripadci">
-          <ScalarProperty Name="Koeficijent" ColumnName="Koeficijent" />
-          <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
-          <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
-          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-          <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
+          <ScalarProperty Name="VrijediDoMjesec" ColumnName="VrijediDoMjesec" />
+          <ScalarProperty Name="VrijediDoGod" ColumnName="VrijediDoGod" />
+          <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
+          <ScalarProperty Name="VrijediOdGod" ColumnName="VrijediOdGod" />
+          <ScalarProperty Name="Koef" ColumnName="Koef" />
+          <ScalarProperty Name="PripadakIZgradaId" ColumnName="PripadakIZgradaId" />
           <ScalarProperty Name="StanId" ColumnName="StanId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -109,6 +102,31 @@
           <ScalarProperty Name="Prezime" ColumnName="Prezime" />
           <ScalarProperty Name="Ime" ColumnName="Ime" />
           <ScalarProperty Name="StanId" ColumnName="StanId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zgrade">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
+        <MappingFragment StoreEntitySet="Zgrade">
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Povrsinam2" ColumnName="Povrsinam2" />
+          <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zgrade_Pripadci">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Pripadci">
+        <MappingFragment StoreEntitySet="Zgrade_Pripadci">
+          <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+          <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
+          <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="PripadakId" ColumnName="PripadakId" />
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

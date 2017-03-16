@@ -2,17 +2,17 @@
     $scope, $routeParams, $location, $rootScope, $uibModal, DataService) {
 
     // new item in collection
-    var newItemDio = { Id: 0, StanId: $routeParams.id, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0, Koeficijent: 0 }
-    var newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", VrstaNaziv: "", PovrsinaM2: 0, PovrsinaPosto: 0, Koeficijent: 0 }
-    var newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 }
+    //var newItemDio = { Id: 0, StanId: $routeParams.id, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0, Koeficijent: 0 }
+    //var newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", VrstaNaziv: "", PovrsinaM2: 0, PovrsinaPosto: 0, Koeficijent: 0 }
+    //var newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 }
 
     if ($routeParams) {
         console.log($routeParams.id); // stanId
 
-        
 
-        var zgradaId = DataService.selectedZgradaId; // iz ove je zgrade
-        var _stanovi = [];
+        //var zgradaId = DataService.selectedZgradaId; // iz ove je zgrade
+        var zgradaId = 4; // iz ove je zgrade
+        var _stanovi = []; // treba za pripadak modal
 
         var _pripadci = [];
         DataService.getPripadci().then(function (result) {
@@ -46,15 +46,16 @@
                             $scope.msg = "Stan: " + $scope.obj.Naziv + ", Zgrada: " + _zgrada.Naziv + ", Adresa: " + _zgrada.Adresa + ", Površina: " + _zgrada.Povrsinam2;
                         }
                     });
-                    IzracunajUkupnePovrsine();
+                    //IzracunajUkupnePovrsine();
                 }
           )
         }
         else {
             $scope.msg = "Dodaj stan" + ", Zgrada: " + _zgrada.Naziv + ", Adresa: " + _zgrada.Adresa;
             $scope.obj = {
-                Id: 0, ZgradaId: zgradaId, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0, Povrsinam2: 0, SumaPovrsinaM2: 0, SumaPovrsinaPosto: 0,
-                Stanovi_PosebniDijelovi: [], Stanovi_Pripadci: [], Stanovi_Stanari: []
+                Id: 0, ZgradaId: zgradaId, BrojStana: "", Kat: "", Naziv: "", Oznaka: "", PovrsinaM2: 0, PovrsinaPosto: 0, SumaPovrsinaM2: 0,
+                SumaPovrsinaPosto: 0, Napomena: "",
+                Stanovi_PosebniDijelovi: [], Stanovi_Pripadci: [], Stanovi_Stanari: [], Stanovi_PrijenosPripadaka: []
             };
         }
 
@@ -67,14 +68,17 @@
 
         $scope.save = function () {
             console.log('save fn');
+            console.log($scope.obj.PovrsinaM2);
             $scope.obj.ZgradaId = zgradaId;
             $rootScope.loaderActive = true;
             DataService.stanCreateUpdate($scope.obj).then(
                 function (result) {
                     // on success
                     if (result.data > 0) {
+                        console.log(DataService.listStanovi);
                         $scope.obj.Id = result.data; // insert, vrati Id sa servera, pukni u obj
                         DataService.listStanovi.push($scope.obj); // dodaj u listu
+                        console.log(DataService.listStanovi);
                     }
                     else {
                         DataService.listStanovi.forEach(function (obj) {
@@ -84,7 +88,6 @@
                     }
                     $rootScope.loaderActive = false;
                     $location.path('/stanovi/' + zgradaId);
-                    console.log(DataService.listStanovi);
                 },
                 function (result) {
                     // on error
@@ -102,20 +105,29 @@
         //
         //                  D E L E T E FNs
         // _________________________________________________________________
-        $scope.deleteDio = function (dio) {
-            var index = $scope.obj.Stanovi_PosebniDijelovi.indexOf(dio)
-            $scope.obj.Stanovi_PosebniDijelovi.splice(index, 1);
-        }
-        $scope.deletePripadak = function (pripadak) {
-            $scope.obj.Stanovi_Pripadci.splice($scope.obj.Stanovi_Pripadci.indexOf(pripadak), 1);
-            IzracunajPovrsineZaPripadke();
-            IzracunajPovrsine();
-        }
+        //$scope.deleteDio = function (dio) {
+        //    var index = $scope.obj.Stanovi_PosebniDijelovi.indexOf(dio)
+        //    $scope.obj.Stanovi_PosebniDijelovi.splice(index, 1);
+        //}
+        
         $scope.deleteStanar = function (stanar) {
-            $scope.obj.Stanovi_Stanari.splice($scope.obj.Stanovi_Stanari.indexOf(stanar), 1);
+            //$scope.obj.Stanovi_Stanari.splice($scope.obj.Stanovi_Stanari.indexOf(stanar), 1);
+            stanar.Status = "d";
         }
 
-
+        $scope.deletePripadak = function (pripadak) {
+            $scope.obj.Stanovi_Pripadci.forEach(function (p) {
+                if (pripadak.PripadakIZgradaId == p.PripadakIZgradaId) {
+                    if($scope.obj.Id == 0)
+                        $scope.obj.Stanovi_Pripadci.splice($scope.obj.Stanovi_Pripadci.indexOf(pripadak), 1);
+                        // obrisi ga, stan nije snimljen, kod snimanja novog stana, snimaju se svi pripadci
+                    else
+                        p.Status = "d";
+                        // markiraj ga kao deleted, biti ce obrisan iz db-a
+                }
+                    
+            })
+        };
 
         // _________________________________________________________________
         // 
@@ -125,88 +137,88 @@
         // _________________________
         //      posebni dio
         // _________________________
-        $scope.newItemDio = newItemDio;
-        $scope.openModalDio = function (item) {
-            var tempObj = {};
-            angular.copy(item, tempObj);
-            var modalInstance = $uibModal.open({
-                templateUrl: '../app/Sifarnici/modals/posebniDioModal.html',
-                //controller: function ($scope, $uibModalInstance, item) {
-                //    $scope.item = item;
-                //},
-                controller: 'posebniDioModalCtrl',
-                size: 'lg',
-                resolve: {
-                    item: function () {
-                        return item;
-                    }
-                }
-            });
+        //$scope.newItemDio = newItemDio;
+        //$scope.openModalDio = function (item) {
+        //    var tempObj = {};
+        //    angular.copy(item, tempObj);
+        //    var modalInstance = $uibModal.open({
+        //        templateUrl: '../app/Sifarnici/modals/posebniDioModal.html',
+        //        //controller: function ($scope, $uibModalInstance, item) {
+        //        //    $scope.item = item;
+        //        //},
+        //        controller: 'posebniDioModalCtrl',
+        //        size: 'lg',
+        //        resolve: {
+        //            item: function () {
+        //                return item;
+        //            }
+        //        }
+        //    });
 
-            modalInstance.result.then(function (item) {
-                console.log(item);
-                if (item.Id == 0) {
-                    // add new
-                    var maxId = 0;
-                    $scope.obj.Stanovi_PosebniDijelovi.forEach(function (obj) {
-                        if (obj.Id > maxId)
-                            maxId = obj.Id;
-                    });
-                    item.Id = maxId + 1;
-                    $scope.obj.Stanovi_PosebniDijelovi.push(item);
-                    console.log($scope.obj.Stanovi_PosebniDijelovi);
-                }
-                //else {
-                //    $scope.obj.Stanovi_PosebniDijelovi.forEach(function (dio) {
-                //        if (dio.Id == item.Id)
-                //            $scope.obj.Stanovi_PosebniDijelovi.dio = item;
-                //    });
-                //}
-            }, function () {
-                if (item.Id > 0) {
-                    // vrati objekt u prethodno stanje (tempObj)
-                    $scope.obj.Stanovi_PosebniDijelovi.forEach(function (dio) {
-                        if (dio.Id == item.Id) {
-                            dio.Naziv = tempObj.Naziv;
-                            dio.PovrsinaM2 = tempObj.PovrsinaM2;
-                            dio.PovrsinaPosto = tempObj.PovrsinaPosto
-                        }
-                    });
-                }
-            });
-            $scope.newItemDio = newItemDio;
-        };
+        //    modalInstance.result.then(function (item) {
+        //        console.log(item);
+        //        if (item.Id == 0) {
+        //            // add new
+        //            var maxId = 0;
+        //            $scope.obj.Stanovi_PosebniDijelovi.forEach(function (obj) {
+        //                if (obj.Id > maxId)
+        //                    maxId = obj.Id;
+        //            });
+        //            item.Id = maxId + 1;
+        //            $scope.obj.Stanovi_PosebniDijelovi.push(item);
+        //            console.log($scope.obj.Stanovi_PosebniDijelovi);
+        //        }
+        //        //else {
+        //        //    $scope.obj.Stanovi_PosebniDijelovi.forEach(function (dio) {
+        //        //        if (dio.Id == item.Id)
+        //        //            $scope.obj.Stanovi_PosebniDijelovi.dio = item;
+        //        //    });
+        //        //}
+        //    }, function () {
+        //        if (item.Id > 0) {
+        //            // vrati objekt u prethodno stanje (tempObj)
+        //            $scope.obj.Stanovi_PosebniDijelovi.forEach(function (dio) {
+        //                if (dio.Id == item.Id) {
+        //                    dio.Naziv = tempObj.Naziv;
+        //                    dio.PovrsinaM2 = tempObj.PovrsinaM2;
+        //                    dio.PovrsinaPosto = tempObj.PovrsinaPosto
+        //                }
+        //            });
+        //        }
+        //    });
+        //    $scope.newItemDio = newItemDio;
+        //};
 
 
-        // _________________________
-        //      pripadci
-        // _________________________
-        $scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", VrstaNaziv: "", PovrsinaM2: 0, PovrsinaPosto: 0, Koeficijent: 0 };
+        //// _________________________
+        ////      pripadci
+        //// _________________________
+        $scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", VrstaNaziv: "", Koef: 0 };
         $scope.openModalPripadak = function (item) {
             var tempObj = {};
             angular.copy(item, tempObj);
             var modalInstance = $uibModal.open({
-                templateUrl: '../app/Sifarnici/modals/pripadakModal.html',
+                templateUrl: '../app/Sifarnici/modals/pripadakStan.html',
                 //controller: function ($scope, $uibModalInstance, item) {
                 //    $scope.item = item;
                 //},
-                controller: 'pripadakModalCtrl',
+                controller: 'pripadakStanCtrl',
                 size: 'lg',
                 resolve: {
                     item: function () {
                         return item;
                     },
-                    pripadci: function () {
-                        console.log("pripadci " + _pripadci);
-                        return _pripadci;
+                    zgrada: function () {
+                        //console.log("_zgrada " + _zgrada);
+                        return _zgrada;
                     },
                     stanovi: function () {
-                        console.log("_stanovi " + _stanovi);
+                        //console.log("_stanovi " + _stanovi);
                         return _stanovi;
                     },
                     currentStan: function () {
                         return $scope.obj;
-                    }
+                    },
                 }
             });
 
@@ -220,20 +232,27 @@
                             maxId = obj.Id;
                     });
                     item.Id = maxId + 1;
-
+                    item.Status = "a";
+                    item.StanId = $scope.obj.Id;
+                    // ako je VrijediOdMjesec null, nije bilo prijenosta, daj ima current mjesec i godinu
+                    if (item.VrijediOdMjesec == null || item.VrijediOdMjesec == undefined)
+                    {
+                        item.VrijediOdMjesec = new Date().getMonth();
+                        item.VrijediOdGodina = new Date().getFullYear();
+                    }
                     $scope.obj.Stanovi_Pripadci.push(item);
+                    //console.log($scope.obj.Stanovi_Pripadci);
 
                 }
-                //else {
+                else {
                 //    $scope.obj.Stanovi_Pripadci.forEach(function (dio) {
                 //        if (dio.Id == item.Id)
                 //            $scope.obj.Stanovi_Pripadci.dio = item;
-                //    });
-                //}
+                    //    });
+                    item.Status = "u";
+                }
 
-                // tu
-                IzracunajPovrsineZaPripadke();
-                IzracunajPovrsine();
+                IzracunajPovrsine(); // proracunaj ponovo povrsine, zbog koeficijenta pripadaka na stanu
             }, function () {
                 // modal dismiss
                 //$scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
@@ -242,20 +261,19 @@
                     $scope.obj.Stanovi_Pripadci.forEach(function (dio) {
                         if (dio.Id == item.Id) {
                             dio.Naziv = tempObj.Naziv;
-                            dio.PovrsinaM2 = tempObj.PovrsinaM2;
-                            dio.PovrsinaPosto = tempObj.PovrsinaPosto
+                            dio.Koef = tempObj.Koef;
+                            Stanovi_PrijenosPripadaka = tempObj.Stanovi_PrijenosPripadaka;
                         }
-
                     });
                 }
             });
-            $scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", VrstaNaziv: "", PovrsinaM2: 0, PovrsinaPosto: 0, Koeficijent: 0 };
+            $scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", VrstaNaziv: "", Koef: 0 };
         }; // end of pripadak modal
 
         // _________________________
         //       stanari
         // _________________________
-        $scope.newItemStanar = newItemStanar;
+        $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 }
         $scope.openModalStanar = function (item) {
             var tempObj = {};
             angular.copy(item, tempObj);
@@ -303,115 +321,74 @@
                     });
                 }
             });
-            $scope.newItemStanar = newItemStanar;
+            $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 };
         }; // end of stanar modal
 
         //PovrsinaPosto, SumaPovrsinaM2, SumaPovrsinaPosto (za zfradu)
         function IzracunajPovrsine() {
             // // POSTOTCI I SUME SE RACUNAJU, M2 SE SNIMA 
 
-            // provjeri
-
-
-            // PovrsinaPosto = PovrsinaM2 od stana / suma svhih PovrsinaM2 u zgradi  * 100
-            var suma_svihPovrsinaM2_uZgradi = 0;
-            _stanovi.forEach(function (stan) {
-                if (stan.Id != $scope.obj.Id) {
-                    suma_svihPovrsinaM2_uZgradi = parseFloat(suma_svihPovrsinaM2_uZgradi) + parseFloat(stan.PovrsinaM2)
-                }
-            });
-            suma_svihPovrsinaM2_uZgradi = parseFloat(suma_svihPovrsinaM2_uZgradi) + parseFloat($scope.obj.PovrsinaM2)
-            console.log("suma_svihPovrsinaM2_uZgradi: " + suma_svihPovrsinaM2_uZgradi);
-            $scope.obj.PovrsinaPosto = parseFloat(parseFloat($scope.obj.PovrsinaM2) / parseFloat(suma_svihPovrsinaM2_uZgradi) * 100).toFixed(2);
-
-            // SumaPovrsinaM2 = Povrsina stana + (suma povrsina svih pripadaka / 2)
-            // ovo ne valja - provjeriiti kako
-            var sumaPovrsinapripadaka = 0;
-            $scope.obj.Stanovi_Pripadci.forEach(function (pripadak) {
-                sumaPovrsinapripadaka = parseFloat(sumaPovrsinapripadaka) + parseFloat(pripadak.PovrsinaM2);
-            });
-            $scope.obj.SumaPovrsinaM2 = parseFloat(parseFloat($scope.obj.PovrsinaM2) + parseFloat(sumaPovrsinapripadaka) / 2).toFixed(2);
-
-            // SumaPovrsinaPosto = SumaPovrsinaM2 (za stan) / suma svih  SumaPovrsinaM2 u zgradi * 100
-            var suma_svihSumaPovrsinaM2_uZgradi = 0;
-            _stanovi.forEach(function (stan) {
-                if (stan.Id != $scope.obj.Id) {
-                    suma_svihSumaPovrsinaM2_uZgradi = parseFloat(suma_svihSumaPovrsinaM2_uZgradi) + parseFloat(stan.SumaPovrsinaM2)
-                }
-            });
-            suma_svihSumaPovrsinaM2_uZgradi = parseFloat(suma_svihSumaPovrsinaM2_uZgradi) + parseFloat($scope.obj.SumaPovrsinaM2)
-            $scope.obj.SumaPovrsinaPosto = parseFloat(parseFloat($scope.obj.SumaPovrsinaM2) / parseFloat(suma_svihSumaPovrsinaM2_uZgradi) * 100).toFixed(2);
-
-            IzracunajUkupnePovrsine();
-        }
-
-        $scope.ukupnaPovrsinaM2 = 0;
-        $scope.ukupnaPovrsinaPosto = 0;
-        $scope.ukupnaSumaPovrsinaM2 = 0;
-        $scope.ukupnaSumaPOvrsinaPosto = 0;
-        // Ukupne povrsine za zfradu
-        function IzracunajUkupnePovrsine() {
-            var ukupnaPovrsinaM2 = 0;
-            var ukupnaPovrsinaPosto = 0;
-            var ukupnaSumaPovrsinaM2 = 0;
-            var ukupnaSumaPOvrsinaPosto = 0;
-
-            console.log("IzracunajUkupnePovrsine");
-            // Ukupno PovrsinaM2
-
-            _stanovi.forEach(function (stan) {
-                if (stan.Id != $scope.obj.Id) {
-                    // ne zbraja vrijednosti od stana iz arraya, uzmi ih direktno da ne zbrajas dva puta
-                    ukupnaPovrsinaM2 += parseFloat(stan.PovrsinaM2);
-                    ukupnaPovrsinaPosto += parseFloat(stan.PovrsinaPosto);
-                    ukupnaSumaPovrsinaM2 += parseFloat(stan.SumaPovrsinaM2);
-                    ukupnaSumaPOvrsinaPosto += parseFloat(stan.SumaPovrsinaPosto);
-                }
-            });
-
-            console.log($scope.obj);
-
-            ukupnaPovrsinaM2 += parseFloat($scope.obj.PovrsinaM2);
-            ukupnaPovrsinaPosto += parseFloat($scope.obj.PovrsinaPosto);
-            ukupnaSumaPovrsinaM2 += parseFloat($scope.obj.SumaPovrsinaM2);
-            ukupnaSumaPOvrsinaPosto += parseFloat($scope.obj.SumaPovrsinaPosto);
-
-            console.log(ukupnaPovrsinaM2);
-            $scope.ukupnaPovrsinaM2 = ukupnaPovrsinaM2.toFixed(2);
-            $scope.ukupnaPovrsinaPosto = ukupnaPovrsinaPosto.toFixed(2);
-            $scope.ukupnaSumaPovrsinaM2 = ukupnaSumaPovrsinaM2.toFixed(2);
-            $scope.ukupnaSumaPOvrsinaPosto = ukupnaSumaPOvrsinaPosto.toFixed(2);
-        }
-
-        // PovrsinaPosto u zgradu za pojedine vrste propadaka (rekapitulacija pripadaka)
-        function IzracunajPovrsineZaPripadke()
-        {
-            // Izracun PovrsinaPosto za pripatke
-            // formula:
-            //          PovrsinaM2 (od pripadka) sto je uneseno / suma svih PovrsinaM2 pripadaka iste vrste u zgradi * 100
-
-            $scope.obj.Stanovi_Pripadci.forEach(function (pripadak) {
-                var ukupnoZaVrtsuPripadka = 0;
-                var ukupnoPovrsinaPoVrsti = 0;
-                $scope.obj.Stanovi_Pripadci.forEach(function (pr) {
-                    if (pr.PripadakId == pripadak.PripadakId)
-                        ukupnoPovrsinaPoVrsti += parseFloat(pr.PovrsinaM2);
-                });
-
+            if (parseFloat($scope.obj.PovrsinaM2) > 0)
+            {
+                // PovrsinaPosto = PovrsinaM2 od stana / suma svhih PovrsinaM2 od stanova u zgradi  * 100
+                var suma_svihPovrsinaM2_uZgradi = 0;
                 _stanovi.forEach(function (stan) {
                     if (stan.Id != $scope.obj.Id) {
-                        stan.Stanovi_Pripadci.forEach(function (p) {
-                            if (p.PripadakId == pripadak.PripadakId)
-                                ukupnoZaVrtsuPripadka += parseFloat(p.PovrsinaM2);
-                        })
+                        suma_svihPovrsinaM2_uZgradi = parseFloat(suma_svihPovrsinaM2_uZgradi) + parseFloat(stan.PovrsinaM2)
                     }
                 });
-                console.log("ukupnoPovrsinaPoVrsti " + ukupnoPovrsinaPoVrsti);
-                ukupnoZaVrtsuPripadka += parseFloat(ukupnoPovrsinaPoVrsti);
-                console.log("ukupnoZaVrtsuPripadka " + ukupnoZaVrtsuPripadka);
-                pripadak.PovrsinaPosto = parseFloat(parseFloat(pripadak.PovrsinaM2) / ukupnoZaVrtsuPripadka * 100).toFixed(2);
-                console.log("pripadak " + pripadak.PripadakId);
+                suma_svihPovrsinaM2_uZgradi = parseFloat(suma_svihPovrsinaM2_uZgradi) + parseFloat($scope.obj.PovrsinaM2)
+                console.log("suma_svihPovrsinaM2_uZgradi: " + suma_svihPovrsinaM2_uZgradi);
+                $scope.obj.PovrsinaPosto = parseFloat(parseFloat($scope.obj.PovrsinaM2) / parseFloat(suma_svihPovrsinaM2_uZgradi) * 100).toFixed(2);
+
+                // SumaPovrsinaM2 = PovrsinaM2 (od stana) + (PovrsinaM2 za pojedini pripadak * Koeficijent)
+                // ovo ne valja - provjeriiti kako
+                var pripadciRez = 0;
+                _zgrada.Zgrade_Pripadci.forEach(function (pripadak) {
+                    // nadji PovrsinaM2 za svaki pripadak na zgradi
+                    // nadji njegov koficijent
+                    console.log($scope.obj.Stanovi_Pripadci);
+                    $scope.obj.Stanovi_Pripadci.forEach(function (pripadakUStanu) {
+                        if (pripadak.Id == pripadakUStanu.PripadakIZgradaId)
+                            pripadciRez += parseFloat(pripadak.PovrsinaM2) * (parseFloat(pripadakUStanu.Koef) / 100 );
+
+                    });
+                });
+                console.log("pripadciRez: " + pripadciRez);
+                $scope.obj.SumaPovrsinaM2 = parseFloat(parseFloat($scope.obj.PovrsinaM2) + parseFloat(pripadciRez)).toFixed(2);
+
+                // SumaPovrsinaPosto = SumaPovrsinaM2 (za stan) / suma svih  SumaPovrsinaM2 u zgradi * 100
+                var suma_svihSumaPovrsinaM2_uZgradi = 0;
+                _stanovi.forEach(function (stan) {
+                    if (stan.Id != $scope.obj.Id) {
+                        suma_svihSumaPovrsinaM2_uZgradi = parseFloat(suma_svihSumaPovrsinaM2_uZgradi) + parseFloat(stan.SumaPovrsinaM2)
+                    }
+                });
+                suma_svihSumaPovrsinaM2_uZgradi = parseFloat(suma_svihSumaPovrsinaM2_uZgradi) + parseFloat($scope.obj.SumaPovrsinaM2)
+                $scope.obj.SumaPovrsinaPosto = parseFloat(parseFloat($scope.obj.SumaPovrsinaM2) / parseFloat(suma_svihSumaPovrsinaM2_uZgradi) * 100).toFixed(2);
+            }
+
+            
+
+            //IzracunajUkupnePovrsine();
+        }
+
+        
+        $scope.getData = function (PripadakIZgradaId) {
+            var o = {};
+            //console.log("PripadakIZgradaId: " + PripadakIZgradaId);
+            _zgrada.Zgrade_Pripadci.forEach(function (pripadakIzZgrade) {
+                if (PripadakIZgradaId == pripadakIzZgrade.Id) {
+                    //console.log('pripadakIzZgrade');
+                    //console.log(pripadakIzZgrade);
+                    o = pripadakIzZgrade;
+                }
+                    
             });
+            var ret = { VrstaNaziv: o.VrstaNaziv, Naziv: o.Naziv, PovrsinaM2: o.PovrsinaM2, PovrsinaPosto: o.PovrsinaPosto };
+
+            //var o = { Vrsta: "a", Naziv: "b" }
+            return ret;
         }
 
     }; // if ($routeParams)

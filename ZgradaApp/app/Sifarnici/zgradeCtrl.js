@@ -4,6 +4,8 @@
         // povuci zgrade
         DataService.getZgrade().then(function (result) {
             $scope.zgrade = result;
+            console.log($scope.zgrade);
+            console.log(result);
         });
 
         //if (DataService.listZgrade.length == 0) {

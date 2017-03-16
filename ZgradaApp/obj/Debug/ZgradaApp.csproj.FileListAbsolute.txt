@@ -175,3 +175,4 @@ C:\Razvoj\ZgradaAppGit\ZgradaApp\ZgradaApp\bin\Microsoft.Owin.Security.Twitter.x
 C:\Razvoj\ZgradaAppGit\ZgradaApp\ZgradaApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Razvoj\ZgradaAppGit\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.dll
 C:\Razvoj\ZgradaAppGit\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.pdb
+C:\Razvoj\ZgradaAppGit\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.csprojResolveAssemblyReference.cache

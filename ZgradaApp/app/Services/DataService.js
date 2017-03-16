@@ -10,7 +10,9 @@
     //    return $http.get('../api/data/getzgrade');
     //}
     var getZgrade = function () {
+        console.log("dataService listZgrade.length: " + listZgrade.length);
         var defer = $q.defer();
+        console.log("dataService listZgrade.length: " + listZgrade.length);
         if (listZgrade.length == 0) {
             $rootScope.loaderActive = true;
             $http.get('../api/data/getzgrade').then(
@@ -28,8 +30,11 @@
                 }
             )
         }
-        else
+        else {
+            console.log("dataService listZgrade.length: " + listZgrade.length);
             defer.resolve(listZgrade);
+        }
+            
         return defer.promise;
     }
 
@@ -75,7 +80,7 @@
     //};
     var getStanovi = function () {
         var defer = $q.defer();
-        if (listStanovi.length == 0) {
+        //if (listStanovi.length == 0) {
             $rootScope.loaderActive = true;
             $http.get('../api/data/getstanovi').then(
                 function (result) {
@@ -91,10 +96,12 @@
                     $rootScope.errMsg = result.Message;
                 }
             )
-        }
-        else 
-            defer.resolve(listStanovi);
-        return defer.promise;
+        //}
+        //else {
+        //    defer.resolve(listStanovi);
+        //}
+            
+            return defer.promise;
     }
 
 

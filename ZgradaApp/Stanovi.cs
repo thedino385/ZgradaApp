@@ -24,11 +24,15 @@ namespace ZgradaApp
     
         public int Id { get; set; }
         public int ZgradaId { get; set; }
+        public string BrojStana { get; set; }
+        public string Kat { get; set; }
         public string Naziv { get; set; }
+        public string Oznaka { get; set; }
         public Nullable<decimal> PovrsinaM2 { get; set; }
         public Nullable<decimal> PovrsinaPosto { get; set; }
         public Nullable<decimal> SumaPovrsinaM2 { get; set; }
         public Nullable<decimal> SumaPovrsinaPosto { get; set; }
+        public string Napomena { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stanovi_PosebniDijelovi> Stanovi_PosebniDijelovi { get; set; }

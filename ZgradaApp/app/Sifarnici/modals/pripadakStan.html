@@ -1,0 +1,132 @@
+﻿
+<div class="modal-dialog modal-lg" style="vertical-align: middle;">
+
+    <div class="modal-header" style="padding-bottom: 8px !important">
+        <h4 class="modal-title">Pripadci</h4>
+    </div>
+
+    <form name="pripadakFrm" ng-submit="save()">
+        <div class="modal-body">
+            <div class='form-horizontal'>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="pripadakId">Vrsta pripadka</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine }">
+                        <select ng-model="item.PripadakIZgradaId" ng-options="c.Id as c.Naziv for c in pripadci"
+                                ng-change="pripadakIdChanged()" name="pripadakId" class="form-control" ng-required></select>
+                        <span style="color: red" ng-show="pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <!--<div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="naziv">Oznaka pripadka</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" ng-readonly="true" class="form-control" ng-bind="pripadakNaziv" />
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>-->
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="naziv">Povrsina (m2)</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>{{pripadakPovrsinaM2 | number: 2}}</label>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="naziv">Povrsina (%)</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>{{pripadakPovrsinaPosto | number: 2}}</label>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="povrsinam2">Koeficijent (%)</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.koef.$invalid && !pripadakFrm.koef.$pristine }">
+                        <input type="number" name="koef" required ng-min="1" class="form-control" ng-model="item.Koef" />
+                        <span style="color: red" ng-show="pripadakFrm.koef.$invalid && !pripadakFrm.koef.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="koeficijent">Napomena</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>{{pripadakNapomena}}</label>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row" ng-show="isPrijenos">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-6">
+                        <span style="color: red">Pripadak je vezan za stan </span><span>{{prijenosSaStana.Naziv}}</span>
+                        <span style="color: red">.<br>Ako snimite, pripadak ce biti prebacen na ovaj stan, odaberite mjesec od kada ce se poceti obracunavati za ovaj stan.</span>
+                        <hr />
+                        
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row" ng-show="isPrijenos">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">Godina</div>
+                    <div class="col-sm-2">
+                        <select class="form-control" ng-model="vrijediOdGod">
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">Mjesec</div>
+                    <div class="col-sm-2">
+                        <select class="form-control" ng-model="vrijediOdMj">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" value="Cancel" ng-click="cancel()" />
+            <input type="submit" class="btn btn-primary" value="Spremi" ng-disabled="pripadakFrm.$invalid" />
+
+        </div>
+    </form>
+</div>
+

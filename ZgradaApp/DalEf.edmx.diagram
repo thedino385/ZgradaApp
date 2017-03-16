@@ -5,19 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="aa149b2c4f8442e2b7da48336a0e39b1" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade" Width="1.5" PointX="4.875" PointY="0.875" />
         <EntityTypeShape EntityType="ZgradaDbModel.Pripadci" Width="1.5" PointX="0.625" PointY="4.25" />
         <EntityTypeShape EntityType="ZgradaDbModel.Kompanije" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.Korisnici" Width="1.5" PointX="2.375" PointY="0.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.PosedniDijelovi" Width="1.5" PointX="3" PointY="4.875" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi" Width="1.5" PointX="6.625" PointY="4.5" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" Width="1.5" PointX="8.25" PointY="1.125" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_Pripadci" Width="1.5" PointX="9.125" PointY="7.625" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_Stanari" Width="1.5" PointX="9.125" PointY="4.375" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi" Width="1.5" PointX="10.375" PointY="3.375" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" Width="1.5" PointX="12.625" PointY="4" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_Pripadci" Width="1.5" PointX="12.625" PointY="7.125" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_Stanari" Width="1.5" PointX="12.625" PointY="0.5" />
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" />
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" />
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" />
-      </Diagram>
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade" Width="1.5" PointX="5.625" PointY="2.625" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_Pripadci" Width="1.5" PointX="7.875" PointY="2.625" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -12,17 +12,16 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Stanovi_Pripadci
+    public partial class Zgrade_Pripadci
     {
         public int Id { get; set; }
-        public int StanId { get; set; }
-        public int PripadakIZgradaId { get; set; }
-        public Nullable<decimal> Koef { get; set; }
-        public Nullable<int> VrijediOdGod { get; set; }
-        public Nullable<int> VrijediOdMjesec { get; set; }
-        public Nullable<int> VrijediDoGod { get; set; }
-        public Nullable<int> VrijediDoMjesec { get; set; }
+        public int ZgradaId { get; set; }
+        public int PripadakId { get; set; }
+        public string Naziv { get; set; }
+        public decimal PovrsinaM2 { get; set; }
+        public Nullable<decimal> PovrsinaPosto { get; set; }
+        public string Napomena { get; set; }
     
-        public virtual Stanovi Stanovi { get; set; }
+        public virtual Zgrade Zgrade { get; set; }
     }
 }

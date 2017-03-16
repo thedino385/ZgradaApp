@@ -235,6 +235,9 @@
     <Compile Include="Zgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="Zgrade_Pripadci.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AAA.html" />
@@ -246,6 +249,8 @@
     <Content Include="app\Sifarnici\modals\posebniDioModalCtrl.js" />
     <Content Include="app\Sifarnici\modals\pripadakModal.html" />
     <Content Include="app\Sifarnici\modals\pripadakModalCtrl.js" />
+    <Content Include="app\Sifarnici\modals\pripadakStan.html" />
+    <Content Include="app\Sifarnici\modals\pripadakStanCtrl.js" />
     <Content Include="app\Sifarnici\modals\stanarModal.html" />
     <Content Include="app\Sifarnici\modals\stanarModalCtrl.js" />
     <Content Include="app\Sifarnici\pripadak.html" />
