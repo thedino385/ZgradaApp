@@ -36,7 +36,7 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
         controller: 'zgradaPregledPripadakaPoStanovimaCtrl'
     })
     .when('/zaduzivanje/:id', { // stanId
-        templateUrl: '../app/zaduzivanjePoMj.html',
+        templateUrl: '../app/zaduzivanja/zaduzivanjePoMj.html',
         controller: 'zaduzivanjePoMjCtrl'
     })
     .otherwise({
