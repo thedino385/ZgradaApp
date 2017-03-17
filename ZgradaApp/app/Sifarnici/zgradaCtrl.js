@@ -1,39 +1,61 @@
 ﻿angularApp.controller('zgradaCtrl', ['$scope', '$routeParams', '$location', '$rootScope', '$uibModal', 'DataService', function (
     $scope, $routeParams, $location, $rootScope, $uibModal, DataService) {
 
-
     if ($routeParams) {
         console.log($routeParams.id);
-
-        var _stanovi = [];
+        //var _stanovi = [];
+        //var _obj = {};
 
         var _pripadci = [];
-        DataService.getPripadci().then(function (result) {
-            _pripadci = result;
-            //nsole.log('pripadci: ' + pripadci);
-        });
+        DataService.getPripadci().then(
+            function (result) {
+            _pripadci = result.data;
+            },
+            function (result) {
+                $rootScope.errMsg = result.Message;
+            }
+        );
 
-        DataService.getStanovi().then(
-        function (stanovi) {
-            stanovi.forEach(function (obj) {
-                if (obj.ZgradaId == $routeParams.id) {
-                    _stanovi.push(obj);
-                }
-            });
-            IzracunajUkupnePovrsine();
-        });
+        //DataService.getStanovi().then(
+        //function (stanovi) {
+        //    stanovi.forEach(function (obj) {
+        //        if (obj.ZgradaId == $routeParams.id) {
+        //            _stanovi.push(obj);
+        //        }
+        //    });
+        //    IzracunajUkupnePovrsine();
+        //});
 
         if ($routeParams.id > 0) {
-            $scope.msg = "Uredi zgradu";
-            console.log(DataService.listZgrade);
-            //DataService.listZgrade.forEach(function (obj) {
-            DataService.getZgrade().then(function (zgrade) {
-                zgrade.forEach(function (obj) {
-                    if ($routeParams.id == obj.Id) {
-                        $scope.obj = obj;
-                    }
-                })
-            })
+            $rootScope.loaderActive = true;
+            DataService.getZgrada($routeParams.id).then(
+                function (result) {
+                    // on success
+                    $scope.obj = result.data;
+                    $rootScope.loaderActive = false;
+                    IzracunajUkupnePovrsine();
+                },
+                function (result) {
+                    // on errr
+                    alert(result.Message);
+                    $rootScope.errMsg = result.Message;
+                }
+            );
+
+
+            //console.log(DataService.listZgrade);
+            //DataService.getZgrade().then(function (zgrade) {
+            //    console.log(zgrade);
+            //    zgrade.forEach(function (obj) {
+            //        if ($routeParams.id == obj.Id) {
+            //            //angular.copy(obj, _obj);
+            //            //console.log(_obj);
+            //            console.log("samo obj:" + obj.Povrsinam2);
+            //            $scope.obj = obj;
+            //            console.log("POVRSSSSSSSSSSSS:" + $scope.obj.Povrsinam2);
+            //        }
+            //    })
+            //})
         }
         else {
             $scope.msg = "Dodaj zgradu";
@@ -44,7 +66,7 @@
     }
 
     $scope.save = function () {
-        console.log('save fn');
+        alert('save fn');
         console.log($scope.obj);
         $rootScope.loaderActive = true;
         // dodaj zgradu u db i DataService.listZgrade array
@@ -97,6 +119,8 @@
             //},
             controller: 'pripadakModalCtrl',
             size: 'lg',
+            backdrop: 'static',
+            keyboard: false,
             resolve: {
                 item: function () {
                     return item;
@@ -176,7 +200,7 @@
         console.log("IzracunajUkupnePovrsine");
         // Ukupno PovrsinaM2
         console.log("ukupnaPovrsinaM2 " + ukupnaPovrsinaM2);
-        _stanovi.forEach(function (stan) {
+        $scope.obj.Stanovi.forEach(function (stan) {
             //if (stan.Id != $scope.obj.Id) {
                 // ne zbraja vrijednosti od stana iz arraya, uzmi ih direktno da ne zbrajas dva puta
                 ukupnaPovrsinaM2 += parseFloat(stan.PovrsinaM2);
@@ -227,6 +251,10 @@
                 console.log("pripadak " + pripadak.PripadakId);
             }
         });
+    }
+
+    $scope.goBack = function () {
+        $location.path('/zgrade');
     }
 
 }]);

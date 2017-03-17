@@ -40,5 +40,6 @@ namespace ZgradaApp
         public virtual ICollection<Stanovi_Pripadci> Stanovi_Pripadci { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stanovi_Stanari> Stanovi_Stanari { get; set; }
+        public virtual Zgrade Zgrade { get; set; }
     }
 }

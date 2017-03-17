@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ZgradaDbModelStoreContainer" CdmEntityContainer="ZgradaDbEntities">
-    <EntitySetMapping Name="Pripadci">
-      <EntityTypeMapping TypeName="ZgradaDbModel.Pripadci">
-        <MappingFragment StoreEntitySet="Pripadci">
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
-          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Kompanije">
       <EntityTypeMapping TypeName="ZgradaDbModel.Kompanije">
         <MappingFragment StoreEntitySet="Kompanije">
@@ -42,6 +32,16 @@
     <EntitySetMapping Name="PosedniDijelovi">
       <EntityTypeMapping TypeName="ZgradaDbModel.PosedniDijelovi">
         <MappingFragment StoreEntitySet="PosedniDijelovi">
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pripadci">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Pripadci">
+        <MappingFragment StoreEntitySet="Pripadci">
           <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
           <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
@@ -92,6 +92,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Stanovi_Stanari">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Stanari">
+        <MappingFragment StoreEntitySet="Stanovi_Stanari">
+          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Udjel" ColumnName="Udjel" />
+          <ScalarProperty Name="OIB" ColumnName="OIB" />
+          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+          <ScalarProperty Name="Ime" ColumnName="Ime" />
+          <ScalarProperty Name="StanId" ColumnName="StanId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Zgrade">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
         <MappingFragment StoreEntitySet="Zgrade">
@@ -117,16 +131,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Stanovi_Stanari">
-      <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Stanari">
-        <MappingFragment StoreEntitySet="Stanovi_Stanari">
-          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Udjel" ColumnName="Udjel" />
-          <ScalarProperty Name="OIB" ColumnName="OIB" />
-          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
-          <ScalarProperty Name="Ime" ColumnName="Ime" />
-          <ScalarProperty Name="StanId" ColumnName="StanId" />
+    <EntitySetMapping Name="Zgrade_ZaduzivanjePoMj">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_ZaduzivanjePoMj">
+        <MappingFragment StoreEntitySet="Zgrade_ZaduzivanjePoMj">
+          <ScalarProperty Name="Mj12" ColumnName="Mj12" />
+          <ScalarProperty Name="Mj11" ColumnName="Mj11" />
+          <ScalarProperty Name="Mj10" ColumnName="Mj10" />
+          <ScalarProperty Name="Mj9" ColumnName="Mj9" />
+          <ScalarProperty Name="Mj8" ColumnName="Mj8" />
+          <ScalarProperty Name="Mj7" ColumnName="Mj7" />
+          <ScalarProperty Name="Mj6" ColumnName="Mj6" />
+          <ScalarProperty Name="Mj5" ColumnName="Mj5" />
+          <ScalarProperty Name="Mj4" ColumnName="Mj4" />
+          <ScalarProperty Name="Mj3" ColumnName="Mj3" />
+          <ScalarProperty Name="Mj2" ColumnName="Mj2" />
+          <ScalarProperty Name="Mj1" ColumnName="Mj1" />
+          <ScalarProperty Name="Godina" ColumnName="Godina" />
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

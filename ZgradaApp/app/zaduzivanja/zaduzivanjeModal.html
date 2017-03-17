@@ -13,7 +13,7 @@
                         <label for="pripadakId">Godina</label>
                     </div>
                     <div class="col-sm-4" ng-class="{ 'has-error' : frm.godina.$invalid && ! frm.godina.$pristine }">
-                        <select ng-model="item.Godina" ng-options="c.Id as c.Naziv for c in godina"
+                        <select ng-model="item.Godina" ng-options="c.Id as c.Naziv for c in godine"
                                 name="godina" class="form-control" ng-required></select>
                         <span style="color: red" ng-show="frm.godina.$invalid && ! frm.godina.$pristine">Obavezno polje</span>
                     </div>
@@ -63,13 +63,100 @@
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
-
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">5. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj5.$invalid && ! frm.mj5.$pristine }">
+                        <input type="number" name="mj5" class="form-control" ng-model="item.Mj5" />
+                        <span style="color: red" ng-show="frm.mj5.$invalid && ! frm.mj5.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">6. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj6.$invalid && ! frm.mj6.$pristine }">
+                        <input type="number" name="mj6" class="form-control" ng-model="item.Mj6" />
+                        <span style="color: red" ng-show="frm.mj6.$invalid && ! frm.mj6.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">7. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj7.$invalid && ! frm.mj7.$pristine }">
+                        <input type="number" name="mj7" class="form-control" ng-model="item.Mj7" />
+                        <span style="color: red" ng-show="frm.mj7.$invalid && ! frm.mj7.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">8. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj8.$invalid && ! frm.mj8.$pristine }">
+                        <input type="number" name="mj8" class="form-control" ng-model="item.Mj8" />
+                        <span style="color: red" ng-show="frm.mj8.$invalid && ! frm.mj8.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">9. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj9.$invalid && ! frm.mj9.$pristine }">
+                        <input type="number" name="mj9" class="form-control" ng-model="item.Mj9" />
+                        <span style="color: red" ng-show="frm.mj9.$invalid && ! frm.mj9.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">10. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj10.$invalid && ! frm.mj10.$pristine }">
+                        <input type="number" name="mj10" class="form-control" ng-model="item.Mj10" />
+                        <span style="color: red" ng-show="frm.mj10.$invalid && ! frm.mj10.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">11. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj11.$invalid && ! frm.mj11.$pristine }">
+                        <input type="number" name="mj11" class="form-control" ng-model="item.Mj11" />
+                        <span style="color: red" ng-show="frm.mj11.$invalid && ! frm.mj11.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="vertical-align: middle">
+                        <label for="mj1">12. mjesec</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : frm.mj12.$invalid && ! frm.mj12.$pristine }">
+                        <input type="number" name="mj12" class="form-control" ng-model="item.Mj12" />
+                        <span style="color: red" ng-show="frm.mj12.$invalid && ! frm.mj12.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
 
             </div>
         </div>
         <div class="modal-footer">
             <input type="button" class="btn btn-default" value="Odustani" ng-click="cancel()" />
-            <input type="submit" class="btn btn-primary" value="Spremi" ng-disabled="pripadakFrm.$invalid" />
+            <input type="submit" class="btn btn-primary" value="Spremi" ng-disabled="frm.$invalid" />
 
         </div>
     </form>

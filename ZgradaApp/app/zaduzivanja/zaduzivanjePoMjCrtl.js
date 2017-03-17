@@ -26,6 +26,8 @@
             //},
             controller: 'zaduzivanjeModalCtrl',
             size: 'lg',
+            backdrop: 'static',
+            keyboard: false,
             resolve: {
                 item: function () {
                     return item;

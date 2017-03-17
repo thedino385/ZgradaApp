@@ -25,20 +25,20 @@
                     <table class="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th style="text-align: start; vertical-align: central">Godina</th>
-                                <th style="text-align: center; vertical-align: central">1</th>
-                                <th style="text-align: center; vertical-align: central">2</th>
-                                <th style="text-align: center; vertical-align: central">3</th>
-                                <th style="text-align: center; vertical-align: central">4</th>
-                                <th style="text-align: center; vertical-align: central">5</th>
-                                <th style="text-align: center; vertical-align: central">6</th>
-                                <th style="text-align: center; vertical-align: central">7</th>
-                                <th style="text-align: center; vertical-align: central">8</th>
-                                <th style="text-align: center; vertical-align: central">9</th>
-                                <th style="text-align: center; vertical-align: central">10</th>
-                                <th style="text-align: center; vertical-align: central">11</th>
-                                <th style="text-align: center; vertical-align: central">12</th>
-                                <th style="text-align: center; vertical-align: central">
+                                <th style="text-align: start; vertical-align: middle">Godina</th>
+                                <th style="text-align: center; vertical-align: middle">1</th>
+                                <th style="text-align: center; vertical-align: middle">2</th>
+                                <th style="text-align: center; vertical-align: middle">3</th>
+                                <th style="text-align: center; vertical-align: middle">4</th>
+                                <th style="text-align: center; vertical-align: middle">5</th>
+                                <th style="text-align: center; vertical-align: middle">6</th>
+                                <th style="text-align: center; vertical-align: middle">7</th>
+                                <th style="text-align: center; vertical-align: middle">8</th>
+                                <th style="text-align: center; vertical-align: middle">9</th>
+                                <th style="text-align: center; vertical-align: middle">10</th>
+                                <th style="text-align: center; vertical-align: middle">11</th>
+                                <th style="text-align: center; vertical-align: middle">12</th>
+                                <th style="text-align: center; vertical-align: middle">
                                     <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModal(novaGodina)">
                                         <span class="glyphicon glyphicon-plus-sign"></span>
                                     </button>
@@ -46,22 +46,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="text-align: start; vertical-align: central">2017</td>
-                                <td style="text-align: end; vertical-align: central">22</td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end; vertical-align: central"></td>
-                                <td style="text-align: end"></td>
-                                <td style="text-align: end"></td>
-                                <td style="text-align: end"></td>
-                                <td style="vertical-align: middle; text-align: center">
-                                    <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModal(pp)">
+                            <tr ng-repeat="z in obj.Zgrade_ZaduzivanjePoMj">
+                                <td style="text-align: start; vertical-align: middle">{{z.Godina}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj1}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj2}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj3}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj4}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj5}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj6}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj7}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj8}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj9}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj10}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj11}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj12}}</td>
+                                <td style="vertical-align: middle; text-align: middle">
+                                    <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModal(z)">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </td>

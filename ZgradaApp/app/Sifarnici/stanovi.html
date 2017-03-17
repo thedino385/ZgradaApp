@@ -2,7 +2,7 @@
 <div class="container-grid">
     <div class="col-lg-12 whiteShadow">
         <div class="bs-callout bs-callout-danger">
-            <h4>Stanovi u zgradi: {{zgrada.Naziv}}, {{zgrada.Adresa}}, {{zgrada.Mjesto}} </h4>
+            <h4>Stanovi u zgradi: {{obj.Naziv}}, {{obj.Adresa}}, {{obj.Mjesto}} </h4>
         </div>
         <button class="btn btn-info" style="margin-bottom: 10px" ng-click="noviStan()">Novi stan</button>
 
@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="s in stanovi">
+                <tr ng-repeat="s in obj.Stanovi">
                     <td style="vertical-align: middle">{{s.Naziv}}</td>
                     <td style="vertical-align: middle">{{s.Oznaka}}</td>
                     <td style="vertical-align: middle; text-align: center">

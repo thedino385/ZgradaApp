@@ -8,29 +8,32 @@ angularApp.controller('pripadakStanCtrl', ['$scope', '$uibModalInstance', 'DataS
         $scope.vrijediOdGod = (new Date().getFullYear()).toString();
         $scope.vrijediOdMj = (new Date().getMonth() + 1).toString();
 
-        console.log("modal item");
-        console.log(item);
 
         $scope.item = item;
 
-        console.log("pripadci u zgradi MODALLLLL");
-        
-
-
         var pripadciSelect = [];
-        //$scope.pripadci = zgrada.Zgrade_Pripadci;
-        // izbaci iz scope-a pripadke koji su vec na stanu
-        zgrada.Zgrade_Pripadci.forEach(function (p) {
-            //if (currentStan.Stanovi_Pripadci.indexOf(p) == -1)
-            //    pripadciSelect.push(p);
-            var ok = true;
-            currentStan.Stanovi_Pripadci.forEach(function (ps) {
-                if (p.Id == ps.PripadakIZgradaId)
-                    ok = false;
+        if (item.Id == 0) {
+            // izbaci iz scope-a pripadke koji su vec na stanu
+            zgrada.Zgrade_Pripadci.forEach(function (p) {
+                //if (currentStan.Stanovi_Pripadci.indexOf(p) == -1)
+                //    pripadciSelect.push(p);
+                var ok = true;
+                currentStan.Stanovi_Pripadci.forEach(function (ps) {
+                    if (p.Id == ps.PripadakIZgradaId)
+                        ok = false;
+                });
+                if (ok)
+                    pripadciSelect.push(p);
             });
-            if (ok)
-                pripadciSelect.push(p);
-        });
+        }
+        else {
+            zgrada.Zgrade_Pripadci.forEach(function (p) {
+                if (p.Id == item.PripadakIZgradaId)
+                    $scope.naziv = p.Naziv;
+
+            });
+        }
+
         //    //if (zgrada.Zgrade_Pripadci.indexOf(p) != -1)
         //    zgrada.Zgrade_Pripadci.splice(zgrada.Zgrade_Pripadci.indexOf(p), 1);
         //    console.log("Obrisano: ");

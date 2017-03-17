@@ -238,6 +238,9 @@
     <Compile Include="Zgrade_Pripadci.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="Zgrade_ZaduzivanjePoMj.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AAA.html" />

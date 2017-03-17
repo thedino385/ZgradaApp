@@ -24,14 +24,14 @@
                                 <label>Broj stana</label>
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" ng-model="obj.BrojStana" />
+                                <input type="text" class="form-control" ng-model="stan.BrojStana" />
                             </div>
 
                             <div class="col-sm-2">
                                 <label>Kat</label>
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" ng-model="obj.Kat" />
+                                <input type="text" class="form-control" ng-model="stan.Kat" />
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
@@ -41,7 +41,7 @@
                                 <label for="naziv">Naziv</label>
                             </div>
                             <div class="col-sm-4" ng-class="{ 'has-error' : frm.naziv.$invalid && !frm.naziv.$pristine }">
-                                <input type="text" name="naziv" required class="form-control" ng-model="obj.Naziv" />
+                                <input type="text" name="naziv" required class="form-control" ng-model="stan.Naziv" />
                                 <span style="color: red" ng-show="frm.naziv.$invalid && !frm.naziv.$pristine">Obavezno polje</span>
                             </div>
                             <div class="col-sm-4"></div>
@@ -52,7 +52,7 @@
                                 <label for="naziv">Oznaka</label>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" ng-model="obj.Oznaka" />
+                                <input type="text" class="form-control" ng-model="stan.Oznaka" />
                             </div>
                             <div class="col-sm-4"></div>
                         </div>
@@ -62,7 +62,7 @@
                                 <label for="povrsinam2">Površina (m2)</label>
                             </div>
                             <div class="col-sm-2" ng-class="{ 'has-error' : frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine }">
-                                <input type="number" ng-change="PovrsinaStanaChanged()" ng-min="1" name="povrsinam2" required class="form-control" ng-model="obj.PovrsinaM2" />
+                                <input type="number" ng-change="PovrsinaStanaChanged()" ng-min="1" name="povrsinam2" required class="form-control" ng-model="stan.PovrsinaM2" />
                                 <span style="color: red" ng-show="frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine">Obavezno polje</span>
                             </div>
 
@@ -70,7 +70,7 @@
                                 <label for="povrsinaposto">Površina (%)</label>
                             </div>
                             <div class="col-sm-2" >
-                                <input type="text" name="povrsinam2" ng-readonly="true" class="form-control" ng-model="obj.PovrsinaPosto" />
+                                <input type="text" name="povrsinam2" ng-readonly="true" class="form-control" ng-model="stan.PovrsinaPosto" />
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
@@ -80,14 +80,14 @@
                                 <label for="sumaPovrsinaM2">Suma površina (m2)</label>
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" ng-readonly="true" name="sumaPovrsinaM2" class="form-control" ng-model="obj.SumaPovrsinaM2" />
+                                <input type="text" ng-readonly="true" name="sumaPovrsinaM2" class="form-control" ng-model="stan.SumaPovrsinaM2" />
                             </div>
 
                             <div class="col-sm-2">
                                 <label for="sumaPovrsinaPosto">Suma površina (%)</label>
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" ng-readonly="true" name="sumaPovrsinaPosto"  class="form-control" ng-model="obj.SumaPovrsinaPosto" />
+                                <input type="text" ng-readonly="true" name="sumaPovrsinaPosto"  class="form-control" ng-model="stan.SumaPovrsinaPosto" />
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
@@ -97,7 +97,7 @@
                                 <label>Napomena</label>
                             </div>
                             <div class="col-sm-6">
-                                <textarea rows="5" style="width: 100%" ng-model="obj.Napomena"></textarea>
+                                <textarea rows="5" style="width: 100%" ng-model="stan.Napomena"></textarea>
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
@@ -198,7 +198,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'}">
+                                                    <tr ng-repeat="pp in stan.Stanovi_Pripadci | filter:{ Status: '!d'}">
                                                     <!--<tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'} }">-->
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).VrstaNaziv}}</td>
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).Naziv}}</td>
@@ -236,7 +236,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="st in obj.Stanovi_Stanari | filter:{ Status: '!d'}">
+                                                    <tr ng-repeat="st in stan.Stanovi_Stanari | filter:{ Status: '!d'}">
                                                         <td style="vertical-align: middle">{{st.Ime}}</td>
                                                         <td style="vertical-align: middle">{{st.Prezime}}</td>
                                                         <td style="vertical-align: middle">{{st.OIB}}</td>

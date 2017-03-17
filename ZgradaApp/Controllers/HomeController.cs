@@ -25,8 +25,9 @@ namespace ZgradaApp.Controllers
                 TimeSpan ts = ((DateTime)company.ExpirationDate).Date - DateTime.Today.Date;
                 if (ts.Days <= 31)
                 {
-                    string d = ts.Days.ToString().EndsWith("1") ? " dan" : " dana";
+                    string d = ts.Days.ToString().EndsWith("1") && ts.Days != 11 ? " dan" : " dana";
                     ViewBag.ExpMsg = "Vaš korisnički račun istiće za " + ts.Days.ToString() + d;
+                    ViewBag.ExpDays = ts.Days;
                 }
                     
 

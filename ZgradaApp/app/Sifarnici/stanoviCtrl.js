@@ -8,21 +8,34 @@
 
             var zgradaId = $routeParams.id;
             var stanovi = [];
-            DataService.getStanovi().then(function (result) {
-                result.forEach(function (stan) {
-                    if (stan.ZgradaId == zgradaId)
-                        stanovi.push(stan);
-                });
-                $scope.stanovi = stanovi;
-            });
-            
+            //DataService.getStanovi().then(function (result) {
+            //    result.forEach(function (stan) {
+            //        if (stan.ZgradaId == zgradaId)
+            //            stanovi.push(stan);
+            //    });
+            //    $scope.stanovi = stanovi;
+            //});
+            $rootScope.loaderActive = true;
+            DataService.getZgrada(zgradaId).then(
+                function (result) {
+                    // on success
+                    $scope.obj = result.data;
+                    $rootScope.loaderActive = false;
+                    //$scope.stanovi = result.data.Stanovi;
+                },
+                function (result) {
+                    // on errr
+                    alert(result.Message);
+                    $rootScope.errMsg = result.Message;
+                }
+            );
 
-            DataService.getZgrade().then(function (result) {
-                result.forEach(function (zgrada) {
-                    if (zgrada.Id == $routeParams.id)
-                        $scope.zgrada = zgrada;
-                })
-            });
+            //DataService.getZgrade().then(function (result) {
+            //    result.forEach(function (zgrada) {
+            //        if (zgrada.Id == $routeParams.id)
+            //            $scope.zgrada = zgrada;
+            //    })
+            //});
 
             //DataService.listZgrade.forEach(function (zgrada) {
             //    if (zgrada.Id == $routeParams.id)

@@ -14,9 +14,10 @@
                         <label for="pripadakId">Vrsta pripadka</label>
                     </div>
                     <div class="col-sm-4" ng-class="{ 'has-error' : pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine }">
-                        <select ng-model="item.PripadakIZgradaId" ng-options="c.Id as c.Naziv for c in pripadci"
+                        <select ng-show="item.Id == 0" ng-model="item.PripadakIZgradaId" ng-options="c.Id as c.Naziv for c in pripadci"
                                 ng-change="pripadakIdChanged()" name="pripadakId" class="form-control" ng-required></select>
                         <span style="color: red" ng-show="pripadakFrm.pripadakId.$invalid && !pripadakFrm.pripadakId.$pristine">Obavezno polje</span>
+                        <label ng-hide="item.Id == 0">{{naziv}}</label>
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
