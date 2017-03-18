@@ -1,5 +1,5 @@
-﻿angularApp.controller('stanCtrl', ['$scope', '$routeParams', '$location', '$rootScope', '$uibModal', 'DataService', function (
-    $scope, $routeParams, $location, $rootScope, $uibModal, DataService) {
+﻿angularApp.controller('stanCtrl', ['$scope', '$routeParams', '$location', '$rootScope', '$uibModal', 'toastr', 'DataService', function (
+    $scope, $routeParams, $location, $rootScope, $uibModal, toastr,  DataService) {
 
     if ($routeParams) {
         console.log($routeParams.id); // stanId
@@ -117,6 +117,7 @@
                     //    })
                     //}
                     $rootScope.loaderActive = false;
+                    toastr.success('Promjene su snimljene!', '');
                     $location.path('/stanovi/' + zgradaId);
                 },
                 function (result) {
@@ -265,7 +266,7 @@
                     });
                     item.Id = maxId + 1;
                     item.Status = "a";
-                    item.StanId = $scope.obj.Id;
+                    item.StanId = $scope.stan.Id;
                     // ako je VrijediOdMjesec null, nije bilo prijenosta, daj ima current mjesec i godinu
                     if (item.VrijediOdMjesec == null || item.VrijediOdMjesec == undefined)
                     {

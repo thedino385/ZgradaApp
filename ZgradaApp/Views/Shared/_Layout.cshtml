@@ -7,18 +7,13 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/custom.css" rel="stylesheet" />
-    <style>
-        .body {
-            padding-top: 0px;
-        }
-    </style>
 </head>
 <body>
 
     @if (Request.IsAuthenticated)
     {
 
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -69,7 +64,7 @@
         {
             if (ViewBag.ExpDays > 15)
             {
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" style="padding-top: 0px">
                     <h5 style="color: red; text-align:end; margin-right: 50px">@ViewBag.ExpMsg!</h5>
                 </div>
             }
@@ -98,6 +93,11 @@
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <link href="~/Content/angular-toastr.css" rel="stylesheet" />
+    <script src="~/Scripts/angular-toastr.js"></script>
+    <script src="~/Scripts/angular-toastr.tpls.js"></script>
+
 
     <link href="~/Content/angular-material.css" rel="stylesheet" />
     <script src="~/Scripts/angular-material/angular-material.min.js"></script>

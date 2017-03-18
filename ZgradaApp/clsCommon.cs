@@ -47,4 +47,9 @@ namespace ZgradaApp
         public int VrijediOdGodina { get; set; }
         public int VrijediOdMjesec { get; set; }
     }
+
+    public partial class Zgrade_ZaduzivanjePoMj
+    {
+        public string Status { get; set; }
+    }
 }

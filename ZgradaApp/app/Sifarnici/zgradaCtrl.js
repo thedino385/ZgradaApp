@@ -1,5 +1,5 @@
-﻿angularApp.controller('zgradaCtrl', ['$scope', '$routeParams', '$location', '$rootScope', '$uibModal', 'DataService', function (
-    $scope, $routeParams, $location, $rootScope, $uibModal, DataService) {
+﻿angularApp.controller('zgradaCtrl', ['$scope', '$routeParams', '$location', '$rootScope', '$uibModal', 'toastr', 'DataService',
+    function ($scope, $routeParams, $location, $rootScope, $uibModal, toastr, DataService) {
 
     if ($routeParams) {
         console.log($routeParams.id);
@@ -66,27 +66,25 @@
     }
 
     $scope.save = function () {
-        alert('save fn');
-        console.log($scope.obj);
         $rootScope.loaderActive = true;
         // dodaj zgradu u db i DataService.listZgrade array
         DataService.zgradaCreateUpdate($scope.obj).then(
         function (result) {
             // on success
-            if (result.data > 0) {
-                $scope.obj.Id = result.data; // insert, vrati Id sa servera, pukni u obj
-                DataService.listZgrade.push($scope.obj); // dodaj u listu
+            //if (result.data > 0) {
+            //    $scope.obj.Id = result.data; // insert, vrati Id sa servera, pukni u obj
+            //    //DataService.listZgrade.push($scope.obj); // dodaj u listu
                 
-            }
-            else {
-                DataService.listZgrade.forEach(function (obj) {
-                    if (obj.Id == result.data)
-                        DataService.listZgrade.obj = $scope.obj;
-                })
-            }
+            //}
+            //else {
+            //    DataService.listZgrade.forEach(function (obj) {
+            //        if (obj.Id == result.data)
+            //            DataService.listZgrade.obj = $scope.obj;
+            //    })
+            //}
             $rootScope.loaderActive = false;
+            toastr.success('Promjene su snimljene!', '');
             $location.path('/zgrade');
-            console.log(DataService.listZgrade);
         },
         function (result) {
             // on error

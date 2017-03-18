@@ -1,4 +1,14 @@
-﻿.mainContainer {
+﻿/*body {
+    padding-top: 0px;
+    background-repeat: no-repeat;
+    /*background: url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg);*/
+    background-image: url('https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg');
+    font-family: 'Oxygen', sans-serif;
+    /*background-size: cover;*/
+    background-attachment: fixed;
+}*/
+
+.mainContainer {
     padding-left: 10px;
     width: 100%;
 }

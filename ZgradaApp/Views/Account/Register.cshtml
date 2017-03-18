@@ -1,96 +1,284 @@
 ﻿@model ZgradaApp.Models.RegisterViewModel
-@{
-    ViewBag.Title = "Registracija";
-}
 
-<h2>@ViewBag.Title.</h2>
+<!-- http://bootsnipp.com/snippets/featured/register-page-design-->
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Otvorite korisnički račun</h4>
-    <hr />
-    <h4>Podaci o tvrtki.</h4>
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Naziv, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Naziv, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.OIB, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.OIB, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Adresa, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Adresa, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Mjesto, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Mjesto, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Telefon, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Telefon, new { @class = "form-control" })
-        </div>
-    </div>
-    <br />
-    <hr />
-    <br />
-    <h4>Podaci o korisniku.</h4>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Ime, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Ime, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Prezime, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.UserEmail, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.UserEmail, new { @class = "form-control" })
+@{ Layout = null;}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+    <style>
+        /*
+               /* Created by Filipe Pina
+                * Specific styles of signin, register, component
+                */
+        /*
+                * General styles
+                */
+        #playground-container {
+            height: 500px;
+            overflow: hidden !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body, html {
+            height: 100%;
+            background-repeat: no-repeat;
+            background: url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg);
+            font-family: 'Oxygen', sans-serif;
+            background-size: cover;
+        }
+
+        .main {
+            margin: 50px 15px;
+        }
+
+        h1.title {
+            font-size: 50px;
+            font-family: 'Passion One', cursive;
+            font-weight: 400;
+        }
+
+        hr {
+            width: 10%;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 15px;
+        }
+
+        input,
+        input::-webkit-input-placeholder {
+            font-size: 11px;
+            padding-top: 3px;
+        }
+
+        .main-login {
+            background-color: #fff;
+            /* shadows and rounded borders */
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+            -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-control {
+            height: auto !important;
+            padding: 8px 12px !important;
+        }
+
+        .input-group {
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21) !important;
+            -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21) !important;
+            box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21) !important;
+        }
+
+        #button {
+            border: 1px solid #ccc;
+            margin-top: 28px;
+            padding: 6px 12px;
+            color: #666;
+            text-shadow: 0 1px #fff;
+            cursor: pointer;
+            -moz-border-radius: 3px 3px;
+            -webkit-border-radius: 3px 3px;
+            border-radius: 3px 3px;
+            -moz-box-shadow: 0 1px #fff inset, 0 1px #ddd;
+            -webkit-box-shadow: 0 1px #fff inset, 0 1px #ddd;
+            box-shadow: 0 1px #fff inset, 0 1px #ddd;
+            background: #f5f5f5;
+            background: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eeeeee));
+            background: -webkit-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+            background: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+            background: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+            background: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
+        }
+
+        .main-center {
+            margin-top: 30px;
+            margin: 0 auto;
+            max-width: 400px;
+            padding: 10px 40px;
+            background: #009edf;
+            color: #FFF;
+            text-shadow: none;
+            -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+            -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+            box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+        }
+
+        span.input-group-addon i {
+            color: #009edf;
+            font-size: 17px;
+        }
+
+        .login-button {
+            margin-top: 5px;
+        }
+
+        .login-register {
+            font-size: 11px;
+            text-align: center;
+        }
+    </style>
+
+    </head>
+<body>
+    <div class="container">
+        <div class="row main">
+            <div class="main-login main-center">
+                <h5>Podaci o tvrtki.</h5>
+
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @*<label for="name" class="cols-sm-2 control-label">Your Name</label>*@
+                        @Html.LabelFor(m => m.Naziv, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Naziv, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @*<label for="name" class="cols-sm-2 control-label">Your Name</label>*@
+                        @Html.LabelFor(m => m.OIB, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-globe fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.OIB, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Adresa, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Adresa, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Mjesto, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-certificate fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Mjesto, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-mail-reply fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telefon, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Telefon, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Podaci o korisniku.</h5>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Ime, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-male fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Ime, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Prezime, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-male fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserEmail, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope-o fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.UserEmail, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-navicon fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "cols-sm-2 control-label" })
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-navicon fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Registracija" />
+                    </div>
+                }
+            </div>
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+   
+</body>
+</html>

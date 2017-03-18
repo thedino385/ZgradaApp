@@ -223,8 +223,17 @@ namespace ZgradaApp.Controllers
                 }
                 else
                 {
-                    // ovdje ce biti malo rada - uvesti Status za childove !!!
-                    _db.Entry(stan).State = EntityState.Modified;
+                    //_db.Entry(stan).State = EntityState.Modified;
+                    var dbStan = await _db.Stanovi.FirstOrDefaultAsync(p => p.Id == stan.Id);
+                    dbStan.BrojStana = stan.BrojStana;
+                    dbStan.Kat = stan.Kat;
+                    dbStan.Napomena = stan.Napomena;
+                    dbStan.Naziv = stan.Naziv;
+                    dbStan.Oznaka = stan.Oznaka;
+                    dbStan.PovrsinaM2 = stan.PovrsinaM2;
+                    dbStan.PovrsinaPosto = stan.PovrsinaPosto;
+                    dbStan.SumaPovrsinaM2 = stan.SumaPovrsinaM2;
+                    dbStan.SumaPovrsinaPosto = stan.SumaPovrsinaPosto;
                     foreach (var pripadak in stan.Stanovi_Pripadci.ToList())
                     {
                         if (pripadak.Status == "a")
@@ -311,5 +320,59 @@ namespace ZgradaApp.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpPost]
+        [Route("api/data/zaduzivanjeCreateUpdate")]
+        public async Task<IHttpActionResult> ZaduzivanjePoMjesecima([FromBody] List<Zgrade_ZaduzivanjePoMj> z)
+        {
+            try
+            {
+                foreach (var item in z)
+                {
+                    if (item.Status == "a")
+                    {
+                        var novoZaduzivanje = new Zgrade_ZaduzivanjePoMj
+                        {
+                            ZgradaId = item.ZgradaId,
+                            Godina = item.Godina,
+                            Mj1 = item.Mj1,
+                            Mj2 = item.Mj2,
+                            Mj3 = item.Mj3,
+                            Mj4 = item.Mj4,
+                            Mj5 = item.Mj5,
+                            Mj6 = item.Mj6,
+                            Mj7 = item.Mj7,
+                            Mj8 = item.Mj8,
+                            Mj9 = item.Mj9,
+                            Mj10 = item.Mj10,
+                            Mj11 = item.Mj11,
+                            Mj12 = item.Mj12
+                        };
+                        _db.Zgrade_ZaduzivanjePoMj.Add(novoZaduzivanje);
+                    }
+                    else if (item.Status == "u")
+                    {
+                        var dbZaduzivanje = await _db.Zgrade_ZaduzivanjePoMj.FirstOrDefaultAsync(p => p.Id == item.Id);
+                        dbZaduzivanje.Godina = item.Godina;
+                        dbZaduzivanje.Mj1 = item.Mj1;
+                        dbZaduzivanje.Mj2 = item.Mj2;
+                        dbZaduzivanje.Mj3 = item.Mj3;
+                        dbZaduzivanje.Mj4 = item.Mj4;
+                        dbZaduzivanje.Mj5 = item.Mj5;
+                        dbZaduzivanje.Mj6 = item.Mj6;
+                        dbZaduzivanje.Mj7 = item.Mj7;
+                        dbZaduzivanje.Mj8 = item.Mj8;
+                        dbZaduzivanje.Mj9 = item.Mj9;
+                        dbZaduzivanje.Mj10 = item.Mj10;
+                        dbZaduzivanje.Mj11 = item.Mj11;
+                        dbZaduzivanje.Mj12 = item.Mj12;
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
     }
 }

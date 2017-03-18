@@ -117,7 +117,9 @@
         return $http.post('../api/data/stanCreateUpdate', stan);
     }
 
-    
+    var zaduzenjeCreateUpdate = function (z) {
+        return $http.post('../api/data/zaduzivanjeCreateUpdate', z);
+    }
 
     return {
         getZgrade: getZgrade,
@@ -129,7 +131,7 @@
         getPripadak: getPripadak,
         pripadakCreateUpdate: pripadakCreateUpdate,
         listStanovi: listStanovi,
-        //getStanovi: getStanovi,
+        zaduzenjeCreateUpdate: zaduzenjeCreateUpdate,
         selectedZgradaId: selectedZgradaId,
         stanCreateUpdate: stanCreateUpdate
     }

@@ -1,5 +1,5 @@
-﻿angularApp.controller('zaduzivanjePoMjCtrl', ['$scope', '$routeParams', '$location', '$uibModal', '$rootScope' ,'DataService',
-    function ($scope, $routeParams, $location, $uibModal, $rootScope, DataService) {
+﻿angularApp.controller('zaduzivanjePoMjCtrl', ['$scope', '$routeParams', '$location', '$uibModal', '$rootScope', 'toastr', 'DataService',
+    function ($scope, $routeParams, $location, $uibModal, $rootScope, toastr, DataService) {
 
     if ($routeParams.id > 0) {
         $scope.msg = "Uredi zgradu";
@@ -29,6 +29,18 @@
         //})
     }
 
+    $scope.save = function () {
+        DataService.zaduzenjeCreateUpdate($scope.obj.Zgrade_ZaduzivanjePoMj).then(
+            function (result) {
+                // success
+                toastr.success('Promjene su snimljene!', '');
+            },
+            function (result) {
+                // on error
+                alert('err');
+            }
+        )
+    }
 
     $scope.novaGodina = { Id: 0, ZgradaId: $routeParams.id, Godina: 0, Mj1: 0, Mj2: 0, Mj3: 0, Mj4: 0, Mj5: 0, Mj6: 0, Mj7: 0, Mj8: 0, Mj9: 0, Mj10: 0, Mj11: 0, Mj12: 0 };
     $scope.openModal = function (item) {
@@ -61,9 +73,7 @@
                         maxId = obj.Id;
                 });
                 item.Id = maxId + 1;
-
                 $scope.obj.Zgrade_ZaduzivanjePoMj.push(item);
-
             }
             else {
                 item.Status = "u";

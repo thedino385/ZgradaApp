@@ -6,7 +6,6 @@
             <h3>{{msgZgrada}}</h3>
         </div>
 
-        <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
             <!--<div class="form-group row">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-2">
@@ -48,8 +47,8 @@
                         <tbody>
                             <tr ng-repeat="z in obj.Zgrade_ZaduzivanjePoMj">
                                 <td style="text-align: start; vertical-align: middle">{{z.Godina}}</td>
-                                <td style="text-align: end; vertical-align: middle">{{z.Mj1}}</td>
-                                <td style="text-align: end; vertical-align: middle">{{z.Mj2}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj1| number:2}}</td>
+                                <td style="text-align: end; vertical-align: middle">{{z.Mj2| number:2}}</td>
                                 <td style="text-align: end; vertical-align: middle">{{z.Mj3}}</td>
                                 <td style="text-align: end; vertical-align: middle">{{z.Mj4}}</td>
                                 <td style="text-align: end; vertical-align: middle">{{z.Mj5}}</td>
@@ -73,9 +72,8 @@
                 <!--</div>-->
             </div>
             <hr />
-            <input type="submit" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
+            <input type="button" class="btn btn-primary pull-right" value="Spremi" ng-click="save()" />
             <a href="#!/zgrade" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>
-        </form>
 
 
     </div>
