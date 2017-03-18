@@ -1,17 +1,32 @@
-﻿angularApp.controller('zaduzivanjePoMjCtrl', ['$scope', '$routeParams', '$location', '$uibModal', 'DataService',
-    function ($scope, $routeParams, $location, $uibModal, DataService) {
+﻿angularApp.controller('zaduzivanjePoMjCtrl', ['$scope', '$routeParams', '$location', '$uibModal', '$rootScope' ,'DataService',
+    function ($scope, $routeParams, $location, $uibModal, $rootScope, DataService) {
 
     if ($routeParams.id > 0) {
         $scope.msg = "Uredi zgradu";
-        DataService.getZgrade().then(function (zgrade) {
-            zgrade.forEach(function (obj) {
-                if ($routeParams.id == obj.Id) {
-                    $scope.obj = obj;
-                }
-            })
-            $scope.msg = "Zaduživanje po mjesecima";
-            $scope.msgZgrada = $scope.obj.Naziv + ", " + $scope.obj.Adresa + ", " + $scope.obj.Mjesto;
-        })
+        $rootScope.loaderActive = true;
+        DataService.getZgrada($routeParams.id).then(
+            function (result) {
+                // on success
+                $scope.obj = result.data;
+                $rootScope.loaderActive = false;
+                $scope.msg = "Zaduživanje po mjesecima";
+                $scope.msgZgrada = $scope.obj.Naziv + ", " + $scope.obj.Adresa + ", " + $scope.obj.Mjesto;
+            },
+            function (result) {
+                // on errr
+                $rootScope.errMsg = result.Message;
+            }
+        );
+
+        //DataService.getZgrade().then(function (zgrade) {
+        //    zgrade.forEach(function (obj) {
+        //        if ($routeParams.id == obj.Id) {
+        //            $scope.obj = obj;
+        //        }
+        //    })
+        //    $scope.msg = "Zaduživanje po mjesecima";
+        //    $scope.msgZgrada = $scope.obj.Naziv + ", " + $scope.obj.Adresa + ", " + $scope.obj.Mjesto;
+        //})
     }
 
 

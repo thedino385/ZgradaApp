@@ -49,6 +49,7 @@ angularApp.controller('pripadakStanCtrl', ['$scope', '$uibModalInstance', 'DataS
         
         var idKojiSeZatvara = 0;
         $scope.pripadakIdChanged = function () {
+            $scope.isPrijenos = false;
             // provjeriti da li pripadak vec vezan za neki stan
             stanovi.forEach(function (stan) {
                 stan.Stanovi_Pripadci.forEach(function (stan_pripadak) {
