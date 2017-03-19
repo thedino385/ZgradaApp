@@ -215,6 +215,12 @@
     <Compile Include="PosedniDijelovi.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="PrihodiRashodi.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PrihodiRashodiDetails.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="Pripadci.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -247,6 +253,10 @@
     <Content Include="AAA_TODO.txt" />
     <Content Include="app\index.html" />
     <Content Include="app\indexCtrl.js" />
+    <Content Include="app\PihRas\edit.html" />
+    <Content Include="app\PihRas\editPrihRasCtrl.js" />
+    <Content Include="app\PihRas\index.html" />
+    <Content Include="app\PihRas\indexprhRasCtrl.js" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\Sifarnici\modals\posebniDioModal.html" />
     <Content Include="app\Sifarnici\modals\posebniDioModalCtrl.js" />

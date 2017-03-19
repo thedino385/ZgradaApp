@@ -35,6 +35,41 @@
     <Property Name="Oznaka" Type="varchar" MaxLength="50" />
     <Property Name="CompanyId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="PrihodiRashodi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ZgradaId" Type="int" Nullable="false" />
+    <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj1" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj2" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj3" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj4" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj5" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj6" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj7" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj8" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj9" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj10" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="PrihodiRashodiDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PrihodiRashodiMasterId" Type="int" Nullable="false" />
+    <Property Name="Rb" Type="int" />
+    <Property Name="Datum" Type="datetime" />
+    <Property Name="Opis" Type="varchar" MaxLength="500" />
+    <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
   <EntityType Name="Pripadci">
     <Key>
       <PropertyRef Name="Id" />
@@ -140,6 +175,18 @@
     <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
+  <Association Name="FK_PrihodiRashodiDetails_PrihodiRashodi">
+    <End Role="PrihodiRashodi" Type="Self.PrihodiRashodi" Multiplicity="1" />
+    <End Role="PrihodiRashodiDetails" Type="Self.PrihodiRashodiDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PrihodiRashodi">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PrihodiRashodiDetails">
+        <PropertyRef Name="PrihodiRashodiMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
     <End Role="Stanovi" Type="Self.Stanovi" Multiplicity="1" />
     <End Role="Stanovi_PosebniDijelovi" Type="Self.Stanovi_PosebniDijelovi" Multiplicity="*" />
@@ -216,6 +263,8 @@
     <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PrihodiRashodi" EntityType="Self.PrihodiRashodi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PrihodiRashodiDetails" EntityType="Self.PrihodiRashodiDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pripadci" EntityType="Self.Pripadci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stanovi" EntityType="Self.Stanovi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
@@ -224,6 +273,10 @@
     <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_ZaduzivanjePoMj" EntityType="Self.Zgrade_ZaduzivanjePoMj" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_PrihodiRashodiDetails_PrihodiRashodi" Association="Self.FK_PrihodiRashodiDetails_PrihodiRashodi">
+      <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
+      <End Role="PrihodiRashodiDetails" EntitySet="PrihodiRashodiDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="Self.FK_Stanovi_PosebniDijelovi_Stanovi">
       <End Role="Stanovi" EntitySet="Stanovi" />
       <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />

@@ -39,6 +39,14 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
         templateUrl: '../app/zaduzivanja/zaduzivanjePoMj.html',
         controller: 'zaduzivanjePoMjCtrl'
     })
+    .when('/prihodirashodi', { // stanId
+        templateUrl: '../app/PihRas/index.html',
+        controller: 'indexPrihRasCtrl'
+    })
+    .when('/prihrasedit', { // stanId
+        templateUrl: '../app/PihRas/edit.html',
+        controller: 'editPrihRasCtrl'
+    })
     .otherwise({
         redirectTo: '/index'
     });

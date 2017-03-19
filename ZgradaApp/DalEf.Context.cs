@@ -36,5 +36,7 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade> Zgrade { get; set; }
         public virtual DbSet<Zgrade_Pripadci> Zgrade_Pripadci { get; set; }
         public virtual DbSet<Zgrade_ZaduzivanjePoMj> Zgrade_ZaduzivanjePoMj { get; set; }
+        public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
+        public virtual DbSet<PrihodiRashodiDetails> PrihodiRashodiDetails { get; set; }
     }
 }

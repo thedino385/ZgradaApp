@@ -152,5 +152,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PrihodiRashodi">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi">
+        <MappingFragment StoreEntitySet="PrihodiRashodi">
+          <ScalarProperty Name="Mj12" ColumnName="Mj12" />
+          <ScalarProperty Name="Mj11" ColumnName="Mj11" />
+          <ScalarProperty Name="Mj10" ColumnName="Mj10" />
+          <ScalarProperty Name="Mj9" ColumnName="Mj9" />
+          <ScalarProperty Name="Mj8" ColumnName="Mj8" />
+          <ScalarProperty Name="Mj7" ColumnName="Mj7" />
+          <ScalarProperty Name="Mj6" ColumnName="Mj6" />
+          <ScalarProperty Name="Mj5" ColumnName="Mj5" />
+          <ScalarProperty Name="Mj4" ColumnName="Mj4" />
+          <ScalarProperty Name="Mj3" ColumnName="Mj3" />
+          <ScalarProperty Name="Mj2" ColumnName="Mj2" />
+          <ScalarProperty Name="Mj1" ColumnName="Mj1" />
+          <ScalarProperty Name="Placeno" ColumnName="Placeno" />
+          <ScalarProperty Name="Razlika" ColumnName="Razlika" />
+          <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PrihodiRashodiDetails">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodiDetails">
+        <MappingFragment StoreEntitySet="PrihodiRashodiDetails">
+          <ScalarProperty Name="Placeno" ColumnName="Placeno" />
+          <ScalarProperty Name="Razlika" ColumnName="Razlika" />
+          <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+          <ScalarProperty Name="Opis" ColumnName="Opis" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="Rb" ColumnName="Rb" />
+          <ScalarProperty Name="PrihodiRashodiMasterId" ColumnName="PrihodiRashodiMasterId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

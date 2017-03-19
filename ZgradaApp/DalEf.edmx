@@ -40,6 +40,41 @@
           <Property Name="Oznaka" Type="varchar" MaxLength="50" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PrihodiRashodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZgradaId" Type="int" Nullable="false" />
+          <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj1" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj3" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj4" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj5" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj6" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj7" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj8" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj9" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj10" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="PrihodiRashodiDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrihodiRashodiMasterId" Type="int" Nullable="false" />
+          <Property Name="Rb" Type="int" />
+          <Property Name="Datum" Type="datetime" />
+          <Property Name="Opis" Type="varchar" MaxLength="500" />
+          <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="Pripadci">
           <Key>
             <PropertyRef Name="Id" />
@@ -145,6 +180,18 @@
           <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <Association Name="FK_PrihodiRashodiDetails_PrihodiRashodi">
+          <End Role="PrihodiRashodi" Type="Self.PrihodiRashodi" Multiplicity="1" />
+          <End Role="PrihodiRashodiDetails" Type="Self.PrihodiRashodiDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrihodiRashodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrihodiRashodiDetails">
+              <PropertyRef Name="PrihodiRashodiMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
           <End Role="Stanovi" Type="Self.Stanovi" Multiplicity="1" />
           <End Role="Stanovi_PosebniDijelovi" Type="Self.Stanovi_PosebniDijelovi" Multiplicity="*" />
@@ -221,6 +268,8 @@
           <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrihodiRashodi" EntityType="Self.PrihodiRashodi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrihodiRashodiDetails" EntityType="Self.PrihodiRashodiDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pripadci" EntityType="Self.Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi" EntityType="Self.Stanovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="Self.Stanovi_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
@@ -229,6 +278,10 @@
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_ZaduzivanjePoMj" EntityType="Self.Zgrade_ZaduzivanjePoMj" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PrihodiRashodiDetails_PrihodiRashodi" Association="Self.FK_PrihodiRashodiDetails_PrihodiRashodi">
+            <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
+            <End Role="PrihodiRashodiDetails" EntitySet="PrihodiRashodiDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="Self.FK_Stanovi_PosebniDijelovi_Stanovi">
             <End Role="Stanovi" EntitySet="Stanovi" />
             <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
@@ -293,6 +346,12 @@
           <AssociationSet Name="FK_Zgrade_ZaduzivanjePoMj_Zgrade" Association="ZgradaDbModel.FK_Zgrade_ZaduzivanjePoMj_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="Zgrade_ZaduzivanjePoMj" EntitySet="Zgrade_ZaduzivanjePoMj" />
+          </AssociationSet>
+          <EntitySet Name="PrihodiRashodi" EntityType="ZgradaDbModel.PrihodiRashodi" />
+          <EntitySet Name="PrihodiRashodiDetails" EntityType="ZgradaDbModel.PrihodiRashodiDetails" />
+          <AssociationSet Name="FK_PrihodiRashodiDetails_PrihodiRashodi" Association="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi">
+            <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
+            <End Role="PrihodiRashodiDetails" EntitySet="PrihodiRashodiDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Kompanije">
@@ -519,6 +578,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PrihodiRashodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+          <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Razlika" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj3" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj4" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj5" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj6" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj7" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj8" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj9" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj10" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj11" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Mj12" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PrihodiRashodiDetails" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodi" ToRole="PrihodiRashodiDetails" />
+        </EntityType>
+        <EntityType Name="PrihodiRashodiDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrihodiRashodiMasterId" Type="Int32" Nullable="false" />
+          <Property Name="Rb" Type="Int32" />
+          <Property Name="Datum" Type="DateTime" Precision="3" />
+          <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Razlika" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodiDetails" ToRole="PrihodiRashodi" />
+        </EntityType>
+        <Association Name="FK_PrihodiRashodiDetails_PrihodiRashodi">
+          <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />
+          <End Type="ZgradaDbModel.PrihodiRashodiDetails" Role="PrihodiRashodiDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrihodiRashodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrihodiRashodiDetails">
+              <PropertyRef Name="PrihodiRashodiMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -672,6 +780,43 @@
                 <ScalarProperty Name="Mj1" ColumnName="Mj1" />
                 <ScalarProperty Name="Godina" ColumnName="Godina" />
                 <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrihodiRashodi">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi">
+              <MappingFragment StoreEntitySet="PrihodiRashodi">
+                <ScalarProperty Name="Mj12" ColumnName="Mj12" />
+                <ScalarProperty Name="Mj11" ColumnName="Mj11" />
+                <ScalarProperty Name="Mj10" ColumnName="Mj10" />
+                <ScalarProperty Name="Mj9" ColumnName="Mj9" />
+                <ScalarProperty Name="Mj8" ColumnName="Mj8" />
+                <ScalarProperty Name="Mj7" ColumnName="Mj7" />
+                <ScalarProperty Name="Mj6" ColumnName="Mj6" />
+                <ScalarProperty Name="Mj5" ColumnName="Mj5" />
+                <ScalarProperty Name="Mj4" ColumnName="Mj4" />
+                <ScalarProperty Name="Mj3" ColumnName="Mj3" />
+                <ScalarProperty Name="Mj2" ColumnName="Mj2" />
+                <ScalarProperty Name="Mj1" ColumnName="Mj1" />
+                <ScalarProperty Name="Placeno" ColumnName="Placeno" />
+                <ScalarProperty Name="Razlika" ColumnName="Razlika" />
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrihodiRashodiDetails">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodiDetails">
+              <MappingFragment StoreEntitySet="PrihodiRashodiDetails">
+                <ScalarProperty Name="Placeno" ColumnName="Placeno" />
+                <ScalarProperty Name="Razlika" ColumnName="Razlika" />
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Rb" ColumnName="Rb" />
+                <ScalarProperty Name="PrihodiRashodiMasterId" ColumnName="PrihodiRashodiMasterId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
