@@ -289,6 +289,7 @@
     <Property Name="Mj11" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Mj12" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PrihodiRashodiDetails" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodi" ToRole="PrihodiRashodiDetails" />
+    <Property Name="Godina" Type="Int32" />
   </EntityType>
   <EntityType Name="PrihodiRashodiDetails">
     <Key>
@@ -303,6 +304,7 @@
     <Property Name="Razlika" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodiDetails" ToRole="PrihodiRashodi" />
+    <Property Name="Vrsta" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
   </EntityType>
   <Association Name="FK_PrihodiRashodiDetails_PrihodiRashodi">
     <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />

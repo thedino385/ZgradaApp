@@ -12,7 +12,8 @@
         }
     )
 
-    $scope.showDetails = function (pr) {
+    $scope.showDetails = function (zgrada) {
+        DataService.selectedZgrada = zgrada;
         $location.path('/prihrasedit');
     }
 

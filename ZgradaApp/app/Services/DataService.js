@@ -3,7 +3,7 @@
     var listZgrade = [];
     var listPripadci = [];
     var listStanovi = [];
-    var selectedZgradaId = null;
+    var selectedZgrada = null;
 
     // zgrade
     var getZgrade = function() {
@@ -121,6 +121,14 @@
         return $http.post('../api/data/zaduzivanjeCreateUpdate', z);
     }
 
+    var getPr = function (ZgradaId) {
+        return $http({
+            url: '../api/data/getprihodirashodi',
+            method: "GET",
+            params: { ZgradaId: ZgradaId }
+        });
+    }
+
     return {
         getZgrade: getZgrade,
         zgradaCreateUpdate: zgradaCreateUpdate,
@@ -132,8 +140,9 @@
         pripadakCreateUpdate: pripadakCreateUpdate,
         listStanovi: listStanovi,
         zaduzenjeCreateUpdate: zaduzenjeCreateUpdate,
-        selectedZgradaId: selectedZgradaId,
-        stanCreateUpdate: stanCreateUpdate
+        selectedZgrada: selectedZgrada,
+        stanCreateUpdate: stanCreateUpdate,
+        getPr: getPr
     }
 
 }]);

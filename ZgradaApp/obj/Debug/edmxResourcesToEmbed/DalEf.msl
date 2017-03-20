@@ -155,6 +155,7 @@
     <EntitySetMapping Name="PrihodiRashodi">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi">
         <MappingFragment StoreEntitySet="PrihodiRashodi">
+          <ScalarProperty Name="Godina" ColumnName="Godina" />
           <ScalarProperty Name="Mj12" ColumnName="Mj12" />
           <ScalarProperty Name="Mj11" ColumnName="Mj11" />
           <ScalarProperty Name="Mj10" ColumnName="Mj10" />
@@ -178,6 +179,7 @@
     <EntitySetMapping Name="PrihodiRashodiDetails">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodiDetails">
         <MappingFragment StoreEntitySet="PrihodiRashodiDetails">
+          <ScalarProperty Name="Vrsta" ColumnName="Vrsta" />
           <ScalarProperty Name="Placeno" ColumnName="Placeno" />
           <ScalarProperty Name="Razlika" ColumnName="Razlika" />
           <ScalarProperty Name="Iznos" ColumnName="Iznos" />

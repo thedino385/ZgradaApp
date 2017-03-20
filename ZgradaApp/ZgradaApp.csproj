@@ -257,6 +257,8 @@
     <Content Include="app\PihRas\editPrihRasCtrl.js" />
     <Content Include="app\PihRas\index.html" />
     <Content Include="app\PihRas\indexprhRasCtrl.js" />
+    <Content Include="app\PihRas\modalPrihod.html" />
+    <Content Include="app\PihRas\modalPrihodCtrl.js" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\Sifarnici\modals\posebniDioModal.html" />
     <Content Include="app\Sifarnici\modals\posebniDioModalCtrl.js" />

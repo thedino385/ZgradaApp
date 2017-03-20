@@ -37,6 +37,7 @@ namespace ZgradaApp
         public Nullable<decimal> Mj10 { get; set; }
         public Nullable<decimal> Mj11 { get; set; }
         public Nullable<decimal> Mj12 { get; set; }
+        public Nullable<int> Godina { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrihodiRashodiDetails> PrihodiRashodiDetails { get; set; }

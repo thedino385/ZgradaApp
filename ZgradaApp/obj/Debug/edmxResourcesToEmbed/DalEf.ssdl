@@ -41,6 +41,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ZgradaId" Type="int" Nullable="false" />
+    <Property Name="Godina" Type="int" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
@@ -69,6 +70,7 @@
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Vrsta" Type="char" MaxLength="1" />
   </EntityType>
   <EntityType Name="Pripadci">
     <Key>

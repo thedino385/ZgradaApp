@@ -9,10 +9,11 @@
 <div class="container-grid">
     <div class="col-lg-12 whiteShadow">
         <div class="bs-callout bs-callout-info">
-            <h4>Prihodi / Rashodi</h4>
-            <h5>Zgrada: Zgrada1</h5>
-            <h5>Adresa: Ulica 1</h5>
+            <h5>Zgrada: {{zgrada.Naziv}}</h5>
+            <h5>Adresa: {{zgrada.Adresa}}</h5>
         </div>
+        <select ng-model="SelectedGodina" ng-options="c.Godina as c.Godina for c in godine"
+                ng-change="godinaChanged()" class="form-control" style="margin-bottom: 10px"></select>
         <table style="width: 100%">
             <tr>
                 <td>
@@ -20,9 +21,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModal(novaGodina)">
-                                        <span class="glyphicon glyphicon-plus-sign"></span>
-                                    </button>
+                                    <b>Godina: 2017</b>
                                 </th>
                                 <th style="text-align: center; vertical-align: middle">Prihodi</th>
                                 <th style="text-align: center; vertical-align: middle">Iznos</th>
@@ -31,12 +30,63 @@
                         <tbody>
                             <tr>
                                 <td style="vertical-align: middle">1.</td>
-                                <td style="vertical-align: middle"><a href="">od 01.01. do 31.01.</a></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj1')">od 01.01. do 31.01.</a></td>
                                 <td style="vertical-align: middle"></td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">2.</td>
-                                <td style="vertical-align: middle">od 01.02. do 28.02.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj2')">od 01.02. do {{getFebDay()}}.02.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">3.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj3')">od 01.03. do 31.03.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">4.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj4')">od 01.04. do 30.04.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">5.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj5')">od 01.05. do 31.05.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">6.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj6')">od 01.06. do 30.06.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">7.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj7')">od 01.07. do 31.07.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">8.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj8')">od 01.08. do 31.08.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">9.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj9')">od 01.09. do 30.09.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">10.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj10')">od 01.10. do 31.10.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">11.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj11')">od 01.11. do 30.11.</a></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">12.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj12')">od 01.12. do 31.12.</a></td>
+                                <td style="vertical-align: middle"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -46,9 +96,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModal(novaGodina)">
-                                        <span class="glyphicon glyphicon-plus-sign"></span>
-                                    </button>
+                                    <b>Godina: 2017</b>
                                 </th>
                                 <th style="text-align: center; vertical-align: middle">Rashodi</th>
                                 <th style="text-align: center; vertical-align: middle">Iznos</th>
@@ -59,14 +107,84 @@
                         <tbody>
                             <tr>
                                 <td style="vertical-align: middle">1.</td>
-                                <td style="vertical-align: middle"><a href="">od 01.01. do 31.01.</a></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj1')">od 01.01. do 31.01.</a></td>
                                 <td style="vertical-align: middle"></td>
                                 <td style="vertical-align: middle"></td>
                                 <td style="vertical-align: middle"></td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">2.</td>
-                                <td style="vertical-align: middle">od 01.02. do 28.02.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj2')">od 01.02. do {{getFebDay()}}.02.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">3.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj3')">od 01.03. do 31.03.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">4.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj4')">od 01.04. do 30.04.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">5.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj5')">od 01.05. do 31.05.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">6.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj6')">od 01.06. do 30.06.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">7.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj7')">od 01.07. do 31.07.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">8.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj8')">od 01.08. do 31.08.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">9.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj9')">od 01.09. do 30.09.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">10.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj10')">od 01.10. do 31.10.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">11.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj11')">od 01.11. do 30.11.</a></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">12.</td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('Mj12')">od 01.12. do 31.12.</a></td>
                                 <td style="vertical-align: middle"></td>
                                 <td style="vertical-align: middle"></td>
                                 <td style="vertical-align: middle"></td>

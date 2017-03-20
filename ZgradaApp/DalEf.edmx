@@ -46,6 +46,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ZgradaId" Type="int" Nullable="false" />
+          <Property Name="Godina" Type="int" />
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
@@ -74,6 +75,7 @@
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Vrsta" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="Pripadci">
           <Key>
@@ -600,6 +602,7 @@
           <Property Name="Mj11" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Mj12" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PrihodiRashodiDetails" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodi" ToRole="PrihodiRashodiDetails" />
+          <Property Name="Godina" Type="Int32" />
         </EntityType>
         <EntityType Name="PrihodiRashodiDetails">
           <Key>
@@ -614,6 +617,7 @@
           <Property Name="Razlika" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodiDetails" ToRole="PrihodiRashodi" />
+          <Property Name="Vrsta" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK_PrihodiRashodiDetails_PrihodiRashodi">
           <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />
@@ -787,6 +791,7 @@
           <EntitySetMapping Name="PrihodiRashodi">
             <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi">
               <MappingFragment StoreEntitySet="PrihodiRashodi">
+                <ScalarProperty Name="Godina" ColumnName="Godina" />
                 <ScalarProperty Name="Mj12" ColumnName="Mj12" />
                 <ScalarProperty Name="Mj11" ColumnName="Mj11" />
                 <ScalarProperty Name="Mj10" ColumnName="Mj10" />
@@ -810,6 +815,7 @@
           <EntitySetMapping Name="PrihodiRashodiDetails">
             <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodiDetails">
               <MappingFragment StoreEntitySet="PrihodiRashodiDetails">
+                <ScalarProperty Name="Vrsta" ColumnName="Vrsta" />
                 <ScalarProperty Name="Placeno" ColumnName="Placeno" />
                 <ScalarProperty Name="Razlika" ColumnName="Razlika" />
                 <ScalarProperty Name="Iznos" ColumnName="Iznos" />

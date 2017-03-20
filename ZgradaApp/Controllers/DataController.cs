@@ -374,5 +374,19 @@ namespace ZgradaApp.Controllers
             catch (Exception ex) { return InternalServerError(); }
         }
 
+        [HttpGet]
+        [Route("api/data/getprihodirashodi")]
+        public async Task<IHttpActionResult> GetPrihodiRashodi(int ZgradaId)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+            var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == ZgradaId &&  p.CompanyId == companyId);
+            if(zgrada.CompanyId == companyId)
+            {
+                var pr = await _db.PrihodiRashodi.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
+                return Ok(pr);
+            }
+            return InternalServerError();
+        }
     }
 }
