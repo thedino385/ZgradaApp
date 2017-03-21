@@ -84,6 +84,7 @@
     <EntitySetMapping Name="Stanovi_Stanari">
       <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Stanari">
         <MappingFragment StoreEntitySet="Stanovi_Stanari">
+          <ScalarProperty Name="Vlasnik" ColumnName="Vlasnik" />
           <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Udjel" ColumnName="Udjel" />

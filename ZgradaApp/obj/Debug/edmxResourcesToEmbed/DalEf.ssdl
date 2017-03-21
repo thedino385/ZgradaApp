@@ -134,6 +134,7 @@
     <Property Name="OIB" Type="char" MaxLength="11" />
     <Property Name="Udjel" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Vlasnik" Type="bit" />
     <Property Name="UserGuid" Type="varchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="Zgrade">

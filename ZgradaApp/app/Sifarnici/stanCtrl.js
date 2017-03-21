@@ -289,7 +289,7 @@
             });
 
             modalInstance.result.then(function (item) {
-                console.log("modal result fn");
+                alert('modal result pripadak');
                 if (item.Id == 0) {
                     // add new
                     var maxId = 0;
@@ -311,14 +311,14 @@
 
                 }
                 else {
-                //    $scope.obj.Stanovi_Pripadci.forEach(function (dio) {
-                //        if (dio.Id == item.Id)
-                //            $scope.obj.Stanovi_Pripadci.dio = item;
-                    //    });
+                    $scope.stan.Stanovi_Pripadci.forEach(function (dio) {
+                        if (dio.Id == item.Id)
+                            $scope.stan.Stanovi_Pripadci.dio = item;
+                        });
                     item.Status = "u";
                 }
-
-                IzracunajPovrsine(); // proracunaj ponovo povrsine, zbog koeficijenta pripadaka na stanu
+                IzracunajPovrsine();
+                IzracunajPovrsineNG();// proracunaj ponovo povrsine, zbog koeficijenta pripadaka na stanu
             }, function () {
                 // modal dismiss
                 //$scope.newItemPripadak = { Id: 0, StanId: $routeParams.id, PripadakId: null, Naziv: "", PovrsinaM2: 0, PovrsinaPosto: 0 }
@@ -340,7 +340,7 @@
         // _________________________
         //       stanari
         // _________________________
-        $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 }
+        $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0, Vlasnik: false }
         $scope.openModalStanar = function (item) {
             var tempObj = {};
             angular.copy(item, tempObj);
@@ -387,12 +387,13 @@
                             stanar.OIB = tempObj.OIB;
                             stanar.Email = tempObj.Email;
                             stanar.Udjel = tempObj.Udjel;
+                            stanar.Vlasnik = tempObj.Vlasnik;
                         }
 
                     });
                 }
             });
-            $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0 };
+            $scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0, Vlasnik: false };
         }; // end of stanar modal
 
         //PovrsinaPosto, SumaPovrsinaM2, SumaPovrsinaPosto (za zfradu)
@@ -441,6 +442,7 @@
         }
 
         function IzracunajPovrsineNG() {
+            alert("IzracunajPovrsineNG");
             // novi nacin - povrsonaM2 Povrsina sa koeficijentom
             var totalM2 = 0;
             var totalM2Koef = 0;
@@ -456,14 +458,14 @@
                 o.PovrsinaM2 = dio.PovrsinaM2;
                 o.Koef = dio.Koef;
                 o.PovrsinaSaKoef = dio.PovrsinaSaKoef;
-                o.Ukupno = dio.PovrsinaM2 + dio.PovrsinaSaKoef;
+                //o.Ukupno = parseFloat(dio.PovrsinaM2) + parseFloat(dio.PovrsinaSaKoef);
                 tablePovrsine.push(o);
                 totalM2 += parseFloat(dio.PovrsinaM2);
                 totalM2Koef += parseFloat(dio.PovrsinaSaKoef);
             });
             $scope.stan.Stanovi_Pripadci.forEach(function (sp) {
                 console.log(sp);
-                o = { class: "", Oznaka: "", PovrsinaM2: 0, Koef: 0, PovrsinaSaKoef: 0, Ukupno: 0 };
+                o = { class: "", Oznaka: "", PovrsinaM2: 0, Koef: 0, PovrsinaSaKef: 0, Ukupno: 0 };
                 o.class = 'warning';
                 _zgradePripadci.forEach(function (zp) {
                     //console.log(sp.PripadakIZgradaId + " " + zp.Id);
@@ -475,14 +477,14 @@
                 });
                 o.Koef = sp.Koef;
                 o.PovrsinaSaKoef = sp.PovrsinaSaKef;
-                o.Ukupno = o.PovrsinaM2 + sp.PovrsinaSaKef;
+                //o.Ukupno = parseFloat(o.PovrsinaM2) + parseFloat(sp.PovrsinaSaKef);
                 tablePovrsine.push(o);
                 totalM2Koef += parseFloat(sp.PovrsinaSaKef);
             });
             console.log("totalM2Koef " + totalM2Koef);
             $scope.totalM2 = totalM2;
             $scope.totalM2Koef = totalM2Koef;
-            $scope.total = totalM2 + totalM2Koef;
+            //$scope.total = totalM2 + totalM2Koef;
             $scope.tablePovrisne = tablePovrsine;
         }
         

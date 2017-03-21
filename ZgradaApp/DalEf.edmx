@@ -139,6 +139,7 @@
           <Property Name="OIB" Type="char" MaxLength="11" />
           <Property Name="Udjel" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Vlasnik" Type="bit" />
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="Zgrade">
@@ -450,6 +451,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi_Stanari" ToRole="Stanovi" />
+          <Property Name="Vlasnik" Type="Boolean" />
         </EntityType>
         <EntityType Name="Zgrade">
           <Key>
@@ -724,6 +726,7 @@
           <EntitySetMapping Name="Stanovi_Stanari">
             <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Stanari">
               <MappingFragment StoreEntitySet="Stanovi_Stanari">
+                <ScalarProperty Name="Vlasnik" ColumnName="Vlasnik" />
                 <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Udjel" ColumnName="Udjel" />

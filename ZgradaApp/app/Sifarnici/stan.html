@@ -112,7 +112,7 @@
                                     <th>Površina (m2)</th>
                                     <th>Koeficijent</th>
                                     <th>Površina sa koeficijentom</th>
-                                    <th>Ukupno</th>
+                                    <!--<th>Ukupno</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,30 +121,16 @@
                                     <td ng-class="x.class" style="vertical-align: middle">{{x.PovrsinaM2 | number : 2}}</td>
                                     <td ng-class="x.class" style="vertical-align: middle">{{x.Koef | number : 2}}</td>
                                     <td ng-class="x.class" style="vertical-align: middle">{{x.PovrsinaSaKoef | number : 2}}</td>
-                                    <td ng-class="x.class" style="vertical-align: middle">{{x.Ukupno | number : 2}}</td>
+                                    <!--<td ng-class="x.class" style="vertical-align: middle">{{x.Ukupno | number : 2}}</td>-->
                                 </tr>
-                                <!--<tr class="info" ng-repeat="pd in stan.Stanovi_PosebniDijelovi | filter:{ Status: '!d'}">
-                                    <td style="vertical-align: middle">{{pd.Oznaka}}</td>
-                                    <td style="vertical-align: middle">{{pd.PovrsinaM2 | number : 2}}</td>
-                                    <td style="vertical-align: middle">{{pd.Koef | number : 2}}</td>
-                                    <td style="vertical-align: middle">{{pd.PovrsinaSaKoef | number : 2}}</td>
-                                    <td style="vertical-align: middle"></td>
-                                </tr>
-                                <tr class="warning" ng-repeat="sp in stan.Stanovi_Pripadci | filter:{ Status: '!d'}">
-                                    <td style="vertical-align: middle">{{sp.Oznaka}}</td>
-                                    <td style="vertical-align: middle">{{sp.PovrsinaM2 | number : 2}}</td>
-                                    <td style="vertical-align: middle">{{sp.Koef | number : 2}}</td>
-                                    <td style="vertical-align: middle">{{sp.PovrsinaSaKoef | number : 2}}</td>
-                                    <td style="vertical-align: middle"></td>
-                                </tr>-->
                             </tbody>
                             <thead>
                                 <tr>
                                     <th>Ukupno</th>
-                                    <th>{{totalM2 | number : 2}}</th>
+                                    <th style="text-align: right">{{totalM2 | number : 2}}</th>
                                     <th></th>
-                                    <th>{{totalM2Koef | number : 2}}</th>
-                                    <th>{{total | number : 2}}</th>
+                                    <th style="text-align: right">{{totalM2Koef | number : 2}}</th>
+                                    <!--<th>{{total | number : 2}}</th>-->
                                 </tr>
                             </thead>
                         </table>
@@ -271,6 +257,7 @@
                                                         <th>OIB</th>
                                                         <th>Email</th>
                                                         <th>Udio</th>
+                                                        <th>Vlasnik</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -280,6 +267,7 @@
                                                         <td style="vertical-align: middle">{{st.OIB}}</td>
                                                         <td style="vertical-align: middle">{{st.Email}}</td>
                                                         <td style="vertical-align: middle">{{st.Udjel}}</td>
+                                                        <td style="vertical-align: middle">{{st.Vlasnik}}</td>
                                                         <td style="vertical-align: middle">
                                                             <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalStanar(st)">
                                                                 <span class="glyphicon glyphicon-edit"></span>

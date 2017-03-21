@@ -135,6 +135,7 @@
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi_Stanari" ToRole="Stanovi" />
+    <Property Name="Vlasnik" Type="Boolean" />
   </EntityType>
   <EntityType Name="Zgrade">
     <Key>

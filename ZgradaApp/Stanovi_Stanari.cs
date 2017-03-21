@@ -22,6 +22,7 @@ namespace ZgradaApp
         public Nullable<decimal> Udjel { get; set; }
         public string Email { get; set; }
         public string UserGuid { get; set; }
+        public Nullable<bool> Vlasnik { get; set; }
     
         public virtual Stanovi Stanovi { get; set; }
     }

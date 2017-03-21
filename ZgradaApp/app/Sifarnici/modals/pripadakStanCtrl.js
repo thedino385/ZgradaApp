@@ -100,6 +100,7 @@ angularApp.controller('pripadakStanCtrl', ['$scope', '$uibModalInstance', 'DataS
                 else
                     currentStan.Stanovi_PrijenosPripadaka.push(obj);
             }
+            item.PovrsinaSaKef = parseFloat($scope.pripadakPovrsinaM2 * item.Koef / 100).toFixed(2);
             $uibModalInstance.close(item);
         };
 

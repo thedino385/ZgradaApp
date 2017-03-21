@@ -298,7 +298,7 @@ namespace ZgradaApp.Controllers
                             targetDio.Koef = dio.Koef;
                             targetDio.PovrsinaSaKoef = dio.PovrsinaSaKoef;
                         }
-                        else
+                        else if(dio.Status == "d")
                         {
                             var target = await _db.Stanovi_PosebniDijelovi.FirstOrDefaultAsync(p => p.Id == dio.Id);
                             if(target != null)
@@ -353,7 +353,8 @@ namespace ZgradaApp.Controllers
                                 Ime = stanar.Ime,
                                 OIB = stanar.OIB,
                                 Prezime = stanar.Prezime,
-                                Udjel = stanar.Udjel
+                                Udjel = stanar.Udjel,
+                                Vlasnik = stanar.Vlasnik ?? false
                             };
                             _db.Stanovi_Stanari.Add(newStanar);
                         }
@@ -366,6 +367,7 @@ namespace ZgradaApp.Controllers
                             target.Prezime = stanar.Prezime;
                             target.StanId = stan.Id;
                             target.Udjel = stanar.Udjel;
+                            target.Vlasnik = stanar.Vlasnik ?? false;
                         }
                         else if (stanar.Status == "d")
                         {
