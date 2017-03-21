@@ -103,10 +103,11 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StanId" Type="int" Nullable="false" />
-    <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Koeficijent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PosebniDioId" Type="int" Nullable="false" />
+    <Property Name="Oznaka" Type="varchar" MaxLength="50" />
     <Property Name="PovrsinaM2" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="PovrsinaPosto" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PovrsinaSaKoef" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="Stanovi_Pripadci">
     <Key>
@@ -116,6 +117,7 @@
     <Property Name="StanId" Type="int" Nullable="false" />
     <Property Name="PripadakIZgradaId" Type="int" Nullable="false" />
     <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PovrsinaSaKef" Type="decimal" Precision="18" Scale="2" />
     <Property Name="VrijediOdGod" Type="int" />
     <Property Name="VrijediOdMjesec" Type="int" />
     <Property Name="VrijediDoGod" Type="int" />

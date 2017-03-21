@@ -66,21 +66,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Stanovi_PosebniDijelovi">
-      <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_PosebniDijelovi">
-        <MappingFragment StoreEntitySet="Stanovi_PosebniDijelovi">
-          <ScalarProperty Name="PovrsinaPosto" ColumnName="PovrsinaPosto" />
-          <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
-          <ScalarProperty Name="Koeficijent" ColumnName="Koeficijent" />
-          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-          <ScalarProperty Name="StanId" ColumnName="StanId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Stanovi_Pripadci">
       <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_Pripadci">
         <MappingFragment StoreEntitySet="Stanovi_Pripadci">
+          <ScalarProperty Name="PovrsinaSaKef" ColumnName="PovrsinaSaKef" />
           <ScalarProperty Name="VrijediDoMjesec" ColumnName="VrijediDoMjesec" />
           <ScalarProperty Name="VrijediDoGod" ColumnName="VrijediDoGod" />
           <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
@@ -187,6 +176,19 @@
           <ScalarProperty Name="Datum" ColumnName="Datum" />
           <ScalarProperty Name="Rb" ColumnName="Rb" />
           <ScalarProperty Name="PrihodiRashodiMasterId" ColumnName="PrihodiRashodiMasterId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stanovi_PosebniDijelovi">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Stanovi_PosebniDijelovi">
+        <MappingFragment StoreEntitySet="Stanovi_PosebniDijelovi">
+          <ScalarProperty Name="PovrsinaSaKoef" ColumnName="PovrsinaSaKoef" />
+          <ScalarProperty Name="Koef" ColumnName="Koef" />
+          <ScalarProperty Name="PovrsinaM2" ColumnName="PovrsinaM2" />
+          <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+          <ScalarProperty Name="PosebniDioId" ColumnName="PosebniDioId" />
+          <ScalarProperty Name="StanId" ColumnName="StanId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

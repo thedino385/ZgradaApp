@@ -268,10 +268,14 @@
     <Content Include="app\Sifarnici\modals\pripadakStanCtrl.js" />
     <Content Include="app\Sifarnici\modals\stanarModal.html" />
     <Content Include="app\Sifarnici\modals\stanarModalCtrl.js" />
+    <Content Include="app\Sifarnici\posebniDio.html" />
+    <Content Include="app\Sifarnici\posebniDioCtrl.js" />
     <Content Include="app\Sifarnici\pripadak.html" />
     <Content Include="app\Sifarnici\pripadakCtrl.js" />
     <Content Include="app\Sifarnici\pripadci.html" />
     <Content Include="app\Sifarnici\pripadciCtrl.js" />
+    <Content Include="app\Sifarnici\prosebniDIjelovi.html" />
+    <Content Include="app\Sifarnici\prosebniDIjeloviCtrl.js" />
     <Content Include="app\Sifarnici\stan.html" />
     <Content Include="app\Sifarnici\stanCtrl.js" />
     <Content Include="app\Sifarnici\stanovi.html" />

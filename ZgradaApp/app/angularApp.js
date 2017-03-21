@@ -23,6 +23,14 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
         templateUrl: '../app/Sifarnici/pripadak.html',
         controller: 'pripadakCtrl'
     })
+    .when('/prosebniDIjelovi', {
+        templateUrl: '../app/Sifarnici/prosebniDIjelovi.html',
+        controller: 'prosebniDIjeloviCtrl'
+    })
+    .when('/posebniDio/:id', {
+        templateUrl: '../app/Sifarnici/posebniDio.html',
+        controller: 'posebniDioCtrl'
+    })
     .when('/stanovi/:id', { // zgradaId
         templateUrl: '../app/Sifarnici/stanovi.html',
         controller: 'stanoviCtrl'

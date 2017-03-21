@@ -3,12 +3,14 @@
 angularApp.controller('pripadakModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'item', 'pripadci',
     function ($scope, $uibModalInstance, DataService, item, pripadci) {
 
+        var _povrsinaM2 = 0;
         $scope.pripadakIdChanged = function () {
             pripadci.forEach(function (p) {
                 console.log(p);
                 if (p.Id == $scope.item.PripadakId) {
                     $scope.item.Naziv = p.Oznaka + "-";
                     $scope.item.VrstaNaziv = p.Naziv;
+                    var _povrsinaM2 = parseFloat(p.PovrsinaM2);
                 }
                     
             })
@@ -19,6 +21,7 @@ angularApp.controller('pripadakModalCtrl', ['$scope', '$uibModalInstance', 'Data
         $scope.pripadci = pripadci;
 
         $scope.save = function () {
+            item.PovrsinaSaKoef = parseFloat(_povrsinaM2 * item.Koef / 100).toFixed(2);
             console.log('save');
             $uibModalInstance.close(item);
         };

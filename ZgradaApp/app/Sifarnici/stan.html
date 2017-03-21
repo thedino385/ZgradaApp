@@ -69,7 +69,7 @@
                             <div class="col-sm-2">
                                 <label for="povrsinaposto">Površina (%)</label>
                             </div>
-                            <div class="col-sm-2" >
+                            <div class="col-sm-2">
                                 <input type="text" name="povrsinam2" ng-readonly="true" class="form-control" ng-model="stan.PovrsinaPosto" />
                             </div>
                             <div class="col-sm-2"></div>
@@ -87,7 +87,7 @@
                                 <label for="sumaPovrsinaPosto">Suma površina (%)</label>
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" ng-readonly="true" name="sumaPovrsinaPosto"  class="form-control" ng-model="stan.SumaPovrsinaPosto" />
+                                <input type="text" ng-readonly="true" name="sumaPovrsinaPosto" class="form-control" ng-model="stan.SumaPovrsinaPosto" />
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
@@ -102,6 +102,52 @@
                             <div class="col-sm-2"></div>
                         </div>
 
+
+                        <hr />
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Oznaka</th>
+                                    <th>Površina (m2)</th>
+                                    <th>Koeficijent</th>
+                                    <th>Površina sa koeficijentom</th>
+                                    <th>Ukupno</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in tablePovrisne track by $index"">
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.Oznaka}}</td>
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.PovrsinaM2 | number : 2}}</td>
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.Koef | number : 2}}</td>
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.PovrsinaSaKoef | number : 2}}</td>
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.Ukupno | number : 2}}</td>
+                                </tr>
+                                <!--<tr class="info" ng-repeat="pd in stan.Stanovi_PosebniDijelovi | filter:{ Status: '!d'}">
+                                    <td style="vertical-align: middle">{{pd.Oznaka}}</td>
+                                    <td style="vertical-align: middle">{{pd.PovrsinaM2 | number : 2}}</td>
+                                    <td style="vertical-align: middle">{{pd.Koef | number : 2}}</td>
+                                    <td style="vertical-align: middle">{{pd.PovrsinaSaKoef | number : 2}}</td>
+                                    <td style="vertical-align: middle"></td>
+                                </tr>
+                                <tr class="warning" ng-repeat="sp in stan.Stanovi_Pripadci | filter:{ Status: '!d'}">
+                                    <td style="vertical-align: middle">{{sp.Oznaka}}</td>
+                                    <td style="vertical-align: middle">{{sp.PovrsinaM2 | number : 2}}</td>
+                                    <td style="vertical-align: middle">{{sp.Koef | number : 2}}</td>
+                                    <td style="vertical-align: middle">{{sp.PovrsinaSaKoef | number : 2}}</td>
+                                    <td style="vertical-align: middle"></td>
+                                </tr>-->
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th>Ukupno</th>
+                                    <th>{{totalM2 | number : 2}}</th>
+                                    <th></th>
+                                    <th>{{totalM2Koef | number : 2}}</th>
+                                    <th>{{total | number : 2}}</th>
+                                </tr>
+                            </thead>
+                        </table>
 
                         <hr />
 
@@ -140,33 +186,25 @@
                             </div>
                             <div class="col-sm-2"></div>
                         </div>-->
-
-                        
-                        
-
-
                         <!--tabs-->
                         <div ng-cloak>
                             <md-content>
                                 <md-tabs md-dynamic-height md-border-bottom>
-                                    <!-- <md-tab label="Posebni dijelovi">
+                                    <md-tab label="Posebni dijelovi">
                                         <md-content class="md-padding">
                                             <a href="" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalDio(newItemDio)">Dodaj dio</a>
                                             <table class="table table-hover table-striped table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Naziv</th>
-                                                        <th>Površina (m2)</th>
-                                                        <th>Površina (%)</th>
-                                                        <th>Koeficijent (%)</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="pd in obj.Stanovi_PosebniDijelovi">
-                                                        <td style="vertical-align: middle">{{pd.Naziv}}</td>
-                                                        <td style="vertical-align: middle">{{pd.PovrsinaM2}}</td>
-                                                        <td style="vertical-align: middle">{{pd.PovrsinaPosto}}</td>
-                                                        <td style="vertical-align: middle">{{pd.Koeficijent}}</td>
+                                                    <tr ng-repeat="pd in stan.Stanovi_PosebniDijelovi | filter:{ Status: '!d'}">
+
+                                                        <!--<td style="vertical-align: middle">{{getDataDio(pd.PosebniDioId).Oznaka}}</td>-->
+                                                        <td style="vertical-align: middle">{{pd.Oznaka}}</td>
                                                         <td style="vertical-align: middle">
                                                             <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalDio(pd)">
                                                                 <span class="glyphicon glyphicon-edit"></span>
@@ -181,10 +219,10 @@
                                                 </tbody>
                                             </table>
                                         </md-content>
-                                    </md-tab> -->
+                                    </md-tab>
                                     <md-tab label="Pripadci">
                                         <md-content class="md-padding">
-                                            <input type="button" ng-disabled="obj.PovrsinaM2 == 0" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalPripadak(newItemPripadak)" value="Dodaj pripadak"/>
+                                            <input type="button" ng-disabled="stan.PovrsinaM2 == 0" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalPripadak(newItemPripadak)" value="Dodaj pripadak" />
                                             <table class="table table-hover table-striped table-bordered">
                                                 <thead>
                                                     <tr>
@@ -199,7 +237,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="pp in stan.Stanovi_Pripadci | filter:{ Status: '!d'}">
-                                                    <!--<tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'} }">-->
+                                                        <!--<tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'} }">-->
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).VrstaNaziv}}</td>
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).Naziv}}</td>
                                                         <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).PovrsinaM2}}</td>

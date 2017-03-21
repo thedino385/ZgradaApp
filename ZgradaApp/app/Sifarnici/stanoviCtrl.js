@@ -78,6 +78,7 @@
             };
 
             $scope.edit = function (obj) {
+                DataService.selectedStan = obj;
                 $location.path('/stan/' + obj.Id);
             }
         }

@@ -1,12 +1,14 @@
 ﻿// https://angular-ui.github.io/bootstrap/
 
-angularApp.controller('posebniDioModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'item', function ($scope, $uibModalInstance, DataService, item) {
+angularApp.controller('posebniDioModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'item', 'posebniDijelovi',
+    function ($scope, $uibModalInstance, DataService, item, posebniDijelovi) {
 
     $scope.item = item;
-    console.log(item);
+    $scope.posebniDijelovi = posebniDijelovi;
 
     $scope.save = function () {
         console.log('save');
+        item.PovrsinaSaKoef = parseFloat(item.PovrsinaM2 * item.Koef / 100).toFixed(2);
         $uibModalInstance.close(item);
     };
 
@@ -16,6 +18,14 @@ angularApp.controller('posebniDioModalCtrl', ['$scope', '$uibModalInstance', 'Da
         $uibModalInstance.dismiss('cancel');
     }
 
-    
+    $scope.posebniDioIdChanged = function () {
+        posebniDijelovi.forEach(function (p) {
+            if (p.Id == $scope.item.PosebniDioId) {
+                $scope.item.Oznaka = p.Oznaka + "-";
+                //$scope.item.VrstaNaziv = p.Naziv;
+            }
+
+        })
+    }
 
 }]);

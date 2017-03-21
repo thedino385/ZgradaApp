@@ -30,7 +30,6 @@ namespace ZgradaApp
         public virtual DbSet<PosedniDijelovi> PosedniDijelovi { get; set; }
         public virtual DbSet<Pripadci> Pripadci { get; set; }
         public virtual DbSet<Stanovi> Stanovi { get; set; }
-        public virtual DbSet<Stanovi_PosebniDijelovi> Stanovi_PosebniDijelovi { get; set; }
         public virtual DbSet<Stanovi_Pripadci> Stanovi_Pripadci { get; set; }
         public virtual DbSet<Stanovi_Stanari> Stanovi_Stanari { get; set; }
         public virtual DbSet<Zgrade> Zgrade { get; set; }
@@ -38,5 +37,6 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade_ZaduzivanjePoMj> Zgrade_ZaduzivanjePoMj { get; set; }
         public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
         public virtual DbSet<PrihodiRashodiDetails> PrihodiRashodiDetails { get; set; }
+        public virtual DbSet<Stanovi_PosebniDijelovi> Stanovi_PosebniDijelovi { get; set; }
     }
 }

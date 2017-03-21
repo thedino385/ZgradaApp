@@ -99,8 +99,8 @@ namespace ZgradaApp.Controllers
                             target.PovrsinaPosto = pripadak.PovrsinaPosto;
                             target.Napomena = pripadak.Napomena;
                         }
-
                     }
+                    
                     await _db.SaveChangesAsync();
                     return Ok(-1);
                 }
@@ -144,6 +144,23 @@ namespace ZgradaApp.Controllers
             }
         }
 
+        
+            [HttpGet]
+        [Route("api/data/getPosebiDijelovi")]
+        public async Task<IHttpActionResult> GetPosebniDijelovi()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                return Ok(await _db.PosedniDijelovi.Where(p => p.CompanyId == companyId).ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
         [HttpPost]
         [Route("api/data/pripadakCreateUpdate")]
         public async Task<IHttpActionResult> PripadakCreateUpdate([FromBody] Pripadci pripadak)
@@ -173,6 +190,36 @@ namespace ZgradaApp.Controllers
             }
         }
 
+
+        
+             [HttpPost]
+        [Route("api/data/posebniDioCreateUpdate")]
+        public async Task<IHttpActionResult> PosebniDioCreateUpdate([FromBody] PosedniDijelovi dio)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                dio.CompanyId = companyId;
+                if (dio.Id == 0)
+                {
+                    _db.PosedniDijelovi.Add(dio);
+                    await _db.SaveChangesAsync();
+                    return Ok(dio.Id);
+                }
+                else
+                {
+                    _db.Entry(dio).State = EntityState.Modified;
+                    await _db.SaveChangesAsync();
+                    return Ok(-1);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
         //[HttpGet]
         //[Route("api/data/getstanovi")]
         //public async Task<IHttpActionResult> GetStanovi()
@@ -234,6 +281,31 @@ namespace ZgradaApp.Controllers
                     dbStan.PovrsinaPosto = stan.PovrsinaPosto;
                     dbStan.SumaPovrsinaM2 = stan.SumaPovrsinaM2;
                     dbStan.SumaPovrsinaPosto = stan.SumaPovrsinaPosto;
+                    foreach (var dio in stan.Stanovi_PosebniDijelovi)
+                    {
+                        if(dio.Status == "a")
+                        {
+                            var noviDio = new Stanovi_PosebniDijelovi { StanId = stan.Id, PosebniDioId = dio.PosebniDioId, Oznaka = dio.Oznaka,
+                                Koef = dio.Koef, PovrsinaM2 = dio.PovrsinaM2, PovrsinaSaKoef = dio.PovrsinaSaKoef };
+                            _db.Stanovi_PosebniDijelovi.Add(noviDio);
+                        }
+                        else if(dio.Status == "u")
+                        {
+                            var targetDio = await _db.Stanovi_PosebniDijelovi.FirstOrDefaultAsync(p => p.Id == dio.Id);
+                            targetDio.PosebniDioId = dio.PosebniDioId;
+                            targetDio.Oznaka = dio.Oznaka;
+                            targetDio.PovrsinaM2 = dio.PovrsinaM2;
+                            targetDio.Koef = dio.Koef;
+                            targetDio.PovrsinaSaKoef = dio.PovrsinaSaKoef;
+                        }
+                        else
+                        {
+                            var target = await _db.Stanovi_PosebniDijelovi.FirstOrDefaultAsync(p => p.Id == dio.Id);
+                            if(target != null)
+                                _db.Stanovi_PosebniDijelovi.Remove(target);
+                        }
+                    }
+
                     foreach (var pripadak in stan.Stanovi_Pripadci.ToList())
                     {
                         if (pripadak.Status == "a")
@@ -242,6 +314,7 @@ namespace ZgradaApp.Controllers
                             newPripadak.Koef = pripadak.Koef;
                             newPripadak.PripadakIZgradaId = pripadak.PripadakIZgradaId;
                             newPripadak.StanId = stan.Id;
+                            newPripadak.PovrsinaSaKef = pripadak.PovrsinaSaKef;
                             newPripadak.VrijediOdMjesec = DateTime.Today.Month;
                             newPripadak.VrijediOdGod = DateTime.Today.Year;
                             if (stan.Stanovi_PrijenosPripadaka != null)
@@ -262,6 +335,7 @@ namespace ZgradaApp.Controllers
                         {
                             var dbPripadak = await _db.Stanovi_Pripadci.FirstOrDefaultAsync(p => p.Id == pripadak.Id);
                             dbPripadak.Koef = pripadak.Koef;
+                            dbPripadak.PovrsinaSaKef = pripadak.PovrsinaSaKef;
                         }
                         else if (pripadak.Status == "d")
                         {

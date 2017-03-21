@@ -16,10 +16,11 @@ namespace ZgradaApp
     {
         public int Id { get; set; }
         public int StanId { get; set; }
-        public string Naziv { get; set; }
-        public Nullable<decimal> Koeficijent { get; set; }
+        public int PosebniDioId { get; set; }
+        public string Oznaka { get; set; }
         public Nullable<decimal> PovrsinaM2 { get; set; }
-        public Nullable<decimal> PovrsinaPosto { get; set; }
+        public Nullable<decimal> Koef { get; set; }
+        public Nullable<decimal> PovrsinaSaKoef { get; set; }
     
         public virtual Stanovi Stanovi { get; set; }
     }

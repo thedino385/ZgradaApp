@@ -6,16 +6,11 @@
     <EntitySet Name="PosedniDijelovi" EntityType="ZgradaDbModel.PosedniDijelovi" />
     <EntitySet Name="Pripadci" EntityType="ZgradaDbModel.Pripadci" />
     <EntitySet Name="Stanovi" EntityType="ZgradaDbModel.Stanovi" />
-    <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" />
     <EntitySet Name="Stanovi_Pripadci" EntityType="ZgradaDbModel.Stanovi_Pripadci" />
     <EntitySet Name="Stanovi_Stanari" EntityType="ZgradaDbModel.Stanovi_Stanari" />
     <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
     <EntitySet Name="Zgrade_Pripadci" EntityType="ZgradaDbModel.Zgrade_Pripadci" />
     <EntitySet Name="Zgrade_ZaduzivanjePoMj" EntityType="ZgradaDbModel.Zgrade_ZaduzivanjePoMj" />
-    <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi">
-      <End Role="Stanovi" EntitySet="Stanovi" />
-      <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
-    </AssociationSet>
     <AssociationSet Name="FK_Stanovi_Pripadci_Stanovi" Association="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi">
       <End Role="Stanovi" EntitySet="Stanovi" />
       <End Role="Stanovi_Pripadci" EntitySet="Stanovi_Pripadci" />
@@ -41,6 +36,11 @@
     <AssociationSet Name="FK_PrihodiRashodiDetails_PrihodiRashodi" Association="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi">
       <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
       <End Role="PrihodiRashodiDetails" EntitySet="PrihodiRashodiDetails" />
+    </AssociationSet>
+    <EntitySet Name="Stanovi_PosebniDijelovi" EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" />
+    <AssociationSet Name="FK_Stanovi_PosebniDijelovi_Stanovi" Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi">
+      <End Role="Stanovi" EntitySet="Stanovi" />
+      <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Kompanije">
@@ -102,22 +102,10 @@
     <Property Name="SumaPovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="SumaPovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Stanovi_PosebniDijelovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi" ToRole="Stanovi_PosebniDijelovi" />
     <NavigationProperty Name="Stanovi_Pripadci" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi" ToRole="Stanovi_Pripadci" />
     <NavigationProperty Name="Stanovi_Stanari" Relationship="ZgradaDbModel.FK_Stanovi_Stanari_Stanovi" FromRole="Stanovi" ToRole="Stanovi_Stanari" />
     <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Stanovi_Zgrade" FromRole="Stanovi" ToRole="Zgrade" />
-  </EntityType>
-  <EntityType Name="Stanovi_PosebniDijelovi">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="StanId" Type="Int32" Nullable="false" />
-    <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Koeficijent" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="PovrsinaPosto" Type="Decimal" Precision="18" Scale="2" />
-    <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi_PosebniDijelovi" ToRole="Stanovi" />
+    <NavigationProperty Name="Stanovi_PosebniDijelovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi" ToRole="Stanovi_PosebniDijelovi" />
   </EntityType>
   <EntityType Name="Stanovi_Pripadci">
     <Key>
@@ -132,6 +120,7 @@
     <Property Name="VrijediDoGod" Type="Int32" />
     <Property Name="VrijediDoMjesec" Type="Int32" />
     <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Pripadci_Stanovi" FromRole="Stanovi_Pripadci" ToRole="Stanovi" />
+    <Property Name="PovrsinaSaKef" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="Stanovi_Stanari">
     <Key>
@@ -195,18 +184,6 @@
     <Property Name="Mj12" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_ZaduzivanjePoMj_Zgrade" FromRole="Zgrade_ZaduzivanjePoMj" ToRole="Zgrade" />
   </EntityType>
-  <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
-    <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
-    <End Type="ZgradaDbModel.Stanovi_PosebniDijelovi" Role="Stanovi_PosebniDijelovi" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Stanovi">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Stanovi_PosebniDijelovi">
-        <PropertyRef Name="StanId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Stanovi_Pripadci_Stanovi">
     <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
     <End Type="ZgradaDbModel.Stanovi_Pripadci" Role="Stanovi_Pripadci" Multiplicity="*" />
@@ -315,6 +292,31 @@
       </Principal>
       <Dependent Role="PrihodiRashodiDetails">
         <PropertyRef Name="PrihodiRashodiMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Stanovi_PosebniDijelovi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StanId" Type="Int32" Nullable="false" />
+    <Property Name="PosebniDioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" FromRole="Stanovi_PosebniDijelovi" ToRole="Stanovi" />
+    <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PovrsinaM2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PovrsinaSaKoef" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <Association Name="FK_Stanovi_PosebniDijelovi_Stanovi">
+    <End Type="ZgradaDbModel.Stanovi" Role="Stanovi" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Stanovi_PosebniDijelovi" Role="Stanovi_PosebniDijelovi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stanovi">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stanovi_PosebniDijelovi">
+        <PropertyRef Name="StanId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

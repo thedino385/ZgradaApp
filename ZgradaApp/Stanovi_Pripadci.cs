@@ -22,6 +22,7 @@ namespace ZgradaApp
         public Nullable<int> VrijediOdMjesec { get; set; }
         public Nullable<int> VrijediDoGod { get; set; }
         public Nullable<int> VrijediDoMjesec { get; set; }
+        public Nullable<decimal> PovrsinaSaKef { get; set; }
     
         public virtual Stanovi Stanovi { get; set; }
     }

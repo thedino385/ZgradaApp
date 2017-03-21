@@ -4,6 +4,8 @@
     var listPripadci = [];
     var listStanovi = [];
     var selectedZgrada = null;
+    var selectedStan = null;
+    var selectedPosebniDio = null;
 
     // zgrade
     var getZgrade = function() {
@@ -54,6 +56,10 @@
         return $http.get('../api/data/getpripadak?Id=' + id);
     }
 
+    var getPosebiDijelovi = function () {
+        return $http.get('../api/data/getPosebiDijelovi');
+    }
+
     //var getPripadci = function () {
     //    var defer = $q.defer();
     //    if (listPripadci.length == 0) {
@@ -80,6 +86,10 @@
 
     var pripadakCreateUpdate = function (pripadak) {
         return $http.post('../api/data/pripadakCreateUpdate', pripadak);
+    }
+
+    var posebniDioCreateUpdate = function (dio) {
+        return $http.post('../api/data/posebniDioCreateUpdate', dio);
     }
 
     //var getStanovi = function () {
@@ -137,12 +147,16 @@
         listPripadci: listPripadci,
         getPripadci: getPripadci,
         getPripadak: getPripadak,
+        getPosebiDijelovi: getPosebiDijelovi,
+        posebniDioCreateUpdate: posebniDioCreateUpdate,
         pripadakCreateUpdate: pripadakCreateUpdate,
         listStanovi: listStanovi,
         zaduzenjeCreateUpdate: zaduzenjeCreateUpdate,
         selectedZgrada: selectedZgrada,
         stanCreateUpdate: stanCreateUpdate,
-        getPr: getPr
+        getPr: getPr,
+        selectedPosebniDio: selectedPosebniDio,
+        selectedStan: selectedStan
     }
 
 }]);
