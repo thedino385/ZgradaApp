@@ -42,6 +42,11 @@
       <End Role="Stanovi" EntitySet="Stanovi" />
       <End Role="Stanovi_PosebniDijelovi" EntitySet="Stanovi_PosebniDijelovi" />
     </AssociationSet>
+    <EntitySet Name="Zgrade_Pricuva" EntityType="ZgradaDbModel.Zgrade_Pricuva" />
+    <AssociationSet Name="FK_Zgrade_Pricuva_Zgrade" Association="ZgradaDbModel.FK_Zgrade_Pricuva_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_Pricuva" EntitySet="Zgrade_Pricuva" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -150,6 +155,7 @@
     <NavigationProperty Name="Stanovi" Relationship="ZgradaDbModel.FK_Stanovi_Zgrade" FromRole="Zgrade" ToRole="Stanovi" />
     <NavigationProperty Name="Zgrade_Pripadci" Relationship="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade" FromRole="Zgrade" ToRole="Zgrade_Pripadci" />
     <NavigationProperty Name="Zgrade_ZaduzivanjePoMj" Relationship="ZgradaDbModel.FK_Zgrade_ZaduzivanjePoMj_Zgrade" FromRole="Zgrade" ToRole="Zgrade_ZaduzivanjePoMj" />
+    <NavigationProperty Name="Zgrade_Pricuva" Relationship="ZgradaDbModel.FK_Zgrade_Pricuva_Zgrade" FromRole="Zgrade" ToRole="Zgrade_Pricuva" />
   </EntityType>
   <EntityType Name="Zgrade_Pripadci">
     <Key>
@@ -318,6 +324,42 @@
       </Principal>
       <Dependent Role="Stanovi_PosebniDijelovi">
         <PropertyRef Name="StanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Zgrade_Pricuva">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="ObracunTip" Type="Int16" Nullable="false" />
+    <Property Name="StanId" Type="Int32" Nullable="false" />
+    <Property Name="Mj1" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj3" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj4" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj5" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj6" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj7" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj8" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj9" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj10" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj11" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj12" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Pricuva_Zgrade" FromRole="Zgrade_Pricuva" ToRole="Zgrade" />
+    <Property Name="Godina" Type="Int32" Nullable="false" />
+    <Property Name="VlasnikId" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_Zgrade_Pricuva_Zgrade">
+    <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Zgrade_Pricuva" Role="Zgrade_Pricuva" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_Pricuva">
+        <PropertyRef Name="ZgradaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

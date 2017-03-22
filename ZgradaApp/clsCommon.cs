@@ -52,4 +52,9 @@ namespace ZgradaApp
     {
         public string Status { get; set; }
     }
+
+    public partial class Zgrade_Pricuva
+    {
+        public string ImePrezime { get; set; }
+    }
 }

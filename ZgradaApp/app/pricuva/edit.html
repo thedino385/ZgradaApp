@@ -1,0 +1,95 @@
+﻿<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="bs-callout bs-callout-info">
+            <h5>Zgrada: {{zgrada.Naziv}}</h5>
+            <h5>Adresa: {{zgrada.Adresa}}</h5>
+        </div>
+        <select ng-model="SelectedGodina" ng-options="c.Godina as c.Godina for c in godine"
+                ng-change="godinaChanged()" class="form-control" style="margin-bottom: 10px"></select>
+        {{get()}}
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="vertical-align: middle">
+                        Ime i prezime
+                    </th>
+                    <th style="vertical-align: middle">
+                        Posebni dio
+                    </th>
+                    <th style="vertical-align: middle">
+                        Dug/pretplata
+                    </th>
+                    <th style="vertical-align: middle">
+                        Mjesečno zaduženje
+                    </th>
+                    <th style="vertical-align: middle">
+                        1
+                    </th>
+                    <th style="vertical-align: middle">
+                        2
+                    </th>
+                    <th style="vertical-align: middle">
+                        3
+                    </th>
+                    <th style="vertical-align: middle">
+                        4
+                    </th>
+                    <th style="vertical-align: middle">
+                        5
+                    </th>
+                    <th style="vertical-align: middle">
+                        6
+                    </th>
+                    <th style="vertical-align: middle">
+                        7
+                    </th>
+                    <th style="vertical-align: middle">
+                        8
+                    </th>
+                    <th style="vertical-align: middle">
+                        9
+                    </th>
+                    <th style="vertical-align: middle">
+                        11
+                    </th>
+                    <th style="vertical-align: middle">
+                        12
+                    </th>
+                    <th style="vertical-align: middle">
+                        Stanje pr.godina
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="pr in pricuvaList">
+                    <td style="vertical-align: middle">
+                        {{pr.ImePrezime}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stan in zgrada.Stanovi | filter :{ Id: pr.StanId}">
+                            <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
+                                <div>{{dio.Oznaka}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle"></td>
+                    <td style="vertical-align: middle"></td>
+                    <td style="vertical-align: middle">{{pr.Mj1}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj2}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj3}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj4}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj5}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj6}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj7}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj8}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj9}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj10}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj11}}</td>
+                    <td style="vertical-align: middle">{{pr.Mj12}}</td>
+                    <td style="vertical-align: middle"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

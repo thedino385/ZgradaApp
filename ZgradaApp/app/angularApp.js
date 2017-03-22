@@ -43,18 +43,22 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
         templateUrl: '../app/Sifarnici/zgradaPregledPripadakaPoStanovima.html',
         controller: 'zgradaPregledPripadakaPoStanovimaCtrl'
     })
-    .when('/zaduzivanje/:id', { // stanId
+    .when('/zaduzivanje/:id', { 
         templateUrl: '../app/zaduzivanja/zaduzivanjePoMj.html',
         controller: 'zaduzivanjePoMjCtrl'
     })
-    .when('/prihodirashodi', { // stanId
+    .when('/prihodirashodi', { 
         templateUrl: '../app/PihRas/index.html',
         controller: 'indexPrihRasCtrl'
     })
-    .when('/prihrasedit', { // stanId
+    .when('/prihrasedit', {
         templateUrl: '../app/PihRas/edit.html',
         controller: 'editPrihRasCtrl'
-    })
+        })
+        .when('/pricuvaedit/:id', {
+            templateUrl: '../app/pricuva/edit.html',
+            controller: 'pricuvaEditCtrl'
+        })
     .otherwise({
         redirectTo: '/index'
     });

@@ -464,5 +464,24 @@ namespace ZgradaApp.Controllers
             }
             return InternalServerError();
         }
+
+        [HttpGet]
+        [Route("api/data/createPricuva")]
+        public async Task<IHttpActionResult> CreatePricuva(int ZgradaId, int Godina)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+            var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == ZgradaId);
+            if (zgrada.CompanyId != companyId)
+                return InternalServerError();
+
+            List<Zgrade_Pricuva> list = new List<Zgrade_Pricuva>();
+            foreach (var item in zgrada.Stanovi)
+            {
+                list.Add(new Zgrade_Pricuva { Id = 0, Godina = Godina, ZgradaId = ZgradaId, StanId = item.Id, Mj1 = 124 });
+            }
+
+            return Ok(list);
+        }
     }
 }

@@ -139,6 +139,15 @@
         });
     }
 
+    var createPricuva = function (ZgradaId, Godina) {
+        console.log("zgradaId: " + ZgradaId);
+        return $http({
+            url: '../api/data/createPricuva',
+            method: "GET",
+            params: { ZgradaId: ZgradaId, Godina: Godina }
+        });
+    }
+
     return {
         getZgrade: getZgrade,
         zgradaCreateUpdate: zgradaCreateUpdate,
@@ -156,7 +165,8 @@
         stanCreateUpdate: stanCreateUpdate,
         getPr: getPr,
         selectedPosebniDio: selectedPosebniDio,
-        selectedStan: selectedStan
+        selectedStan: selectedStan,
+        createPricuva: createPricuva
     }
 
 }]);
