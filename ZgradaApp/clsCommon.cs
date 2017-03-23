@@ -17,7 +17,7 @@ namespace ZgradaApp
     {
         public string Status { get; set; }
         public bool Active { get; set; }
-}
+    }
     public partial class Stanovi_Stanari
     {
         public string Status { get; set; }
@@ -53,8 +53,14 @@ namespace ZgradaApp
         public string Status { get; set; }
     }
 
-    public partial class Zgrade_Pricuva
+    public partial class PrihodiRashodi
     {
-        public string ImePrezime { get; set; }
+        public string Status { get; set; }
     }
+
+    public partial class PrihodiRashodiDetails
+    {
+        public string Status { get; set; }
+    }
+    
 }

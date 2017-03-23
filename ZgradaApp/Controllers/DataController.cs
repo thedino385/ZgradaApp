@@ -100,7 +100,7 @@ namespace ZgradaApp.Controllers
                             target.Napomena = pripadak.Napomena;
                         }
                     }
-                    
+
                     await _db.SaveChangesAsync();
                     return Ok(-1);
                 }
@@ -144,8 +144,8 @@ namespace ZgradaApp.Controllers
             }
         }
 
-        
-            [HttpGet]
+
+        [HttpGet]
         [Route("api/data/getPosebiDijelovi")]
         public async Task<IHttpActionResult> GetPosebniDijelovi()
         {
@@ -191,8 +191,8 @@ namespace ZgradaApp.Controllers
         }
 
 
-        
-             [HttpPost]
+
+        [HttpPost]
         [Route("api/data/posebniDioCreateUpdate")]
         public async Task<IHttpActionResult> PosebniDioCreateUpdate([FromBody] PosedniDijelovi dio)
         {
@@ -283,13 +283,20 @@ namespace ZgradaApp.Controllers
                     dbStan.SumaPovrsinaPosto = stan.SumaPovrsinaPosto;
                     foreach (var dio in stan.Stanovi_PosebniDijelovi)
                     {
-                        if(dio.Status == "a")
+                        if (dio.Status == "a")
                         {
-                            var noviDio = new Stanovi_PosebniDijelovi { StanId = stan.Id, PosebniDioId = dio.PosebniDioId, Oznaka = dio.Oznaka,
-                                Koef = dio.Koef, PovrsinaM2 = dio.PovrsinaM2, PovrsinaSaKoef = dio.PovrsinaSaKoef };
+                            var noviDio = new Stanovi_PosebniDijelovi
+                            {
+                                StanId = stan.Id,
+                                PosebniDioId = dio.PosebniDioId,
+                                Oznaka = dio.Oznaka,
+                                Koef = dio.Koef,
+                                PovrsinaM2 = dio.PovrsinaM2,
+                                PovrsinaSaKoef = dio.PovrsinaSaKoef
+                            };
                             _db.Stanovi_PosebniDijelovi.Add(noviDio);
                         }
-                        else if(dio.Status == "u")
+                        else if (dio.Status == "u")
                         {
                             var targetDio = await _db.Stanovi_PosebniDijelovi.FirstOrDefaultAsync(p => p.Id == dio.Id);
                             targetDio.PosebniDioId = dio.PosebniDioId;
@@ -298,10 +305,10 @@ namespace ZgradaApp.Controllers
                             targetDio.Koef = dio.Koef;
                             targetDio.PovrsinaSaKoef = dio.PovrsinaSaKoef;
                         }
-                        else if(dio.Status == "d")
+                        else if (dio.Status == "d")
                         {
                             var target = await _db.Stanovi_PosebniDijelovi.FirstOrDefaultAsync(p => p.Id == dio.Id);
-                            if(target != null)
+                            if (target != null)
                                 _db.Stanovi_PosebniDijelovi.Remove(target);
                         }
                     }
@@ -456,8 +463,8 @@ namespace ZgradaApp.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
-            var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == ZgradaId &&  p.CompanyId == companyId);
-            if(zgrada.CompanyId == companyId)
+            var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == ZgradaId && p.CompanyId == companyId);
+            if (zgrada.CompanyId == companyId)
             {
                 var pr = await _db.PrihodiRashodi.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
                 return Ok(pr);
@@ -466,8 +473,15 @@ namespace ZgradaApp.Controllers
         }
 
         [HttpGet]
+        [Route("api/data/createEmptyPrihodRashod")]
+        public async Task<IHttpActionResult> CreateEmptyPrihodRashod(int ZgradaId, int Godina)
+        {
+            return Ok(new PrihodiRashodi { ZgradaId = ZgradaId, Godina = Godina });
+        }
+
+        [HttpGet]
         [Route("api/data/createPricuva")]
-        public async Task<IHttpActionResult> CreatePricuva(int ZgradaId, int Godina)
+        public async Task<IHttpActionResult> CreatePricuvaZaMjesec(int ZgradaId, int Godina, int Mjesec)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
@@ -475,11 +489,28 @@ namespace ZgradaApp.Controllers
             if (zgrada.CompanyId != companyId)
                 return InternalServerError();
 
-            List<Zgrade_Pricuva> list = new List<Zgrade_Pricuva>();
-            foreach (var item in zgrada.Stanovi)
+            List<Zgrade_PricuvaMjesec> list = new List<Zgrade_PricuvaMjesec>();
+            foreach (var stan in zgrada.Stanovi)
             {
-                list.Add(new Zgrade_Pricuva { Id = 0, Godina = Godina, ZgradaId = ZgradaId, StanId = item.Id, Mj1 = 124 });
+                var vlasnik = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && p.Vlasnik == true);
+                list.Add(new Zgrade_PricuvaMjesec
+                {
+                    Id = 0,
+                    Godina = Godina,
+                    Mjesec = Mjesec,
+                    ZgradaId = ZgradaId,
+                    StanId = stan.Id,
+                    VlasnikId = vlasnik.Id,
+                });
             }
+            // test
+            var jozo = list.FirstOrDefault(p => p.VlasnikId == 1);
+            jozo.DugPretplata = 10;
+            jozo.Zaduzenje = 20;
+
+            var dino = list.FirstOrDefault(p => p.VlasnikId == 2);
+            dino.DugPretplata = 50;
+            dino.Zaduzenje = 70;
 
             return Ok(list);
         }

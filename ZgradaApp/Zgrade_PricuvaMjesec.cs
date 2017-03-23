@@ -12,26 +12,21 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Zgrade_Pricuva
+    public partial class Zgrade_PricuvaMjesec
     {
         public int Id { get; set; }
-        public int ZgradaId { get; set; }
-        public short ObracunTip { get; set; }
-        public int StanId { get; set; }
-        public Nullable<decimal> Mj1 { get; set; }
-        public Nullable<decimal> Mj2 { get; set; }
-        public Nullable<decimal> Mj3 { get; set; }
-        public Nullable<decimal> Mj4 { get; set; }
-        public Nullable<decimal> Mj5 { get; set; }
-        public Nullable<decimal> Mj6 { get; set; }
-        public Nullable<decimal> Mj7 { get; set; }
-        public Nullable<decimal> Mj8 { get; set; }
-        public Nullable<decimal> Mj9 { get; set; }
-        public Nullable<decimal> Mj10 { get; set; }
-        public Nullable<decimal> Mj11 { get; set; }
-        public Nullable<decimal> Mj12 { get; set; }
         public int Godina { get; set; }
+        public int Mjesec { get; set; }
+        public int ZgradaId { get; set; }
+        public int StanId { get; set; }
         public Nullable<int> VlasnikId { get; set; }
+        public Nullable<short> ObracunTip { get; set; }
+        public Nullable<decimal> DugPretplata { get; set; }
+        public Nullable<decimal> Zaduzenje { get; set; }
+        public Nullable<decimal> Uplaceno { get; set; }
+        public Nullable<decimal> StanjeOdProslog { get; set; }
+        public Nullable<decimal> ObracunTipM2 { get; set; }
+        public Nullable<decimal> ObracunTipUkupno { get; set; }
     
         public virtual Zgrade Zgrade { get; set; }
     }

@@ -17,6 +17,7 @@ namespace ZgradaApp
         public int Id { get; set; }
         public int PrihodiRashodiMasterId { get; set; }
         public Nullable<int> Rb { get; set; }
+        public Nullable<int> Mjesec { get; set; }
         public Nullable<System.DateTime> Datum { get; set; }
         public string Opis { get; set; }
         public Nullable<decimal> Iznos { get; set; }

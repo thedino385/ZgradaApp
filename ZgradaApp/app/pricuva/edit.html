@@ -23,8 +23,9 @@
                         Mjesečno zaduženje
                     </th>
                     <th style="vertical-align: middle">
-                        1
+                        Uplaćeno
                     </th>
+                    <th style="vertical-align: middle"><a href="" ng-click="openMjesecno('1')">1</a></th>
                     <th style="vertical-align: middle">
                         2
                     </th>
@@ -61,17 +62,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="pr in pricuvaList">
+                <tr ng-repeat="pr in zgrada.Zgrade_PricuvaMjesec">
                     <td style="vertical-align: middle">
-                        {{pr.ImePrezime}}
+                        <div ng-repeat="stanar in zgrada.Stanovi_Stanari | filter: { stanar.Id: pr.VlasnikId }">
+                            {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
+                        </div>
                     </td>
                     <td style="vertical-align: middle">
-                        <div ng-repeat="stan in zgrada.Stanovi | filter :{ Id: pr.StanId}">
+                        <div ng-repeat="stan in zgrada.Stanovi | filter :{ stan.Id: pr.StanId}">
                             <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
                                 <div>{{dio.Oznaka}}</div>
                             </div>
                         </div>
                     </td>
+                    <td style="vertical-align: middle"></td>
                     <td style="vertical-align: middle"></td>
                     <td style="vertical-align: middle"></td>
                     <td style="vertical-align: middle">{{pr.Mj1}}</td>

@@ -42,21 +42,34 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ZgradaId" Type="int" Nullable="false" />
     <Property Name="Godina" Type="int" />
-    <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj1" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj2" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj3" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj4" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj5" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj6" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj7" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj8" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj9" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj10" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj1" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj2" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj3" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj4" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj5" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj6" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj7" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj8" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj9" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj10" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj11" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoPrihodMj12" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IznosRashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="RazlikaRashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PlacenoRashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj1Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj2Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj3Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj4Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj5Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj6Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj7Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj8Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj9Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj10Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj11Rashod" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj12Rashod" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PrihodiRashodiDetails">
     <Key>
@@ -65,6 +78,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PrihodiRashodiMasterId" Type="int" Nullable="false" />
     <Property Name="Rb" Type="int" />
+    <Property Name="Mjesec" Type="int" />
     <Property Name="Datum" Type="datetime" />
     <Property Name="Opis" Type="varchar" MaxLength="500" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
@@ -148,28 +162,23 @@
     <Property Name="Povrsinam2" Type="decimal" Precision="18" Scale="2" />
     <Property Name="CompanyId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Zgrade_Pricuva">
+  <EntityType Name="Zgrade_PricuvaMjesec">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Godina" Type="int" Nullable="false" />
+    <Property Name="Mjesec" Type="int" Nullable="false" />
     <Property Name="ZgradaId" Type="int" Nullable="false" />
-    <Property Name="ObracunTip" Type="smallint" Nullable="false" />
     <Property Name="StanId" Type="int" Nullable="false" />
     <Property Name="VlasnikId" Type="int" />
-    <Property Name="Mj1" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj2" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj3" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj4" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj5" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj6" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj7" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj8" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj9" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj10" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ObracunTip" Type="smallint" />
+    <Property Name="DugPretplata" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="StanjeOdProslog" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ObracunTipM2" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ObracunTipUkupno" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="Zgrade_Pripadci">
     <Key>
@@ -263,14 +272,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Zgrade_Pricuva_Zgrade">
+  <Association Name="FK_Zgrade_PricuvaMjesec_Zgrade">
     <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
-    <End Role="Zgrade_Pricuva" Type="Self.Zgrade_Pricuva" Multiplicity="*" />
+    <End Role="Zgrade_PricuvaMjesec" Type="Self.Zgrade_PricuvaMjesec" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Zgrade">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Zgrade_Pricuva">
+      <Dependent Role="Zgrade_PricuvaMjesec">
         <PropertyRef Name="ZgradaId" />
       </Dependent>
     </ReferentialConstraint>
@@ -311,7 +320,7 @@
     <EntitySet Name="Stanovi_Pripadci" EntityType="Self.Stanovi_Pripadci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stanovi_Stanari" EntityType="Self.Stanovi_Stanari" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Zgrade_Pricuva" EntityType="Self.Zgrade_Pricuva" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zgrade_PricuvaMjesec" EntityType="Self.Zgrade_PricuvaMjesec" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_ZaduzivanjePoMj" EntityType="Self.Zgrade_ZaduzivanjePoMj" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_PrihodiRashodiDetails_PrihodiRashodi" Association="Self.FK_PrihodiRashodiDetails_PrihodiRashodi">
@@ -334,9 +343,9 @@
       <End Role="Zgrade" EntitySet="Zgrade" />
       <End Role="Stanovi" EntitySet="Stanovi" />
     </AssociationSet>
-    <AssociationSet Name="FK_Zgrade_Pricuva_Zgrade" Association="Self.FK_Zgrade_Pricuva_Zgrade">
+    <AssociationSet Name="FK_Zgrade_PricuvaMjesec_Zgrade" Association="Self.FK_Zgrade_PricuvaMjesec_Zgrade">
       <End Role="Zgrade" EntitySet="Zgrade" />
-      <End Role="Zgrade_Pricuva" EntitySet="Zgrade_Pricuva" />
+      <End Role="Zgrade_PricuvaMjesec" EntitySet="Zgrade_PricuvaMjesec" />
     </AssociationSet>
     <AssociationSet Name="FK_Zgrade_Pripadci_Zgrade" Association="Self.FK_Zgrade_Pripadci_Zgrade">
       <End Role="Zgrade" EntitySet="Zgrade" />

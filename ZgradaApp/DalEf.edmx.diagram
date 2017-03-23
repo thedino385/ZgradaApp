@@ -20,13 +20,13 @@
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_Pripadci_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_ZaduzivanjePoMj_Zgrade" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi" Width="1.5" PointX="10.25" PointY="11.25" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodiDetails" Width="1.5" PointX="12.5" PointY="12.125" />
-        <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" Width="1.5" PointX="5.25" PointY="16.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" Width="1.5" PointX="4.625" PointY="17.625" />
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_Pricuva" Width="1.5" PointX="0.5" PointY="15.625" />
-        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_Pricuva_Zgrade" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PricuvaMjesec" Width="1.5" PointX="0.75" PointY="14.125" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PricuvaMjesec_Zgrade" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi" Width="1.5" PointX="7.375" PointY="11.375" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodiDetails" Width="1.5" PointX="9.625" PointY="15.375" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

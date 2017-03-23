@@ -241,7 +241,7 @@
     <Compile Include="Zgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_Pricuva.cs">
+    <Compile Include="Zgrade_PricuvaMjesec.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade_Pripadci.cs">
@@ -264,6 +264,8 @@
     <Content Include="app\PihRas\modalPrihodCtrl.js" />
     <Content Include="app\pricuva\edit.html" />
     <Content Include="app\pricuva\editCtrl.js" />
+    <Content Include="app\pricuva\pricuvaMjesecModal.html" />
+    <Content Include="app\pricuva\pricuvaMjesecModalCtrl.js" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\Sifarnici\modals\posebniDioModal.html" />
     <Content Include="app\Sifarnici\modals\posebniDioModalCtrl.js" />

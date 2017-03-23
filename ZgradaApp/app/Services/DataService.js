@@ -139,10 +139,18 @@
         });
     }
 
-    var createPricuva = function (ZgradaId, Godina) {
-        console.log("zgradaId: " + ZgradaId);
+    var createPricuvaZaMjesec = function (ZgradaId, Godina, Mjesec) {
         return $http({
             url: '../api/data/createPricuva',
+            method: "GET",
+            params: { ZgradaId: ZgradaId, Godina: Godina, Mjesec: Mjesec }
+        });
+    }
+
+    
+    var createEmptyPrihodRashod = function (ZgradaId, Godina) {
+        return $http({
+            url: '../api/data/createEmptyPrihodRashod',
             method: "GET",
             params: { ZgradaId: ZgradaId, Godina: Godina }
         });
@@ -166,7 +174,8 @@
         getPr: getPr,
         selectedPosebniDio: selectedPosebniDio,
         selectedStan: selectedStan,
-        createPricuva: createPricuva
+        createPricuvaZaMjesec: createPricuvaZaMjesec,
+        createEmptyPrihodRashod: createEmptyPrihodRashod
     }
 
 }]);

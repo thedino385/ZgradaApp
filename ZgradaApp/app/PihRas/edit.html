@@ -14,14 +14,17 @@
         </div>
         <select ng-model="SelectedGodina" ng-options="c.Godina as c.Godina for c in godine"
                 ng-change="godinaChanged()" class="form-control" style="margin-bottom: 10px"></select>
-        <table style="width: 100%">
+        
+        <input type="number" class="form-control" ng-model="novaGodina" />
+        <input type="button" class="form-control" value="Doaj godinu" ng-click="dodajGodinu()" />
+        <table style="width: 100%" ng-show="tableVisible">
             <tr>
                 <td>
                     <table class="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>
-                                    <b>Godina: 2017</b>
+                                    <b>Godina: {{SelectedGodina}}</b>
                                 </th>
                                 <th style="text-align: center; vertical-align: middle">Prihodi</th>
                                 <th style="text-align: center; vertical-align: middle">Iznos</th>
@@ -30,63 +33,63 @@
                         <tbody>
                             <tr>
                                 <td style="vertical-align: middle">1.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj1')">od 01.01. do 31.01.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('1')">od 01.01. do 31.01.</a></td>
+                                <td style="vertical-align: middle">{{obj.PlacenoPrihodMj1 | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">2.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj2')">od 01.02. do {{getFebDay()}}.02.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('2')">od 01.02. do {{getFebDay()}}.02.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj2}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">3.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj3')">od 01.03. do 31.03.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('3')">od 01.03. do 31.03.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj3}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">4.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj4')">od 01.04. do 30.04.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('4')">od 01.04. do 30.04.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj4}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">5.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj5')">od 01.05. do 31.05.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('5')">od 01.05. do 31.05.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj5}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">6.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj6')">od 01.06. do 30.06.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('6')">od 01.06. do 30.06.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj6}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">7.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj7')">od 01.07. do 31.07.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('7')">od 01.07. do 31.07.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj7}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">8.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj8')">od 01.08. do 31.08.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('8')">od 01.08. do 31.08.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj8}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">9.</td>
                                 <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj9')">od 01.09. do 30.09.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj9}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">10.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj10')">od 01.10. do 31.10.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('10')">od 01.10. do 31.10.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj10}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">11.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj11')">od 01.11. do 30.11.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('11')">od 01.11. do 30.11.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj11}}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">12.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('Mj12')">od 01.12. do 31.12.</a></td>
-                                <td style="vertical-align: middle"></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('12')">od 01.12. do 31.12.</a></td>
+                                <td style="vertical-align: middle">{{PlacenoPrihodMj12}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -195,6 +198,8 @@
             </tr>
         </table>
 
-
+        <hr />
+        <input ng-click="saveAll()" type="button" class="btn btn-primary pull-right" value="Spremi" />
+        <a ng-click="cancelReload()" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;
     </div>
 </div>
