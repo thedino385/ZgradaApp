@@ -22,11 +22,13 @@
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_ZaduzivanjePoMj_Zgrade" />
         <EntityTypeShape EntityType="ZgradaDbModel.Stanovi_PosebniDijelovi" Width="1.5" PointX="4.625" PointY="17.625" />
         <AssociationConnector Association="ZgradaDbModel.FK_Stanovi_PosebniDijelovi_Stanovi" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PricuvaMjesec" Width="1.5" PointX="0.75" PointY="14.125" />
-        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PricuvaMjesec_Zgrade" />
         <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi" Width="1.5" PointX="7.375" PointY="11.375" />
         <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodiDetails" Width="1.5" PointX="9.625" PointY="15.375" />
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" />
+        <EntityTypeShape EntityType="ZgradaDbModel.KarticeSuvlasnika" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaGod" Width="1.5" PointX="9.375" PointY="11.5" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaMj" Width="1.5" PointX="11.625" PointY="11" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -74,7 +74,6 @@
             }
         )
         $scope.godinaChanged = function () {
-            alert($scope.SelectedGodina);
             $scope.prihodiRashodi.forEach(function (pr) {
                 if (pr.Godina == $scope.SelectedGodina)
                     $scope.obj = pr;

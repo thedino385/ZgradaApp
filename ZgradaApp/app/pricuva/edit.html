@@ -6,8 +6,10 @@
         </div>
         <select ng-model="SelectedGodina" ng-options="c.Godina as c.Godina for c in godine"
                 ng-change="godinaChanged()" class="form-control" style="margin-bottom: 10px"></select>
-        {{get()}}
-        <table class="table table-hover table-striped table-bordered">
+
+        <input type="number" class="form-control" ng-model="novaGodina" />
+        <input type="button" class="form-control" value="Doaj godinu" ng-click="dodajGodinu()" />
+        <table class="table table-hover table-striped table-bordered" ng-show="tableVisible">
             <thead>
                 <tr>
                     <th style="vertical-align: middle">
@@ -62,17 +64,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="pr in zgrada.Zgrade_PricuvaMjesec">
+                <tr ng-repeat="stan in zgrada.Stanovi">
                     <td style="vertical-align: middle">
-                        <div ng-repeat="stanar in zgrada.Stanovi_Stanari | filter: { stanar.Id: pr.VlasnikId }">
-                            {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
+                            <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                                {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
                         </div>
                     </td>
                     <td style="vertical-align: middle">
-                        <div ng-repeat="stan in zgrada.Stanovi | filter :{ stan.Id: pr.StanId}">
                             <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
                                 <div>{{dio.Oznaka}}</div>
-                            </div>
                         </div>
                     </td>
                     <td style="vertical-align: middle"></td>

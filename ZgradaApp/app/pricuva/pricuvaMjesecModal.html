@@ -61,10 +61,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="pr in pricuvaMjesec">
+                    <tr ng-repeat="pr in pricuveZaZgraduGodina.PricuvaMj">
                         <td style="vertical-align: middle">
                             <div ng-repeat="stan in zgrada.Stanovi | filter: { Id: pr.StanId }">
-                                <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Id: pr.VlasnikId }">
+                                <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
                                     {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
                                 </div>
                             </div>

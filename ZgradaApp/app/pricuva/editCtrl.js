@@ -1,16 +1,67 @@
 ﻿angularApp.controller('pricuvaEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'DataService',
     function ($scope, $rootScope, $routeParams, $location, $uibModal, DataService) {
 
-        $scope.godina = 2017;
+        // $scope.pricuveZaZgraduSveGodine - sve godine za zgradu
+
+        $scope.SelectedGodina = '';
+        var gList = [];
+        var g = {};
+        $scope.pricuveZaZgraduGodina = {}; // ovo je object za izabranu godinu
+        $scope.zgrada = {};
+
+        $scope.godine = [];
+
+        $scope.novaGodina = null; // godina koju user dodaje
+        $scope.dodajGodinu = function () {
+            if (isFinite($scope.novaGodina)) {
+                // kreiraj prazan prihodRashod za Tvrtku i godinu
+                DataService.createEmptyPricuva($scope.zgrada.Id, $scope.novaGodina).then(
+                    function (result) {
+                        $scope.pricuveZaZgraduGodina = result.data;
+                        //$scope.obj.Status = 'a';
+                        $scope.SelectedGodina = $scope.novaGodina
+                        $scope.tableVisible = true;
+                        g = { Godina: $scope.novaGodina };
+                        $scope.godine.push(g);
+                        //console.log(pricuveZaZgraduGodina);
+                    },
+                    function (result) {
+                        // err
+                    }
+
+                )
+            }
+        }
+
 
         if ($routeParams) {
             $rootScope.loaderActive = true;
-            DataService.getZgrada($routeParams.id).then(
+            DataService.getPricuva($routeParams.id).then(
                 function (result) {
                     // on success
-                    $scope.zgrada = result.data;
-                    $rootScope.loaderActive = false;
-
+                    DataService.getZgrada($routeParams.id).then(
+                        function (resultZgrada) {
+                            $scope.zgrada = resultZgrada.data;
+                            $scope.pricuveZaZgraduSveGodine = result.data; // ovo su sve godine selected zgrade
+                            $rootScope.loaderActive = false;
+                            if ($scope.pricuveZaZgraduSveGodine.length > 0) {
+                                $scope.pricuveZaZgraduSveGodine.forEach(function (g) {
+                                    g = { Godina: g.Godina };
+                                    gList.push(g)
+                                });
+                                $scope.godine = gList;
+                                $scope.SelectedGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1].Godina;
+                                $scope.pricuveZaZgraduGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1]; // selektiraj zadnjega
+                                $scope.tableVisible = true;
+                            }
+                            else {
+                                $scope.tableVisible = false;
+                            }
+                        },
+                        function (resultZgrada) {
+                            alert('Greska kod dohvacanja podataka za zgradu');
+                        },
+                    )
                     // sa servera stile lista pricuva (zaduzenja) po mjesecima
                     // za godisnji view potrebno je pozbrajati property-je - to jos ne znam kako
                     // ako je kolekcija prazna, nemoj nista ispisivati
@@ -23,54 +74,60 @@
                     //getpricuvaZaGodinu($routeParams.id, 2017);
                 },
                 function (result) {
-                    // on errr
+                    // on errr - err kod pricuve
+                    alert('Greska kod dohvacanja podataka za pricuvu');
                     $rootScope.errMsg = result.Message;
                 }
             );
         }
 
-        function CreatePricuvaZaMjesec(mjesec) {
-            DataService.createPricuvaZaMjesec($scope.zgrada.Id, $scope.godina, mjesec).then(
-                function (result) {
-                    //console.log("finished" + result.data);
-                    return result.data; // ovo je prazan mjesec
-                },
-                function (result) {
-                    // err
-                    alert('err creating pricuva');
-                }
-            )
-        }
-
-        $scope.openMjesecno = function (mjesec) {
-            var pricuvaMjesec = [];
-            $scope.zgrada.Zgrade_PricuvaMjesec.forEach(function (pricuva) {
-                if (pricuva.Mjesec == mjesec && pricuva.Godina == $scope.godina)
-                    pricuvaMjesec = pricuva;
+        $scope.godinaChanged = function () {
+            alert('ch');
+            $scope.pricuveZaZgraduSveGodine.forEach(function (pr) {
+                if (pr.Godina == $scope.SelectedGodina)
+                    $scope.pricuveZaZgraduGodina = pr;
             });
-
-            if (pricuvaMjesec.length == 0) {
-                DataService.createPricuvaZaMjesec($scope.zgrada.Id, $scope.godina, mjesec).then(
-                    function (result) {
-                        //console.log(result.data);
-                        //return result.data; // ovo je prazan mjesec
-                        openModal(result.data, mjesec);
-                    },
-                    function (result) {
-                        // err
-                        alert('err creating pricuva');
-                    }
-                )
-                //return CreatePricuvaZaMjesec(mjesec);
-            }
-            else
-                openModal(pricuvaMjesec, mjesec);
         };
 
+        
+        //$scope.openMjesecno = function (mjesec) {
+        //    if ($scope.SelectedGodina == '') {
+        //        alert('Odaverite godinu');
+        //        return;
+        //    }
 
-        //$scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0, Vlasnik: false }
-        //$scope.openModal = function (mjesec) {
-        function openModal(pricuvaMjesec, mjesec) {
+        //    var pricuvaMjesec = [];
+        //    //$scope.zgrada.Zgrade_PricuvaMjesec.forEach(function (pricuva) {
+        //    //    if (pricuva.Mjesec == mjesec && pricuva.Godina == $scope.godina)
+        //    //        pricuvaMjesec = pricuva;
+        //    //});
+
+        //    if (pricuvaMjesec.length == 0) {
+        //        DataService.createPricuvaZaMjesec($scope.zgrada.Id, $scope.godina, mjesec).then(
+        //            function (result) {
+        //                //console.log(result.data);
+        //                //return result.data; // ovo je prazan mjesec
+        //                openModal(result.data, mjesec);
+        //            },
+        //            function (result) {
+        //                // err
+        //                alert('err creating pricuva');
+        //            }
+        //        )
+        //        //return CreatePricuvaZaMjesec(mjesec);
+        //    }
+        //    else
+        //        openModal(pricuvaMjesec, mjesec);
+        //};
+
+
+        
+        //function openModal(pricuvaMjesec, mjesec) {
+        $scope.openMjesecno = function (mjesec) {
+            if ($scope.SelectedGodina == '') {
+                alert('Odaverite godinu');
+                return;
+            }
 
             var modalInstance = $uibModal.open({
                 templateUrl: '../app/pricuva/pricuvaMjesecModal.html',
@@ -82,13 +139,13 @@
                 backdrop: 'static',
                 keyboard: false,
                 resolve: {
-                    pricuvaMjesec: function () {
-                        return pricuvaMjesec;
+                    pricuveZaZgraduGodina: function () { 
+                        return $scope.pricuveZaZgraduGodina;
                     },
                     zgrada: function () {
                         return $scope.zgrada;
                     },
-                    godina: function () { return $scope.godina; },
+                    godina: function () { return $scope.SelectedGodina; },
                     mjesec: function () { return mjesec; }
                 }
             });

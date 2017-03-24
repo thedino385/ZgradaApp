@@ -479,9 +479,25 @@ namespace ZgradaApp.Controllers
             return Ok(new PrihodiRashodi { ZgradaId = ZgradaId, Godina = Godina });
         }
 
+
         [HttpGet]
-        [Route("api/data/createPricuva")]
-        public async Task<IHttpActionResult> CreatePricuvaZaMjesec(int ZgradaId, int Godina, int Mjesec)
+        [Route("api/data/getpricuva")]
+        public async Task<IHttpActionResult> GetPricuva(int ZgradaId)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+            var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == ZgradaId && p.CompanyId == companyId);
+            if (zgrada.CompanyId == companyId)
+            {
+                var pr = await _db.PricuvaGod.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
+                return Ok(pr);
+            }
+            return InternalServerError();
+        }
+
+        [HttpGet]
+        [Route("api/data/createEmptyPricuva")]
+        public async Task<IHttpActionResult> CreateEmptyPricuva(int ZgradaId, int Godina)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
@@ -489,30 +505,42 @@ namespace ZgradaApp.Controllers
             if (zgrada.CompanyId != companyId)
                 return InternalServerError();
 
-            List<Zgrade_PricuvaMjesec> list = new List<Zgrade_PricuvaMjesec>();
+            PricuvaGod god = new PricuvaGod { ZgradaId = ZgradaId, Godina = Godina };
+            // sad napuni childove sa stanovima
             foreach (var stan in zgrada.Stanovi)
             {
-                var vlasnik = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && p.Vlasnik == true);
-                list.Add(new Zgrade_PricuvaMjesec
+
+                var vlasnik = _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && (p.Vlasnik ?? false));
+                for (int i = 1; i <= 12; i++)
                 {
-                    Id = 0,
-                    Godina = Godina,
-                    Mjesec = Mjesec,
-                    ZgradaId = ZgradaId,
-                    StanId = stan.Id,
-                    VlasnikId = vlasnik.Id,
-                });
+                    god.PricuvaMj.Add(new PricuvaMj
+                    {
+                        StanId = stan.Id,
+                        Mjesec = i,
+                        DugPretplata = 0,
+                        StanjeOd = 0,
+                        Uplaceno = 0,
+                        VlasnikId = vlasnik.Id,
+                        Zaduzenje = 0
+                    });
+                }
             }
-            // test
-            var jozo = list.FirstOrDefault(p => p.VlasnikId == 1);
-            jozo.DugPretplata = 10;
-            jozo.Zaduzenje = 20;
+            
+           
 
-            var dino = list.FirstOrDefault(p => p.VlasnikId == 2);
-            dino.DugPretplata = 50;
-            dino.Zaduzenje = 70;
-
-            return Ok(list);
+            // napuniti childove za mjesec i stanove
+            //foreach (var stan in zgrada.Stanovi)
+            //{
+            //    var vlasnik = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && p.Vlasnik == true);
+            //    var pricuvaMj = new List<PricuvaMj>();
+            //    list.Add(new PricuvaGod
+            //    {
+            //        Id = 0,
+            //        Godina = Godina,
+            //        ZgradaId = ZgradaId,
+            //    });
+            //}
+            return Ok(god);
         }
     }
 }

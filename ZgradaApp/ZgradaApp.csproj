@@ -203,6 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="KarticeSuvlasnika.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="Kompanije.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -213,6 +216,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="PosedniDijelovi.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PricuvaGod.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PricuvaMj.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="PrihodiRashodi.cs">
@@ -239,9 +248,6 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Zgrade.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Zgrade_PricuvaMjesec.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade_Pripadci.cs">
