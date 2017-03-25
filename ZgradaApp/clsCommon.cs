@@ -62,5 +62,21 @@ namespace ZgradaApp
     {
         public string Status { get; set; }
     }
-    
+
+    public partial class PricuvaGod
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class PricuvaMj
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class KS
+    {
+        public decimal Zaduzenje { get; set; }
+        public decimal Stanje { get; set; }
+        public string Status { get; set; }
+    }
 }

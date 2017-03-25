@@ -212,6 +212,9 @@
     <Compile Include="Korisnici.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="KS.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -270,6 +273,8 @@
     <Content Include="app\PihRas\modalPrihodCtrl.js" />
     <Content Include="app\pricuva\edit.html" />
     <Content Include="app\pricuva\editCtrl.js" />
+    <Content Include="app\pricuva\ksModal.html" />
+    <Content Include="app\pricuva\ksModalCtrl.js" />
     <Content Include="app\pricuva\pricuvaMjesecModal.html" />
     <Content Include="app\pricuva\pricuvaMjesecModalCtrl.js" />
     <Content Include="app\Services\DataService.js" />

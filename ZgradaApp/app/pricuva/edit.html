@@ -67,15 +67,20 @@
                 <tr ng-repeat="stan in zgrada.Stanovi">
                     <td style="vertical-align: middle">
                             <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
-                                {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
+                                <a href="" ng-click="openKs(stanar.Id)">{{stanar.Ime}}&nbsp;{{stanar.Prezime}}</a>
                         </div>
                     </td>
                     <td style="vertical-align: middle">
                             <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
                                 <div>{{dio.Oznaka}}</div>
-                        </div>
+                            </div>
                     </td>
-                    <td style="vertical-align: middle"></td>
+                    <td style="vertical-align: middle">
+                        <!--Dug/pretplata-->
+                        <!--<div ng-repeat="dug in pricuveZaZgraduGodina.PricuvaMj | filter: {StanId: stan.Id}">-->
+                            {{zbrojiDugove(stan.Id)}}
+                        <!--</div>-->
+                    </td>
                     <td style="vertical-align: middle"></td>
                     <td style="vertical-align: middle"></td>
                     <td style="vertical-align: middle">{{pr.Mj1}}</td>

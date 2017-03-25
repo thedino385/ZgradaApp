@@ -5,92 +5,105 @@
         <h4 class="modal-title">Godina: {{godina}}  Mjesec: {{mjesec}}</h4>
     </div>
     <div class="modal-body">
-
-        <md-radio-group ng-model="pricuvaMjesec.ObracunTip">
+        <md-radio-group ng-model="tipObr">
 
             <md-radio-button value="0" class="md-primary">Po m2</md-radio-button>
             <md-radio-button value="1">Raspodjela od ukupno</md-radio-button>
 
         </md-radio-group>
 
-       
-        <div class='form-horizontal'  ng-show="pricuvaMjesec.ObracunTip == 0">
+
+        <div class='form-horizontal' ng-show="tipObr == 0">
             <div class="form-group row">
                 <div class="col-sm-2">
                     <label for="pripadakId">Cijena po m2</label>
                 </div>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" ng-model="pricuvaMjesec.ObracunTipM2" />
+                    <input type="text" class="form-control" ng-model="CijenaPoM2" />
                 </div>
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6" style="align-content: flex-start">
+                    <a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()">Kreiraj</a>
+                </div>
             </div>
-       </div>
-        <div class='form-horizontal' ng-show="pricuvaMjesec.ObracunTip == 1">
+        </div>
+        <div class='form-horizontal' ng-show="tipObr == 1">
             <div class="form-group row">
                 <div class="col-sm-2">
                     <label for="pripadakId">Ukupna cijena</label>
                 </div>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" ng-model="pricuvaMjesec.ObracunTipUkupno" />
+                    <input type="text" class="form-control" ng-model="CijenaUkupno" />
                 </div>
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6" style="align-content: flex-start">
+                    <a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()">Kreiraj</a>
+                </div>
             </div>
         </div>
 
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th style="vertical-align: middle">
-                            Ime i prezime
-                        </th>
-                        <th style="vertical-align: middle">
-                            Posebni dio
-                        </th>
-                        <th style="vertical-align: middle">
-                            Dug/pretplata
-                        </th>
-                        <th style="vertical-align: middle">
-                            Zaduženje
-                        </th>
-                        <th style="vertical-align: middle">
-                            Uplaćeno
-                        </th>
-                        <th style="vertical-align: middle">
-                            Stanje od XX
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="pr in pricuveZaZgraduGodina.PricuvaMj">
-                        <td style="vertical-align: middle">
-                            <div ng-repeat="stan in zgrada.Stanovi | filter: { Id: pr.StanId }">
-                                <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
-                                    {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
-                                </div>
-                            </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="vertical-align: middle">
+                        Ime i prezime
+                    </th>
+                    <th style="vertical-align: middle">
+                        Posebni dio
+                    </th>
+                    <th style="vertical-align: middle">
+                        Dug/pretplata
+                    </th>
+                    <th style="vertical-align: middle">
+                        Zaduženje
+                    </th>
+                    <th style="vertical-align: middle">
+                        Uplaćeno
+                    </th>
+                    <th style="vertical-align: middle">
+                        Stanje od XX
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--<tr ng-repeat="pr in pricuveZaZgraduGodina.PricuvaMj">-->
+                <tr ng-repeat="stan in zgrada.Stanovi">
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
+                            <div>{{dio.Oznaka}}</div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                            {{rec.DugPretplata | number: 2}}
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                            {{rec.Zaduzenje | number: 2}}
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                            {{rec.Uplaceno | number: 2}}
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { Mjesec: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                            {{rec.StanjeOd | number: 2}}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-                        </td>
-                        <td style="vertical-align: middle">
-                            <div ng-repeat="stan in zgrada.Stanovi | filter: { Id: pr.StanId}">
-                                <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
-                                    <div>{{dio.Oznaka}}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td style="vertical-align: middle"></td>
-                        <td style="vertical-align: middle"></td>
-                        <td style="vertical-align: middle"></td>
-                        <td style="vertical-align: middle">
-                            {{pr.DugPretplata + pr.Zaduzenje}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
+    </div>
     <div class="modal-footer">
         <input type="button" class="btn btn-default" value="Odustani" ng-click="cancel()" />
-        <input type="submit" class="btn btn-primary" value="Spremi" />
+        <input type="submit" class="btn btn-primary" ng-disabled="snimanjeDisabled" value="Spremi" />
 
     </div>
 </div>

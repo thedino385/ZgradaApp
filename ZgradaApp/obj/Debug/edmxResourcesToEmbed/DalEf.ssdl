@@ -38,6 +38,18 @@
     <Property Name="UserGuid" Type="varchar" MaxLength="128" />
     <Property Name="MasterAcc" Type="bit" />
   </EntityType>
+  <EntityType Name="KS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PricuvaGodId" Type="int" Nullable="false" />
+    <Property Name="StanarId" Type="int" Nullable="false" />
+    <Property Name="Mjesec" Type="int" />
+    <Property Name="Godina" Type="int" />
+    <Property Name="Datum" Type="datetime" />
+    <Property Name="Uplata" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
   <EntityType Name="PosedniDijelovi">
     <Key>
       <PropertyRef Name="Id" />
@@ -69,6 +81,7 @@
     <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TipObracuna" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="PrihodiRashodi">
     <Key>
@@ -250,6 +263,18 @@
     <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
+  <Association Name="FK_KS_PricuvaGod">
+    <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
+    <End Role="KS" Type="Self.KS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaGod">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="KS">
+        <PropertyRef Name="PricuvaGodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PricuvaMj_PricuvaGod">
     <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
     <End Role="PricuvaMj" Type="Self.PricuvaMj" Multiplicity="*" />
@@ -350,6 +375,7 @@
     <EntitySet Name="KarticeSuvlasnika" EntityType="Self.KarticeSuvlasnika" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KS" EntityType="Self.KS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaGod" EntityType="Self.PricuvaGod" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaMj" EntityType="Self.PricuvaMj" Schema="dbo" store:Type="Tables" />
@@ -363,6 +389,10 @@
     <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_ZaduzivanjePoMj" EntityType="Self.Zgrade_ZaduzivanjePoMj" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_KS_PricuvaGod" Association="Self.FK_KS_PricuvaGod">
+      <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+      <End Role="KS" EntitySet="KS" />
+    </AssociationSet>
     <AssociationSet Name="FK_PricuvaMj_PricuvaGod" Association="Self.FK_PricuvaMj_PricuvaGod">
       <End Role="PricuvaGod" EntitySet="PricuvaGod" />
       <End Role="PricuvaMj" EntitySet="PricuvaMj" />

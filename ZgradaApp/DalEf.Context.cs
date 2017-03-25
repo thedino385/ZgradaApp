@@ -41,5 +41,6 @@ namespace ZgradaApp
         public virtual DbSet<KarticeSuvlasnika> KarticeSuvlasnika { get; set; }
         public virtual DbSet<PricuvaGod> PricuvaGod { get; set; }
         public virtual DbSet<PricuvaMj> PricuvaMj { get; set; }
+        public virtual DbSet<KS> KS { get; set; }
     }
 }

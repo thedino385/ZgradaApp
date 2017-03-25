@@ -2,6 +2,7 @@
     function ($scope, $rootScope, $routeParams, $location, $uibModal, DataService) {
 
         // $scope.pricuveZaZgraduSveGodine - sve godine za zgradu
+        // $scope.pricuveZaZgraduGodina - jedna godina za zgradu
 
         $scope.SelectedGodina = '';
         var gList = [];
@@ -191,5 +192,55 @@
             //$scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0, Vlasnik: false };
         }; // end of stanar modal
 
-        
+        $scope.zbrojiDugove = function (stanId) {
+            if ($scope.pricuveZaZgraduGodina.PricuvaMj == undefined)
+                return;
+            var dug = 0;
+            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
+                if (rec.StanId == stanId)
+                    dug = dug + rec.DugPretplata
+            });
+            return dug;
+        }
+
+        // _______________________________________________________________
+        //      KS
+        // _______________________________________________________________
+        $scope.openKs = function (stanarId) {
+            if ($scope.SelectedGodina == '') {
+                alert('Odaverite godinu');
+                return;
+            }
+            // za cancel event
+            var tempObj = {};
+            angular.copy($scope.pricuveZaZgraduGodina, tempObj);
+
+            var modalInstance = $uibModal.open({
+                templateUrl: '../app/pricuva/ksModal.html',
+                controller: 'ksModalCtrl',
+                size: 'lg',
+                backdrop: 'static',
+                keyboard: false,
+                resolve: {
+                    pricuveZaZgraduGodina: function () {
+                        return $scope.pricuveZaZgraduGodina;
+                    },
+                    zgrada: function () {
+                        return $scope.zgrada;
+                    },
+                    godina: function () { return $scope.SelectedGodina; },
+                    stanarId: function () { return stanarId; },
+                }
+            });
+
+            modalInstance.result.then(function (item) {
+                console.log("modal result fn");
+                // Save
+                // ovdje ne moram nista radiit, modal controller vodi brigu o CRUD-u za KS
+
+            }, function () {
+                // modal dismiss = Cancel
+                angular.copy(tempObj, $scope.pricuveZaZgraduGodina);
+            });
+        }; // end of ks modal
 }]);

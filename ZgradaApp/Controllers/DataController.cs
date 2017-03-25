@@ -505,7 +505,7 @@ namespace ZgradaApp.Controllers
             if (zgrada.CompanyId != companyId)
                 return InternalServerError();
 
-            PricuvaGod god = new PricuvaGod { ZgradaId = ZgradaId, Godina = Godina };
+            PricuvaGod god = new PricuvaGod { ZgradaId = ZgradaId, Godina = Godina, Status = "a" };
             // sad napuni childove sa stanovima
             foreach (var stan in zgrada.Stanovi)
             {
@@ -517,29 +517,37 @@ namespace ZgradaApp.Controllers
                     {
                         StanId = stan.Id,
                         Mjesec = i,
-                        DugPretplata = 0,
+                        DugPretplata = 100,
                         StanjeOd = 0,
                         Uplaceno = 0,
                         VlasnikId = vlasnik.Id,
-                        Zaduzenje = 0
+                        Zaduzenje = 0,
+                        Status = "a",
+                        TipObracuna = 0
                     });
                 }
+                // kreirati i prazne kartice suvlasnika za godinu (za svakog suvlacnika)
+                // neka budu prazne, user ce dodati mjesece i uplate, al da ima za godinu za koju
+                // postoji PricuvaGod
+                god.KS.Add(new KS
+                {
+                    StanarId = vlasnik.Id,
+                    Godina = Godina,
+                    Datum = null,
+                    Uplata = 0,
+                    Status = "a"
+                });
             }
-            
-           
 
-            // napuniti childove za mjesec i stanove
-            //foreach (var stan in zgrada.Stanovi)
-            //{
-            //    var vlasnik = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && p.Vlasnik == true);
-            //    var pricuvaMj = new List<PricuvaMj>();
-            //    list.Add(new PricuvaGod
-            //    {
-            //        Id = 0,
-            //        Godina = Godina,
-            //        ZgradaId = ZgradaId,
-            //    });
-            //}
+            // ovo je za test
+            int a = 1;
+            foreach (var item in god.PricuvaMj)
+            {
+                if (item.StanId == 57)
+                    item.DugPretplata += a;
+            }
+
+
             return Ok(god);
         }
     }

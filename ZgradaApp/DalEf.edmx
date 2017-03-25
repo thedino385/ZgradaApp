@@ -43,6 +43,18 @@
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
           <Property Name="MasterAcc" Type="bit" />
         </EntityType>
+        <EntityType Name="KS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PricuvaGodId" Type="int" Nullable="false" />
+          <Property Name="StanarId" Type="int" Nullable="false" />
+          <Property Name="Mjesec" Type="int" />
+          <Property Name="Godina" Type="int" />
+          <Property Name="Datum" Type="datetime" />
+          <Property Name="Uplata" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="PosedniDijelovi">
           <Key>
             <PropertyRef Name="Id" />
@@ -74,6 +86,7 @@
           <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TipObracuna" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="PrihodiRashodi">
           <Key>
@@ -255,6 +268,18 @@
           <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <Association Name="FK_KS_PricuvaGod">
+          <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
+          <End Role="KS" Type="Self.KS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaGod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KS">
+              <PropertyRef Name="PricuvaGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PricuvaMj_PricuvaGod">
           <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
           <End Role="PricuvaMj" Type="Self.PricuvaMj" Multiplicity="*" />
@@ -355,6 +380,7 @@
           <EntitySet Name="KarticeSuvlasnika" EntityType="Self.KarticeSuvlasnika" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KS" EntityType="Self.KS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaGod" EntityType="Self.PricuvaGod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaMj" EntityType="Self.PricuvaMj" Schema="dbo" store:Type="Tables" />
@@ -368,6 +394,10 @@
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_Pripadci" EntityType="Self.Zgrade_Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_ZaduzivanjePoMj" EntityType="Self.Zgrade_ZaduzivanjePoMj" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_KS_PricuvaGod" Association="Self.FK_KS_PricuvaGod">
+            <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+            <End Role="KS" EntitySet="KS" />
+          </AssociationSet>
           <AssociationSet Name="FK_PricuvaMj_PricuvaGod" Association="Self.FK_PricuvaMj_PricuvaGod">
             <End Role="PricuvaGod" EntitySet="PricuvaGod" />
             <End Role="PricuvaMj" EntitySet="PricuvaMj" />
@@ -453,6 +483,11 @@
           <AssociationSet Name="FK_PricuvaMj_PricuvaGod" Association="ZgradaDbModel.FK_PricuvaMj_PricuvaGod">
             <End Role="PricuvaGod" EntitySet="PricuvaGod" />
             <End Role="PricuvaMj" EntitySet="PricuvaMj" />
+          </AssociationSet>
+          <EntitySet Name="KS" EntityType="ZgradaDbModel.KS" />
+          <AssociationSet Name="FK_KS_PricuvaGod" Association="ZgradaDbModel.FK_KS_PricuvaGod">
+            <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+            <End Role="KS" EntitySet="KS" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Kompanije">
@@ -789,6 +824,7 @@
           <Property Name="Godina" Type="Int32" Nullable="false" />
           <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PricuvaMj" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaMj" />
+          <NavigationProperty Name="KS" Relationship="ZgradaDbModel.FK_KS_PricuvaGod" FromRole="PricuvaGod" ToRole="KS" />
         </EntityType>
         <EntityType Name="PricuvaMj">
           <Key>
@@ -804,6 +840,7 @@
           <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaMj" ToRole="PricuvaGod" />
+          <Property Name="TipObracuna" Type="Int16" Nullable="false" />
         </EntityType>
         <Association Name="FK_PricuvaMj_PricuvaGod">
           <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
@@ -813,6 +850,31 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PricuvaMj">
+              <PropertyRef Name="PricuvaGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="KS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PricuvaGodId" Type="Int32" Nullable="false" />
+          <Property Name="StanarId" Type="Int32" Nullable="false" />
+          <Property Name="Mjesec" Type="Int32" />
+          <Property Name="Godina" Type="Int32" />
+          <Property Name="Datum" Type="DateTime" Precision="3" />
+          <Property Name="Uplata" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_KS_PricuvaGod" FromRole="KS" ToRole="PricuvaGod" />
+        </EntityType>
+        <Association Name="FK_KS_PricuvaGod">
+          <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
+          <End Type="ZgradaDbModel.KS" Role="KS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaGod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KS">
               <PropertyRef Name="PricuvaGodId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1077,6 +1139,7 @@
           <EntitySetMapping Name="PricuvaMj">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaMj">
               <MappingFragment StoreEntitySet="PricuvaMj">
+                <ScalarProperty Name="TipObracuna" ColumnName="TipObracuna" />
                 <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
                 <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
                 <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
@@ -1084,6 +1147,19 @@
                 <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
                 <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
                 <ScalarProperty Name="StanId" ColumnName="StanId" />
+                <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KS">
+            <EntityTypeMapping TypeName="ZgradaDbModel.KS">
+              <MappingFragment StoreEntitySet="KS">
+                <ScalarProperty Name="Uplata" ColumnName="Uplata" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Godina" ColumnName="Godina" />
+                <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
+                <ScalarProperty Name="StanarId" ColumnName="StanarId" />
                 <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

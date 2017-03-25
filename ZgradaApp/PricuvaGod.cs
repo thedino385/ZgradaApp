@@ -18,6 +18,7 @@ namespace ZgradaApp
         public PricuvaGod()
         {
             this.PricuvaMj = new HashSet<PricuvaMj>();
+            this.KS = new HashSet<KS>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace ZgradaApp
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PricuvaMj> PricuvaMj { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KS> KS { get; set; }
     }
 }

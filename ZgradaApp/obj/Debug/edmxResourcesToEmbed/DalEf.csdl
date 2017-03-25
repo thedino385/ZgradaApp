@@ -49,6 +49,11 @@
       <End Role="PricuvaGod" EntitySet="PricuvaGod" />
       <End Role="PricuvaMj" EntitySet="PricuvaMj" />
     </AssociationSet>
+    <EntitySet Name="KS" EntityType="ZgradaDbModel.KS" />
+    <AssociationSet Name="FK_KS_PricuvaGod" Association="ZgradaDbModel.FK_KS_PricuvaGod">
+      <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+      <End Role="KS" EntitySet="KS" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -384,6 +389,7 @@
     <Property Name="Godina" Type="Int32" Nullable="false" />
     <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PricuvaMj" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaMj" />
+    <NavigationProperty Name="KS" Relationship="ZgradaDbModel.FK_KS_PricuvaGod" FromRole="PricuvaGod" ToRole="KS" />
   </EntityType>
   <EntityType Name="PricuvaMj">
     <Key>
@@ -399,6 +405,7 @@
     <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaMj" ToRole="PricuvaGod" />
+    <Property Name="TipObracuna" Type="Int16" Nullable="false" />
   </EntityType>
   <Association Name="FK_PricuvaMj_PricuvaGod">
     <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
@@ -408,6 +415,31 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="PricuvaMj">
+        <PropertyRef Name="PricuvaGodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="KS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PricuvaGodId" Type="Int32" Nullable="false" />
+    <Property Name="StanarId" Type="Int32" Nullable="false" />
+    <Property Name="Mjesec" Type="Int32" />
+    <Property Name="Godina" Type="Int32" />
+    <Property Name="Datum" Type="DateTime" Precision="3" />
+    <Property Name="Uplata" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_KS_PricuvaGod" FromRole="KS" ToRole="PricuvaGod" />
+  </EntityType>
+  <Association Name="FK_KS_PricuvaGod">
+    <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
+    <End Type="ZgradaDbModel.KS" Role="KS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaGod">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="KS">
         <PropertyRef Name="PricuvaGodId" />
       </Dependent>
     </ReferentialConstraint>

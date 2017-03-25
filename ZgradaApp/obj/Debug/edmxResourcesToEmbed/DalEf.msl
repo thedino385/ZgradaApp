@@ -255,6 +255,7 @@
     <EntitySetMapping Name="PricuvaMj">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaMj">
         <MappingFragment StoreEntitySet="PricuvaMj">
+          <ScalarProperty Name="TipObracuna" ColumnName="TipObracuna" />
           <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
           <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
           <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
@@ -262,6 +263,19 @@
           <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
           <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
           <ScalarProperty Name="StanId" ColumnName="StanId" />
+          <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KS">
+      <EntityTypeMapping TypeName="ZgradaDbModel.KS">
+        <MappingFragment StoreEntitySet="KS">
+          <ScalarProperty Name="Uplata" ColumnName="Uplata" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="Godina" ColumnName="Godina" />
+          <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
+          <ScalarProperty Name="StanarId" ColumnName="StanarId" />
           <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
