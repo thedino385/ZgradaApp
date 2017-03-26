@@ -7,7 +7,7 @@
         $scope.SelectedGodina = '';
         var gList = [];
         var g = {};
-        $scope.pricuveZaZgraduGodina = {}; // ovo je object za izabranu godinu
+        $scope.pricuveZaZgraduGodina = { KS: [] }; // ovo je object za izabranu godinu
         $scope.zgrada = {};
 
         $scope.godine = [];
@@ -129,7 +129,8 @@
                 alert('Odaverite godinu');
                 return;
             }
-
+            var tempObj = {};
+            angular.copy($scope.pricuveZaZgraduGodina, tempObj);
             var modalInstance = $uibModal.open({
                 templateUrl: '../app/pricuva/pricuvaMjesecModal.html',
                 //controller: function ($scope, $uibModalInstance, item) {
@@ -153,55 +154,30 @@
 
             modalInstance.result.then(function (item) {
                 console.log("modal result fn");
-                if (item.Id == 0) {
-                    // add new
-                    var maxId = 0;
-                    $scope.zgrada.Zgrade_PricuvaMjesec.forEach(function (obj) {
-                        if (obj.Id > maxId)
-                            maxId = obj.Id;
-                    });
-                    item.Id = maxId + 1;
-                    $scope.zgrada.Zgrade_PricuvaMjesec.push(item);
-                    item.Status = "a";
-                }
-                else {
-                    $scope.zgrada.Zgrade_PricuvaMjesec.forEach(function (obj) {
-                        if (obj.Id == item.Id)
-                            obj = item;
-                    });
-                item.Status = "u";
-                }
-
+                // sve se radi u modl controlleru
             }, function () {
                 // modal dismiss
-                //if (item.Id > 0) {
-                //    // vrati objekt u prethodno stanje (tempObj)
-                //    $scope.stan.Stanovi_Stanari.forEach(function (stanar) {
-                //        if (stanar.Id == item.Id) {
-                //            stanar.Ime = tempObj.Ime;
-                //            stanar.Prezime = tempObj.Prezime;
-                //            stanar.OIB = tempObj.OIB;
-                //            stanar.Email = tempObj.Email;
-                //            stanar.Udjel = tempObj.Udjel;
-                //            stanar.Vlasnik = tempObj.Vlasnik;
-                //        }
-
-                //    });
-                //}
+                angular.copy(tempObj, $scope.pricuveZaZgraduGodina);
             });
             //$scope.newItemStanar = { Id: 0, StanId: $routeParams.id, Ime: "", Prezime: "", OIB: "", Email: "", Udjel: 0, Vlasnik: false };
         }; // end of stanar modal
 
-        $scope.zbrojiDugove = function (stanId) {
-            if ($scope.pricuveZaZgraduGodina.PricuvaMj == undefined)
-                return;
-            var dug = 0;
-            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
-                if (rec.StanId == stanId)
-                    dug = dug + rec.DugPretplata
-            });
-            return dug;
-        }
+        //$scope.zbrojiDugove = function (stanId) {
+        //    if ($scope.pricuveZaZgraduGodina.PricuvaMj == undefined)
+        //        return;
+        //    var dugObj = { dug: 0, color: 'red' };
+        //    var dug = 0;
+        //    $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
+        //        if (rec.StanId == stanId)
+        //            dug += parseFloat(rec.DugPretplata);
+        //    });
+        //    dugObj.dug = dug;
+        //    if (dug >= 0)
+        //        dugObj.color = 'green';
+        //    return dugObj;
+        //}
+
+       
 
         // _______________________________________________________________
         //      KS
@@ -243,4 +219,34 @@
                 angular.copy(tempObj, $scope.pricuveZaZgraduGodina);
             });
         }; // end of ks modal
+
+        // _________________________________________________________
+        //                  izracuni
+
+
+        $scope.MjesecnaZaduzenja = function (stanId) {
+            // zbroj svih [Zaduzenje] za stanara u godini u mjesecnim pricuvama za zgradu (godina je vec odabrana)
+            if ($scope.pricuveZaZgraduGodina.PricuvaMj == undefined)
+                return;
+            var mz = 0;
+            //console.log(stanId);
+            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
+                if (rec.StanId == stanId) {
+                    mz += parseFloat(rec.Zaduzenje);
+                    console.log('rec.Zaduzenje: ' +  rec.Zaduzenje);
+                }
+
+            });
+            return mz;
+        }
+
+        $scope.SumaUplacenogUgodini = function (stanarId) {
+            // ovo je suma KS[Uplata] u godini za stanara
+            uplaceno = 0;
+            $scope.pricuveZaZgraduGodina.KS.forEach(function (ks) {
+                if (ks.StanarId == stanarId)
+                    uplaceno += parseFloat(ks.Uplata);
+            });
+            return uplaceno;
+        }
 }]);

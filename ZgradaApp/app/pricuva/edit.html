@@ -66,35 +66,113 @@
             <tbody>
                 <tr ng-repeat="stan in zgrada.Stanovi">
                     <td style="vertical-align: middle">
-                            <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
-                                <a href="" ng-click="openKs(stanar.Id)">{{stanar.Ime}}&nbsp;{{stanar.Prezime}}</a>
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <a href="" ng-click="openKs(stanar.Id)">{{stanar.Ime}}&nbsp;{{stanar.Prezime}}</a>
                         </div>
                     </td>
                     <td style="vertical-align: middle">
-                            <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
-                                <div>{{dio.Oznaka}}</div>
-                            </div>
+                        <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
+                            <div>{{dio.Oznaka}}</div>
+                        </div>
                     </td>
                     <td style="vertical-align: middle">
                         <!--Dug/pretplata-->
-                        <!--<div ng-repeat="dug in pricuveZaZgraduGodina.PricuvaMj | filter: {StanId: stan.Id}">-->
-                            {{zbrojiDugove(stan.Id)}}
-                        <!--</div>-->
+
                     </td>
-                    <td style="vertical-align: middle"></td>
-                    <td style="vertical-align: middle"></td>
-                    <td style="vertical-align: middle">{{pr.Mj1}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj2}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj3}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj4}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj5}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj6}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj7}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj8}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj9}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj10}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj11}}</td>
-                    <td style="vertical-align: middle">{{pr.Mj12}}</td>
+                    <td style="vertical-align: middle">
+                        <!--MjesecnoZaduzenje-->
+                        {{MjesecnaZaduzenja(stan.Id) | number: 2}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        <!--Uplaceno - suma ks.Uplata za stanara u godini-->
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            {{SumaUplacenogUgodini(stanar.Id) | number: 2}}
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 1 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 2 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 3 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 4 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 5 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 6 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 7 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 8 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 9 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 10 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 11 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="ks in pricuveZaZgraduGodina.KS | filter: { StanarId: stanar.Id } | filter: { Mjesec: 12 }">
+                                {{ks.Uplata | number: 2}}
+                            </div>
+                        </div>
+                    </td>>
                     <td style="vertical-align: middle"></td>
                 </tr>
             </tbody>

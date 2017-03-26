@@ -510,14 +510,14 @@ namespace ZgradaApp.Controllers
             foreach (var stan in zgrada.Stanovi)
             {
 
-                var vlasnik = _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && (p.Vlasnik ?? false));
+                var vlasnik = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && (p.Vlasnik ?? false));
                 for (int i = 1; i <= 12; i++)
                 {
                     god.PricuvaMj.Add(new PricuvaMj
                     {
                         StanId = stan.Id,
                         Mjesec = i,
-                        DugPretplata = 100,
+                        DugPretplata = 0,
                         StanjeOd = 0,
                         Uplaceno = 0,
                         VlasnikId = vlasnik.Id,
@@ -529,23 +529,23 @@ namespace ZgradaApp.Controllers
                 // kreirati i prazne kartice suvlasnika za godinu (za svakog suvlacnika)
                 // neka budu prazne, user ce dodati mjesece i uplate, al da ima za godinu za koju
                 // postoji PricuvaGod
-                god.KS.Add(new KS
-                {
-                    StanarId = vlasnik.Id,
-                    Godina = Godina,
-                    Datum = null,
-                    Uplata = 0,
-                    Status = "a"
-                });
+                //god.KS.Add(new KS
+                //{
+                //    StanarId = vlasnik.Id,
+                //    Godina = Godina,
+                //    Datum = null,
+                //    Uplata = 0,
+                //    Status = "a"
+                //});
             }
 
             // ovo je za test
-            int a = 1;
-            foreach (var item in god.PricuvaMj)
-            {
-                if (item.StanId == 57)
-                    item.DugPretplata += a;
-            }
+            //int a = 1;
+            //foreach (var item in god.PricuvaMj)
+            //{
+            //    if (item.StanId == 57)
+            //        item.DugPretplata += a;
+            //}
 
 
             return Ok(god);

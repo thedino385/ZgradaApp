@@ -18,7 +18,7 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
         $scope.tipObr = 0;
         $scope.CijenaPoM2 = 0;
         $scope.CijenaUkupno = 0;
-
+        
         // prvo moramo naci TipObracuna
         $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
             $scope.tipObr = rec.TipObracuna;
@@ -29,7 +29,7 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
 
         $scope.save = function () {
             console.log('save');
-            $uibModalInstance.close(item);
+            $uibModalInstance.close(pricuveZaZgraduGodina);
         };
 
         $scope.cancel = function () {
@@ -51,28 +51,33 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
             // CijenaUkupno
 
             if ($scope.tipObr == 0) {
-                alert('po m2')
                 // po m2
                 // formula = CijenaPoM2 * povrsina stana (sa pipadcima sa koeficijentom)
                 $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
-                    // za jedan i drugi obracun, treba povrsina stana, dijelovi + pripadci
-                    var povrisnaPrip = 0;
-                    var povrsinaDijelovi = 0;
-                    zgrada.Stanovi.forEach(function (stan) {
-                        stan.Zgrade_Pripadci.forEach(function (pripadakUstanu) {
-                            if (pripadakUstanu.PripadakIZgradaId == stan.Id) {
-                                zgrada.Zgrade_Pripadci.forEach(func)
+                    if ($scope.mjesec == rec.Mjesec)
+                    {
+                        // za jedan i drugi obracun, treba povrsina stana, dijelovi + pripadci
+                        var povrisnaPrip = 0;
+                        var povrsinaDijelovi = 0;
+                        zgrada.Stanovi.forEach(function (stan) {
+                            if (stan.Id == rec.StanId) {
+                                stan.Stanovi_Pripadci.forEach(function (pripadak) {
+                                    povrisnaPrip += parseFloat(pripadak.PovrsinaSaKef);
+                                });
+                                stan.Stanovi_PosebniDijelovi.forEach(function (dio) {
+                                    povrsinaDijelovi += parseFloat(dio.PovrsinaSaKoef);
+                                });
+
+                                $scope.pricuveZaZgraduGodina.KS.forEach(function (ks) {
+                                    if (rec.VlasnikId == ks.StanarId && rec.Mjesec == ks.Mjesec) {
+                                        rec.Uplaceno = ks.Uplata;
+                                    }
+                                });
+                                rec.Zaduzenje = ((parseFloat(povrisnaPrip) + parseFloat(povrsinaDijelovi)) * parseFloat($scope.CijenaPoM2)).toFixed(2);
+                                rec.DugPretplata = parseFloat(rec.Uplaceno) + parseFloat(rec.StanjeOd) - parseFloat(rec.Zaduzenje);
                             }
-                                
                         });
-                    });
-
-                    if (rec.Mjesec == mjesec) {
-                        console.log(rec);
-                        // ok, ovo je trazena pricuva za mjesec
-
                     }
-
                 });
             }
             else {
@@ -93,4 +98,20 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                 }
             });
         }
+
+        $scope.IzracunajEfektivnuPovrsinuZaStan = function (stanId) {
+            var p = 0;
+            zgrada.Stanovi.forEach(function (stan) {
+                if (stan.Id == stanId) {
+                    stan.Stanovi_Pripadci.forEach(function (pripadak) {
+                        p += parseFloat(pripadak.PovrsinaSaKef);
+                    });
+                    stan.Stanovi_PosebniDijelovi.forEach(function (dio) {
+                        p += parseFloat(dio.PovrsinaSaKoef);
+                    });
+                }
+            });
+            return p.toFixed(2);
+        }
+
     }]);

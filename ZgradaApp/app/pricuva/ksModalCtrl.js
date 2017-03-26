@@ -74,7 +74,7 @@ angularApp.controller('ksModalCtrl', ['$scope', '$uibModalInstance', 'DataServic
 
         $scope.save = function () {
             console.log('save');
-            $uibModalInstance.close(item);
+            $uibModalInstance.close(pricuveZaZgraduGodina);
         };
 
         $scope.cancel = function () {
