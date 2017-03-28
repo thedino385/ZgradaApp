@@ -87,7 +87,7 @@
                         <label>{{$index+1}}.</label>
                     </td>
                     <td style="vertical-align: middle">
-                        <input class="form-control noBorder" type="text" ng-model="ks.Mjesec" />
+                        <input class="form-control noBorder" type="number" ng-model="ks.Mjesec" />
                     </td>
                     <td style="vertical-align: middle">
                         <input class="form-control noBorder" type="text" ng-model="ks.Godina" />
@@ -100,7 +100,12 @@
                         <input ng-change="uplataChanged(ks.Id)" class="form-control noBorder" type="text" ng-model="ks.Uplata" />
                     </td>
                     <td style="vertical-align: middle">
-                        {{Zaduzenje}}
+                        <!--Zaduzenje se povlaci sa Zaduzenja iz PricuveMj za current mjesec (onaj koji je user upisao - ks.Mjesec)-->
+                        <div ng-repeat="mj in pricuveZaZgraduGodina.PricuvaMj | filter: { VlasnikId: ks.StanarId } | filter: { Mjesec: ks.Mjesec }:true">
+                            {{mj.Zaduzenje}}
+                            {{mj.Mjesec}}
+                        </div>
+                        
                     </td>
                     <td style="vertical-align: middle">
                         {{Stanje}}

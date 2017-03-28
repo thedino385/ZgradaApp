@@ -255,6 +255,8 @@
     <EntitySetMapping Name="PricuvaMj">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaMj">
         <MappingFragment StoreEntitySet="PricuvaMj">
+          <ScalarProperty Name="CijenaUkupno" ColumnName="CijenaUkupno" />
+          <ScalarProperty Name="CijenaPoM2" ColumnName="CijenaPoM2" />
           <ScalarProperty Name="TipObracuna" ColumnName="TipObracuna" />
           <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
           <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
@@ -276,6 +278,48 @@
           <ScalarProperty Name="Godina" ColumnName="Godina" />
           <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
           <ScalarProperty Name="StanarId" ColumnName="StanarId" />
+          <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PricuvaGod_StanjeOd">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaGod_StanjeOd">
+        <MappingFragment StoreEntitySet="PricuvaGod_StanjeOd">
+          <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
+          <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
+          <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PricuvaMj_VrstaObracuna">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaMj_VrstaObracuna">
+        <MappingFragment StoreEntitySet="PricuvaMj_VrstaObracuna">
+          <ScalarProperty Name="TipObracunaMj10" ColumnName="TipObracunaMj10" />
+          <ScalarProperty Name="CijenaMj12" ColumnName="CijenaMj12" />
+          <ScalarProperty Name="CijenaMj11" ColumnName="CijenaMj11" />
+          <ScalarProperty Name="CijenaMj10" ColumnName="CijenaMj10" />
+          <ScalarProperty Name="CijenaMj9" ColumnName="CijenaMj9" />
+          <ScalarProperty Name="CijenaMj8" ColumnName="CijenaMj8" />
+          <ScalarProperty Name="CijenaMj7" ColumnName="CijenaMj7" />
+          <ScalarProperty Name="CijenaMj6" ColumnName="CijenaMj6" />
+          <ScalarProperty Name="CijenaMj5" ColumnName="CijenaMj5" />
+          <ScalarProperty Name="CijenaMj4" ColumnName="CijenaMj4" />
+          <ScalarProperty Name="CijenaMj3" ColumnName="CijenaMj3" />
+          <ScalarProperty Name="CijenaMj2" ColumnName="CijenaMj2" />
+          <ScalarProperty Name="CijenaMj1" ColumnName="CijenaMj1" />
+          <ScalarProperty Name="TipObracunaMj12" ColumnName="TipObracunaMj12" />
+          <ScalarProperty Name="TipObracunaMj11" ColumnName="TipObracunaMj11" />
+          <ScalarProperty Name="TipObracunaMj9" ColumnName="TipObracunaMj9" />
+          <ScalarProperty Name="TipObracunaMj8" ColumnName="TipObracunaMj8" />
+          <ScalarProperty Name="TipObracunaMj7" ColumnName="TipObracunaMj7" />
+          <ScalarProperty Name="TipObracunaMj6" ColumnName="TipObracunaMj6" />
+          <ScalarProperty Name="TipObracunaMj5" ColumnName="TipObracunaMj5" />
+          <ScalarProperty Name="TipObracunaMj4" ColumnName="TipObracunaMj4" />
+          <ScalarProperty Name="TipObracunaMj3" ColumnName="TipObracunaMj3" />
+          <ScalarProperty Name="TipObracunaMj2" ColumnName="TipObracunaMj2" />
+          <ScalarProperty Name="TipObracunaMj1" ColumnName="TipObracunaMj1" />
           <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

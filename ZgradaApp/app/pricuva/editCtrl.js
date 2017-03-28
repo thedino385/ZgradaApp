@@ -1,5 +1,5 @@
-﻿angularApp.controller('pricuvaEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'DataService',
-    function ($scope, $rootScope, $routeParams, $location, $uibModal, DataService) {
+﻿angularApp.controller('pricuvaEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'toastr', 'DataService',
+    function ($scope, $rootScope, $routeParams, $location, $uibModal, toastr, DataService) {
 
         // $scope.pricuveZaZgraduSveGodine - sve godine za zgradu
         // $scope.pricuveZaZgraduGodina - jedna godina za zgradu
@@ -7,7 +7,7 @@
         $scope.SelectedGodina = '';
         var gList = [];
         var g = {};
-        $scope.pricuveZaZgraduGodina = { KS: [] }; // ovo je object za izabranu godinu
+        //$scope.pricuveZaZgraduGodina = { KS: [], PricuvaGod_StanjeOd: [] }; // ovo je object za izabranu godinu
         $scope.zgrada = {};
 
         $scope.godine = [];
@@ -24,12 +24,12 @@
                         $scope.tableVisible = true;
                         g = { Godina: $scope.novaGodina };
                         $scope.godine.push(g);
+                        $scope.pricuveZaZgraduSveGodine.push(result.data);
                         //console.log(pricuveZaZgraduGodina);
                     },
                     function (result) {
                         // err
                     }
-
                 )
             }
         }
@@ -54,6 +54,7 @@
                                 $scope.SelectedGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1].Godina;
                                 $scope.pricuveZaZgraduGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1]; // selektiraj zadnjega
                                 $scope.tableVisible = true;
+                                farbajMjesece();
                             }
                             else {
                                 $scope.tableVisible = false;
@@ -91,6 +92,7 @@
         };
 
         
+
         //$scope.openMjesecno = function (mjesec) {
         //    if ($scope.SelectedGodina == '') {
         //        alert('Odaverite godinu');
@@ -154,6 +156,13 @@
 
             modalInstance.result.then(function (item) {
                 console.log("modal result fn");
+                farbajMjesece();
+                //switch (parseInt(mjesec))
+                //{
+                //    case 1:
+                //        $scope.mjesec1background = 'green';
+                //        break;
+                //}
                 // sve se radi u modl controlleru
             }, function () {
                 // modal dismiss
@@ -224,16 +233,16 @@
         //                  izracuni
 
 
-        $scope.MjesecnaZaduzenja = function (stanId) {
+        $scope.IzracunajMjesecnaZaduzenja = function (stanId) {
             // zbroj svih [Zaduzenje] za stanara u godini u mjesecnim pricuvama za zgradu (godina je vec odabrana)
-            if ($scope.pricuveZaZgraduGodina.PricuvaMj == undefined)
+            if ($scope.pricuveZaZgraduGodina == undefined)
                 return;
             var mz = 0;
             //console.log(stanId);
             $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
                 if (rec.StanId == stanId) {
                     mz += parseFloat(rec.Zaduzenje);
-                    console.log('rec.Zaduzenje: ' +  rec.Zaduzenje);
+                    //console.log('rec.Zaduzenje: ' +  rec.Zaduzenje);
                 }
 
             });
@@ -241,6 +250,8 @@
         }
 
         $scope.SumaUplacenogUgodini = function (stanarId) {
+            if ($scope.pricuveZaZgraduGodina == undefined)
+                return;
             // ovo je suma KS[Uplata] u godini za stanara
             uplaceno = 0;
             $scope.pricuveZaZgraduGodina.KS.forEach(function (ks) {
@@ -248,5 +259,51 @@
                     uplaceno += parseFloat(ks.Uplata);
             });
             return uplaceno;
+        }
+
+        $scope.IzracunajDugPretplatu = function (stanar) {
+            if ($scope.pricuveZaZgraduGodina == undefined)
+                return;
+            // formula: Uplaceno + StanjeOd - MjZaduzenje
+            var uplaceno = $scope.SumaUplacenogUgodini(stanar.Id);
+            var mjZad = $scope.IzracunajMjesecnaZaduzenja(stanar.StanId);
+            var stanje = 0;
+            $scope.pricuveZaZgraduGodina.PricuvaGod_StanjeOd.forEach(function (stanjeOd) {
+                if (stanjeOd.VlasnikId == stanar.Id) {
+                    stanje = stanjeOd.StanjeOd;
+                    //console.log('naso vlasnika');
+                }
+                    
+            });
+            //console.log('IzracunajDugPretplatu');
+            //console.log($scope.pricuveZaZgraduGodina.PricuvaGod_StanjeOd);
+            //console.log(stanar);
+            //console.log(uplaceno);
+            //console.log(mjZad);
+            //console.log(stanje);
+            return (parseFloat(uplaceno) + parseFloat(stanje) - parseFloat(mjZad));
+        }
+
+        function farbajMjesece()
+        {
+            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (mj) {
+                if (mj.Mjesec == 1 && mj.DugPretplata != 0)
+                    $scope.mjesec1background = 'green';
+            });
+        }
+
+        $scope.save = function () {
+            DataService.pricuvaCreateUpdate($scope.pricuveZaZgraduSveGodine).then(
+                function (result) {
+                    toastr.success('Promjene su snimljene!', '');
+                },
+                function (result) {
+                    toastr.error('Greška kod snimanja!', '');
+                }
+            )
+        }
+
+        $scope.cancelReload = function () {
+            $route.reload();
         }
 }]);

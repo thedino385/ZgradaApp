@@ -224,7 +224,13 @@
     <Compile Include="PricuvaGod.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="PricuvaGod_StanjeOd.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="PricuvaMj.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PricuvaMj_VrstaObracuna.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="PrihodiRashodi.cs">

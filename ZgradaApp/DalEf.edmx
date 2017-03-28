@@ -73,6 +73,15 @@
           <Property Name="Godina" Type="int" Nullable="false" />
           <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="PricuvaGod_StanjeOd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PricuvaGodId" Type="int" Nullable="false" />
+          <Property Name="VlasnikId" Type="int" Nullable="false" />
+          <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="PricuvaMj">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,6 +96,39 @@
           <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TipObracuna" Type="smallint" Nullable="false" />
+          <Property Name="CijenaPoM2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CijenaUkupno" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="PricuvaMj_VrstaObracuna">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PricuvaGodId" Type="int" Nullable="false" />
+          <Property Name="TipObracunaMj1" Type="tinyint" />
+          <Property Name="TipObracunaMj2" Type="tinyint" />
+          <Property Name="TipObracunaMj3" Type="tinyint" />
+          <Property Name="TipObracunaMj4" Type="tinyint" />
+          <Property Name="TipObracunaMj5" Type="tinyint" />
+          <Property Name="TipObracunaMj6" Type="tinyint" />
+          <Property Name="TipObracunaMj7" Type="tinyint" />
+          <Property Name="TipObracunaMj8" Type="tinyint" />
+          <Property Name="TipObracunaMj9" Type="tinyint" />
+          <Property Name="TipObracunaMj10" Type="tinyint" />
+          <Property Name="TipObracunaMj11" Type="tinyint" />
+          <Property Name="TipObracunaMj12" Type="tinyint" />
+          <Property Name="CijenaMj1" Type="tinyint" />
+          <Property Name="CijenaMj2" Type="tinyint" />
+          <Property Name="CijenaMj3" Type="tinyint" />
+          <Property Name="CijenaMj4" Type="tinyint" />
+          <Property Name="CijenaMj5" Type="tinyint" />
+          <Property Name="CijenaMj6" Type="tinyint" />
+          <Property Name="CijenaMj7" Type="tinyint" />
+          <Property Name="CijenaMj8" Type="tinyint" />
+          <Property Name="CijenaMj9" Type="tinyint" />
+          <Property Name="CijenaMj10" Type="tinyint" />
+          <Property Name="CijenaMj11" Type="tinyint" />
+          <Property Name="CijenaMj12" Type="tinyint" />
         </EntityType>
         <EntityType Name="PrihodiRashodi">
           <Key>
@@ -280,6 +322,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PricuvaGod_StanjeOd_PricuvaGod">
+          <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
+          <End Role="PricuvaGod_StanjeOd" Type="Self.PricuvaGod_StanjeOd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaGod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricuvaGod_StanjeOd">
+              <PropertyRef Name="PricuvaGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PricuvaMj_PricuvaGod">
           <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
           <End Role="PricuvaMj" Type="Self.PricuvaMj" Multiplicity="*" />
@@ -288,6 +342,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PricuvaMj">
+              <PropertyRef Name="PricuvaGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PricuvaMj_VrstaObracuna_PricuvaGod">
+          <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
+          <End Role="PricuvaMj_VrstaObracuna" Type="Self.PricuvaMj_VrstaObracuna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaGod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricuvaMj_VrstaObracuna">
               <PropertyRef Name="PricuvaGodId" />
             </Dependent>
           </ReferentialConstraint>
@@ -383,7 +449,9 @@
           <EntitySet Name="KS" EntityType="Self.KS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaGod" EntityType="Self.PricuvaGod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricuvaGod_StanjeOd" EntityType="Self.PricuvaGod_StanjeOd" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaMj" EntityType="Self.PricuvaMj" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricuvaMj_VrstaObracuna" EntityType="Self.PricuvaMj_VrstaObracuna" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi" EntityType="Self.PrihodiRashodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodiDetails" EntityType="Self.PrihodiRashodiDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pripadci" EntityType="Self.Pripadci" Schema="dbo" store:Type="Tables" />
@@ -398,9 +466,17 @@
             <End Role="PricuvaGod" EntitySet="PricuvaGod" />
             <End Role="KS" EntitySet="KS" />
           </AssociationSet>
+          <AssociationSet Name="FK_PricuvaGod_StanjeOd_PricuvaGod" Association="Self.FK_PricuvaGod_StanjeOd_PricuvaGod">
+            <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+            <End Role="PricuvaGod_StanjeOd" EntitySet="PricuvaGod_StanjeOd" />
+          </AssociationSet>
           <AssociationSet Name="FK_PricuvaMj_PricuvaGod" Association="Self.FK_PricuvaMj_PricuvaGod">
             <End Role="PricuvaGod" EntitySet="PricuvaGod" />
             <End Role="PricuvaMj" EntitySet="PricuvaMj" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PricuvaMj_VrstaObracuna_PricuvaGod" Association="Self.FK_PricuvaMj_VrstaObracuna_PricuvaGod">
+            <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+            <End Role="PricuvaMj_VrstaObracuna" EntitySet="PricuvaMj_VrstaObracuna" />
           </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodiDetails_PrihodiRashodi" Association="Self.FK_PrihodiRashodiDetails_PrihodiRashodi">
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
@@ -488,6 +564,16 @@
           <AssociationSet Name="FK_KS_PricuvaGod" Association="ZgradaDbModel.FK_KS_PricuvaGod">
             <End Role="PricuvaGod" EntitySet="PricuvaGod" />
             <End Role="KS" EntitySet="KS" />
+          </AssociationSet>
+          <EntitySet Name="PricuvaGod_StanjeOd" EntityType="ZgradaDbModel.PricuvaGod_StanjeOd" />
+          <AssociationSet Name="FK_PricuvaGod_StanjeOd_PricuvaGod" Association="ZgradaDbModel.FK_PricuvaGod_StanjeOd_PricuvaGod">
+            <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+            <End Role="PricuvaGod_StanjeOd" EntitySet="PricuvaGod_StanjeOd" />
+          </AssociationSet>
+          <EntitySet Name="PricuvaMj_VrstaObracuna" EntityType="ZgradaDbModel.PricuvaMj_VrstaObracuna" />
+          <AssociationSet Name="FK_PricuvaMj_VrstaObracuna_PricuvaGod" Association="ZgradaDbModel.FK_PricuvaMj_VrstaObracuna_PricuvaGod">
+            <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+            <End Role="PricuvaMj_VrstaObracuna" EntitySet="PricuvaMj_VrstaObracuna" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Kompanije">
@@ -825,6 +911,8 @@
           <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PricuvaMj" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaMj" />
           <NavigationProperty Name="KS" Relationship="ZgradaDbModel.FK_KS_PricuvaGod" FromRole="PricuvaGod" ToRole="KS" />
+          <NavigationProperty Name="PricuvaGod_StanjeOd" Relationship="ZgradaDbModel.FK_PricuvaGod_StanjeOd_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaGod_StanjeOd" />
+          <NavigationProperty Name="PricuvaMj_VrstaObracuna" Relationship="ZgradaDbModel.FK_PricuvaMj_VrstaObracuna_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaMj_VrstaObracuna" />
         </EntityType>
         <EntityType Name="PricuvaMj">
           <Key>
@@ -841,6 +929,8 @@
           <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaMj" ToRole="PricuvaGod" />
           <Property Name="TipObracuna" Type="Int16" Nullable="false" />
+          <Property Name="CijenaPoM2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CijenaUkupno" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_PricuvaMj_PricuvaGod">
           <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
@@ -875,6 +965,72 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="KS">
+              <PropertyRef Name="PricuvaGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PricuvaGod_StanjeOd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PricuvaGodId" Type="Int32" Nullable="false" />
+          <Property Name="VlasnikId" Type="Int32" Nullable="false" />
+          <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaGod_StanjeOd_PricuvaGod" FromRole="PricuvaGod_StanjeOd" ToRole="PricuvaGod" />
+        </EntityType>
+        <Association Name="FK_PricuvaGod_StanjeOd_PricuvaGod">
+          <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
+          <End Type="ZgradaDbModel.PricuvaGod_StanjeOd" Role="PricuvaGod_StanjeOd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaGod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricuvaGod_StanjeOd">
+              <PropertyRef Name="PricuvaGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PricuvaMj_VrstaObracuna">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PricuvaGodId" Type="Int32" Nullable="false" />
+          <Property Name="TipObracunaMj1" Type="Byte" />
+          <Property Name="TipObracunaMj2" Type="Byte" />
+          <Property Name="TipObracunaMj3" Type="Byte" />
+          <Property Name="TipObracunaMj4" Type="Byte" />
+          <Property Name="TipObracunaMj5" Type="Byte" />
+          <Property Name="TipObracunaMj6" Type="Byte" />
+          <Property Name="TipObracunaMj7" Type="Byte" />
+          <Property Name="TipObracunaMj8" Type="Byte" />
+          <Property Name="TipObracunaMj9" Type="Byte" />
+          <Property Name="TipObracunaMj11" Type="Byte" />
+          <Property Name="TipObracunaMj12" Type="Byte" />
+          <Property Name="CijenaMj1" Type="Byte" />
+          <Property Name="CijenaMj2" Type="Byte" />
+          <Property Name="CijenaMj3" Type="Byte" />
+          <Property Name="CijenaMj4" Type="Byte" />
+          <Property Name="CijenaMj5" Type="Byte" />
+          <Property Name="CijenaMj6" Type="Byte" />
+          <Property Name="CijenaMj7" Type="Byte" />
+          <Property Name="CijenaMj8" Type="Byte" />
+          <Property Name="CijenaMj9" Type="Byte" />
+          <Property Name="CijenaMj10" Type="Byte" />
+          <Property Name="CijenaMj11" Type="Byte" />
+          <Property Name="CijenaMj12" Type="Byte" />
+          <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaMj_VrstaObracuna_PricuvaGod" FromRole="PricuvaMj_VrstaObracuna" ToRole="PricuvaGod" />
+          <Property Name="TipObracunaMj10" Type="Byte" />
+        </EntityType>
+        <Association Name="FK_PricuvaMj_VrstaObracuna_PricuvaGod">
+          <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
+          <End Type="ZgradaDbModel.PricuvaMj_VrstaObracuna" Role="PricuvaMj_VrstaObracuna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaGod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricuvaMj_VrstaObracuna">
               <PropertyRef Name="PricuvaGodId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1139,6 +1295,8 @@
           <EntitySetMapping Name="PricuvaMj">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaMj">
               <MappingFragment StoreEntitySet="PricuvaMj">
+                <ScalarProperty Name="CijenaUkupno" ColumnName="CijenaUkupno" />
+                <ScalarProperty Name="CijenaPoM2" ColumnName="CijenaPoM2" />
                 <ScalarProperty Name="TipObracuna" ColumnName="TipObracuna" />
                 <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
                 <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
@@ -1160,6 +1318,48 @@
                 <ScalarProperty Name="Godina" ColumnName="Godina" />
                 <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
                 <ScalarProperty Name="StanarId" ColumnName="StanarId" />
+                <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PricuvaGod_StanjeOd">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaGod_StanjeOd">
+              <MappingFragment StoreEntitySet="PricuvaGod_StanjeOd">
+                <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
+                <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
+                <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PricuvaMj_VrstaObracuna">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaMj_VrstaObracuna">
+              <MappingFragment StoreEntitySet="PricuvaMj_VrstaObracuna">
+                <ScalarProperty Name="TipObracunaMj10" ColumnName="TipObracunaMj10" />
+                <ScalarProperty Name="CijenaMj12" ColumnName="CijenaMj12" />
+                <ScalarProperty Name="CijenaMj11" ColumnName="CijenaMj11" />
+                <ScalarProperty Name="CijenaMj10" ColumnName="CijenaMj10" />
+                <ScalarProperty Name="CijenaMj9" ColumnName="CijenaMj9" />
+                <ScalarProperty Name="CijenaMj8" ColumnName="CijenaMj8" />
+                <ScalarProperty Name="CijenaMj7" ColumnName="CijenaMj7" />
+                <ScalarProperty Name="CijenaMj6" ColumnName="CijenaMj6" />
+                <ScalarProperty Name="CijenaMj5" ColumnName="CijenaMj5" />
+                <ScalarProperty Name="CijenaMj4" ColumnName="CijenaMj4" />
+                <ScalarProperty Name="CijenaMj3" ColumnName="CijenaMj3" />
+                <ScalarProperty Name="CijenaMj2" ColumnName="CijenaMj2" />
+                <ScalarProperty Name="CijenaMj1" ColumnName="CijenaMj1" />
+                <ScalarProperty Name="TipObracunaMj12" ColumnName="TipObracunaMj12" />
+                <ScalarProperty Name="TipObracunaMj11" ColumnName="TipObracunaMj11" />
+                <ScalarProperty Name="TipObracunaMj9" ColumnName="TipObracunaMj9" />
+                <ScalarProperty Name="TipObracunaMj8" ColumnName="TipObracunaMj8" />
+                <ScalarProperty Name="TipObracunaMj7" ColumnName="TipObracunaMj7" />
+                <ScalarProperty Name="TipObracunaMj6" ColumnName="TipObracunaMj6" />
+                <ScalarProperty Name="TipObracunaMj5" ColumnName="TipObracunaMj5" />
+                <ScalarProperty Name="TipObracunaMj4" ColumnName="TipObracunaMj4" />
+                <ScalarProperty Name="TipObracunaMj3" ColumnName="TipObracunaMj3" />
+                <ScalarProperty Name="TipObracunaMj2" ColumnName="TipObracunaMj2" />
+                <ScalarProperty Name="TipObracunaMj1" ColumnName="TipObracunaMj1" />
                 <ScalarProperty Name="PricuvaGodId" ColumnName="PricuvaGodId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

@@ -509,10 +509,11 @@ namespace ZgradaApp.Controllers
             // sad napuni childove sa stanovima
             foreach (var stan in zgrada.Stanovi)
             {
-
                 var vlasnik = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && (p.Vlasnik ?? false));
+                
                 for (int i = 1; i <= 12; i++)
                 {
+                    // Mjesecna pricuva
                     god.PricuvaMj.Add(new PricuvaMj
                     {
                         StanId = stan.Id,
@@ -525,7 +526,15 @@ namespace ZgradaApp.Controllers
                         Status = "a",
                         TipObracuna = 0
                     });
+                    // StanjeOd - za svakog vlasnika
                 }
+                god.PricuvaGod_StanjeOd.Add(new PricuvaGod_StanjeOd
+                {
+                    PricuvaGodId = god.Id,
+                    StanjeOd = 0,
+                    VlasnikId = vlasnik.Id
+                });
+                
                 // kreirati i prazne kartice suvlasnika za godinu (za svakog suvlacnika)
                 // neka budu prazne, user ce dodati mjesece i uplate, al da ima za godinu za koju
                 // postoji PricuvaGod
@@ -539,6 +548,35 @@ namespace ZgradaApp.Controllers
                 //});
             }
 
+            god.PricuvaMj_VrstaObracuna.Add(new PricuvaMj_VrstaObracuna
+            {
+                PricuvaGodId = god.Id,
+                TipObracunaMj1 = 0,
+                TipObracunaMj2 = 0,
+                TipObracunaMj3 = 0,
+                TipObracunaMj4 = 0,
+                TipObracunaMj5 = 0,
+                TipObracunaMj6 = 0,
+                TipObracunaMj7 = 0,
+                TipObracunaMj8 = 0,
+                TipObracunaMj9 = 0,
+                TipObracunaMj10 = 0,
+                TipObracunaMj11 = 0,
+                TipObracunaMj12 = 0,
+                CijenaMj1 = 0,
+                CijenaMj2 = 0,
+                CijenaMj3 = 0,
+                CijenaMj4 = 0,
+                CijenaMj5 = 0,
+                CijenaMj6 = 0,
+                CijenaMj7 = 0,
+                CijenaMj8 = 0,
+                CijenaMj9 = 0,
+                CijenaMj10 = 0,
+                CijenaMj11 = 0,
+                CijenaMj12 = 0,
+            });
+
             // ovo je za test
             //int a = 1;
             //foreach (var item in god.PricuvaMj)
@@ -549,6 +587,60 @@ namespace ZgradaApp.Controllers
 
 
             return Ok(god);
+        }
+
+        [HttpPost]
+        [Route("api/data/pricuvaCreateUpdate")]
+        public async Task<IHttpActionResult> PricuvaCreateUpdate (List<PricuvaGod> pricuve)
+        {
+            try
+            {
+                foreach (var item in pricuve)
+                {
+                    if (item.Id == 0)
+                        _db.PricuvaGod.Add(item);
+                    else
+                    {
+                        var targetMaster = await _db.PricuvaGod.FirstOrDefaultAsync(p => p.Id == item.Id);
+                        targetMaster.Godina = item.Godina;
+                        targetMaster.StanjeOd = item.StanjeOd;
+                        // mjeseci
+                        foreach (var mj in item.PricuvaMj)
+                        {
+                            var target = await _db.PricuvaMj.FirstOrDefaultAsync(p => p.Id == mj.Id);
+                            target.CijenaPoM2 = mj.CijenaPoM2;
+                            target.CijenaUkupno = mj.CijenaUkupno;
+                            target.DugPretplata = mj.DugPretplata;
+                            target.Mjesec = mj.Mjesec;
+                            target.StanId = mj.StanId;
+                            target.StanjeOd = mj.StanjeOd;
+                            target.TipObracuna = mj.TipObracuna;
+                            target.Uplaceno = mj.Uplaceno;
+                            target.VlasnikId = mj.VlasnikId;
+                            target.Zaduzenje = mj.Zaduzenje;
+                        }
+                        // stanjeOd
+                        foreach (var stanje in item.PricuvaGod_StanjeOd)
+                        {
+                            var target = await _db.PricuvaGod_StanjeOd.FirstOrDefaultAsync(p => p.Id == stanje.Id);
+                            target.StanjeOd = stanje.StanjeOd;
+                        }
+                        // KS
+                        foreach (var ks in item.KS)
+                        {
+                            var target = await _db.KS.FirstOrDefaultAsync(p => p.Id == ks.Id);
+                            target.Datum = ks.Datum;
+                            target.Godina = ks.Godina;
+                            target.Mjesec = ks.Mjesec;
+                            target.StanarId = ks.StanarId;
+                            target.Uplata = ks.Uplata;
+                        }
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
         }
     }
 }

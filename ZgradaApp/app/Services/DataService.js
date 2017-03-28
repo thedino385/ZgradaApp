@@ -165,6 +165,10 @@
         });
     }
 
+    var pricuvaCreateUpdate = function (pricuve) {
+        return $http.post('../api/data/pricuvaCreateUpdate', pricuve);
+    }
+
     return {
         getZgrade: getZgrade,
         zgradaCreateUpdate: zgradaCreateUpdate,
@@ -185,7 +189,8 @@
         selectedStan: selectedStan,
         createEmptyPricuva: createEmptyPricuva ,
         createEmptyPrihodRashod: createEmptyPrihodRashod,
-        getPricuva: getPricuva
+        getPricuva: getPricuva,
+        pricuvaCreateUpdate: pricuvaCreateUpdate
     }
 
 }]);

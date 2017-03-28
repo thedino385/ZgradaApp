@@ -12,20 +12,12 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class PricuvaMj
+    public partial class PricuvaGod_StanjeOd
     {
         public int Id { get; set; }
         public int PricuvaGodId { get; set; }
-        public int StanId { get; set; }
         public int VlasnikId { get; set; }
-        public int Mjesec { get; set; }
-        public Nullable<decimal> DugPretplata { get; set; }
-        public Nullable<decimal> Zaduzenje { get; set; }
-        public Nullable<decimal> Uplaceno { get; set; }
         public Nullable<decimal> StanjeOd { get; set; }
-        public short TipObracuna { get; set; }
-        public Nullable<decimal> CijenaPoM2 { get; set; }
-        public Nullable<decimal> CijenaUkupno { get; set; }
     
         public virtual PricuvaGod PricuvaGod { get; set; }
     }

@@ -8,7 +8,7 @@
                 ng-change="godinaChanged()" class="form-control" style="margin-bottom: 10px"></select>
 
         <input type="number" class="form-control" ng-model="novaGodina" />
-        <input type="button" class="form-control" value="Doaj godinu" ng-click="dodajGodinu()" />
+        <input type="button" class="form-control" value="Dodaj godinu" ng-click="dodajGodinu()" />
         <table class="table table-hover table-striped table-bordered" ng-show="tableVisible">
             <thead>
                 <tr>
@@ -27,13 +27,9 @@
                     <th style="vertical-align: middle">
                         Uplaćeno
                     </th>
-                    <th style="vertical-align: middle"><a href="" ng-click="openMjesecno('1')">1</a></th>
-                    <th style="vertical-align: middle">
-                        2
-                    </th>
-                    <th style="vertical-align: middle">
-                        3
-                    </th>
+                    <th style="vertical-align: middle" id="target" ng-style="{'background-color': mjesec1background}" ng-click="openMjesecno(1)">1</th>
+                    <th style="vertical-align: middle" ng-click="openMjesecno('2')">2</th>
+                    <th style="vertical-align: middle" ng-click="openMjesecno('3')">3</th>
                     <th style="vertical-align: middle">
                         4
                     </th>
@@ -51,6 +47,9 @@
                     </th>
                     <th style="vertical-align: middle">
                         9
+                    </th>
+                    <th style="vertical-align: middle">
+                        10
                     </th>
                     <th style="vertical-align: middle">
                         11
@@ -77,11 +76,14 @@
                     </td>
                     <td style="vertical-align: middle">
                         <!--Dug/pretplata-->
-
+                        <!--Uplaceno + StanjeOd - MjesecnoZaduzenje-->
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                                {{IzracunajDugPretplatu(stanar) | number: 2}}
+                        </div>
                     </td>
                     <td style="vertical-align: middle">
                         <!--MjesecnoZaduzenje-->
-                        {{MjesecnaZaduzenja(stan.Id) | number: 2}}
+                        {{IzracunajMjesecnaZaduzenja(stan.Id) | number: 2}}
                     </td>
                     <td style="vertical-align: middle">
                         <!--Uplaceno - suma ks.Uplata za stanara u godini-->
@@ -172,11 +174,21 @@
                                 {{ks.Uplata | number: 2}}
                             </div>
                         </div>
-                    </td>>
-                    <td style="vertical-align: middle"></td>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <div ng-repeat="stanjeOd in pricuveZaZgraduGodina.PricuvaGod_StanjeOd | filter: { VlasnikId: stanar.Id }">
+                                <input ng-change="IzracunajDugPretplatu(stanar)" type="text" class="form-control small" ng-model="stanjeOd.StanjeOd" />
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
+
+        <hr />
+        <input ng-click="save()" type="button" class="btn btn-primary pull-right" value="Spremi" />
+        <a ng-click="cancelReload()" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;
     </div>
 </div>
 

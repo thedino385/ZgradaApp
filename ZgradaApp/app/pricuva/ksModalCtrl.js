@@ -36,6 +36,7 @@ angularApp.controller('ksModalCtrl', ['$scope', '$uibModalInstance', 'DataServic
             };
             $scope.pricuveZaZgraduGodina.KS.push(noviRecord);
             OkZaSnimanje();
+            console.log(pricuveZaZgraduGodina.PricuvaMj);
         }
 
         $scope.delete = function (Id) {
