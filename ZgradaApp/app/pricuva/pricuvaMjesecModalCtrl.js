@@ -30,6 +30,9 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
         //    $scope.CijenaUkupno = rec.CijenaUkupno;
         //});
 
+        
+
+
         $scope.kreirajPricuvuZaMjesec = function () {
             //PricuvaGodId
             //StanId
@@ -187,7 +190,6 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                     case 1:
                         obr.TipObracunaMj1 = $scope.tipObr;
                         obr.CijenaMj1 = $scope.Cijena;
-                        alert('found');
                         break;
                     case 2:
                         obr.TipObracunaMj2 = $scope.tipObr;

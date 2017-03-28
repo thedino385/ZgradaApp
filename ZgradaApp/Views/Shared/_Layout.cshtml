@@ -63,16 +63,23 @@
         </nav>
         if (ViewBag.ExpMsg != null)
         {
-            if (ViewBag.ExpDays > 15)
+            if (ViewBag.ExpDays >= 15)
             {
                 <div class="alert alert-warning" style="padding-top: 0px">
                     <h5 style="color: red; text-align:end; margin-right: 50px">@ViewBag.ExpMsg!</h5>
+                </div>
+            }
+            else if (ViewBag.ExpDays < 15 && ViewBag.ExpDays >= 0 )
+            {
+                <div class="alert alert-danger">
+                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
                 </div>
             }
             else
             {
                 <div class="alert alert-danger">
                     <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
+                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsgGrace</b></h5>
                 </div>
             }
 

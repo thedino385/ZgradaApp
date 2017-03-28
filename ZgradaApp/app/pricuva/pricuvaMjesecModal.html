@@ -1,17 +1,4 @@
 ﻿
-<style>
-    .red {
-        color: red;
-        height: 100%;
-        width: 100%;
-    }
-
-    .green {
-        color: green;
-        height: 100%;
-        width: 100%;
-    }
-</style>
 
 <div class="modal-dialog modal-lg" style="vertical-align: middle;">
 
@@ -97,7 +84,7 @@
                 </td>
                 <td style="vertical-align: middle">
                     <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
-                        <div ng-class="{green: rec.DugPretplata > 0, red: rec.DugPretplata < 0}">
+                        <div ng-class="{greenCell: rec.DugPretplata > 0, redCell: rec.DugPretplata < 0}">
                             {{rec.DugPretplata | number: 2}}
                         </div>
                     </div>
@@ -113,9 +100,11 @@
                     </div>
                 </td>
                 <td style="vertical-align: middle">
-                    <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { Mjesec: stan.Id }:true | filter: { Mjesec: mjesec }:true">
-                        <div ng-class="{green: rec.StanjeOd > 0, red: rec.StanjeOd < 0}">
-                            {{rec.StanjeOd | number: 2}}
+                    <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                        <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaGod_StanjeOd | filter: { VlasnikId: stanar.Id }:true">
+                            <div ng-class="{greenCell: rec.StanjeOd > 0, redCell: rec.StanjeOd < 0}">
+                                {{rec.StanjeOd | number: 2}}
+                            </div>
                         </div>
                     </div>
                 </td>

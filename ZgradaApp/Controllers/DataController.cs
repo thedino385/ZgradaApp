@@ -635,6 +635,44 @@ namespace ZgradaApp.Controllers
                             target.StanarId = ks.StanarId;
                             target.Uplata = ks.Uplata;
                         }
+                        // PricuvaMj_VrstaObracuna
+                        foreach (var obr in item.PricuvaMj_VrstaObracuna)
+                        {
+                            var target = await _db.PricuvaMj_VrstaObracuna.FirstOrDefaultAsync(p => p.PricuvaGodId == item.Id);
+                            if(target == null)
+                            {
+                                obr.PricuvaGodId = item.Id;
+                                _db.PricuvaMj_VrstaObracuna.Add(obr);
+                            }
+                            else
+                            {
+                                target.CijenaMj1 = obr.CijenaMj1;
+                                target.CijenaMj2 = obr.CijenaMj2;
+                                target.CijenaMj3= obr.CijenaMj3;
+                                target.CijenaMj4 = obr.CijenaMj4;
+                                target.CijenaMj5 = obr.CijenaMj5;
+                                target.CijenaMj6 = obr.CijenaMj6;
+                                target.CijenaMj7 = obr.CijenaMj7;
+                                target.CijenaMj8 = obr.CijenaMj8;
+                                target.CijenaMj9 = obr.CijenaMj9;
+                                target.CijenaMj10 = obr.CijenaMj10;
+                                target.CijenaMj11 = obr.CijenaMj11;
+                                target.CijenaMj12 = obr.CijenaMj12;
+
+                                target.TipObracunaMj1 = obr.TipObracunaMj1;
+                                target.TipObracunaMj2 = obr.TipObracunaMj2;
+                                target.TipObracunaMj3 = obr.TipObracunaMj3;
+                                target.TipObracunaMj4 = obr.TipObracunaMj4;
+                                target.TipObracunaMj5 = obr.TipObracunaMj5;
+                                target.TipObracunaMj6 = obr.TipObracunaMj6;
+                                target.TipObracunaMj7 = obr.TipObracunaMj7;
+                                target.TipObracunaMj8 = obr.TipObracunaMj8;
+                                target.TipObracunaMj9 = obr.TipObracunaMj9;
+                                target.TipObracunaMj10 = obr.TipObracunaMj10;
+                                target.TipObracunaMj11 = obr.TipObracunaMj11;
+                                target.TipObracunaMj12 = obr.TipObracunaMj12;
+                            }
+                        }
                     }
                 }
                 await _db.SaveChangesAsync();

@@ -75,3 +75,22 @@
 .bs-callout + .bs-callout {
     margin-top: -5px;
 }
+
+.redCell {
+    color: #a94442;
+    height: 100%;
+    width: 100%;
+}
+
+.greenCell {
+    color: #449d44;
+    height: 100%;
+    width: 100%;
+}
+
+.greenCellBack {
+    background-color: #99ff99;
+}
+.transCellBack {
+    background-color: transparent;
+}

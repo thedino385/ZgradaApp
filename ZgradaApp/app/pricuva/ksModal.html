@@ -103,12 +103,14 @@
                         <!--Zaduzenje se povlaci sa Zaduzenja iz PricuveMj za current mjesec (onaj koji je user upisao - ks.Mjesec)-->
                         <div ng-repeat="mj in pricuveZaZgraduGodina.PricuvaMj | filter: { VlasnikId: ks.StanarId } | filter: { Mjesec: ks.Mjesec }:true">
                             {{mj.Zaduzenje}}
-                            {{mj.Mjesec}}
                         </div>
                         
                     </td>
                     <td style="vertical-align: middle">
-                        {{Stanje}}
+                        <!--Uplata - Zaduzenje-->
+                        <div ng-repeat="mj in pricuveZaZgraduGodina.PricuvaMj | filter: { VlasnikId: ks.StanarId } | filter: { Mjesec: ks.Mjesec }:true">
+                            {{ks.Uplata - mj.Zaduzenje}}
+                        </div>
                     </td>
                     <td style="vertical-align: middle">
                         <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="delete(ks.Id)">

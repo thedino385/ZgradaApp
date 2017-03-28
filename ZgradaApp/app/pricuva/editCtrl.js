@@ -14,6 +14,16 @@
 
         $scope.novaGodina = null; // godina koju user dodaje
         $scope.dodajGodinu = function () {
+            var ok = true;
+            $scope.pricuveZaZgraduSveGodine.forEach(function (obj) {
+                if (obj.Godina == $scope.novaGodina) {
+                    toastr.error('Godina postoji!');
+                    ok = false;
+                }
+            });
+            if (!ok)
+                return;
+
             if (isFinite($scope.novaGodina)) {
                 // kreiraj prazan prihodRashod za Tvrtku i godinu
                 DataService.createEmptyPricuva($scope.zgrada.Id, $scope.novaGodina).then(
@@ -22,13 +32,13 @@
                         //$scope.obj.Status = 'a';
                         $scope.SelectedGodina = $scope.novaGodina
                         $scope.tableVisible = true;
-                        g = { Godina: $scope.novaGodina };
-                        $scope.godine.push(g);
+                        $scope.godine.push($scope.novaGodina);
                         $scope.pricuveZaZgraduSveGodine.push(result.data);
-                        //console.log(pricuveZaZgraduGodina);
+                        $scope.novaGodina = '';
                     },
                     function (result) {
                         // err
+                        toastr.error('Godina nije kreirana!', result.data);
                     }
                 )
             }
@@ -47,14 +57,13 @@
                             $rootScope.loaderActive = false;
                             if ($scope.pricuveZaZgraduSveGodine.length > 0) {
                                 $scope.pricuveZaZgraduSveGodine.forEach(function (g) {
-                                    g = { Godina: g.Godina };
-                                    gList.push(g)
+                                    gList.push(g.Godina)
                                 });
                                 $scope.godine = gList;
-                                $scope.SelectedGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1].Godina;
-                                $scope.pricuveZaZgraduGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1]; // selektiraj zadnjega
-                                $scope.tableVisible = true;
-                                farbajMjesece();
+                                //$scope.SelectedGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1].Godina;
+                                //$scope.pricuveZaZgraduGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1]; // selektiraj zadnjega
+                                //$scope.tableVisible = true;
+                                //farbajMjesece();
                             }
                             else {
                                 $scope.tableVisible = false;
@@ -83,15 +92,18 @@
             );
         }
 
-        $scope.godinaChanged = function () {
-            alert('ch');
+        $scope.godinaChanged = function (godina) {
+            $scope.SelectedGodina = godina;
             $scope.pricuveZaZgraduSveGodine.forEach(function (pr) {
-                if (pr.Godina == $scope.SelectedGodina)
+                if (pr.Godina == $scope.SelectedGodina) {
                     $scope.pricuveZaZgraduGodina = pr;
+                    farbajMjesece();
+                    $scope.tableVisible = true;
+                }
             });
         };
 
-        
+
 
         //$scope.openMjesecno = function (mjesec) {
         //    if ($scope.SelectedGodina == '') {
@@ -124,7 +136,7 @@
         //};
 
 
-        
+
         //function openModal(pricuvaMjesec, mjesec) {
         $scope.openMjesecno = function (mjesec) {
             if ($scope.SelectedGodina == '') {
@@ -143,7 +155,7 @@
                 backdrop: 'static',
                 keyboard: false,
                 resolve: {
-                    pricuveZaZgraduGodina: function () { 
+                    pricuveZaZgraduGodina: function () {
                         return $scope.pricuveZaZgraduGodina;
                     },
                     zgrada: function () {
@@ -186,7 +198,7 @@
         //    return dugObj;
         //}
 
-       
+
 
         // _______________________________________________________________
         //      KS
@@ -273,7 +285,7 @@
                     stanje = stanjeOd.StanjeOd;
                     //console.log('naso vlasnika');
                 }
-                    
+
             });
             //console.log('IzracunajDugPretplatu');
             //console.log($scope.pricuveZaZgraduGodina.PricuvaGod_StanjeOd);
@@ -282,14 +294,6 @@
             //console.log(mjZad);
             //console.log(stanje);
             return (parseFloat(uplaceno) + parseFloat(stanje) - parseFloat(mjZad));
-        }
-
-        function farbajMjesece()
-        {
-            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (mj) {
-                if (mj.Mjesec == 1 && mj.DugPretplata != 0)
-                    $scope.mjesec1background = 'green';
-            });
         }
 
         $scope.save = function () {
@@ -306,4 +310,46 @@
         $scope.cancelReload = function () {
             $route.reload();
         }
-}]);
+
+        function farbajMjesece() {
+            $scope.clsMjesec1 = 'transCellBack';
+            $scope.clsMjesec2 = 'transCellBack';
+            $scope.clsMjesec3 = 'transCellBack';
+            $scope.clsMjesec4 = 'transCellBack';
+            $scope.clsMjesec5 = 'transCellBack';
+            $scope.clsMjesec6 = 'transCellBack';
+            $scope.clsMjesec7 = 'transCellBack';
+            $scope.clsMjesec8 = 'transCellBack';
+            $scope.clsMjesec9 = 'transCellBack';
+            $scope.clsMjesec10 = 'transCellBack';
+            $scope.clsMjesec11 = 'transCellBack';
+            $scope.clsMjesec12 = 'transCellBack';
+
+            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (mj) {
+                if (mj.Mjesec == 1 && mj.DugPretplata != 0) 
+                    $scope.clsMjesec1 = 'greenCellBack';
+                if (mj.Mjesec == 2 && mj.DugPretplata != 0)
+                    $scope.clsMjesec2 = 'greenCellBack';
+                if (mj.Mjesec == 3 && mj.DugPretplata != 0)
+                    $scope.clsMjesec3 = 'greenCellBack';
+                if (mj.Mjesec == 4 && mj.DugPretplata != 0)
+                    $scope.clsMjesec4 = 'greenCellBack';
+                if (mj.Mjesec == 5 && mj.DugPretplata != 0)
+                    $scope.clsMjesec5 = 'greenCellBack';
+                if (mj.Mjesec == 6 && mj.DugPretplata != 0)
+                    $scope.clsMjesec6 = 'greenCellBack';
+                if (mj.Mjesec == 7 && mj.DugPretplata != 0)
+                    $scope.clsMjesec7 = 'greenCellBack';
+                if (mj.Mjesec == 8 && mj.DugPretplata != 0)
+                    $scope.clsMjesec8 = 'greenCellBack';
+                if (mj.Mjesec == 9 && mj.DugPretplata != 0)
+                    $scope.clsMjesec9 = 'greenCellBack';
+                if (mj.Mjesec == 10 && mj.DugPretplata != 0)
+                    $scope.clsMjesec10 = 'greenCellBack';
+                if (mj.Mjesec == 11 && mj.DugPretplata != 0)
+                    $scope.clsMjesec11 = 'greenCellBack';
+                if (mj.Mjesec == 12 && mj.DugPretplata != 0)
+                    $scope.clsMjesec12 = 'greenCellBack';
+            });
+        }
+    }]);

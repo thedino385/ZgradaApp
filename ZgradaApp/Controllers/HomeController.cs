@@ -22,16 +22,24 @@ namespace ZgradaApp.Controllers
                 ViewBag.ImePrezime = String.Join(" ", new[] { user.Ime, user.Prezime });
                 ViewBag.Company = company.Naziv;
 
+                string expGrace = ((DateTime)company.ExpirationDate).AddDays(14).ToShortDateString();
+
                 TimeSpan ts = ((DateTime)company.ExpirationDate).Date - DateTime.Today.Date;
-                if (ts.Days <= 31)
+                if (ts.Days <= 31 && ts.Days > 0)
                 {
                     string d = ts.Days.ToString().EndsWith("1") && ts.Days != 11 ? " dan" : " dana";
                     ViewBag.ExpMsg = "Vaš korisnički račun istiće za " + ts.Days.ToString() + d;
                     ViewBag.ExpDays = ts.Days;
                 }
-                    
+                else if (ts.Days < 0)
+                {
 
-                if(company.ExpirationDate > DateTime.Today.AddDays(14))
+                    ViewBag.ExpMsg = "Vaš korisnički račun je istekao"; 
+                    ViewBag.ExpMsgGrace = "Molimo, podmirite vaš račun do " + expGrace; 
+                    ViewBag.ExpDays = ts.Days;
+                }
+
+                if (company.ExpirationDate > DateTime.Today.AddDays(14))
                 {
                     RedirectToAction("LogOffExpired", "Account");
                 }
