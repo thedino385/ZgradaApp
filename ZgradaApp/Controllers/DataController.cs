@@ -476,7 +476,7 @@ namespace ZgradaApp.Controllers
         [Route("api/data/createEmptyPrihodRashod")]
         public async Task<IHttpActionResult> CreateEmptyPrihodRashod(int ZgradaId, int Godina)
         {
-            return Ok(new PrihodiRashodi { ZgradaId = ZgradaId, Godina = Godina });
+            return Ok(new PrihodiRashodi { ZgradaId = ZgradaId, Godina = Godina, Status = "a" });
         }
 
 

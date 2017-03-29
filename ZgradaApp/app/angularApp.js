@@ -55,10 +55,18 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
         templateUrl: '../app/PihRas/edit.html',
         controller: 'editPrihRasCtrl'
         })
-        .when('/pricuvaedit/:id', {
-            templateUrl: '../app/pricuva/edit.html',
-            controller: 'pricuvaEditCtrl'
+    .when('/pricuva', {
+        templateUrl: '../app/pricuva/index.html',
+        controller: 'indexPricuvaCtrl'
+    })
+    .when('/pricuvaedit/:id', {
+        templateUrl: '../app/pricuva/edit.html',
+        controller: 'pricuvaEditCtrl'
         })
+    .when('/ks/:id', {
+        templateUrl: '../app/ks/display.html',
+        controller: 'ksDisplayCtrl'
+    })
     .otherwise({
         redirectTo: '/index'
     });

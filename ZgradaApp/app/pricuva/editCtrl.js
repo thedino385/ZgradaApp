@@ -1,5 +1,5 @@
-﻿angularApp.controller('pricuvaEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$uibModal', 'toastr', 'DataService',
-    function ($scope, $rootScope, $routeParams, $location, $uibModal, toastr, DataService) {
+﻿angularApp.controller('pricuvaEditCtrl', ['$scope', '$route', '$rootScope', '$routeParams', '$location', '$uibModal', 'toastr', 'DataService',
+    function ($scope, $route, $rootScope, $routeParams, $location, $uibModal, toastr, DataService) {
 
         // $scope.pricuveZaZgraduSveGodine - sve godine za zgradu
         // $scope.pricuveZaZgraduGodina - jedna godina za zgradu

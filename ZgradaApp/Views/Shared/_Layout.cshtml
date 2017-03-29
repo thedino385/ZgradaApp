@@ -41,11 +41,12 @@
                             </ul>
                         </li>
                         <li id="zgrade"><a href="#!/zgrade" onclick="Mark('zgrade')">Zgrade</a></li>
-                        <li class="dropdown" id="ob1">
+                        <li class="dropdown" id="obr">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">$$$$ <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#!/prihodirashodi">Prihodi / rashodi</a></li>
-                                <li><a href="#!/pricuvaedit/4">Pričuva</a></li>
+                                <li><a href="#!/ks/4" onclick="Mark('obr')">Kartice suvlasnika</a></li>
+                                <li><a href="#!/prihodirashodi" onclick="Mark('obr')">Prihodi / rashodi</a></li>
+                                <li><a href="#!/pricuva" onclick="Mark('obr')">Pričuva</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Nav header</li>
                                 <li><a href="#">Action</a></li>
@@ -135,7 +136,12 @@
     <script src="~/app/PihRas/indexprhRasCtrl.js"></script>
     <script src="~/app/PihRas/editPrihRasCtrl.js"></script>
     <script src="~/app/PihRas/modalPrihodCtrl.js"></script>
+    <script src="~/app/PihRas/modalRashodCtrl.js"></script>
 
+    <script src="~/app/ks/ksDisplayCtrl.js"></script>
+    <script src="~/app/ks/ksksModalCtrl.js"></script>
+
+    <script src="~/app/pricuva/indexPricuvaCtrl.js"></script>
     <script src="~/app/pricuva/pricuvaMjesecModalCtrl.js"></script>
     <script src="~/app/pricuva/ksModalCtrl.js"></script>
     <script type="text/javascript">
