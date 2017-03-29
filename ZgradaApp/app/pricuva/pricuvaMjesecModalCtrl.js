@@ -65,16 +65,25 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                                 povrsinaDijelovi += parseFloat(dio.PovrsinaSaKoef);
                             });
 
+                            // 1
                             $scope.pricuveZaZgraduGodina.KS.forEach(function (ks) {
                                 if (rec.VlasnikId == ks.StanarId && rec.Mjesec == ks.Mjesec) {
                                     rec.Uplaceno = ks.Uplata;
                                 }
                             });
+                            // 2
                             if ($scope.tipObr == 0) // m2
                                 rec.Zaduzenje = ((parseFloat(povrisnaPrip) + parseFloat(povrsinaDijelovi)) * parseFloat($scope.Cijena)).toFixed(2);
                             else // ukupna cijena
                                 rec.Zaduzenje = (((parseFloat(povrisnaPrip) + parseFloat(povrsinaDijelovi)) / parseFloat(zgrada.Povrsinam2) * parseFloat($scope.Cijena))).toFixed(2);
+
+                            // StanjeOd:
+                            //  - ako je prvi mjesec, vuci iz kolekcije StanjeOd (na godisnjoj razini)
+                            //  - ako nije, stanjeOd current mjeseca je DugPretplata iz proslog mjeseca
+
+                            // 3
                             rec.DugPretplata = parseFloat(rec.Uplaceno) + parseFloat(rec.StanjeOd) - parseFloat(rec.Zaduzenje);
+                            rec.Dirty = false;
                         }
                     });
                 }

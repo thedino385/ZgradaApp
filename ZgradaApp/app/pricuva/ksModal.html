@@ -63,9 +63,9 @@
                     <th style="vertical-align: middle">
                         Mjesec
                     </th>
-                    <th style="vertical-align: middle">
+                    <!--<th style="vertical-align: middle">
                         Godina
-                    </th>
+                    </th>-->
                     <th style="vertical-align: middle">
                         Datum
                     </th>
@@ -87,11 +87,11 @@
                         <label>{{$index+1}}.</label>
                     </td>
                     <td style="vertical-align: middle">
-                        <input class="form-control noBorder" type="number" ng-model="ks.Mjesec" />
+                        <input class="form-control noBorder" type="number" ng-change="ksChanged(ks.Id)" ng-model="ks.Mjesec" />
                     </td>
-                    <td style="vertical-align: middle">
+                    <!--<td style="vertical-align: middle">
                         <input class="form-control noBorder" type="text" ng-model="ks.Godina" />
-                    </td>
+                    </td>-->
                     <td style="vertical-align: middle">
                         <input class="form-control noBorder" type="text" ng-model="ks.Datum" />
                         <!--<md-datepicker ng-model="ks.Datum" md-placeholder="Datum"></md-datepicker>-->
@@ -117,6 +117,12 @@
                             <span class="glyphicon glyphicon-trash"></span>
                         </button>
                     </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
+                    <td style="vertical-align: middle; text-align: end"><b>{{uplataTotal}}</b></td>
+                    <td style="vertical-align: middle; text-align: end"><b>{{zaduzenjeTotal}}</b></td>
+                    <td style="vertical-align: middle; text-align: end"><b>---</b></td>
                 </tr>
             </tbody>
         </table>

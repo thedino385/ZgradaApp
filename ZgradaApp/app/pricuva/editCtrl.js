@@ -9,7 +9,7 @@
         var g = {};
         //$scope.pricuveZaZgraduGodina = { KS: [], PricuvaGod_StanjeOd: [] }; // ovo je object za izabranu godinu
         $scope.zgrada = {};
-
+        $scope.saveDisabled = false;
         $scope.godine = [];
 
         $scope.novaGodina = null; // godina koju user dodaje
@@ -232,6 +232,7 @@
 
             modalInstance.result.then(function (item) {
                 console.log("modal result fn");
+                farbajMjesece();
                 // Save
                 // ovdje ne moram nista radiit, modal controller vodi brigu o CRUD-u za KS
 
@@ -324,32 +325,63 @@
             $scope.clsMjesec10 = 'transCellBack';
             $scope.clsMjesec11 = 'transCellBack';
             $scope.clsMjesec12 = 'transCellBack';
+            $scope.saveDisabled = false;
 
             $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (mj) {
-                if (mj.Mjesec == 1 && mj.DugPretplata != 0) 
-                    $scope.clsMjesec1 = 'greenCellBack';
-                if (mj.Mjesec == 2 && mj.DugPretplata != 0)
-                    $scope.clsMjesec2 = 'greenCellBack';
-                if (mj.Mjesec == 3 && mj.DugPretplata != 0)
-                    $scope.clsMjesec3 = 'greenCellBack';
-                if (mj.Mjesec == 4 && mj.DugPretplata != 0)
-                    $scope.clsMjesec4 = 'greenCellBack';
-                if (mj.Mjesec == 5 && mj.DugPretplata != 0)
-                    $scope.clsMjesec5 = 'greenCellBack';
-                if (mj.Mjesec == 6 && mj.DugPretplata != 0)
-                    $scope.clsMjesec6 = 'greenCellBack';
-                if (mj.Mjesec == 7 && mj.DugPretplata != 0)
-                    $scope.clsMjesec7 = 'greenCellBack';
-                if (mj.Mjesec == 8 && mj.DugPretplata != 0)
-                    $scope.clsMjesec8 = 'greenCellBack';
-                if (mj.Mjesec == 9 && mj.DugPretplata != 0)
-                    $scope.clsMjesec9 = 'greenCellBack';
-                if (mj.Mjesec == 10 && mj.DugPretplata != 0)
-                    $scope.clsMjesec10 = 'greenCellBack';
-                if (mj.Mjesec == 11 && mj.DugPretplata != 0)
-                    $scope.clsMjesec11 = 'greenCellBack';
-                if (mj.Mjesec == 12 && mj.DugPretplata != 0)
-                    $scope.clsMjesec12 = 'greenCellBack';
+                //if (mj.Mjesec == 1 && mj.DugPretplata != 0) 
+                //    $scope.clsMjesec1 = 'greenCellBack';
+                switch (mj.Mjesec)
+                {
+                    case 1:
+                        if (mj.DugPretplata != 0 && mj.Dirty != true)
+                            // ok, nema promjena, pricuva postoji
+                            $scope.clsMjesec1 = 'greenCellBack'; 
+                        else if (mj.DugPretplata != 0 && mj.Dirty == true) {
+                            // promjena u kreiranoj pricuvai, crveno, nema snimanja
+                            $scope.clsMjesec1 = 'redCellBack';
+                            $scope.saveDisabled = true;
+                        }
+                        else if (mj.DugPretplata == 0 && mj.Dirty == true)
+                            // nema kreirane pricuve, ali ima unosa za taj mjesec, no worries
+                            $scope.clsMjesec1 = 'blueCellBack';
+                        break;
+                    case 2:
+                        if (mj.DugPretplata != 0 && mj.Dirty != true)
+                            $scope.clsMjesec2 = 'greenCellBack'; 
+                        else if (mj.DugPretplata != 0 && mj.Dirty == true) {
+                            $scope.clsMjesec2 = 'redCellBack'; 
+                            $scope.saveDisabled = true;
+                        }
+                        else if (mj.DugPretplata == 0 && mj.Dirty == true)
+                            $scope.clsMjesec2 = 'blueCellBack';
+                        break;
+                }
+
+               
+                    
+
+                //if (mj.Mjesec == 2 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec2 = 'greenCellBack';
+                //if (mj.Mjesec == 3 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec3 = 'greenCellBack';
+                //if (mj.Mjesec == 4 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec4 = 'greenCellBack';
+                //if (mj.Mjesec == 5 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec5 = 'greenCellBack';
+                //if (mj.Mjesec == 6 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec6 = 'greenCellBack';
+                //if (mj.Mjesec == 7 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec7 = 'greenCellBack';
+                //if (mj.Mjesec == 8 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec8 = 'greenCellBack';
+                //if (mj.Mjesec == 9 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec9 = 'greenCellBack';
+                //if (mj.Mjesec == 10 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec10 = 'greenCellBack';
+                //if (mj.Mjesec == 11 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec11 = 'greenCellBack';
+                //if (mj.Mjesec == 12 && mj.DugPretplata != 0)
+                //    $scope.clsMjesec12 = 'greenCellBack';
             });
         }
     }]);

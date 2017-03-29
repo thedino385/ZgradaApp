@@ -71,6 +71,7 @@ namespace ZgradaApp
     public partial class PricuvaMj
     {
         public string Status { get; set; }
+        public bool Dirty { get; set; }
     }
 
     public partial class KS

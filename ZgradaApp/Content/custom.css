@@ -91,6 +91,12 @@
 .greenCellBack {
     background-color: #99ff99;
 }
+.redCellBack {
+    background-color: #ff908e;
+}
+.blueCellBack {
+    background-color: #9ec0f7;
+}
 .transCellBack {
     background-color: transparent;
 }

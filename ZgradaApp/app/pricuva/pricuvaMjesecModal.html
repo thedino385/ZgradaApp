@@ -100,6 +100,7 @@
                     </div>
                 </td>
                 <td style="vertical-align: middle">
+                    <!--NE VALJA, MORA BITI NA SCOPE-U - preracunaj kao i sve u kreirajPricuvuZaMjesec-->
                     <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
                         <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaGod_StanjeOd | filter: { VlasnikId: stanar.Id }:true">
                             <div ng-class="{greenCell: rec.StanjeOd > 0, redCell: rec.StanjeOd < 0}">
