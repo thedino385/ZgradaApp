@@ -216,6 +216,8 @@
     <EntitySetMapping Name="PrihodiRashodiDetails">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodiDetails">
         <MappingFragment StoreEntitySet="PrihodiRashodiDetails">
+          <ScalarProperty Name="PrijenosIzProlse" ColumnName="PrijenosIzProlse" />
+          <ScalarProperty Name="UplataPricuve" ColumnName="UplataPricuve" />
           <ScalarProperty Name="Vrsta" ColumnName="Vrsta" />
           <ScalarProperty Name="Placeno" ColumnName="Placeno" />
           <ScalarProperty Name="Razlika" ColumnName="Razlika" />
@@ -258,7 +260,6 @@
           <ScalarProperty Name="CijenaUkupno" ColumnName="CijenaUkupno" />
           <ScalarProperty Name="CijenaPoM2" ColumnName="CijenaPoM2" />
           <ScalarProperty Name="TipObracuna" ColumnName="TipObracuna" />
-          <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
           <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
           <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
           <ScalarProperty Name="DugPretplata" ColumnName="DugPretplata" />

@@ -19,7 +19,19 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
         $scope.Cijena = 0;
         //$scope.CijenaUkupno = 0;
 
-        console.log($scope.pricuveZaZgraduGodina);
+        $scope.totalDugPretplata = 0;
+        $scope.totalZaduzenje = 0;
+        $scope.totalUplaceno = 0;
+        $scope.totalStanjeOd = 0;
+        $scope.pricuvaKreirana = false;
+
+        //$scope.$watch($scope.pricuveZaZgraduGodina.PricuvaMj , function () { alert("chenged"); });
+        //$scope.$watch($scope.pricuveZaZgraduGodina, function () {
+        //    console.log(newValue + " " + oldValue)
+        //    if (newValue != oldValue) {
+        //        alert("chenged");
+        //    }
+        //});
 
         // prvo moramo naci TipObracuna
         nadjiVrstuObracuna();
@@ -30,10 +42,11 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
         //    $scope.CijenaUkupno = rec.CijenaUkupno;
         //});
 
-        
+        povuciStanjeOd();
 
 
         $scope.kreirajPricuvuZaMjesec = function () {
+            $scope.pricuvaKreirana = true;
             //PricuvaGodId
             //StanId
             //VlasnikId
@@ -59,16 +72,21 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                     zgrada.Stanovi.forEach(function (stan) {
                         if (stan.Id == rec.StanId) {
                             stan.Stanovi_Pripadci.forEach(function (pripadak) {
-                                povrisnaPrip += parseFloat(pripadak.PovrsinaSaKef);
+                                //povrisnaPrip += parseFloat(pripadak.PovrsinaSaKef);
+                                console.log(pripadak.PovrsinaSaKef);
+                                console.log(isFinite(pripadak.PovrsinaSaKef));
+                                isFinite(pripadak.PovrsinaSaKef) && pripadak.PovrsinaSaKef != null ? povrisnaPrip += parseFloat(pripadak.PovrsinaSaKef) : povrisnaPrip = povrisnaPrip;
                             });
                             stan.Stanovi_PosebniDijelovi.forEach(function (dio) {
-                                povrsinaDijelovi += parseFloat(dio.PovrsinaSaKoef);
+                                //povrsinaDijelovi += parseFloat(dio.PovrsinaSaKoef);
+                                isFinite(dio.PovrsinaSaKoef) && dio.PovrsinaSaKoef != null ? povrsinaDijelovi += parseFloat(dio.PovrsinaSaKoef) : povrsinaDijelovi = povrsinaDijelovi;
                             });
 
                             // 1
                             $scope.pricuveZaZgraduGodina.KS.forEach(function (ks) {
                                 if (rec.VlasnikId == ks.StanarId && rec.Mjesec == ks.Mjesec) {
-                                    rec.Uplaceno = ks.Uplata;
+                                    //rec.Uplaceno = ks.Uplata;
+                                    isFinite(rec.Uplaceno) && rec.Uplaceno != null ? rec.Uplaceno = parseFloat(ks.Uplata) : rec.Uplaceno = 0;
                                 }
                             });
                             // 2
@@ -77,15 +95,12 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                             else // ukupna cijena
                                 rec.Zaduzenje = (((parseFloat(povrisnaPrip) + parseFloat(povrsinaDijelovi)) / parseFloat(zgrada.Povrsinam2) * parseFloat($scope.Cijena))).toFixed(2);
 
-                            // StanjeOd:
-                            //  - ako je prvi mjesec, vuci iz kolekcije StanjeOd (na godisnjoj razini)
-                            //  - ako nije, stanjeOd current mjeseca je DugPretplata iz proslog mjeseca
-
                             // 3
                             rec.DugPretplata = parseFloat(rec.Uplaceno) + parseFloat(rec.StanjeOd) - parseFloat(rec.Zaduzenje);
                             rec.Dirty = false;
                         }
                     });
+                    // ako ima promjena i user klikne cancel - upozori ga
                 }
             });
             //}
@@ -93,8 +108,60 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
             //    alert('po ukupnoj povrisini zgrade');
             //    // povrsina stana (sa pripadcima) / ukupno(kuna) * 100
             //}
+            izracunajUkupno();
             checkOkZaSnimanje();
         }
+
+        function povuciStanjeOd() {
+            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
+                // StanjeOd:
+                //  - ako je prvi mjesec, vuci iz kolekcije StanjeOd (na godisnjoj razini)
+                //  - ako nije, stanjeOd current mjeseca je DugPretplata iz proslog mjeseca
+                console.log('vucem');
+                if ($scope.mjesec == 1) {
+                    console.log('mjesec 1');
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_StanjeOd.forEach(function (stanje) {
+                        console.log(stanje);
+                        console.log(rec);
+                        if (rec.PricuvaGodId == stanje.PricuvaGodId && stanje.VlasnikId == rec.VlasnikId) {
+                            console.log('match');
+                            rec.StanjeOd = stanje.StanjeOd;
+                        }
+                    });
+                }
+                else {
+                    $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (recmj) {
+                        if (recmj.Mjesec == $scope.mjesec - 1 && rec.VlasnikId == recmj.VlasnikId) {
+                            // prosli mjesec
+                            rec.StanjeOd = recmj.DugPretplata;
+                        }
+                    });
+                }
+            });
+            izracunajUkupno();
+        }
+
+        function izracunajUkupno() {
+            var totalDug = 0;
+            var totalZaduzenje = 0;
+            var totalUplaceno = 0;
+            var totalStanjeOd = 0;
+            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
+                if (rec.Mjesec == $scope.mjesec) {
+                    rec.DugPretplata != null && !isNaN(rec.DugPretplata) ? totalDug += parseFloat(rec.DugPretplata) : totalDug = totalDug;
+                    rec.Zaduzenje != null ? totalZaduzenje += parseFloat(rec.Zaduzenje) : totalZaduzenje = totalZaduzenje;
+                    rec.Uplaceno != null ? totalUplaceno += parseFloat(rec.Uplaceno) : totalUplaceno = totalUplaceno;
+                    rec.StanjeOd != null ? totalStanjeOd += parseFloat(rec.StanjeOd) : totalStanjeOd = totalStanjeOd;
+                }
+            });
+            $scope.totalDugPretplata = totalDug;
+            $scope.totalZaduzenje = totalZaduzenje;
+            $scope.totalUplaceno = totalUplaceno;
+            $scope.totalStanjeOd = totalStanjeOd;
+        }
+
+        //function summary()
+
 
         function checkOkZaSnimanje() {
             $scope.snimanjeDisabled = true;
@@ -190,7 +257,13 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
         };
 
         $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
+            if ($scope.pricuvaKreirana) {
+                var c = confirm("Pricuva je promjenjena, zelite oddbaciti promjene?")
+                if (c)
+                    $uibModalInstance.dismiss('cancel');
+            }
+            else
+                $uibModalInstance.dismiss('cancel');
         }
 
         function snimiVrstuObracuna() {
@@ -247,5 +320,7 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                 }
             });
         }
+
+
 
     }]);

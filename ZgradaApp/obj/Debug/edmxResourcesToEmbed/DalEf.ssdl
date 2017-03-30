@@ -89,7 +89,6 @@
     <Property Name="DugPretplata" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
     <Property Name="TipObracuna" Type="smallint" Nullable="false" />
     <Property Name="CijenaPoM2" Type="decimal" Precision="18" Scale="2" />
     <Property Name="CijenaUkupno" Type="decimal" Precision="18" Scale="2" />
@@ -196,6 +195,8 @@
     <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Vrsta" Type="char" MaxLength="1" />
+    <Property Name="UplataPricuve" Type="bit" />
+    <Property Name="PrijenosIzProlse" Type="bit" />
   </EntityType>
   <EntityType Name="Pripadci">
     <Key>

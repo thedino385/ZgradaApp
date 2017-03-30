@@ -47,12 +47,22 @@
         DataService.getPr(DataService.selectedZgrada.Id).then(
             function (result) {
                 $scope.prihodiRashodi = result.data; // ovo su sve godine selected zgrade
+                DataService.getPricuva(DataService.selectedZgrada.Id).then(
+                    function (result) {
+                        $scope.pricuvaZaZgraduSveGodine = result.data;
+                    },
+                    function (result) {
+                        alert('Dohvat pricuva nije uspio');
+                    }
+                )
+
                 if ($scope.prihodiRashodi.length > 0) {
                     $scope.prihodiRashodi.forEach(function (g) {
                         gList.push(g.Godina)
                     });
                     $scope.godine = gList;
                     $scope.tableVisible = true;
+                    // povuci i pricuvu zbog prebacivanja upata pricuve
                 }
                 else {
                     $scope.tableVisible = false;
@@ -100,7 +110,8 @@
                         return $scope.prihodRashodZaGodinu;
                     },
                     mjesec: function () { return mjesec; },
-                    godina: function () { return $scope.SelectedGodina; }
+                    godina: function () { return $scope.SelectedGodina; },
+                    pricuvaZaZgraduSveGodine: function () { return $scope.pricuvaZaZgraduSveGodine; }
                 }
             });
 

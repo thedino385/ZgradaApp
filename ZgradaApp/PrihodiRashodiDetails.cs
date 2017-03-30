@@ -24,6 +24,8 @@ namespace ZgradaApp
         public Nullable<decimal> Razlika { get; set; }
         public Nullable<decimal> Placeno { get; set; }
         public string Vrsta { get; set; }
+        public Nullable<bool> UplataPricuve { get; set; }
+        public Nullable<bool> PrijenosIzProlse { get; set; }
     
         public virtual PrihodiRashodi PrihodiRashodi { get; set; }
     }

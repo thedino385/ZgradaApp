@@ -72,6 +72,7 @@ namespace ZgradaApp
     {
         public string Status { get; set; }
         public bool Dirty { get; set; }
+        public decimal StanjeOd { get; set; }
     }
 
     public partial class KS

@@ -20,9 +20,11 @@ angularApp.controller('ksModalCtrl', ['$scope', '$uibModalInstance', 'DataServic
         $scope.stanarId = parseInt(stanarId);
         $scope.godina = parseInt(godina);
         $scope.snimanjeOk = false;
+        $scope.dodavanjeOk = true;
 
         $scope.uplataTotal = 0;
         $scope.zaduzenjeTotal = 0;
+        $scope.stanjeTotal = 0;
 
         var changes = [];
 
@@ -70,9 +72,12 @@ angularApp.controller('ksModalCtrl', ['$scope', '$uibModalInstance', 'DataServic
         function OkZaSnimanje() {
             $scope.snimanjeOk = true;
             $scope.pricuveZaZgraduGodina.KS.forEach(function (rec) {
-                if (!isFinite(rec.Uplata))
-                    $scope.snimanjeOk = false;
+                if (rec.Status != 'd') {
+                    if (!isFinite(rec.Uplata) || rec.Mjesec == null || !isFinite(rec.Mjesec))
+                        $scope.snimanjeOk = false;
+                }
             });
+            $scope.dodavanjeOk = $scope.snimanjeOk;
         }
 
         $scope.uplataChanged = function (ksId) {
@@ -83,7 +88,15 @@ angularApp.controller('ksModalCtrl', ['$scope', '$uibModalInstance', 'DataServic
         }
 
         $scope.ksChanged = function (ksId) {
+            $scope.pricuveZaZgraduGodina.KS.forEach(function (ks) {
+                if (ksId == ks.Id && !isFinite(ks.Mjesec)) {
+                    ks.Mjesec = null;
+                    $scope.snimanjeOk = false;
+                    $scope.dodavanjeOk = false;
+                }
+            });
             changes.push(ksId);
+            OkZaSnimanje();
         }
 
         // watch for changes - mjesec, uplata
@@ -129,6 +142,7 @@ angularApp.controller('ksModalCtrl', ['$scope', '$uibModalInstance', 'DataServic
             });
             $scope.uplataTotal = totalUplata;
             $scope.zaduzenjeTotal = totalZaduzenje;
+            $scope.stanjeTotal = totalUplata + totalZaduzenje;
         }
 
     }]);

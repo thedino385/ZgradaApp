@@ -22,7 +22,6 @@ namespace ZgradaApp
         public Nullable<decimal> DugPretplata { get; set; }
         public Nullable<decimal> Zaduzenje { get; set; }
         public Nullable<decimal> Uplaceno { get; set; }
-        public Nullable<decimal> StanjeOd { get; set; }
         public short TipObracuna { get; set; }
         public Nullable<decimal> CijenaPoM2 { get; set; }
         public Nullable<decimal> CijenaUkupno { get; set; }

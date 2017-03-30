@@ -365,6 +365,8 @@
     <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Vrsta" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodiDetails" ToRole="PrihodiRashodi" />
+    <Property Name="UplataPricuve" Type="Boolean" />
+    <Property Name="PrijenosIzProlse" Type="Boolean" />
   </EntityType>
   <Association Name="FK_PrihodiRashodiDetails_PrihodiRashodi">
     <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />
@@ -415,7 +417,6 @@
     <Property Name="DugPretplata" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Zaduzenje" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaMj" ToRole="PricuvaGod" />
     <Property Name="TipObracuna" Type="Int16" Nullable="false" />
     <Property Name="CijenaPoM2" Type="Decimal" Precision="18" Scale="2" />

@@ -94,7 +94,6 @@
           <Property Name="DugPretplata" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TipObracuna" Type="smallint" Nullable="false" />
           <Property Name="CijenaPoM2" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CijenaUkupno" Type="decimal" Precision="18" Scale="2" />
@@ -201,6 +200,8 @@
           <Property Name="Razlika" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Vrsta" Type="char" MaxLength="1" />
+          <Property Name="UplataPricuve" Type="bit" />
+          <Property Name="PrijenosIzProlse" Type="bit" />
         </EntityType>
         <EntityType Name="Pripadci">
           <Key>
@@ -876,6 +877,8 @@
           <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Vrsta" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" FromRole="PrihodiRashodiDetails" ToRole="PrihodiRashodi" />
+          <Property Name="UplataPricuve" Type="Boolean" />
+          <Property Name="PrijenosIzProlse" Type="Boolean" />
         </EntityType>
         <Association Name="FK_PrihodiRashodiDetails_PrihodiRashodi">
           <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />
@@ -926,7 +929,6 @@
           <Property Name="DugPretplata" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Zaduzenje" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" FromRole="PricuvaMj" ToRole="PricuvaGod" />
           <Property Name="TipObracuna" Type="Int16" Nullable="false" />
           <Property Name="CijenaPoM2" Type="Decimal" Precision="18" Scale="2" />
@@ -1256,6 +1258,8 @@
           <EntitySetMapping Name="PrihodiRashodiDetails">
             <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodiDetails">
               <MappingFragment StoreEntitySet="PrihodiRashodiDetails">
+                <ScalarProperty Name="PrijenosIzProlse" ColumnName="PrijenosIzProlse" />
+                <ScalarProperty Name="UplataPricuve" ColumnName="UplataPricuve" />
                 <ScalarProperty Name="Vrsta" ColumnName="Vrsta" />
                 <ScalarProperty Name="Placeno" ColumnName="Placeno" />
                 <ScalarProperty Name="Razlika" ColumnName="Razlika" />
@@ -1298,7 +1302,6 @@
                 <ScalarProperty Name="CijenaUkupno" ColumnName="CijenaUkupno" />
                 <ScalarProperty Name="CijenaPoM2" ColumnName="CijenaPoM2" />
                 <ScalarProperty Name="TipObracuna" ColumnName="TipObracuna" />
-                <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
                 <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
                 <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
                 <ScalarProperty Name="DugPretplata" ColumnName="DugPretplata" />

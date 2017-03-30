@@ -1,21 +1,57 @@
-﻿angularApp.controller('modalPrihodCtrl', ['$scope', '$uibModalInstance', 'DataService', 'prihodRashodZaGodinu', 'mjesec', 'godina',
-    function ($scope, $uibModalInstance, DataService, prihodRashodZaGodinu, mjesec, godina) {
+﻿angularApp.controller('modalPrihodCtrl', ['$scope', '$uibModalInstance', 'DataService', 'prihodRashodZaGodinu', 'mjesec', 'godina', 'pricuvaZaZgraduSveGodine',
+    function ($scope, $uibModalInstance, DataService, prihodRashodZaGodinu, mjesec, godina, pricuvaZaZgraduSveGodine) {
+
+        console.log(pricuvaZaZgraduSveGodine);
 
         // prosljedjen je cijeli objekt, nadji samo prihode iz mjeseca (godina je vec ranije odabrana)
         $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
         $scope.mjesec = mjesec;
         $scope.godina = godina;
         $scope.period = getHeaderText();
+        $scope.pricuvaZaZgraduSveGodine = pricuvaZaZgraduSveGodine;
+        $scope.uplataPricuve = 0;
 
-        $scope.dodajRecord = function () {
+        // uplata pricuve, samo se mapira, ne snima se
+        var uplataPricuve = 0;
+        $scope.pricuvaZaZgraduSveGodine.forEach(function (prGod) {
+            if (prGod.Godina == $scope.godina) {
+                var masterId = prGod.Id;
+                prGod.KS.forEach(function (ks) {
+                    if (ks.PricuvaGodId == masterId && ks.Mjesec == $scope.mjesec) {
+                        uplataPricuve += parseFloat(ks.Uplata);
+                    }
+                });
+            }
+        })
+        $scope.uplataPricuve = uplataPricuve;
+
+        if ($scope.mjesec == 1) {
+            // ako je prvi mjesec, onda postoji prijeno procuve iz pr. godine
+            // ako nema recorda, dodaj ga
+            var found = false;
+            prihodRashodZaGodinu.PrihodiRashodiDetails.forEach(function (prihod) {
+                if (rec.mjesec == 1 && rec.PrijenosIzProlse)
+                    found = true;
+            });
+            if (!found)
+                dodajRec(true);
+        }
+
+        izracunajUkupno();
+
+        $scope.dodajRecord = function (PrijenosIzProlse) {
+            dodajRec(PrijenosIzProlse);
+        }
+
+        function dodajRec(PrijenosIzProlse) {
             var maxId = 0;
-            prihodZaGodinu.PrihodiRashodiDetails.forEach(function (prihod) {
+            prihodRashodZaGodinu.PrihodiRashodiDetails.forEach(function (prihod) {
                 if (prihod.Mjesec == mjesec && prihod.Vrsta == 'p')
                     maxId = prihod.Id;
             });
             var noviRecord = {
-                Id: maxId + 1, PrihodiRashodiMasterId: prihodZaGodinu.Id, Mjesec: mjesec,
-                Opis: "", Iznos: 0, Vrsta: "p", Status: 'a'
+                Id: maxId + 1, PrihodiRashodiMasterId: prihodRashodZaGodinu.Id, Mjesec: mjesec,
+                Opis: "", Iznos: 0, Vrsta: "p", Status: 'a', PrijenosIzProlse: PrijenosIzProlse
             };
             $scope.prihodRashodZaGodinu.PrihodiRashodiDetails.push(noviRecord);
         }
@@ -38,7 +74,20 @@
                         rec.Status = 'd';       
                 })
             }
-                
+            izracunajUkupno();
+        }
+
+        $scope.ukupno = function () {
+            izracunajUkupno();
+        }
+
+        function izracunajUkupno() {
+            var ukupno = 0;
+            $scope.prihodRashodZaGodinu.PrihodiRashodiDetails.forEach(function (rec) {
+                if (rec.Vrsta == 'p' && rec.Status != 'd' && rec.Mjesec == mjesec)
+                    ukupno += parseFloat(rec.Iznos);
+            })
+            $scope.total = (ukupno + parseFloat($scope.uplataPricuve)).toFixed(2);
         }
 
         $scope.save = function () {
