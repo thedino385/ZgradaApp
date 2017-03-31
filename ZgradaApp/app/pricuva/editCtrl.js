@@ -54,16 +54,21 @@
                         function (resultZgrada) {
                             $scope.zgrada = resultZgrada.data;
                             $scope.pricuveZaZgraduSveGodine = result.data; // ovo su sve godine selected zgrade
-                            $rootScope.loaderActive = false;
+                            DataService.getPr($scope.zgrada.Id).then(
+                                function (result) {
+                                    $scope.prihodiRashodi = result.data;
+                                    $rootScope.loaderActive = false;
+                                },
+                                function (result) {
+                                    alert('Dohvat prihoda i rashoda nije uspio');
+                                }
+                            )
                             if ($scope.pricuveZaZgraduSveGodine.length > 0) {
                                 $scope.pricuveZaZgraduSveGodine.forEach(function (g) {
                                     gList.push(g.Godina)
                                 });
                                 $scope.godine = gList;
-                                //$scope.SelectedGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1].Godina;
-                                //$scope.pricuveZaZgraduGodina = $scope.pricuveZaZgraduSveGodine[$scope.pricuveZaZgraduSveGodine.length - 1]; // selektiraj zadnjega
-                                //$scope.tableVisible = true;
-                                //farbajMjesece();
+                                // povuci i prihdeRashode
                             }
                             else {
                                 $scope.tableVisible = false;
@@ -162,7 +167,8 @@
                         return $scope.zgrada;
                     },
                     godina: function () { return $scope.SelectedGodina; },
-                    mjesec: function () { return mjesec; }
+                    mjesec: function () { return mjesec; },
+                    prihodiRashodi: function () { return $scope.prihodiRashodi; }
                 }
             });
 

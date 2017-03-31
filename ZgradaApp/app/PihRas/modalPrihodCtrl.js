@@ -1,7 +1,7 @@
 ﻿angularApp.controller('modalPrihodCtrl', ['$scope', '$uibModalInstance', 'DataService', 'prihodRashodZaGodinu', 'mjesec', 'godina', 'pricuvaZaZgraduSveGodine',
     function ($scope, $uibModalInstance, DataService, prihodRashodZaGodinu, mjesec, godina, pricuvaZaZgraduSveGodine) {
 
-        console.log(pricuvaZaZgraduSveGodine);
+        console.log(prihodRashodZaGodinu);
 
         // prosljedjen je cijeli objekt, nadji samo prihode iz mjeseca (godina je vec ranije odabrana)
         $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
@@ -29,8 +29,9 @@
             // ako je prvi mjesec, onda postoji prijeno procuve iz pr. godine
             // ako nema recorda, dodaj ga
             var found = false;
-            prihodRashodZaGodinu.PrihodiRashodiDetails.forEach(function (prihod) {
-                if (rec.mjesec == 1 && rec.PrijenosIzProlse)
+            $scope.prihodRashodZaGodinu.PrihodiRashodiDetails.forEach(function (prihod) {
+                console.log(prihod.Mjesec);
+                if (parseInt(prihod.Mjesec) == 1 && prihod.PrijenosIzProlse == true)
                     found = true;
             });
             if (!found)
@@ -39,8 +40,8 @@
 
         izracunajUkupno();
 
-        $scope.dodajRecord = function (PrijenosIzProlse) {
-            dodajRec(PrijenosIzProlse);
+        $scope.dodajRecord = function () {
+            dodajRec(false);
         }
 
         function dodajRec(PrijenosIzProlse) {
@@ -94,7 +95,7 @@
             // za sve ostale recorde, stavi status 'u'
             var Placeno_u_currMjesecu = 0;
             $scope.prihodRashodZaGodinu.PrihodiRashodiDetails.forEach(function (rec) {
-                if (rec.Vrsta == 'p' && rec.Status.length == 0)
+                if (rec.Vrsta == 'p' && rec.Status == null)
                     rec.Status = 'u';
                 if (rec.Vrsta == 'p' && rec.Mjesec == mjesec)
                     Placeno_u_currMjesecu += parseFloat(rec.Iznos);

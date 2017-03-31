@@ -479,6 +479,112 @@ namespace ZgradaApp.Controllers
             return Ok(new PrihodiRashodi { ZgradaId = ZgradaId, Godina = Godina, Status = "a" });
         }
 
+        [HttpPost]
+        [Route("api/data/pRCreateUpdate")]
+        public async Task<IHttpActionResult> pRCreateUpdate(List<PrihodiRashodi> masterList)
+        {
+            try
+            {
+                foreach (var item in masterList)
+                {
+                    if (item.Status == "a")
+                        _db.PrihodiRashodi.Add(item);
+                    else
+                    {
+                        // nema brisanja mastera
+
+                        var master = await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.Id == item.Id);
+                        master.Godina = item.Godina;
+                        master.IznosRashodMj1 = item.IznosRashodMj1;
+                        master.IznosRashodMj2 = item.IznosRashodMj2;
+                        master.IznosRashodMj3 = item.IznosRashodMj3;
+                        master.IznosRashodMj4 = item.IznosRashodMj4;
+                        master.IznosRashodMj5 = item.IznosRashodMj5;
+                        master.IznosRashodMj6 = item.IznosRashodMj6;
+                        master.IznosRashodMj7 = item.IznosRashodMj7;
+                        master.IznosRashodMj8 = item.IznosRashodMj8;
+                        master.IznosRashodMj9 = item.IznosRashodMj9;
+                        master.IznosRashodMj10 = item.IznosRashodMj10;
+                        master.IznosRashodMj11 = item.IznosRashodMj11;
+                        master.IznosRashodMj12 = item.IznosRashodMj12;
+
+                        master.PlacenoPrihodMj1 = item.PlacenoPrihodMj1;
+                        master.PlacenoPrihodMj2 = item.PlacenoPrihodMj2;
+                        master.PlacenoPrihodMj3 = item.PlacenoPrihodMj3;
+                        master.PlacenoPrihodMj4 = item.PlacenoPrihodMj4;
+                        master.PlacenoPrihodMj5 = item.PlacenoPrihodMj5;
+                        master.PlacenoPrihodMj6 = item.PlacenoPrihodMj6;
+                        master.PlacenoPrihodMj7 = item.PlacenoPrihodMj7;
+                        master.PlacenoPrihodMj8 = item.PlacenoPrihodMj8;
+                        master.PlacenoPrihodMj9 = item.PlacenoPrihodMj9;
+                        master.PlacenoPrihodMj10 = item.PlacenoPrihodMj10;
+                        master.PlacenoPrihodMj11 = item.PlacenoPrihodMj11;
+                        master.PlacenoPrihodMj12 = item.PlacenoPrihodMj12;
+
+                        master.PlacenoRashodMj1 = item.PlacenoRashodMj1;
+                        master.PlacenoRashodMj2 = item.PlacenoRashodMj2;
+                        master.PlacenoRashodMj3 = item.PlacenoRashodMj3;
+                        master.PlacenoRashodMj4 = item.PlacenoRashodMj4;
+                        master.PlacenoRashodMj5 = item.PlacenoRashodMj5;
+                        master.PlacenoRashodMj6 = item.PlacenoRashodMj6;
+                        master.PlacenoRashodMj7 = item.PlacenoRashodMj7;
+                        master.PlacenoRashodMj8 = item.PlacenoRashodMj8;
+                        master.PlacenoRashodMj9 = item.PlacenoRashodMj9;
+                        master.PlacenoRashodMj10 = item.PlacenoRashodMj10;
+                        master.PlacenoRashodMj11 = item.PlacenoRashodMj11;
+                        master.PlacenoRashodMj12 = item.PlacenoRashodMj12;
+
+                        master.RazlikaRashodMj1 = item.RazlikaRashodMj1;
+                        master.RazlikaRashodMj2 = item.RazlikaRashodMj2;
+                        master.RazlikaRashodMj3 = item.RazlikaRashodMj3;
+                        master.RazlikaRashodMj4 = item.RazlikaRashodMj4;
+                        master.RazlikaRashodMj5 = item.RazlikaRashodMj5;
+                        master.RazlikaRashodMj6 = item.RazlikaRashodMj6;
+                        master.RazlikaRashodMj7 = item.RazlikaRashodMj7;
+                        master.RazlikaRashodMj8 = item.RazlikaRashodMj8;
+                        master.RazlikaRashodMj9 = item.RazlikaRashodMj9;
+                        master.RazlikaRashodMj10 = item.RazlikaRashodMj10;
+                        master.RazlikaRashodMj11 = item.RazlikaRashodMj11;
+                        master.RazlikaRashodMj12 = item.RazlikaRashodMj12;
+
+
+
+                        foreach (var detail in item.PrihodiRashodiDetails)
+                        {
+                            detail.PrihodiRashodiMasterId = item.Id;
+                            switch (detail.Status)
+                            {
+                                case "a":
+                                    _db.PrihodiRashodiDetails.Add(detail);
+                                    break;
+                                case "u":
+                                    _db.PrihodiRashodiDetails.Attach(detail);
+                                    _db.Entry(detail).State = EntityState.Modified;
+                                    //    var target = await _db.PrihodiRashodiDetails.FirstOrDefaultAsync(p => p.Id == detail.Id);
+                                    //    target.Datum = detail.Datum;
+                                    //    target.Iznos = detail.Iznos;
+                                    //    target.Mjesec = detail.Mjesec;
+                                    //    target.Opis = detail.Opis;
+                                    //    target.Placeno = detail.Placeno;
+                                    //    target.PrihodiRashodi = detail.PrihodiRashodi;
+                                    //    target.PrijenosIzProlse = detail.PrijenosIzProlse;
+                                    //    target.Razlika = detail.Razlika;
+                                    //    target.UplataPricuve = detail.UplataPricuve;
+                                    //    target.Vrsta = detail.Vrsta;
+                                    break;
+                                case "d":
+                                    var targetDel = await _db.PrihodiRashodiDetails.FirstOrDefaultAsync(p => p.Id == detail.Id);
+                                    _db.PrihodiRashodiDetails.Remove(targetDel);
+                                    break;
+                            }
+                        }
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
 
         [HttpGet]
         [Route("api/data/getpricuva")]
@@ -510,7 +616,7 @@ namespace ZgradaApp.Controllers
             foreach (var stan in zgrada.Stanovi)
             {
                 var vlasnik = await _db.Stanovi_Stanari.FirstOrDefaultAsync(p => p.StanId == stan.Id && (p.Vlasnik ?? false));
-                
+
                 for (int i = 1; i <= 12; i++)
                 {
                     // Mjesecna pricuva
@@ -534,7 +640,7 @@ namespace ZgradaApp.Controllers
                     StanjeOd = 0,
                     VlasnikId = vlasnik.Id
                 });
-                
+
                 // kreirati i prazne kartice suvlasnika za godinu (za svakog suvlacnika)
                 // neka budu prazne, user ce dodati mjesece i uplate, al da ima za godinu za koju
                 // postoji PricuvaGod
@@ -585,13 +691,29 @@ namespace ZgradaApp.Controllers
             //        item.DugPretplata += a;
             //}
 
+            god.PricuvaGod_OrocenaSredstva.Add(new PricuvaGod_OrocenaSredstva
+            {
+                PicuvaGodId = god.Id,
+                Mj1 = 0,
+                Mj2 = 0,
+                Mj3 = 0,
+                Mj4 = 0,
+                Mj5 = 0,
+                Mj6 = 0,
+                Mj7 = 0,
+                Mj8 = 0,
+                Mj9 = 0,
+                Mj10 = 0,
+                Mj11 = 0,
+                Mj12 = 0
+            });
 
             return Ok(god);
         }
 
         [HttpPost]
         [Route("api/data/pricuvaCreateUpdate")]
-        public async Task<IHttpActionResult> PricuvaCreateUpdate (List<PricuvaGod> pricuve)
+        public async Task<IHttpActionResult> PricuvaCreateUpdate(List<PricuvaGod> pricuve)
         {
             try
             {
@@ -607,70 +729,87 @@ namespace ZgradaApp.Controllers
                         // mjeseci
                         foreach (var mj in item.PricuvaMj)
                         {
-                            var target = await _db.PricuvaMj.FirstOrDefaultAsync(p => p.Id == mj.Id);
-                            target.CijenaPoM2 = mj.CijenaPoM2;
-                            target.CijenaUkupno = mj.CijenaUkupno;
-                            target.DugPretplata = mj.DugPretplata;
-                            target.Mjesec = mj.Mjesec;
-                            target.StanId = mj.StanId;
-                            target.StanjeOd = mj.StanjeOd;
-                            target.TipObracuna = mj.TipObracuna;
-                            target.Uplaceno = mj.Uplaceno;
-                            target.VlasnikId = mj.VlasnikId;
-                            target.Zaduzenje = mj.Zaduzenje;
+                            //var target = await _db.PricuvaMj.FirstOrDefaultAsync(p => p.Id == mj.Id);
+                            //target.CijenaPoM2 = mj.CijenaPoM2;
+                            //target.CijenaUkupno = mj.CijenaUkupno;
+                            //target.DugPretplata = mj.DugPretplata;
+                            //target.Mjesec = mj.Mjesec;
+                            //target.StanId = mj.StanId;
+                            //target.StanjeOd = mj.StanjeOd;
+                            //target.TipObracuna = mj.TipObracuna;
+                            //target.Uplaceno = mj.Uplaceno;
+                            //target.VlasnikId = mj.VlasnikId;
+                            //target.Zaduzenje = mj.Zaduzenje;
+                            _db.PricuvaMj.Attach(mj);
+                            _db.Entry(mj).State = EntityState.Modified;
                         }
                         // stanjeOd
                         foreach (var stanje in item.PricuvaGod_StanjeOd)
                         {
-                            var target = await _db.PricuvaGod_StanjeOd.FirstOrDefaultAsync(p => p.Id == stanje.Id);
-                            target.StanjeOd = stanje.StanjeOd;
+                            //var target = await _db.PricuvaGod_StanjeOd.FirstOrDefaultAsync(p => p.Id == stanje.Id);
+                            //target.StanjeOd = stanje.StanjeOd;
+                            _db.PricuvaGod_StanjeOd.Attach(stanje);
+                            _db.Entry(stanje).State = EntityState.Modified;
                         }
                         // KS
                         foreach (var ks in item.KS)
                         {
-                            var target = await _db.KS.FirstOrDefaultAsync(p => p.Id == ks.Id);
-                            target.Datum = ks.Datum;
-                            target.Godina = ks.Godina;
-                            target.Mjesec = ks.Mjesec;
-                            target.StanarId = ks.StanarId;
-                            target.Uplata = ks.Uplata;
+                            var target = await _db.KS.AsNoTracking().FirstOrDefaultAsync(p => p.Id == ks.Id);
+                            if (target == null)
+                            {
+                                ks.PricuvaGodId = item.Id;
+                                _db.KS.Add(ks);
+                            }
+                            else
+                            {
+                                _db.KS.Attach(ks);
+                                _db.Entry(ks).State = EntityState.Modified;
+                            }
+
+                            //target.Datum = ks.Datum;
+                            //target.Godina = ks.Godina;
+                            //target.Mjesec = ks.Mjesec;
+                            //target.StanarId = ks.StanarId;
+                            //target.Uplata = ks.Uplata;
                         }
                         // PricuvaMj_VrstaObracuna
                         foreach (var obr in item.PricuvaMj_VrstaObracuna)
                         {
-                            var target = await _db.PricuvaMj_VrstaObracuna.FirstOrDefaultAsync(p => p.PricuvaGodId == item.Id);
-                            if(target == null)
+                            var target = await _db.PricuvaMj_VrstaObracuna.AsNoTracking().FirstOrDefaultAsync(p => p.PricuvaGodId == item.Id);
+                            if (target == null)
                             {
                                 obr.PricuvaGodId = item.Id;
                                 _db.PricuvaMj_VrstaObracuna.Add(obr);
                             }
                             else
                             {
-                                target.CijenaMj1 = obr.CijenaMj1;
-                                target.CijenaMj2 = obr.CijenaMj2;
-                                target.CijenaMj3= obr.CijenaMj3;
-                                target.CijenaMj4 = obr.CijenaMj4;
-                                target.CijenaMj5 = obr.CijenaMj5;
-                                target.CijenaMj6 = obr.CijenaMj6;
-                                target.CijenaMj7 = obr.CijenaMj7;
-                                target.CijenaMj8 = obr.CijenaMj8;
-                                target.CijenaMj9 = obr.CijenaMj9;
-                                target.CijenaMj10 = obr.CijenaMj10;
-                                target.CijenaMj11 = obr.CijenaMj11;
-                                target.CijenaMj12 = obr.CijenaMj12;
+                                _db.PricuvaMj_VrstaObracuna.Attach(obr);
+                                _db.Entry(obr).State = EntityState.Modified;
+                                //target.CijenaMj1 = obr.CijenaMj1;
+                                //target.CijenaMj2 = obr.CijenaMj2;
+                                //target.CijenaMj3 = obr.CijenaMj3;
+                                //target.CijenaMj4 = obr.CijenaMj4;
+                                //target.CijenaMj5 = obr.CijenaMj5;
+                                //target.CijenaMj6 = obr.CijenaMj6;
+                                //target.CijenaMj7 = obr.CijenaMj7;
+                                //target.CijenaMj8 = obr.CijenaMj8;
+                                //target.CijenaMj9 = obr.CijenaMj9;
+                                //target.CijenaMj10 = obr.CijenaMj10;
+                                //target.CijenaMj11 = obr.CijenaMj11;
+                                //target.CijenaMj12 = obr.CijenaMj12;
 
-                                target.TipObracunaMj1 = obr.TipObracunaMj1;
-                                target.TipObracunaMj2 = obr.TipObracunaMj2;
-                                target.TipObracunaMj3 = obr.TipObracunaMj3;
-                                target.TipObracunaMj4 = obr.TipObracunaMj4;
-                                target.TipObracunaMj5 = obr.TipObracunaMj5;
-                                target.TipObracunaMj6 = obr.TipObracunaMj6;
-                                target.TipObracunaMj7 = obr.TipObracunaMj7;
-                                target.TipObracunaMj8 = obr.TipObracunaMj8;
-                                target.TipObracunaMj9 = obr.TipObracunaMj9;
-                                target.TipObracunaMj10 = obr.TipObracunaMj10;
-                                target.TipObracunaMj11 = obr.TipObracunaMj11;
-                                target.TipObracunaMj12 = obr.TipObracunaMj12;
+                                //target.TipObracunaMj1 = obr.TipObracunaMj1;
+                                //target.TipObracunaMj2 = obr.TipObracunaMj2;
+                                //target.TipObracunaMj3 = obr.TipObracunaMj3;
+                                //target.TipObracunaMj4 = obr.TipObracunaMj4;
+                                //target.TipObracunaMj5 = obr.TipObracunaMj5;
+                                //target.TipObracunaMj6 = obr.TipObracunaMj6;
+                                //target.TipObracunaMj7 = obr.TipObracunaMj7;
+                                //target.TipObracunaMj8 = obr.TipObracunaMj8;
+                                //target.TipObracunaMj9 = obr.TipObracunaMj9;
+                                //target.TipObracunaMj10 = obr.TipObracunaMj10;
+                                //target.TipObracunaMj11 = obr.TipObracunaMj11;
+                                //target.TipObracunaMj12 = obr.TipObracunaMj12;
                             }
                         }
                     }

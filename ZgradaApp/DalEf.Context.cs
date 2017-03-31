@@ -44,5 +44,6 @@ namespace ZgradaApp
         public virtual DbSet<KS> KS { get; set; }
         public virtual DbSet<PricuvaGod_StanjeOd> PricuvaGod_StanjeOd { get; set; }
         public virtual DbSet<PricuvaMj_VrstaObracuna> PricuvaMj_VrstaObracuna { get; set; }
+        public virtual DbSet<PricuvaGod_OrocenaSredstva> PricuvaGod_OrocenaSredstva { get; set; }
     }
 }

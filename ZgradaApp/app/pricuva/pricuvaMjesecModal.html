@@ -1,7 +1,7 @@
 ﻿<style>
-    .tableFontSmall {
+    /*.tableFontSmall {
         font-size: 12px;
-    }
+    }*/
 
     .modal-dialog {
         width: 100%;
@@ -36,10 +36,10 @@
                         <label for="pripadakId">Cijena po m2</label>
                     </div>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" ng-model="Cijena" />
+                        <input type="text" class="form-control" ng-change="kreirajPricuvuZaMjesecOnScope()" ng-model="Cijena" />
                     </div>
                     <div class="col-sm-6" style="align-content: flex-start">
-                        <a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()">Kreiraj</a>
+                        <!--<a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()" ng-disabled="Cijena == 0">Kreiraj</a>-->
                     </div>
                 </div>
             </div>
@@ -49,10 +49,10 @@
                         <label for="pripadakId">Ukupna cijena</label>
                     </div>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" ng-model="Cijena" />
+                        <input type="text" class="form-control" ng-change="kreirajPricuvuZaMjesecOnScope()" ng-model="Cijena" />
                     </div>
                     <div class="col-sm-6" style="align-content: flex-start">
-                        <a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()">Kreiraj</a>
+                        <!--<a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()" ng-disabled="Cijena == 0">Kreiraj</a>-->
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                             Uplaćeno
                         </th>
                         <th style="vertical-align: middle; text-align: center">
-                            Stanje od XX
+                            Stanje od {{stanjeOdDatum}}
                         </th>
                     </tr>
                 </thead>
@@ -134,12 +134,12 @@
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="4" style="vertical-align: middle; text-align: start">Pričuva od ???</td>
-                        <td style="vertical-align: middle; text-align: end">--</td>
+                        <td style="vertical-align: middle; text-align: end">{{pricuvaOd}}</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="4" style="vertical-align: middle; text-align: start">Pričuva u navedenom razdoblju</td>
-                        <td style="vertical-align: middle; text-align: end">--</td>
+                        <td style="vertical-align: middle; text-align: end">{{totalUplacenoSumm}}</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
@@ -149,17 +149,19 @@
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="4" style="vertical-align: middle; text-align: start">Rashodi u navedenom razdoblju</td>
-                        <td style="vertical-align: middle; text-align: end">--</td>
+                        <td style="vertical-align: middle; text-align: end">{{rashodi}}</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="4" style="vertical-align: middle; text-align: start">Oročena sredstva pričuve</td>
-                        <td style="vertical-align: middle; text-align: end">--</td>
+                        <td style="vertical-align: middle; text-align: end">
+                                <input type="text" ng-model="orocenaSredstva" ng-change="izracunSummaryScope(mjesec)" />
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td colspan="4" style="vertical-align: middle; text-align: start"><b>Raspoloživa sredstva pričuve</b></td>
-                        <td style="vertical-align: middle; text-align: end">--</td>
+                        <td style="vertical-align: middle; text-align: end">{{raspolozivaSredstva}}</td>
                     </tr>
                 </tbody>
             </table>

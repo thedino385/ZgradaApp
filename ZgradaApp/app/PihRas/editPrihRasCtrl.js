@@ -1,5 +1,5 @@
-﻿angularApp.controller('editPrihRasCtrl', ['$scope', '$rootScope', '$route', '$location', '$uibModal', 'DataService',
-    function ($scope, $rootScope, $route, $location, $uibModal, DataService) {
+﻿angularApp.controller('editPrihRasCtrl', ['$scope', '$rootScope', '$route', '$location', '$uibModal', 'DataService', 'toastr',
+    function ($scope, $rootScope, $route, $location, $uibModal, DataService, toastr) {
 
         // $scope.prihodiRashodi - masteri (sve godine)
         //  $scope.prihodRashodZaGodinu - master (jedna godina)
@@ -8,7 +8,7 @@
             $location.path('prihodirashodi');
             return;
         }
-
+        $scope.tableVisible = false;
         $scope.godine = [];
         $scope.novaGodina = null; // godina koju user dodaje
         $scope.dodajGodinu = function () {
@@ -43,33 +43,34 @@
         var g = {};
         $scope.obj = {}; // ovo je object za izabranu godinu
         $scope.zgrada = DataService.selectedZgrada;
-
+        $rootScope.loaderActive = true;
         DataService.getPr(DataService.selectedZgrada.Id).then(
             function (result) {
                 $scope.prihodiRashodi = result.data; // ovo su sve godine selected zgrade
                 DataService.getPricuva(DataService.selectedZgrada.Id).then(
                     function (result) {
                         $scope.pricuvaZaZgraduSveGodine = result.data;
+                        $rootScope.loaderActive = false;
+                        if ($scope.prihodiRashodi.length > 0) {
+                            $scope.prihodiRashodi.forEach(function (g) {
+                                gList.push(g.Godina)
+                            });
+                            $scope.godine = gList;
+                            //$scope.tableVisible = true;
+                            // povuci i pricuvu zbog prebacivanja upata pricuve
+                        }
+                        //else {
+                        //    $scope.tableVisible = false;
+                        //}
                     },
                     function (result) {
                         alert('Dohvat pricuva nije uspio');
                     }
                 )
-
-                if ($scope.prihodiRashodi.length > 0) {
-                    $scope.prihodiRashodi.forEach(function (g) {
-                        gList.push(g.Godina)
-                    });
-                    $scope.godine = gList;
-                    $scope.tableVisible = true;
-                    // povuci i pricuvu zbog prebacivanja upata pricuve
-                }
-                else {
-                    $scope.tableVisible = false;
-                }
             },
             function (result) {
                 // on error
+                alert('Dohvat prihoda i rashoda nije uspio')
             }
         )
         $scope.godinaChanged = function (godina) {
@@ -86,7 +87,8 @@
 
         // provjeri lleap year
         $scope.getFebDay = function () {
-            var year = new Date().getFullYear();
+            //var year = new Date().getFullYear();
+            var year = $scope.SelectedGodina;
             if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
                 return 29;
             return 28;
@@ -115,8 +117,8 @@
                 }
             });
 
-            modalInstance.result.then(function (prihodZaGodinu) { // citav object sa editiranim/dodanim kolekcijama
-                if (prihodRashodZaGodinu.Status.length == 0)
+            modalInstance.result.then(function (prihodRashodZaGodinu) { // citav object sa editiranim/dodanim kolekcijama
+                if (prihodRashodZaGodinu.Status == null)
                     prihodRashodZaGodinu.Status = 'u';
 
             }, function () {
@@ -159,7 +161,15 @@
         }; // end of prihod modal stuff
 
         $scope.saveAll = function () {
-            alert('saveAll');
+            DataService.pRCreateUpdate($scope.prihodiRashodi).then(
+                function (result) {
+                    toastr.success('Promjene su snimljene!', '');
+                },
+                function (result) {
+                    toastr.error('Greška kod snimanja!', '');
+                }
+            )
+            
         }
 
         $scope.cancelReload = function () {

@@ -27,14 +27,16 @@
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodiDetails_PrihodiRashodi" />
         <EntityTypeShape EntityType="ZgradaDbModel.KarticeSuvlasnika" Width="1.5" PointX="5.375" PointY="6.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaGod" Width="1.5" PointX="14" PointY="11" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaMj" Width="1.5" PointX="19.125" PointY="10" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaMj" Width="1.5" PointX="19.625" PointY="10.75" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaMj_PricuvaGod" />
         <EntityTypeShape EntityType="ZgradaDbModel.KS" Width="1.5" PointX="14.375" PointY="14.125" />
         <AssociationConnector Association="ZgradaDbModel.FK_KS_PricuvaGod" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaGod_StanjeOd" Width="1.5" PointX="16.375" PointY="9.625" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaGod_StanjeOd" Width="1.5" PointX="16.25" PointY="9.75" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaGod_StanjeOd_PricuvaGod" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaMj_VrstaObracuna" Width="1.75" PointX="17.25" PointY="14.125" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaMj_VrstaObracuna_PricuvaGod" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaGod_OrocenaSredstva" Width="1.5" PointX="18.25" PointY="6.25" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaGod_OrocenaSredstva_PricuvaGod" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -224,6 +224,9 @@
     <Compile Include="PricuvaGod.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="PricuvaGod_OrocenaSredstva.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="PricuvaGod_StanjeOd.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>

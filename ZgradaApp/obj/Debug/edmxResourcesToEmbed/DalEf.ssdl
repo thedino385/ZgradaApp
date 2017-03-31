@@ -68,6 +68,25 @@
     <Property Name="Godina" Type="int" Nullable="false" />
     <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
+  <EntityType Name="PricuvaGod_OrocenaSredstva">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PicuvaGodId" Type="int" Nullable="false" />
+    <Property Name="Mj1" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj2" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj3" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj4" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj5" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj6" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj7" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj8" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj9" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj10" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj11" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Mj12" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
   <EntityType Name="PricuvaGod_StanjeOd">
     <Key>
       <PropertyRef Name="Id" />
@@ -318,6 +337,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PricuvaGod_OrocenaSredstva_PricuvaGod">
+    <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
+    <End Role="PricuvaGod_OrocenaSredstva" Type="Self.PricuvaGod_OrocenaSredstva" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaGod">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaGod_OrocenaSredstva">
+        <PropertyRef Name="PicuvaGodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PricuvaGod_StanjeOd_PricuvaGod">
     <End Role="PricuvaGod" Type="Self.PricuvaGod" Multiplicity="1" />
     <End Role="PricuvaGod_StanjeOd" Type="Self.PricuvaGod_StanjeOd" Multiplicity="*" />
@@ -445,6 +476,7 @@
     <EntitySet Name="KS" EntityType="Self.KS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PosedniDijelovi" EntityType="Self.PosedniDijelovi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaGod" EntityType="Self.PricuvaGod" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PricuvaGod_OrocenaSredstva" EntityType="Self.PricuvaGod_OrocenaSredstva" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaGod_StanjeOd" EntityType="Self.PricuvaGod_StanjeOd" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaMj" EntityType="Self.PricuvaMj" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaMj_VrstaObracuna" EntityType="Self.PricuvaMj_VrstaObracuna" Schema="dbo" store:Type="Tables" />
@@ -461,6 +493,10 @@
     <AssociationSet Name="FK_KS_PricuvaGod" Association="Self.FK_KS_PricuvaGod">
       <End Role="PricuvaGod" EntitySet="PricuvaGod" />
       <End Role="KS" EntitySet="KS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PricuvaGod_OrocenaSredstva_PricuvaGod" Association="Self.FK_PricuvaGod_OrocenaSredstva_PricuvaGod">
+      <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+      <End Role="PricuvaGod_OrocenaSredstva" EntitySet="PricuvaGod_OrocenaSredstva" />
     </AssociationSet>
     <AssociationSet Name="FK_PricuvaGod_StanjeOd_PricuvaGod" Association="Self.FK_PricuvaGod_StanjeOd_PricuvaGod">
       <End Role="PricuvaGod" EntitySet="PricuvaGod" />

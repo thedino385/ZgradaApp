@@ -64,6 +64,11 @@
       <End Role="PricuvaGod" EntitySet="PricuvaGod" />
       <End Role="PricuvaMj_VrstaObracuna" EntitySet="PricuvaMj_VrstaObracuna" />
     </AssociationSet>
+    <EntitySet Name="PricuvaGod_OrocenaSredstva" EntityType="ZgradaDbModel.PricuvaGod_OrocenaSredstva" />
+    <AssociationSet Name="FK_PricuvaGod_OrocenaSredstva_PricuvaGod" Association="ZgradaDbModel.FK_PricuvaGod_OrocenaSredstva_PricuvaGod">
+      <End Role="PricuvaGod" EntitySet="PricuvaGod" />
+      <End Role="PricuvaGod_OrocenaSredstva" EntitySet="PricuvaGod_OrocenaSredstva" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -404,6 +409,7 @@
     <NavigationProperty Name="KS" Relationship="ZgradaDbModel.FK_KS_PricuvaGod" FromRole="PricuvaGod" ToRole="KS" />
     <NavigationProperty Name="PricuvaGod_StanjeOd" Relationship="ZgradaDbModel.FK_PricuvaGod_StanjeOd_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaGod_StanjeOd" />
     <NavigationProperty Name="PricuvaMj_VrstaObracuna" Relationship="ZgradaDbModel.FK_PricuvaMj_VrstaObracuna_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaMj_VrstaObracuna" />
+    <NavigationProperty Name="PricuvaGod_OrocenaSredstva" Relationship="ZgradaDbModel.FK_PricuvaGod_OrocenaSredstva_PricuvaGod" FromRole="PricuvaGod" ToRole="PricuvaGod_OrocenaSredstva" />
   </EntityType>
   <EntityType Name="PricuvaMj">
     <Key>
@@ -522,6 +528,38 @@
       </Principal>
       <Dependent Role="PricuvaMj_VrstaObracuna">
         <PropertyRef Name="PricuvaGodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PricuvaGod_OrocenaSredstva">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PicuvaGodId" Type="Int32" Nullable="false" />
+    <Property Name="Mj1" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj3" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj4" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj5" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj6" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj7" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj8" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj9" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj10" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj11" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mj12" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="PricuvaGod" Relationship="ZgradaDbModel.FK_PricuvaGod_OrocenaSredstva_PricuvaGod" FromRole="PricuvaGod_OrocenaSredstva" ToRole="PricuvaGod" />
+  </EntityType>
+  <Association Name="FK_PricuvaGod_OrocenaSredstva_PricuvaGod">
+    <End Type="ZgradaDbModel.PricuvaGod" Role="PricuvaGod" Multiplicity="1" />
+    <End Type="ZgradaDbModel.PricuvaGod_OrocenaSredstva" Role="PricuvaGod_OrocenaSredstva" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaGod">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaGod_OrocenaSredstva">
+        <PropertyRef Name="PicuvaGodId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

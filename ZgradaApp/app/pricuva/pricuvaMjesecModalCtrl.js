@@ -1,12 +1,12 @@
 ﻿// https://angular-ui.github.io/bootstrap/
 
-angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'pricuveZaZgraduGodina', 'zgrada', 'godina', 'mjesec',
-    function ($scope, $uibModalInstance, DataService, pricuveZaZgraduGodina, zgrada, godina, mjesec) {
+angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 'DataService', 'pricuveZaZgraduGodina', 'zgrada', 'godina', 'mjesec', 'prihodiRashodi',
+    function ($scope, $uibModalInstance, DataService, pricuveZaZgraduGodina, zgrada, godina, mjesec, prihodiRashodi) {
 
         // pricuveZaZgraduGodina (sinle object)
         //      |----> pricuveZaZgraduGodina.PricuvaMj
         //      |----> KS
-
+        
 
         $scope.pricuveZaZgraduGodina = pricuveZaZgraduGodina;
         $scope.zgrada = zgrada;
@@ -24,6 +24,13 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
         $scope.totalUplaceno = 0;
         $scope.totalStanjeOd = 0;
         $scope.pricuvaKreirana = false;
+
+        var currPrihodRashod;
+        prihodiRashodi.forEach(function (pr) {
+            if (pr.Godina == $scope.godina) {
+                currPrihodRashod = pr;
+            }
+        });
 
         //$scope.$watch($scope.pricuveZaZgraduGodina.PricuvaMj , function () { alert("chenged"); });
         //$scope.$watch($scope.pricuveZaZgraduGodina, function () {
@@ -43,9 +50,15 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
         //});
 
         povuciStanjeOd();
+        getStanjeOdDatum();
+        getorocenaSrZaMjesec();
+
+        kreirajPricuvuZaMjesec(); // odmah izracunal
+
+        $scope.kreirajPricuvuZaMjesecOnScope = function () { kreirajPricuvuZaMjesec(); }
 
 
-        $scope.kreirajPricuvuZaMjesec = function () {
+        function kreirajPricuvuZaMjesec () {
             $scope.pricuvaKreirana = true;
             //PricuvaGodId
             //StanId
@@ -73,8 +86,8 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                         if (stan.Id == rec.StanId) {
                             stan.Stanovi_Pripadci.forEach(function (pripadak) {
                                 //povrisnaPrip += parseFloat(pripadak.PovrsinaSaKef);
-                                console.log(pripadak.PovrsinaSaKef);
-                                console.log(isFinite(pripadak.PovrsinaSaKef));
+                                //console.log(pripadak.PovrsinaSaKef);
+                                //console.log(isFinite(pripadak.PovrsinaSaKef));
                                 isFinite(pripadak.PovrsinaSaKef) && pripadak.PovrsinaSaKef != null ? povrisnaPrip += parseFloat(pripadak.PovrsinaSaKef) : povrisnaPrip = povrisnaPrip;
                             });
                             stan.Stanovi_PosebniDijelovi.forEach(function (dio) {
@@ -108,8 +121,11 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
             //    alert('po ukupnoj povrisini zgrade');
             //    // povrsina stana (sa pripadcima) / ukupno(kuna) * 100
             //}
+
             izracunajUkupno();
             checkOkZaSnimanje();
+            izracunSummary($scope.mjesec);
+            
         }
 
         function povuciStanjeOd() {
@@ -119,12 +135,12 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
                 //  - ako nije, stanjeOd current mjeseca je DugPretplata iz proslog mjeseca
                 console.log('vucem');
                 if ($scope.mjesec == 1) {
-                    console.log('mjesec 1');
+                    //console.log('mjesec 1');
                     $scope.pricuveZaZgraduGodina.PricuvaGod_StanjeOd.forEach(function (stanje) {
-                        console.log(stanje);
-                        console.log(rec);
+                        //console.log(stanje);
+                        //console.log(rec);
                         if (rec.PricuvaGodId == stanje.PricuvaGodId && stanje.VlasnikId == rec.VlasnikId) {
-                            console.log('match');
+                            //console.log('match');
                             rec.StanjeOd = stanje.StanjeOd;
                         }
                     });
@@ -149,9 +165,9 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
             $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
                 if (rec.Mjesec == $scope.mjesec) {
                     rec.DugPretplata != null && !isNaN(rec.DugPretplata) ? totalDug += parseFloat(rec.DugPretplata) : totalDug = totalDug;
-                    rec.Zaduzenje != null ? totalZaduzenje += parseFloat(rec.Zaduzenje) : totalZaduzenje = totalZaduzenje;
-                    rec.Uplaceno != null ? totalUplaceno += parseFloat(rec.Uplaceno) : totalUplaceno = totalUplaceno;
-                    rec.StanjeOd != null ? totalStanjeOd += parseFloat(rec.StanjeOd) : totalStanjeOd = totalStanjeOd;
+                    rec.Zaduzenje != null && !isNaN(rec.Zaduzenje) ? totalZaduzenje += parseFloat(rec.Zaduzenje) : totalZaduzenje = totalZaduzenje;
+                    rec.Uplaceno != null && !isNaN(rec.Uplaceno) ? totalUplaceno += parseFloat(rec.Uplaceno) : totalUplaceno = totalUplaceno;
+                    rec.StanjeOd != null && !isNaN(rec.StanjeOd) ? totalStanjeOd += parseFloat(rec.StanjeOd) : totalStanjeOd = totalStanjeOd;
                 }
             });
             $scope.totalDugPretplata = totalDug;
@@ -160,8 +176,57 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
             $scope.totalStanjeOd = totalStanjeOd;
         }
 
-        //function summary()
 
+
+        function getStanjeOdDatum() {
+            switch ($scope.mjesec) {
+                case 1:
+                    $scope.stanjeOdDatum = '31.12.' + parseInt($scope.godina - 1) + '.';
+                    break;
+                case 2:
+                    $scope.stanjeOdDatum = '31.01.' + $scope.godina + '.';
+                    break;
+                case 3:
+                    $scope.stanjeOdDatum = getFebDay() + '.02.' + $scope.godina + '.';
+                    break;
+                case 4:
+                    $scope.stanjeOdDatum = '31.03.' + $scope.godina + '.';
+                    break;
+                case 5:
+                    $scope.stanjeOdDatum = '30.04.' + $scope.godina + '.';
+                    break;
+                case 6:
+                    $scope.stanjeOdDatum = '31.05.' + $scope.godina + '.';
+                    break;
+                case 7:
+                    $scope.stanjeOdDatum = '30.06.' + $scope.godina + '.';
+                    break;
+                case 8:
+                    $scope.stanjeOdDatum = '31.07.' + $scope.godina + '.';
+                    break;
+                case 9:
+                    $scope.stanjeOdDatum = '31.08.' + $scope.godina + '.';
+                    break;
+                case 10:
+                    $scope.stanjeOdDatum = '30.09.' + $scope.godina + '.';
+                    break;
+                case 11:
+                    $scope.stanjeOdDatum = '31.10.' + $scope.godina + '.';
+                    break;
+                case 12:
+                    $scope.stanjeOdDatum = '30.11.' + $scope.godina + '.';
+                    break;
+            }
+        }
+
+        // provjeri lleap year
+        function getFebDay() {
+            //var year = new Date().getFullYear();
+            var year = $scope.godina;
+            if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
+                return 29;
+            return 28;
+        }
 
         function checkOkZaSnimanje() {
             $scope.snimanjeDisabled = true;
@@ -252,6 +317,7 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
             console.log('save');
             console.log($scope.pricuveZaZgraduGodina.PricuvaMj_VrstaObracuna);
             snimiVrstuObracuna();
+            snimiOrocenaSredstvapricuve();
             console.log($scope.pricuveZaZgraduGodina.PricuvaMj_VrstaObracuna);
             $uibModalInstance.close(pricuveZaZgraduGodina);
         };
@@ -268,7 +334,7 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
 
         function snimiVrstuObracuna() {
             $scope.pricuveZaZgraduGodina.PricuvaMj_VrstaObracuna.forEach(function (obr) {
-                switch (mjesec) {
+                switch ($scope.mjesec) {
                     case 1:
                         obr.TipObracunaMj1 = $scope.tipObr;
                         obr.CijenaMj1 = $scope.Cijena;
@@ -321,6 +387,259 @@ angularApp.controller('pricuvaMjesecModalCtrl', ['$scope', '$uibModalInstance', 
             });
         }
 
+        function snimiOrocenaSredstvapricuve() {
+            $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva.forEach(function (obr) {
+                switch ($scope.mjesec) {
+                    case 1:
+                        obr.Mj1 = $scope.orocenaSredstva;
+                        break;
+                    case 2:
+                        obr.Mj2 = $scope.orocenaSredstva;
+                        break;
+                    case 3:
+                        obr.Mj3 = $scope.orocenaSredstva;
+                        break;
+                    case 4:
+                        obr.Mj4 = $scope.orocenaSredstva;
+                        break;
+                    case 5:
+                        obr.Mj5 = $scope.orocenaSredstva;
+                        break;
+                    case 6:
+                        obr.Mj6 = $scope.orocenaSredstva;
+                        break;
+                    case 7:
+                        obr.Mj7 = $scope.orocenaSredstva;
+                        break;
+                    case 8:
+                        obr.Mj8 = $scope.orocenaSredstva;
+                        break;
+                    case 9:
+                        obr.Mj9 = $scope.orocenaSredstva;
+                        break;
+                    case 10:
+                        obr.Mj10 = $scope.orocenaSredstva;
+                        break;
+                    case 11:
+                        obr.Mj11 = $scope.orocenaSredstva;
+                        break;
+                    case 12:
+                        obr.Mj12 = $scope.orocenaSredstva;
+                        break;
+                }
+            });
+        }
 
+        // __________________________ SUMMARY_____________________________
+
+        var raspolozivaSrMj1 = 0; var raspolozivaSrMj2 = 0; var raspolozivaSrMj3 = 0; var raspolozivaSrMj4 = 0;
+        var raspolozivaSrMj5 = 0; var raspolozivaSrMj6 = 0; var raspolozivaSrMj7 = 0; var raspolozivaSrMj8 = 0;
+        var raspolozivaSrMj9 = 0; var raspolozivaSrMj10 = 0; var raspolozivaSrMj11 = 0;
+
+        var currPrihodRashod;
+        prihodiRashodi.forEach(function (pr) {
+            if (pr.Godina == $scope.godina) {
+                currPrihodRashod = pr;
+            }
+        });
+
+        if (currPrihodRashod != undefined && currPrihodRashod.PrihodiRashodiDetails != undefined) {
+            // ako nema unesenih prihoda i rashoda, nemoj racunati, jer ce puknuti
+            raspolozivaSrMj1 = izracunSummary(1);
+            raspolozivaSrMj2 = izracunSummary(2);
+            raspolozivaSrMj3 = izracunSummary(3);
+            raspolozivaSrMj4 = izracunSummary(4);
+            raspolozivaSrMj5 = izracunSummary(5);
+            raspolozivaSrMj6 = izracunSummary(6);
+            raspolozivaSrMj7 = izracunSummary(7);
+            raspolozivaSrMj8 = izracunSummary(8);
+            raspolozivaSrMj9 = izracunSummary(9);
+            raspolozivaSrMj10 = izracunSummary(10);
+            raspolozivaSrMj11 = izracunSummary(11);
+        }
+        else
+            console.log('PricuvaModal prihodiRashodi.PrihodiRashodiDetails su undef');
+
+
+        $scope.izracunSummaryScope = function (mjesec) {
+            izracunSummary(mjesec);
+        }
+
+        function izracunSummary(mjesec) {
+            console.log('PricuvaModal izracunSummary');
+            // 1. Pricuva od
+            var pricuvaOd = 0;
+            if (mjesec == 1) {
+                console.log('1mj');
+                console.log(currPrihodRashod);
+                // povlaci se iz prihodaRashoda za 1. mjesec prijenos iz pricuve
+                currPrihodRashod.PrihodiRashodiDetails.forEach(function (pr) {
+                    //console.log("Mjesec check " + pr.Mjesec + " " + mjesec);
+                    //console.log(pr.Mesec == mjesec);
+                    //console.log(pr.PrijenosIzProlse == true);
+                    //console.log(pr.Iznos != null);
+
+                    if (pr.Mjesec == mjesec && pr.PrijenosIzProlse == true && pr.Iznos != null)
+                        pricuvaOd = parseFloat(pr.Iznos);
+                });
+            }
+            else {
+                switch (mjesec) {
+                    case 2:
+                        pricuvaOd = raspolozivaSrMj1;
+                        break;
+                    case 3:
+                        pricuvaOd = raspolozivaSrMj2;
+                        break;
+                    case 4:
+                        pricuvaOd = raspolozivaSrMj3;
+                        break;
+                    case 5:
+                        pricuvaOd = raspolozivaSrMj4;
+                        break;
+                    case 6:
+                        pricuvaOd = raspolozivaSrMj5;
+                        break;
+                    case 7:
+                        pricuvaOd = raspolozivaSrMj6;
+                        break;
+                    case 8:
+                        pricuvaOd = raspolozivaSrMj7;
+                        break;
+                    case 9:
+                        pricuvaOd = raspolozivaSrMj8;
+                        break;
+                    case 10:
+                        pricuvaOd = raspolozivaSrMj9;
+                        break;
+                    case 11:
+                        pricuvaOd = raspolozivaSrMj10;
+                        break;
+                    case 12:
+                        pricuvaOd = raspolozivaSrMj11;
+                        break;
+                }
+            }
+
+            // 2. Pricuva u navedenom razdoblju
+            var totalUplaceno = 0;
+            $scope.pricuveZaZgraduGodina.PricuvaMj.forEach(function (rec) {
+                if (rec.Mjesec == mjesec) {
+                    rec.Uplaceno != null && !isNaN(rec.Uplaceno) ? totalUplaceno += parseFloat(rec.Uplaceno) : totalUplaceno = totalUplaceno;
+                }
+            });
+
+            // 3. Ostali prihodi u navedenom rezd ???
+
+            // 4. Rashodi u navedenom razdoblju
+            // 5. orocena sredstva
+            var rashodi = 0;
+            var orocenaSredstva = 0;
+            switch (parseInt(mjesec)) {
+                case 1:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj1 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj1 : 0;
+                    currPrihodRashod.PlacenoRashodMj1 != null ? rashodi = currPrihodRashod.PlacenoRashodMj1 : 0;
+                    break;
+                case 2:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj2 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj2 : 0;
+                    currPrihodRashod.PlacenoRashodMj2 != null ? rashodi = currPrihodRashod.PlacenoRashodMj2 : 0;
+                    break;
+                case 3:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj3 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].M32 : 0;
+                    currPrihodRashod.PlacenoRashodMj3 != null ? rashodi = currPrihodRashod.PlacenoRashodMj3 : 0;
+                    break;
+                case 4:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj4 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj4 : 0;
+                    currPrihodRashod.PlacenoRashodMj4 != null ? rashodi = currPrihodRashod.PlacenoRashodMj4 : 0;
+                    break;
+                case 5:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj5 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj5 : 0;
+                    currPrihodRashod.PlacenoRashodMj5 != null ? rashodi = currPrihodRashod.PlacenoRashodMj5 : 0;
+                    break;
+                case 6:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj6 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj6 : 0;
+                    currPrihodRashod.PlacenoRashodMj6 != null ? rashodi = currPrihodRashod.PlacenoRashodMj6 : 0;
+                    break;
+                case 7:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj7 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj7 : 0;
+                    currPrihodRashod.PlacenoRashodMj7 != null ? rashodi = currPrihodRashod.PlacenoRashodMj7 : 0;
+                    break;
+                case 8:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj8 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj8 : 0;
+                    currPrihodRashod.PlacenoRashodMj8 != null ? rashodi = currPrihodRashod.PlacenoRashodMj8 : 0;
+                    break;
+                case 9:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj9 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj9 : 0;
+                    currPrihodRashod.PlacenoRashodMj9 != null ? rashodi = currPrihodRashod.PlacenoRashodMj9 : 0;
+                    break;
+                case 10:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj10 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj10 : 0;
+                    currPrihodRashod.PlacenoRashodMj10 != null ? rashodi = currPrihodRashod.PlacenoRashodMj10 : 0;
+                    break;
+                case 11:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj11 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj11 : 0;
+                    currPrihodRashod.PlacenoRashodMj11 != null ? rashodi = currPrihodRashod.PlacenoRashodMj11 : 0;
+                    break;
+                case 12:
+                    pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj12 != null ? orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj12 : 0;
+                    prihodiRashodi.PlacenoPrihodMj12 != null ? rashodi = prihodiRashodi.PlacenoPrihodMj12 : rashodi = 0;
+                    break;
+            }
+
+            // 6. Raspoloziva sredstva pricuve
+            var raspolozivaSredstva = parseFloat(pricuvaOd) + parseFloat(totalUplaceno) - parseFloat(rashodi) - parseFloat(orocenaSredstva);
+            if ($scope.mjesec == mjesec) {
+                $scope.pricuvaOd = pricuvaOd.toFixed(2);
+                $scope.totalUplacenoSumm = totalUplaceno.toFixed(2);
+                $scope.rashodi = rashodi.toFixed(2);
+                //$scope.orocenaSredstva = orocenaSredstva.toFixed(2);
+                $scope.raspolozivaSredstva = raspolozivaSredstva = parseFloat(pricuvaOd) + parseFloat(totalUplaceno) - parseFloat(rashodi) - parseFloat($scope.orocenaSredstva).toFixed(2);
+            }
+            else
+                return raspolozivaSredstva;
+        }
+
+
+        function getorocenaSrZaMjesec() {
+            switch ($scope.mjesec) {
+                case 1:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj1 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj1 : 0;
+                    console.log('$scope.orocenaSredstva ' + $scope.orocenaSredstva);
+                    break;
+                case 2:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj2 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj2 : 0;
+                    break;
+                case 3:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj3 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].M32 : 0;
+                    break;
+                case 4:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj4 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj4 : 0;
+                    break;
+                case 5:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj5 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj5 : 0;
+                    break;
+                case 6:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj6 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj6 : 0;
+                    break;
+                case 7:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj7 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj7 : 0;
+                    break;
+                case 8:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj8 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj8 : 0;
+                    break;
+                case 9:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj9 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj9 : 0;
+                    break;
+                case 10:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj10 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj10 : 0;
+                    break;
+                case 11:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj11 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj11 : 0;
+                    break;
+                case 12:
+                    $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj12 != null ? $scope.orocenaSredstva = $scope.pricuveZaZgraduGodina.PricuvaGod_OrocenaSredstva[0].Mj12 : 0;
+                    break;
+            }
+        }
 
     }]);

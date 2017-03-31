@@ -326,5 +326,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PricuvaGod_OrocenaSredstva">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaGod_OrocenaSredstva">
+        <MappingFragment StoreEntitySet="PricuvaGod_OrocenaSredstva">
+          <ScalarProperty Name="Mj12" ColumnName="Mj12" />
+          <ScalarProperty Name="Mj11" ColumnName="Mj11" />
+          <ScalarProperty Name="Mj10" ColumnName="Mj10" />
+          <ScalarProperty Name="Mj9" ColumnName="Mj9" />
+          <ScalarProperty Name="Mj8" ColumnName="Mj8" />
+          <ScalarProperty Name="Mj7" ColumnName="Mj7" />
+          <ScalarProperty Name="Mj6" ColumnName="Mj6" />
+          <ScalarProperty Name="Mj5" ColumnName="Mj5" />
+          <ScalarProperty Name="Mj4" ColumnName="Mj4" />
+          <ScalarProperty Name="Mj3" ColumnName="Mj3" />
+          <ScalarProperty Name="Mj2" ColumnName="Mj2" />
+          <ScalarProperty Name="Mj1" ColumnName="Mj1" />
+          <ScalarProperty Name="PicuvaGodId" ColumnName="PicuvaGodId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

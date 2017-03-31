@@ -139,6 +139,10 @@
         });
     }
 
+    var pRCreateUpdate = function (pr) {
+        return $http.post('../api/data/pRCreateUpdate', pr);
+    }
+
     var createEmptyPricuva  = function (ZgradaId, Godina, Mjesec) {
         return $http({
             url: '../api/data/createEmptyPricuva',
@@ -190,7 +194,8 @@
         createEmptyPricuva: createEmptyPricuva ,
         createEmptyPrihodRashod: createEmptyPrihodRashod,
         getPricuva: getPricuva,
-        pricuvaCreateUpdate: pricuvaCreateUpdate
+        pricuvaCreateUpdate: pricuvaCreateUpdate,
+        pRCreateUpdate: pRCreateUpdate
     }
 
 }]);
