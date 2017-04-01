@@ -762,8 +762,17 @@ namespace ZgradaApp.Controllers
                             }
                             else
                             {
-                                _db.KS.Attach(ks);
-                                _db.Entry(ks).State = EntityState.Modified;
+                                if(ks.Status == "d")
+                                {
+                                    var t = await _db.KS.FirstOrDefaultAsync(p => p.Id == ks.Id);
+                                    _db.KS.Remove(t);
+                                }
+                                else
+                                {
+                                    _db.KS.Attach(ks);
+                                    _db.Entry(ks).State = EntityState.Modified;
+                                }
+                                
                             }
 
                             //target.Datum = ks.Datum;
@@ -810,6 +819,20 @@ namespace ZgradaApp.Controllers
                                 //target.TipObracunaMj10 = obr.TipObracunaMj10;
                                 //target.TipObracunaMj11 = obr.TipObracunaMj11;
                                 //target.TipObracunaMj12 = obr.TipObracunaMj12;
+                            }
+                        }
+                        foreach (var orocenaSr in item.PricuvaGod_OrocenaSredstva)
+                        {
+                            var target = await _db.PricuvaGod_OrocenaSredstva.AsNoTracking().FirstOrDefaultAsync(p => p.PicuvaGodId == item.Id);
+                            if (target == null)
+                            {
+                                orocenaSr.PicuvaGodId = item.Id;
+                                _db.PricuvaGod_OrocenaSredstva.Add(orocenaSr);
+                            }
+                            else
+                            {
+                                _db.PricuvaGod_OrocenaSredstva.Attach(orocenaSr);
+                                _db.Entry(orocenaSr).State = EntityState.Modified;
                             }
                         }
                     }

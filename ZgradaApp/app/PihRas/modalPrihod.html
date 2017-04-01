@@ -49,7 +49,7 @@
                     <th></th>
                 </tr>
 
-                <tr ng-repeat="pr in prihodRashodZaGodinu.PrihodiRashodiDetails | filter:{ Mjesec: mjesec} | filter: { PrijenosIzProlse: '!true' }" style="vertical-align: middle">
+                <tr ng-repeat="pr in prihodRashodZaGodinu.PrihodiRashodiDetails | filter:{ Mjesec: mjesec} | filter: { PrijenosIzProlse: '!true' } | filter: { Status: '!d' }" style="vertical-align: middle">
                     <!--<td style="vertical-align: middle">
                         <label>{{$index+1}}.</label>
                     </td>-->

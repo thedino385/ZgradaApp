@@ -68,11 +68,17 @@
                     }
                 })
             }
-            // ako nije, u bazi je, stavi status na 'd'
+            // ako nije, ako je status 'a', brisi, u suprotnom stavi status na 'd'
             else {
                 $scope.prihodRashodZaGodinu.PrihodiRashodiDetails.forEach(function (rec) {
-                    if (rec.Type == 'p' && rec.Id == Id) 
-                        rec.Status = 'd';       
+                    if (rec.Vrsta == 'p' && rec.Id == Id) {
+                        if (rec.Status == 'a') {
+                            var index = $scope.prihodRashodZaGodinu.PrihodiRashodiDetails.indexOf(rec)
+                            $scope.prihodRashodZaGodinu.PrihodiRashodiDetails.splice(index, 1);
+                        }
+                        else
+                            rec.Status = 'd';
+                    }
                 })
             }
             izracunajUkupno();

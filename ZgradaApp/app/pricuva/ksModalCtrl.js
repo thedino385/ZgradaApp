@@ -64,6 +64,7 @@ angularApp.controller('ksModalCtrl', ['$scope', '$uibModalInstance', 'DataServic
                     if (rec.Id == Id)
                         rec.Status = 'd';
                 });
+                console.log($scope.pricuveZaZgraduGodina.KS);
             }
             changes.push(Id);
             OkZaSnimanje();

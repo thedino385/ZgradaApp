@@ -31,7 +31,7 @@
                         $scope.pricuveZaZgraduGodina = result.data;
                         //$scope.obj.Status = 'a';
                         $scope.SelectedGodina = $scope.novaGodina
-                        $scope.tableVisible = true;
+                        //$scope.tableVisible = true;
                         $scope.godine.push($scope.novaGodina);
                         $scope.pricuveZaZgraduSveGodine.push(result.data);
                         $scope.novaGodina = '';
@@ -307,6 +307,7 @@
             DataService.pricuvaCreateUpdate($scope.pricuveZaZgraduSveGodine).then(
                 function (result) {
                     toastr.success('Promjene su snimljene!', '');
+                    $route.reload();
                 },
                 function (result) {
                     toastr.error('Greška kod snimanja!', '');
@@ -389,5 +390,21 @@
                 //if (mj.Mjesec == 12 && mj.DugPretplata != 0)
                 //    $scope.clsMjesec12 = 'greenCellBack';
             });
+        }
+
+
+        $scope.SumaUplataIzKsZaMjesec = function (stan, mjesec) {
+            if ($scope.pricuveZaZgraduGodina == undefined)
+                return;
+            var uplate = 0;
+            stan.Stanovi_Stanari.forEach(function (stanar) {
+                if (stanar.Vlasnik) {
+                    $scope.pricuveZaZgraduGodina.KS.forEach(function (ks) {
+                        if (ks.StanarId == stanar.Id && ks.Mjesec == mjesec)
+                            ks.Uplata != null ? uplate += parseFloat(ks.Uplata) : 0;
+                    });
+                }
+            });
+            return uplate.toFixed(2);
         }
     }]);
