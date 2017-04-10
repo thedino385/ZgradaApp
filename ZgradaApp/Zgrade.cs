@@ -17,23 +17,26 @@ namespace ZgradaApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Zgrade()
         {
-            this.Stanovi = new HashSet<Stanovi>();
-            this.Zgrade_Pripadci = new HashSet<Zgrade_Pripadci>();
-            this.Zgrade_ZaduzivanjePoMj = new HashSet<Zgrade_ZaduzivanjePoMj>();
+            this.PricuvaRezijeGodina = new HashSet<PricuvaRezijeGodina>();
+            this.PrihodiRashodi = new HashSet<PrihodiRashodi>();
+            this.Zgrade_PosebniDijelovi = new HashSet<Zgrade_PosebniDijelovi>();
+            this.Zgrade_Stanari = new HashSet<Zgrade_Stanari>();
         }
     
         public int Id { get; set; }
+        public int CompanyId { get; set; }
         public string Naziv { get; set; }
         public string Adresa { get; set; }
         public string Mjesto { get; set; }
-        public Nullable<decimal> Povrsinam2 { get; set; }
-        public int CompanyId { get; set; }
+        public string Napomena { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Stanovi> Stanovi { get; set; }
+        public virtual ICollection<PricuvaRezijeGodina> PricuvaRezijeGodina { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zgrade_Pripadci> Zgrade_Pripadci { get; set; }
+        public virtual ICollection<PrihodiRashodi> PrihodiRashodi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zgrade_ZaduzivanjePoMj> Zgrade_ZaduzivanjePoMj { get; set; }
+        public virtual ICollection<Zgrade_PosebniDijelovi> Zgrade_PosebniDijelovi { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Zgrade_Stanari> Zgrade_Stanari { get; set; }
     }
 }

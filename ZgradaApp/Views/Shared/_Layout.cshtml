@@ -7,6 +7,14 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/custom.css" rel="stylesheet" />
+    @*<link href="~/Content/angular-material.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layout-attributes.css" rel="stylesheet" />*@
+    <link href="~/Content/angular-toastr.css" rel="stylesheet" />
+    @*<link href="~/Content/angular-material.layouts.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layouts.ie_fixes.css" rel="stylesheet" />*@
+    
+
+   
 </head>
 <body>
 
@@ -104,16 +112,24 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    <link href="~/Content/angular-toastr.css" rel="stylesheet" />
+   
+
     <script src="~/Scripts/angular-toastr.js"></script>
     <script src="~/Scripts/angular-toastr.tpls.js"></script>
-
+    <script src="~/Scripts/angular-messages.js"></script>
 
     <link href="~/Content/angular-material.css" rel="stylesheet" />
     <script src="~/Scripts/angular-material/angular-material.min.js"></script>
     <script src="~/Scripts/angular-animate.min.js"></script>
     <script src="~/Scripts/angular-aria/angular-aria.min.js"></script>
     <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+    @*material pokusaj*@
+    @*<link href="~/Content/bootstrap-material-design.css" rel="stylesheet" />
+    <link href="~/Content/ripples.css" rel="stylesheet" />
+    <script src="~/Scripts/material.js"></script>
+    <script src="~/Scripts/ripples.js"></script>*@
+
     <script src="~/app/angularApp.js"></script>
     <script src="~/app/Services/DataService.js"></script>
     <script src="~/app/indexCtrl.js"></script>

@@ -170,10 +170,11 @@ namespace ZgradaApp.Controllers
                     await UserManager.AddClaimAsync(user.Id, new Claim("Cid", company.Id.ToString()));
                     await UserManager.AddClaimAsync(user.Id, new Claim("Comp", company.Naziv));
 
-                    Korisnici korisnik = new Korisnici {
+                    KompanijeUpravitelji korisnik = new KompanijeUpravitelji
+                    {
                         Ime = model.Ime, Prezime = model.Prezime, CompanyId = company.Id, UserGuid = user.Id, MasterAcc = true
                     };
-                    _db.Korisnici.Add(korisnik);
+                    _db.KompanijeUpravitelji.Add(korisnik);
                     await _db.SaveChangesAsync();
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

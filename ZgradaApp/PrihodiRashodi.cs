@@ -17,63 +17,18 @@ namespace ZgradaApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PrihodiRashodi()
         {
-            this.PrihodiRashodiDetails = new HashSet<PrihodiRashodiDetails>();
+            this.PrihodiRashodi_Prihodi = new HashSet<PrihodiRashodi_Prihodi>();
+            this.PrihodiRashodi_Rashodi = new HashSet<PrihodiRashodi_Rashodi>();
         }
     
         public int Id { get; set; }
         public int ZgradaId { get; set; }
-        public Nullable<int> Godina { get; set; }
-        public Nullable<decimal> PlacenoPrihod { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj1 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj2 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj3 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj4 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj5 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj6 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj7 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj8 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj9 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj10 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj11 { get; set; }
-        public Nullable<decimal> PlacenoPrihodMj12 { get; set; }
-        public Nullable<decimal> IznosRashodMj1 { get; set; }
-        public Nullable<decimal> IznosRashodMj2 { get; set; }
-        public Nullable<decimal> IznosRashodMj3 { get; set; }
-        public Nullable<decimal> IznosRashodMj4 { get; set; }
-        public Nullable<decimal> IznosRashodMj5 { get; set; }
-        public Nullable<decimal> IznosRashodMj6 { get; set; }
-        public Nullable<decimal> IznosRashodMj7 { get; set; }
-        public Nullable<decimal> IznosRashodMj8 { get; set; }
-        public Nullable<decimal> IznosRashodMj9 { get; set; }
-        public Nullable<decimal> IznosRashodMj10 { get; set; }
-        public Nullable<decimal> IznosRashodMj11 { get; set; }
-        public Nullable<decimal> IznosRashodMj12 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj1 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj2 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj3 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj4 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj5 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj6 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj7 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj8 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj9 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj10 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj11 { get; set; }
-        public Nullable<decimal> RazlikaRashodMj12 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj1 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj2 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj3 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj4 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj5 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj6 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj7 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj8 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj9 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj10 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj11 { get; set; }
-        public Nullable<decimal> PlacenoRashodMj12 { get; set; }
+        public int Godina { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrihodiRashodiDetails> PrihodiRashodiDetails { get; set; }
+        public virtual ICollection<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrihodiRashodi_Rashodi> PrihodiRashodi_Rashodi { get; set; }
+        public virtual Zgrade Zgrade { get; set; }
     }
 }

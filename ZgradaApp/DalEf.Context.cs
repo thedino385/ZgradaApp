@@ -26,24 +26,20 @@ namespace ZgradaApp
         }
     
         public virtual DbSet<Kompanije> Kompanije { get; set; }
-        public virtual DbSet<Korisnici> Korisnici { get; set; }
-        public virtual DbSet<PosedniDijelovi> PosedniDijelovi { get; set; }
-        public virtual DbSet<Pripadci> Pripadci { get; set; }
-        public virtual DbSet<Stanovi> Stanovi { get; set; }
-        public virtual DbSet<Stanovi_Pripadci> Stanovi_Pripadci { get; set; }
-        public virtual DbSet<Stanovi_Stanari> Stanovi_Stanari { get; set; }
-        public virtual DbSet<Zgrade> Zgrade { get; set; }
-        public virtual DbSet<Zgrade_Pripadci> Zgrade_Pripadci { get; set; }
-        public virtual DbSet<Zgrade_ZaduzivanjePoMj> Zgrade_ZaduzivanjePoMj { get; set; }
-        public virtual DbSet<Stanovi_PosebniDijelovi> Stanovi_PosebniDijelovi { get; set; }
+        public virtual DbSet<KompanijeUpravitelji> KompanijeUpravitelji { get; set; }
+        public virtual DbSet<PricuvaRezijeGodina> PricuvaRezijeGodina { get; set; }
+        public virtual DbSet<PricuvaRezijeMjesec> PricuvaRezijeMjesec { get; set; }
+        public virtual DbSet<PricuvaRezijeMjesec_PosebniDijelovi> PricuvaRezijeMjesec_PosebniDijelovi { get; set; }
+        public virtual DbSet<PricuvaRezijeMjesec_Vlasnici> PricuvaRezijeMjesec_Vlasnici { get; set; }
         public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
-        public virtual DbSet<PrihodiRashodiDetails> PrihodiRashodiDetails { get; set; }
-        public virtual DbSet<KarticeSuvlasnika> KarticeSuvlasnika { get; set; }
-        public virtual DbSet<PricuvaGod> PricuvaGod { get; set; }
-        public virtual DbSet<PricuvaMj> PricuvaMj { get; set; }
-        public virtual DbSet<KS> KS { get; set; }
-        public virtual DbSet<PricuvaGod_StanjeOd> PricuvaGod_StanjeOd { get; set; }
-        public virtual DbSet<PricuvaMj_VrstaObracuna> PricuvaMj_VrstaObracuna { get; set; }
-        public virtual DbSet<PricuvaGod_OrocenaSredstva> PricuvaGod_OrocenaSredstva { get; set; }
+        public virtual DbSet<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
+        public virtual DbSet<PrihodiRashodi_Rashodi> PrihodiRashodi_Rashodi { get; set; }
+        public virtual DbSet<Zgrade> Zgrade { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijelovi> Zgrade_PosebniDijelovi { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijelovi_PD> Zgrade_PosebniDijelovi_PD { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijelovi_PD_Pripadci> Zgrade_PosebniDijelovi_PD_Pripadci { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijelovi_VlasniciPeriod> Zgrade_PosebniDijelovi_VlasniciPeriod { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici> Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici { get; set; }
+        public virtual DbSet<Zgrade_Stanari> Zgrade_Stanari { get; set; }
     }
 }

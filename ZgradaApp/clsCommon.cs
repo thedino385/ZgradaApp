@@ -81,4 +81,9 @@ namespace ZgradaApp
         public decimal Stanje { get; set; }
         public string Status { get; set; }
     }
+
+    public partial class PricuvaGod_StanjeOd
+    {
+        public bool IsError { get; set; }
+    }
 }

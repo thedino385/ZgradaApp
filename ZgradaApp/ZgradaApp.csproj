@@ -183,6 +183,7 @@
     <Compile Include="clsCommon.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Controllers\DataControllerOld.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DalEf.Context.cs">
@@ -203,128 +204,119 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="KarticeSuvlasnika.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
     <Compile Include="Kompanije.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Korisnici.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="KS.cs">
+    <Compile Include="KompanijeUpravitelji.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="PosedniDijelovi.cs">
+    <Compile Include="PricuvaRezijeGodina.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaGod.cs">
+    <Compile Include="PricuvaRezijeMjesec.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaGod_OrocenaSredstva.cs">
+    <Compile Include="PricuvaRezijeMjesec_PosebniDijelovi.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaGod_StanjeOd.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PricuvaMj.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PricuvaMj_VrstaObracuna.cs">
+    <Compile Include="PricuvaRezijeMjesec_Vlasnici.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="PrihodiRashodi.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PrihodiRashodiDetails.cs">
+    <Compile Include="PrihodiRashodi_Prihodi.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Pripadci.cs">
+    <Compile Include="PrihodiRashodi_Rashodi.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stanovi.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Stanovi_PosebniDijelovi.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Stanovi_Pripadci.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Stanovi_Stanari.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Zgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_Pripadci.cs">
+    <Compile Include="Zgrade_PosebniDijelovi.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_ZaduzivanjePoMj.cs">
+    <Compile Include="Zgrade_PosebniDijelovi_PD.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_PosebniDijelovi_PD_Pripadci.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_PosebniDijelovi_VlasniciPeriod.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_Stanari.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AAA.html" />
     <Content Include="AAA_TODO.txt" />
+    <Content Include="appOld\index.html" />
+    <Content Include="appOld\indexCtrl.js" />
+    <Content Include="appOld\ks\display.html" />
+    <Content Include="appOld\ks\ksDisplayCtrl.js" />
+    <Content Include="appOld\ks\ksksModal.html" />
+    <Content Include="appOld\ks\ksksModalCtrl.js" />
+    <Content Include="appOld\PihRas\edit.html" />
+    <Content Include="appOld\PihRas\editPrihRasCtrl.js" />
+    <Content Include="appOld\PihRas\index.html" />
+    <Content Include="appOld\PihRas\indexprhRasCtrl.js" />
+    <Content Include="appOld\PihRas\modalPrihod.html" />
+    <Content Include="appOld\PihRas\modalPrihodCtrl.js" />
+    <Content Include="appOld\PihRas\modalRashod.html" />
+    <Content Include="appOld\PihRas\modalRashodCtrl.js" />
+    <Content Include="appOld\pricuva\edit.html" />
+    <Content Include="appOld\pricuva\editCtrl.js" />
+    <Content Include="appOld\pricuva\index.html" />
+    <Content Include="appOld\pricuva\indexPricuvaCtrl.js" />
+    <Content Include="appOld\pricuva\ksModal.html" />
+    <Content Include="appOld\pricuva\ksModalCtrl.js" />
+    <Content Include="appOld\pricuva\pricuvaMjesecModal.html" />
+    <Content Include="appOld\pricuva\pricuvaMjesecModalCtrl.js" />
+    <Content Include="appOld\Services\DataService.js" />
+    <Content Include="appOld\Sifarnici\modals\posebniDioModal.html" />
+    <Content Include="appOld\Sifarnici\modals\posebniDioModalCtrl.js" />
+    <Content Include="appOld\Sifarnici\modals\pripadakModal.html" />
+    <Content Include="appOld\Sifarnici\modals\pripadakModalCtrl.js" />
+    <Content Include="appOld\Sifarnici\modals\pripadakStan.html" />
+    <Content Include="appOld\Sifarnici\modals\pripadakStanCtrl.js" />
+    <Content Include="appOld\Sifarnici\modals\stanarModal.html" />
+    <Content Include="appOld\Sifarnici\modals\stanarModalCtrl.js" />
+    <Content Include="appOld\Sifarnici\posebniDio.html" />
+    <Content Include="appOld\Sifarnici\posebniDioCtrl.js" />
+    <Content Include="appOld\Sifarnici\pripadak.html" />
+    <Content Include="appOld\Sifarnici\pripadakCtrl.js" />
+    <Content Include="appOld\Sifarnici\pripadci.html" />
+    <Content Include="appOld\Sifarnici\pripadciCtrl.js" />
+    <Content Include="appOld\Sifarnici\prosebniDIjelovi.html" />
+    <Content Include="appOld\Sifarnici\prosebniDIjeloviCtrl.js" />
+    <Content Include="appOld\Sifarnici\stan.html" />
+    <Content Include="appOld\Sifarnici\stanCtrl.js" />
+    <Content Include="appOld\Sifarnici\stanovi.html" />
+    <Content Include="appOld\Sifarnici\stanoviCtrl.js" />
+    <Content Include="appOld\Sifarnici\zgradaCtrl.js" />
+    <Content Include="appOld\Sifarnici\zgrada.html" />
+    <Content Include="appOld\Sifarnici\zgradaPregledPripadakaPoStanovima.html" />
+    <Content Include="appOld\Sifarnici\zgradaPregledPripadakaPoStanovimaCtrl.js" />
+    <Content Include="appOld\Sifarnici\zgrade.html" />
+    <Content Include="appOld\Sifarnici\zgradeCtrl.js" />
+    <Content Include="appOld\zaduzivanja\zaduzivanjeModal.html" />
+    <Content Include="appOld\zaduzivanja\zaduzivanjeModalCtrl.js" />
+    <Content Include="appOld\zaduzivanja\zaduzivanjePoMj.html" />
+    <Content Include="appOld\zaduzivanja\zaduzivanjePoMjCrtl.js" />
+    <Content Include="app\angularApp.js" />
     <Content Include="app\index.html" />
     <Content Include="app\indexCtrl.js" />
-    <Content Include="app\ks\display.html" />
-    <Content Include="app\ks\ksDisplayCtrl.js" />
-    <Content Include="app\ks\ksksModal.html" />
-    <Content Include="app\ks\ksksModalCtrl.js" />
-    <Content Include="app\PihRas\edit.html" />
-    <Content Include="app\PihRas\editPrihRasCtrl.js" />
-    <Content Include="app\PihRas\index.html" />
-    <Content Include="app\PihRas\indexprhRasCtrl.js" />
-    <Content Include="app\PihRas\modalPrihod.html" />
-    <Content Include="app\PihRas\modalPrihodCtrl.js" />
-    <Content Include="app\PihRas\modalRashod.html" />
-    <Content Include="app\PihRas\modalRashodCtrl.js" />
-    <Content Include="app\pricuva\edit.html" />
-    <Content Include="app\pricuva\editCtrl.js" />
-    <Content Include="app\pricuva\index.html" />
-    <Content Include="app\pricuva\indexPricuvaCtrl.js" />
-    <Content Include="app\pricuva\ksModal.html" />
-    <Content Include="app\pricuva\ksModalCtrl.js" />
-    <Content Include="app\pricuva\pricuvaMjesecModal.html" />
-    <Content Include="app\pricuva\pricuvaMjesecModalCtrl.js" />
-    <Content Include="app\Services\DataService.js" />
-    <Content Include="app\Sifarnici\modals\posebniDioModal.html" />
-    <Content Include="app\Sifarnici\modals\posebniDioModalCtrl.js" />
-    <Content Include="app\Sifarnici\modals\pripadakModal.html" />
-    <Content Include="app\Sifarnici\modals\pripadakModalCtrl.js" />
-    <Content Include="app\Sifarnici\modals\pripadakStan.html" />
-    <Content Include="app\Sifarnici\modals\pripadakStanCtrl.js" />
-    <Content Include="app\Sifarnici\modals\stanarModal.html" />
-    <Content Include="app\Sifarnici\modals\stanarModalCtrl.js" />
-    <Content Include="app\Sifarnici\posebniDio.html" />
-    <Content Include="app\Sifarnici\posebniDioCtrl.js" />
-    <Content Include="app\Sifarnici\pripadak.html" />
-    <Content Include="app\Sifarnici\pripadakCtrl.js" />
-    <Content Include="app\Sifarnici\pripadci.html" />
-    <Content Include="app\Sifarnici\pripadciCtrl.js" />
-    <Content Include="app\Sifarnici\prosebniDIjelovi.html" />
-    <Content Include="app\Sifarnici\prosebniDIjeloviCtrl.js" />
-    <Content Include="app\Sifarnici\stan.html" />
-    <Content Include="app\Sifarnici\stanCtrl.js" />
-    <Content Include="app\Sifarnici\stanovi.html" />
-    <Content Include="app\Sifarnici\stanoviCtrl.js" />
-    <Content Include="app\Sifarnici\zgradaCtrl.js" />
-    <Content Include="app\Sifarnici\zgrada.html" />
-    <Content Include="app\Sifarnici\zgradaPregledPripadakaPoStanovima.html" />
-    <Content Include="app\Sifarnici\zgradaPregledPripadakaPoStanovimaCtrl.js" />
-    <Content Include="app\Sifarnici\zgrade.html" />
-    <Content Include="app\Sifarnici\zgradeCtrl.js" />
-    <Content Include="app\zaduzivanja\zaduzivanjeModal.html" />
-    <Content Include="app\zaduzivanja\zaduzivanjeModalCtrl.js" />
-    <Content Include="app\zaduzivanja\zaduzivanjePoMj.html" />
-    <Content Include="app\zaduzivanja\zaduzivanjePoMjCrtl.js" />
     <Content Include="Content\angular-material.css" />
     <Content Include="Content\angular-material.layout-attributes.css" />
     <Content Include="Content\angular-material.layout-attributes.min.css" />
@@ -334,12 +326,14 @@
     <Content Include="Content\angular-material.min.css" />
     <Content Include="Content\angular-toastr.css" />
     <Content Include="Content\angular-toastr.min.css" />
+    <Content Include="Content\bootstrap-material-design.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\ripples.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="DalEf.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -372,6 +366,8 @@
     <Content Include="Scripts\angular-material\angular-material-mocks.js" />
     <Content Include="Scripts\angular-material\angular-material.js" />
     <Content Include="Scripts\angular-material\angular-material.min.js" />
+    <Content Include="Scripts\angular-messages.js" />
+    <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
@@ -397,8 +393,11 @@
     <Content Include="Scripts\angular-aria\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate\angular-animate.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-messages.min.js.map" />
+    <Content Include="Content\bootstrap-material-design.css.map" />
+    <Content Include="Content\ripples.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="app\angularApp.js" />
+    <Content Include="appOld\angularApp.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -412,11 +411,13 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\material.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ripples.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -452,6 +453,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Expired.cshtml" />
     <Content Include="Views\Account\RegisterOrig.cshtml" />
+    <Content Include="Scripts\ripples.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

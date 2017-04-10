@@ -1,0 +1,59 @@
+﻿
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="bs-callout bs-callout-info">
+            <h4>Pričuva</h4>
+        </div>
+        <form name="projectForm">
+            <md-input-container class="md-block">
+                <label>Hourly Rate (USD)</label>
+                <input required type="number" step="any" name="rate" ng-model="rate" min="800"
+                       max="4999" ng-pattern="/^1234$/" />
+
+                <div ng-messages="projectForm.rate.$error" multiple md-auto-hide="false">
+                    <div ng-message="required">
+                        You've got to charge something! You can't just <b>give away</b> a Missile Defense
+                        System.
+                    </div>
+
+                    <div ng-message="min">
+                        You should charge at least $800 an hour. This job is a big deal... if you mess up,
+                        everyone dies!
+                    </div>
+
+                    <div ng-message="pattern">
+                        You should charge exactly $1,234.
+                    </div>
+
+                    <div ng-message="max">
+                        {{projectForm.rate.$viewValue | currency:"$":0}} an hour? That's a little ridiculous. I
+                        doubt even Bill Clinton could afford that.
+                    </div>
+                </div>
+            </md-input-container>
+        </form>
+
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center">Naziv</th>
+                    <th style="text-align: center">Adresa</th>
+                    <th style="text-align: center">Mjesto</th>
+                    <th style="text-align: center">Uredi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="z in zgrade">
+                    <td style="vertical-align: middle">{{z.Naziv}}</td>
+                    <td style="vertical-align: middle">{{z.Adresa}}</td>
+                    <td style="vertical-align: middle">{{z.Mjesto}}</td>
+                    <td style="vertical-align: middle; text-align: center">
+                        <button type="button" class="btn btn-default btn-sm" title="Uredi" ng-click="showDetails(z)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
