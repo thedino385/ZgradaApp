@@ -8,13 +8,16 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
         controller: 'indexCtrl'
     })
     .when('/zgrade', {
-        templateUrl: '../app/Sifarnici/zgrade.html',
+        templateUrl: '../app/zgrade/zgrade.html',
         controller: 'zgradeCtrl'
     })
     .when('/zgrada/:id', {
-        templateUrl: '../app/Sifarnici/zgrada.html',
+        templateUrl: '../app/zgrade/zgrada.html',
         controller: 'zgradaCtrl'
-    })
+        })
+
+
+
     .when('/pripadci', {
         templateUrl: '../app/Sifarnici/pripadci.html',
         controller: 'pripadciCtrl'

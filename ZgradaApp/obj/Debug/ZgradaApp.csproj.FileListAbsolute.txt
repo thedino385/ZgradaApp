@@ -264,3 +264,4 @@ C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.pdb
+C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.csprojResolveAssemblyReference.cache

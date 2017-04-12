@@ -18,7 +18,6 @@ namespace ZgradaApp
         public PrihodiRashodi()
         {
             this.PrihodiRashodi_Prihodi = new HashSet<PrihodiRashodi_Prihodi>();
-            this.PrihodiRashodi_Rashodi = new HashSet<PrihodiRashodi_Rashodi>();
         }
     
         public int Id { get; set; }
@@ -27,8 +26,6 @@ namespace ZgradaApp
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrihodiRashodi_Rashodi> PrihodiRashodi_Rashodi { get; set; }
         public virtual Zgrade Zgrade { get; set; }
     }
 }

@@ -56,7 +56,7 @@
           <Property Name="ObracunPricuvaCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
-        <EntityType Name="PricuvaRezijeMjesec_PosebniDijelovi">
+        <EntityType Name="PricuvaRezijeMjesec_PD">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -68,6 +68,15 @@
           <Property Name="ObracunPricuvaCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeBrojClanova" Type="int" />
           <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="PricuvaRezijeMjesec_PD_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PricuvaRezijeMjesecPosDioId" Type="int" Nullable="false" />
+          <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PricuvaRezijeMjesec_Vlasnici">
           <Key>
@@ -95,18 +104,6 @@
           <Property Name="Mjesec" Type="int" Nullable="false" />
           <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
           <Property Name="Opis" Type="varchar" MaxLength="200" />
-          <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
-        </EntityType>
-        <EntityType Name="PrihodiRashodi_Rashodi">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PrihodiRashodiGodId" Type="int" Nullable="false" />
-          <Property Name="PosebniDioMasterId" Type="int" />
-          <Property Name="Mjesec" Type="int" Nullable="false" />
-          <Property Name="Datum" Type="datetime" />
-          <Property Name="RashodId" Type="int" />
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Zgrade">
@@ -201,6 +198,20 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vZgrade">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="200" />
+          <Property Name="Adresa" Type="varchar" MaxLength="200" />
+          <Property Name="Mjesto" Type="varchar" MaxLength="200" />
+          <Property Name="Napomena" Type="varchar(max)" />
+        </EntityType>
         <Association Name="FK_PricuvaRezijeGodina_Zgrade">
           <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
           <End Role="PricuvaRezijeGodina" Type="Self.PricuvaRezijeGodina" Multiplicity="*" />
@@ -213,14 +224,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
+          <End Role="PricuvaRezijeMjesec_PD" Type="Self.PricuvaRezijeMjesec_PD" Multiplicity="1" />
+          <End Role="PricuvaRezijeMjesec_PD_Pripadci" Type="Self.PricuvaRezijeMjesec_PD_Pripadci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaRezijeMjesec_PD">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricuvaRezijeMjesec_PD_Pripadci">
+              <PropertyRef Name="PricuvaRezijeMjesecPosDioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
           <End Role="PricuvaRezijeMjesec" Type="Self.PricuvaRezijeMjesec" Multiplicity="1" />
-          <End Role="PricuvaRezijeMjesec_PosebniDijelovi" Type="Self.PricuvaRezijeMjesec_PosebniDijelovi" Multiplicity="*" />
+          <End Role="PricuvaRezijeMjesec_PD" Type="Self.PricuvaRezijeMjesec_PD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PricuvaRezijeMjesec">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PricuvaRezijeMjesec_PosebniDijelovi">
+            <Dependent Role="PricuvaRezijeMjesec_PD">
               <PropertyRef Name="PricuvaRezijeMjesecId" />
             </Dependent>
           </ReferentialConstraint>
@@ -257,18 +280,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PrihodiRashodi_Prihodi">
-              <PropertyRef Name="PrihodiRashodiGodId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
-          <End Role="PrihodiRashodi" Type="Self.PrihodiRashodi" Multiplicity="1" />
-          <End Role="PrihodiRashodi_Rashodi" Type="Self.PrihodiRashodi_Rashodi" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PrihodiRashodi">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrihodiRashodi_Rashodi">
               <PropertyRef Name="PrihodiRashodiGodId" />
             </Dependent>
           </ReferentialConstraint>
@@ -362,11 +373,11 @@
           <EntitySet Name="KompanijeUpravitelji" EntityType="Self.KompanijeUpravitelji" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaRezijeGodina" EntityType="Self.PricuvaRezijeGodina" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaRezijeMjesec" EntityType="Self.PricuvaRezijeMjesec" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PricuvaRezijeMjesec_PosebniDijelovi" EntityType="Self.PricuvaRezijeMjesec_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricuvaRezijeMjesec_PD" EntityType="Self.PricuvaRezijeMjesec_PD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricuvaRezijeMjesec_PD_Pripadci" EntityType="Self.PricuvaRezijeMjesec_PD_Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaRezijeMjesec_Vlasnici" EntityType="Self.PricuvaRezijeMjesec_Vlasnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi" EntityType="Self.PrihodiRashodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="Self.PrihodiRashodi_Prihodi" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="Self.PrihodiRashodi_Rashodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_PosebniDijelovi" EntityType="Self.Zgrade_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_PosebniDijelovi_PD" EntityType="Self.Zgrade_PosebniDijelovi_PD" Schema="dbo" store:Type="Tables" />
@@ -374,13 +385,27 @@
           <EntitySet Name="Zgrade_PosebniDijelovi_VlasniciPeriod" EntityType="Self.Zgrade_PosebniDijelovi_VlasniciPeriod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" EntityType="Self.Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_Stanari" EntityType="Self.Zgrade_Stanari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vZgrade" EntityType="Self.vZgrade" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vZgrade].[Id] AS [Id], 
+    [vZgrade].[CompanyId] AS [CompanyId], 
+    [vZgrade].[Naziv] AS [Naziv], 
+    [vZgrade].[Adresa] AS [Adresa], 
+    [vZgrade].[Mjesto] AS [Mjesto], 
+    [vZgrade].[Napomena] AS [Napomena]
+    FROM [dbo].[vZgrade] AS [vZgrade]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_PricuvaRezijeGodina_Zgrade" Association="Self.FK_PricuvaRezijeGodina_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
           </AssociationSet>
+          <AssociationSet Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" Association="Self.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
+            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
+            <End Role="PricuvaRezijeMjesec_PD_Pripadci" EntitySet="PricuvaRezijeMjesec_PD_Pripadci" />
+          </AssociationSet>
           <AssociationSet Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" Association="Self.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
             <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
-            <End Role="PricuvaRezijeMjesec_PosebniDijelovi" EntitySet="PricuvaRezijeMjesec_PosebniDijelovi" />
+            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
           </AssociationSet>
           <AssociationSet Name="FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" Association="Self.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina">
             <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
@@ -393,10 +418,6 @@
           <AssociationSet Name="FK_PrihodiRashodi_Prihodi_PrihodiRashodi" Association="Self.FK_PrihodiRashodi_Prihodi_PrihodiRashodi">
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
             <End Role="PrihodiRashodi_Prihodi" EntitySet="PrihodiRashodi_Prihodi" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi" Association="Self.FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
-            <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
-            <End Role="PrihodiRashodi_Rashodi" EntitySet="PrihodiRashodi_Rashodi" />
           </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="Self.FK_PrihodiRashodi_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
@@ -436,11 +457,11 @@
           <EntitySet Name="KompanijeUpravitelji" EntityType="ZgradaDbModel.KompanijeUpravitelji" />
           <EntitySet Name="PricuvaRezijeGodina" EntityType="ZgradaDbModel.PricuvaRezijeGodina" />
           <EntitySet Name="PricuvaRezijeMjesec" EntityType="ZgradaDbModel.PricuvaRezijeMjesec" />
-          <EntitySet Name="PricuvaRezijeMjesec_PosebniDijelovi" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDijelovi" />
+          <EntitySet Name="PricuvaRezijeMjesec_PD" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PD" />
+          <EntitySet Name="PricuvaRezijeMjesec_PD_Pripadci" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PD_Pripadci" />
           <EntitySet Name="PricuvaRezijeMjesec_Vlasnici" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_Vlasnici" />
           <EntitySet Name="PrihodiRashodi" EntityType="ZgradaDbModel.PrihodiRashodi" />
           <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" />
-          <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi" />
           <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
           <EntitySet Name="Zgrade_PosebniDijelovi" EntityType="ZgradaDbModel.Zgrade_PosebniDijelovi" />
           <EntitySet Name="Zgrade_PosebniDijelovi_PD" EntityType="ZgradaDbModel.Zgrade_PosebniDijelovi_PD" />
@@ -458,19 +479,19 @@
           </AssociationSet>
           <AssociationSet Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
             <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
-            <End Role="PricuvaRezijeMjesec_PosebniDijelovi" EntitySet="PricuvaRezijeMjesec_PosebniDijelovi" />
+            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
           </AssociationSet>
           <AssociationSet Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec">
             <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
             <End Role="PricuvaRezijeMjesec_Vlasnici" EntitySet="PricuvaRezijeMjesec_Vlasnici" />
           </AssociationSet>
+          <AssociationSet Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
+            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
+            <End Role="PricuvaRezijeMjesec_PD_Pripadci" EntitySet="PricuvaRezijeMjesec_PD_Pripadci" />
+          </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Prihodi_PrihodiRashodi" Association="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi">
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
             <End Role="PrihodiRashodi_Prihodi" EntitySet="PrihodiRashodi_Prihodi" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi" Association="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
-            <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
-            <End Role="PrihodiRashodi_Rashodi" EntitySet="PrihodiRashodi_Rashodi" />
           </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="ZgradaDbModel.FK_PrihodiRashodi_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
@@ -500,6 +521,7 @@
             <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod" />
             <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" />
           </AssociationSet>
+          <EntitySet Name="vZgrade" EntityType="ZgradaDbModel.vZgrade" />
         </EntityContainer>
         <EntityType Name="Kompanije">
           <Key>
@@ -554,10 +576,10 @@
           <Property Name="ObracunPricuvaCijenaUkupno" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeCijenaUkupno" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PricuvaRezijeGodina" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeGodina" />
-          <NavigationProperty Name="PricuvaRezijeMjesec_PosebniDijelovi" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeMjesec_PosebniDijelovi" />
+          <NavigationProperty Name="PricuvaRezijeMjesec_PD" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeMjesec_PD" />
           <NavigationProperty Name="PricuvaRezijeMjesec_Vlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeMjesec_Vlasnici" />
         </EntityType>
-        <EntityType Name="PricuvaRezijeMjesec_PosebniDijelovi">
+        <EntityType Name="PricuvaRezijeMjesec_PD">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -569,7 +591,18 @@
           <Property Name="ObracunPricuvaCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeBrojClanova" Type="Int32" />
           <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_PosebniDijelovi" ToRole="PricuvaRezijeMjesec" />
+          <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_PD" ToRole="PricuvaRezijeMjesec" />
+          <NavigationProperty Name="PricuvaRezijeMjesec_PD_Pripadci" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" FromRole="PricuvaRezijeMjesec_PD" ToRole="PricuvaRezijeMjesec_PD_Pripadci" />
+        </EntityType>
+        <EntityType Name="PricuvaRezijeMjesec_PD_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PricuvaRezijeMjesecPosDioId" Type="Int32" Nullable="false" />
+          <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PricuvaRezijeMjesec_PD" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" FromRole="PricuvaRezijeMjesec_PD_Pripadci" ToRole="PricuvaRezijeMjesec_PD" />
         </EntityType>
         <EntityType Name="PricuvaRezijeMjesec_Vlasnici">
           <Key>
@@ -589,7 +622,6 @@
           <Property Name="ZgradaId" Type="Int32" Nullable="false" />
           <Property Name="Godina" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PrihodiRashodi_Prihodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" FromRole="PrihodiRashodi" ToRole="PrihodiRashodi_Prihodi" />
-          <NavigationProperty Name="PrihodiRashodi_Rashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi" ToRole="PrihodiRashodi_Rashodi" />
           <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Zgrade" FromRole="PrihodiRashodi" ToRole="Zgrade" />
         </EntityType>
         <EntityType Name="PrihodiRashodi_Prihodi">
@@ -603,19 +635,6 @@
           <Property Name="Opis" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" FromRole="PrihodiRashodi_Prihodi" ToRole="PrihodiRashodi" />
-        </EntityType>
-        <EntityType Name="PrihodiRashodi_Rashodi">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PrihodiRashodiGodId" Type="Int32" Nullable="false" />
-          <Property Name="PosebniDioMasterId" Type="Int32" />
-          <Property Name="Mjesec" Type="Int32" Nullable="false" />
-          <Property Name="Datum" Type="DateTime" Precision="3" />
-          <Property Name="RashodId" Type="Int32" />
-          <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
         </EntityType>
         <EntityType Name="Zgrade">
           <Key>
@@ -749,12 +768,12 @@
         </Association>
         <Association Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
           <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="1" />
-          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDijelovi" Role="PricuvaRezijeMjesec_PosebniDijelovi" Multiplicity="*" />
+          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PD" Role="PricuvaRezijeMjesec_PD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PricuvaRezijeMjesec">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PricuvaRezijeMjesec_PosebniDijelovi">
+            <Dependent Role="PricuvaRezijeMjesec_PD">
               <PropertyRef Name="PricuvaRezijeMjesecId" />
             </Dependent>
           </ReferentialConstraint>
@@ -771,6 +790,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
+          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PD" Role="PricuvaRezijeMjesec_PD" Multiplicity="1" />
+          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PD_Pripadci" Role="PricuvaRezijeMjesec_PD_Pripadci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PricuvaRezijeMjesec_PD">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricuvaRezijeMjesec_PD_Pripadci">
+              <PropertyRef Name="PricuvaRezijeMjesecPosDioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PrihodiRashodi_Prihodi_PrihodiRashodi">
           <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />
           <End Type="ZgradaDbModel.PrihodiRashodi_Prihodi" Role="PrihodiRashodi_Prihodi" Multiplicity="*" />
@@ -779,18 +810,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PrihodiRashodi_Prihodi">
-              <PropertyRef Name="PrihodiRashodiGodId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
-          <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />
-          <End Type="ZgradaDbModel.PrihodiRashodi_Rashodi" Role="PrihodiRashodi_Rashodi" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PrihodiRashodi">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrihodiRashodi_Rashodi">
               <PropertyRef Name="PrihodiRashodiGodId" />
             </Dependent>
           </ReferentialConstraint>
@@ -879,6 +898,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vZgrade">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Adresa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Mjesto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -940,9 +971,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PricuvaRezijeMjesec_PosebniDijelovi">
-            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDijelovi">
-              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PosebniDijelovi">
+          <EntitySetMapping Name="PricuvaRezijeMjesec_PD">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PD">
+              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PD">
                 <ScalarProperty Name="ObracunRezijeCijenaSlobodanUnos" ColumnName="ObracunRezijeCijenaSlobodanUnos" />
                 <ScalarProperty Name="ObracunRezijeBrojClanova" ColumnName="ObracunRezijeBrojClanova" />
                 <ScalarProperty Name="ObracunPricuvaCijenaSlobodanUnos" ColumnName="ObracunPricuvaCijenaSlobodanUnos" />
@@ -950,6 +981,16 @@
                 <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
                 <ScalarProperty Name="PosebniDioId" ColumnName="PosebniDioId" />
                 <ScalarProperty Name="PricuvaRezijeMjesecId" ColumnName="PricuvaRezijeMjesecId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PricuvaRezijeMjesec_PD_Pripadci">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PD_Pripadci">
+              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PD_Pripadci">
+                <ScalarProperty Name="Koef" ColumnName="Koef" />
+                <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
+                <ScalarProperty Name="PricuvaRezijeMjesecPosDioId" ColumnName="PricuvaRezijeMjesecPosDioId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -980,19 +1021,6 @@
                 <ScalarProperty Name="Opis" ColumnName="Opis" />
                 <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
                 <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
-                <ScalarProperty Name="PrihodiRashodiGodId" ColumnName="PrihodiRashodiGodId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PrihodiRashodi_Rashodi">
-            <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
-              <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
-                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
-                <ScalarProperty Name="RashodId" ColumnName="RashodId" />
-                <ScalarProperty Name="Datum" ColumnName="Datum" />
-                <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
-                <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
                 <ScalarProperty Name="PrihodiRashodiGodId" ColumnName="PrihodiRashodiGodId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1093,6 +1121,18 @@
                 <ScalarProperty Name="Prezime" ColumnName="Prezime" />
                 <ScalarProperty Name="Ime" ColumnName="Ime" />
                 <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vZgrade">
+            <EntityTypeMapping TypeName="ZgradaDbModel.vZgrade">
+              <MappingFragment StoreEntitySet="vZgrade">
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+                <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

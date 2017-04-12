@@ -12,8 +12,14 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class PricuvaRezijeMjesec_PosebniDijelovi
+    public partial class PricuvaRezijeMjesec_PD
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PricuvaRezijeMjesec_PD()
+        {
+            this.PricuvaRezijeMjesec_PD_Pripadci = new HashSet<PricuvaRezijeMjesec_PD_Pripadci>();
+        }
+    
         public int Id { get; set; }
         public int PricuvaRezijeMjesecId { get; set; }
         public Nullable<int> PosebniDioId { get; set; }
@@ -24,5 +30,7 @@ namespace ZgradaApp
         public Nullable<decimal> ObracunRezijeCijenaSlobodanUnos { get; set; }
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PricuvaRezijeMjesec_PD_Pripadci> PricuvaRezijeMjesec_PD_Pripadci { get; set; }
     }
 }
