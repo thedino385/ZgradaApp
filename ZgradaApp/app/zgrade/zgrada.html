@@ -1,159 +1,132 @@
-﻿<style>
-    .spacer {
-        margin-top: 15px; /* define margin as you see fit */
-    }
-
-    .margin-bottom {
-        margin-bottom: 15px;
-    }
-
-    md-content {
-        background-color: transparent;
-    }
-</style>
-
-<div class="container-grid">
+﻿<div class="container-grid">
     <div class="col-lg-12 whiteShadow">
-        <div class="panel-group">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <strong>{{msg}}</strong>
-                </div>
-                <div class="panel-body">
-
-                    <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
-                        <div class="form-group row">
-
-                            <div layout="column" ng-cloak class="md-inline-form">
-                                <md-content layout-padding>
-
-                                    <div layout-gt-sm="row">
-                                        <div class="col-sm-1"></div>
-                                        <md-input-container class="md-block col-sm-3" flex-gt-sm>
-                                            <label>Naziv</label>
-                                            <input required type="text" name="naziv" ng-model="zgradaObj.naziv">
-                                            <div ng-messages="frm.naziv.$error" role="alert">
-                                                <div ng-message-exp="['required']">
-                                                    Obavezno polje
-                                                </div>
-                                            </div>
-                                        </md-input-container>
-
-                                        <md-input-container class="md-block col-sm-3" flex-gt-sm>
-                                            <label>Adresa</label>
-                                            <input required type="text" name="adresa" ng-model="zgradaObj.adresa">
-                                            <div ng-messages="frm.naziv.$error" role="alert">
-                                                <div ng-message-exp="['required']">
-                                                    Obavezno polje
-                                                </div>
-                                            </div>
-                                        </md-input-container>
-
-                                        <md-input-container class="md-block col-sm-3" flex-gt-sm>
-                                            <label>Mjesto</label>
-                                            <input required type="text" name="mjesto" ng-model="zgradaObj.mjesto">
-                                            <div ng-messages="frm.mjesto.$error" role="alert">
-                                                <div ng-message-exp="['required']">
-                                                    Obavezno polje
-                                                </div>
-                                            </div>
-                                        </md-input-container>
-
-                                        <div class="col-sm-1"></div>
+        <md-toolbar class="md-indigo">
+            <div class="md-toolbar-tools">
+                <h3>{{msg}}</h3>
+            </div>
+        </md-toolbar>
+        <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
+            <div class="form-group row">
+                <div layout="column" ng-cloak class="md-inline-form">
+                    <md-content layout-padding>
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-1"></div>
+                            <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                <label>Naziv</label>
+                                <input required type="text" name="naziv" ng-model="zgradaObj.Naziv">
+                                <div ng-messages="frm.naziv.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
                                     </div>
+                                </div>
+                            </md-input-container>
 
-                                    
+                            <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                <label>Adresa</label>
+                                <input required type="text" name="adresa" ng-model="zgradaObj.Adresa">
+                                <div ng-messages="frm.naziv.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
 
-                                </md-content>
-                            </div>
+                            <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                <label>Mjesto</label>
+                                <input required type="text" name="mjesto" ng-model="zgradaObj.Mjesto">
+                                <div ng-messages="frm.mjesto.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
 
-
-                            <!--<div class="col-sm-2"></div>
-                            <div class="col-sm-2">
-                                <label for="naziv">Naziv</label>
-                            </div>
-                            <div class="col-sm-8" ng-class="{ 'has-error' : frm.naziv.$invalid && !frm.naziv.$pristine }">
-                                <input type="text" name="naziv" required class="form-control" ng-model="obj.Naziv" />
-                                <span style="color: red" ng-show="frm.naziv.$invalid && !frm.naziv.$pristine">Obavezno polje</span>
-                            </div>-->
-                        </div>
-
-                        <div class="form-group row">
                             <div class="col-sm-1"></div>
-                            <div class="col-sm-10">
-                                <textarea rows="3" cols="150" style="min-width: 100%" placeholder="Napomena" ng-model="obj.napomena"></textarea>
-                            </div>
-                            <div class="col-sm-1"></div>
                         </div>
-
-                      
-                      
-
-                        
-
-                            <!-- tabs -->
-                            <div ng-cloak>
-                                <md-content>
-                                    <md-tabs md-dynamic-height md-border-bottom>
-                                        <md-tab label="Stanari zgrade">
-                                            <md-content class="md-padding">
-                                                <md-button class="md-primary md-raised" ng-click="openModalStanar(0)">Dodaj stanara</md-button>
-                                                <!--<md-button class="md-primary md-raised" ng-click="showAdvanced(0)">
-                                                    Custom Dialog
-                                                </md-button>-->
-                                                <!--<a href="" class="btn btn-success" style="margin-bottom: 10px">Dodaj stanare</a>-->
-                                                <table class="table table-hover table-striped table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Ime</th>
-                                                            <th>Prezime</th>
-                                                            <th>OIB</th>
-                                                            <th>Email</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="stanar in zgradaObj.Zgrade_Stanari">
-                                                            <td>{{stanar.Ime}}</td>
-                                                            <td>{{stanar.Prezime}}</td>
-                                                            <td>{{stanar.OIB}}</td>
-                                                            <td>{{stanar.Email}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </md-content>
-                                        </md-tab>
-                                        <md-tab label="Posebni dijelovi">
-                                            <md-content class="md-padding">
-                                                <a href="" class="btn btn-success" style="margin-bottom: 10px">Dodaj posebne dijelove</a>
-                                                <table class="table table-hover table-striped table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Vrsta</th>
-                                                            <th>Naziv</th>
-                                                            <th>Površina (m2)</th>
-                                                            <th>Površina (%)</th>
-                                                            <th>Koeficijent (%)</th>
-                                                            <th>Vrijedi od (mj/god)</th>
-                                                            <th>Vrijedi do (mj/god)</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
-                                            </md-content>
-                                        </md-tab>
-                                    </md-tabs>
-                                </md-content>
-                            </div>
-
-                            <hr />
-                            <input type="submit" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
-                            <input type="button" value="Odustani" ng-click="goBack()" style="margin-right: 10px" class="btn btn-default pull-right" />
-</form>
-                    <!--</div>-->
+                    </md-content>
                 </div>
             </div>
-        </div>
+            <div class="form-group row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <textarea rows="3" cols="150" style="min-width: 100%" placeholder="Napomena" ng-model="zgradaObj.Napomena"></textarea>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+
+            <!-- tabs -->
+            <div ng-cloak>
+                <md-content>
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="Stanari zgrade">
+                            <md-content class="md-padding">
+                                <md-button class="md-primary md-raised" ng-click="openModalStanar(0)">&nbsp;Dodaj stanara&nbsp;</md-button>
+                                <table class="table table-hover table-striped table-bordered table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Ime</th>
+                                            <th>Prezime</th>
+                                            <th>OIB</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="stanar in zgradaObj.Zgrade_Stanari">
+                                            <td>{{stanar.Ime}}</td>
+                                            <td>{{stanar.Prezime}}</td>
+                                            <td>{{stanar.OIB}}</td>
+                                            <td>{{stanar.Email}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="openModalStanar(stanar.Id)">
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Posebni dijelovi">
+                            <md-content class="md-padding">
+                                <md-button class="md-primary md-raised" ng-click="openModalPosebniDio(0)">&nbsp;Dodaj posebni dio&nbsp;</md-button>
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Naziv</th>
+                                            <th>Oznaka</th>
+                                            <th>Zatvoren</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="pdMaster in zgradaObj.Zgrade_PosebniDijelovi">
+                                            <td>{{pdMaster.Naziv}}</td>
+                                            <td>{{pdMaster.Oznaka}}</td>
+                                            <td>
+                                                <input ng-show="pdMaster.Zatvoren == true" type="checkbox" checked />
+                                                <input ng-show="pdMaster.Zatvoren == false" type="checkbox" />
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="openModalPosebniDio(pdMaster.Id)">
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
+
+            <hr />
+            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+            <md-button class="md-raised pull-right" ng-click="goBack()">
+                Odustani
+            </md-button>
+        </form>
     </div>
 </div>
 

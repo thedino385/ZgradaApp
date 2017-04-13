@@ -100,3 +100,7 @@
 .transCellBack {
     background-color: transparent;
 }
+
+md-content {
+    background-color: transparent;
+}

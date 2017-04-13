@@ -9,6 +9,23 @@ namespace ZgradaApp
     {
     }
 
+    public partial class Zgrade
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class Zgrade_Stanari
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class Zgrade_PosebniDijelovi
+    {
+        public string Status { get; set; }
+    }
+
+    // OLD
+
     public partial class Stanovi_PosebniDijelovi
     {
         public string Status { get; set; }

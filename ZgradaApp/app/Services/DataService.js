@@ -17,12 +17,21 @@
     }
 
     
-    var zgradaCreateorUpdate = function (zgrada) {
+    var zgradaCreateOrUpdate = function (zgrada) {
         console.log(zgrada);
-        return $http.post('../api/data/zgradaCreateorUpdate', zgrada);
+        return $http.post('../api/data/zgradaCreateOrUpdate', zgrada);
     }
 
+
+    return {
+        getZgrade: getZgrade,
+        getZgrada: getZgrada,
+        zgradaCreateOrUpdate: zgradaCreateOrUpdate
+    }
+
+
     // --------------------------------------------------------------------------------------
+    //    O B S O L E T E 
 
     //var getZgrade = function () {
     //    var defer = $q.defer();
@@ -53,17 +62,17 @@
 
     
 
-    var getPripadci = function () {
-        return $http.get('../api/data/getpripadci');
-    }
+    //var getPripadci = function () {
+    //    return $http.get('../api/data/getpripadci');
+    //}
 
-    var getPripadak = function (id) {
-        return $http.get('../api/data/getpripadak?Id=' + id);
-    }
+    //var getPripadak = function (id) {
+    //    return $http.get('../api/data/getpripadak?Id=' + id);
+    //}
 
-    var getPosebiDijelovi = function () {
-        return $http.get('../api/data/getPosebiDijelovi');
-    }
+    //var getPosebiDijelovi = function () {
+    //    return $http.get('../api/data/getPosebiDijelovi');
+    //}
 
     //var getPripadci = function () {
     //    var defer = $q.defer();
@@ -89,13 +98,13 @@
     //    return defer.promise;
     //}
 
-    var pripadakCreateUpdate = function (pripadak) {
-        return $http.post('../api/data/pripadakCreateUpdate', pripadak);
-    }
+    //var pripadakCreateUpdate = function (pripadak) {
+    //    return $http.post('../api/data/pripadakCreateUpdate', pripadak);
+    //}
 
-    var posebniDioCreateUpdate = function (dio) {
-        return $http.post('../api/data/posebniDioCreateUpdate', dio);
-    }
+    //var posebniDioCreateUpdate = function (dio) {
+    //    return $http.post('../api/data/posebniDioCreateUpdate', dio);
+    //}
 
     //var getStanovi = function () {
     //    return $http.get('../api/data/getstanovi');
@@ -127,80 +136,80 @@
     //}
 
 
-    var stanCreateUpdate = function (stan) {
-        // ovo je master - detail relationship
-        return $http.post('../api/data/stanCreateUpdate', stan);
-    }
+    //var stanCreateUpdate = function (stan) {
+    //    // ovo je master - detail relationship
+    //    return $http.post('../api/data/stanCreateUpdate', stan);
+    //}
 
-    var zaduzenjeCreateUpdate = function (z) {
-        return $http.post('../api/data/zaduzivanjeCreateUpdate', z);
-    }
+    //var zaduzenjeCreateUpdate = function (z) {
+    //    return $http.post('../api/data/zaduzivanjeCreateUpdate', z);
+    //}
 
-    var getPr = function (ZgradaId) {
-        return $http({
-            url: '../api/data/getprihodirashodi',
-            method: "GET",
-            params: { ZgradaId: ZgradaId }
-        });
-    }
+    //var getPr = function (ZgradaId) {
+    //    return $http({
+    //        url: '../api/data/getprihodirashodi',
+    //        method: "GET",
+    //        params: { ZgradaId: ZgradaId }
+    //    });
+    //}
 
-    var pRCreateUpdate = function (pr) {
-        return $http.post('../api/data/pRCreateUpdate', pr);
-    }
+    //var pRCreateUpdate = function (pr) {
+    //    return $http.post('../api/data/pRCreateUpdate', pr);
+    //}
 
-    var createEmptyPricuva  = function (ZgradaId, Godina, Mjesec) {
-        return $http({
-            url: '../api/data/createEmptyPricuva',
-            method: "GET",
-            params: { ZgradaId: ZgradaId, Godina: Godina }
-        });
-    }
-
-    
-    var createEmptyPrihodRashod = function (ZgradaId, Godina) {
-        return $http({
-            url: '../api/data/createEmptyPrihodRashod',
-            method: "GET",
-            params: { ZgradaId: ZgradaId, Godina: Godina }
-        });
-    }
+    //var createEmptyPricuva  = function (ZgradaId, Godina, Mjesec) {
+    //    return $http({
+    //        url: '../api/data/createEmptyPricuva',
+    //        method: "GET",
+    //        params: { ZgradaId: ZgradaId, Godina: Godina }
+    //    });
+    //}
 
     
-    var getPricuva = function (ZgradaId) {
-        return $http({
-            url: '../api/data/getpricuva',
-            method: "GET",
-            params: { ZgradaId: ZgradaId }
-        });
-    }
+    //var createEmptyPrihodRashod = function (ZgradaId, Godina) {
+    //    return $http({
+    //        url: '../api/data/createEmptyPrihodRashod',
+    //        method: "GET",
+    //        params: { ZgradaId: ZgradaId, Godina: Godina }
+    //    });
+    //}
 
-    var pricuvaCreateUpdate = function (pricuve) {
-        return $http.post('../api/data/pricuvaCreateUpdate', pricuve);
-    }
+    
+    //var getPricuva = function (ZgradaId) {
+    //    return $http({
+    //        url: '../api/data/getpricuva',
+    //        method: "GET",
+    //        params: { ZgradaId: ZgradaId }
+    //    });
+    //}
 
-    return {
-        getZgrade: getZgrade,
-        zgradaCreateorUpdate: zgradaCreateorUpdate,
-        listZgrade: listZgrade,
-        getZgrada: getZgrada,
-        listPripadci: listPripadci,
-        getPripadci: getPripadci,
-        getPripadak: getPripadak,
-        getPosebiDijelovi: getPosebiDijelovi,
-        posebniDioCreateUpdate: posebniDioCreateUpdate,
-        pripadakCreateUpdate: pripadakCreateUpdate,
-        listStanovi: listStanovi,
-        zaduzenjeCreateUpdate: zaduzenjeCreateUpdate,
-        selectedZgrada: selectedZgrada,
-        stanCreateUpdate: stanCreateUpdate,
-        getPr: getPr,
-        selectedPosebniDio: selectedPosebniDio,
-        selectedStan: selectedStan,
-        createEmptyPricuva: createEmptyPricuva ,
-        createEmptyPrihodRashod: createEmptyPrihodRashod,
-        getPricuva: getPricuva,
-        pricuvaCreateUpdate: pricuvaCreateUpdate,
-        pRCreateUpdate: pRCreateUpdate
-    }
+    //var pricuvaCreateUpdate = function (pricuve) {
+    //    return $http.post('../api/data/pricuvaCreateUpdate', pricuve);
+    //}
+
+    //return {
+    //    getZgrade: getZgrade,
+    //    zgradaCreateOrUpdate: zgradaCreateOrUpdate,
+    //    listZgrade: listZgrade,
+    //    getZgrada: getZgrada,
+    //    listPripadci: listPripadci,
+    //    getPripadci: getPripadci,
+    //    getPripadak: getPripadak,
+    //    getPosebiDijelovi: getPosebiDijelovi,
+    //    posebniDioCreateUpdate: posebniDioCreateUpdate,
+    //    pripadakCreateUpdate: pripadakCreateUpdate,
+    //    listStanovi: listStanovi,
+    //    zaduzenjeCreateUpdate: zaduzenjeCreateUpdate,
+    //    selectedZgrada: selectedZgrada,
+    //    stanCreateUpdate: stanCreateUpdate,
+    //    getPr: getPr,
+    //    selectedPosebniDio: selectedPosebniDio,
+    //    selectedStan: selectedStan,
+    //    createEmptyPricuva: createEmptyPricuva ,
+    //    createEmptyPrihodRashod: createEmptyPrihodRashod,
+    //    getPricuva: getPricuva,
+    //    pricuvaCreateUpdate: pricuvaCreateUpdate,
+    //    pRCreateUpdate: pRCreateUpdate
+    //}
 
 }]);

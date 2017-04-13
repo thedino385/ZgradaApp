@@ -55,5 +55,63 @@ namespace ZgradaApp.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpPost]
+        [Route("api/data/zgradaCreateOrUpdate")]
+        public async Task<IHttpActionResult> ZgradaCreateOrUpdate(Zgrade zgrada)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                if (zgrada.Id == 0)
+                {
+                    zgrada.CompanyId = companyId;
+                    _db.Zgrade.Add(zgrada);
+                }
+                else
+                {
+                    var target = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == zgrada.Id);
+                    target.Mjesto = zgrada.Mjesto;
+                    target.Adresa = zgrada.Adresa;
+                    target.CompanyId = companyId;
+                    target.Napomena = zgrada.Napomena;
+                    target.Naziv = zgrada.Naziv;
+                    foreach (var item in zgrada.Zgrade_Stanari)
+                    {
+                        switch(item.Status)
+                        {
+                            case "a":
+                                _db.Zgrade_Stanari.Add(item);
+                                break;
+                            case "u":
+                                _db.Zgrade_Stanari.Attach(item);
+                                _db.Entry(item).State = EntityState.Modified;
+                                break;
+                        }
+                        
+                    }
+                    foreach (var item in zgrada.Zgrade_PosebniDijelovi)
+                    {
+                        switch (item.Status)
+                        {
+                            case "a":
+                                _db.Zgrade_PosebniDijelovi.Add(item);
+                                break;
+                            case "u":
+                                _db.Zgrade_PosebniDijelovi.Attach(item);
+                                _db.Entry(item).State = EntityState.Modified;
+                                break;
+                        }
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }

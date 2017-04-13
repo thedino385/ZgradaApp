@@ -324,8 +324,10 @@
     <Content Include="app\zgrade\dialog1.html" />
     <Content Include="app\zgrade\zgrada.html" />
     <Content Include="app\zgrade\zgradaCtrl.js" />
+    <Content Include="app\zgrade\zgradaPosebniDijeloviModal.html" />
+    <Content Include="app\zgrade\zgradaPosedniDijeloviModalCtrl.js" />
     <Content Include="app\zgrade\zgradaStanariModal.html" />
-    <Content Include="app\zgrade\zgradaStanariModalctrl.js" />
+    <Content Include="app\zgrade\zgradaStanariModalCtrl.js" />
     <Content Include="app\zgrade\zgrade.html" />
     <Content Include="app\zgrade\zgradeCtrl.js" />
     <Content Include="Content\angular-material.css" />
