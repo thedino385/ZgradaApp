@@ -30,8 +30,8 @@
             $location.path('/zgrada/' + obj.Id);
         }
 
-        $scope.goToStanovi = function (zgradaId) {
-            $location.path('/stanovi/' + zgradaId);
+        $scope.goToPosebniDjeloviChild = function (zgradaId) {
+            $location.path('/posebniDijeloviMasterList/' + zgradaId);
         }
 
         $scope.goToPregled = function (zgradaId) {

@@ -57,8 +57,8 @@
         // _________________________________________________________
         $scope.openModalPosebniDio = function (id) {
             $mdDialog.show({
-                controller: 'zgradaPosebniDijeloviModalCtrl',
-                templateUrl: 'app/zgrade/zgradaPosebniDijeloviModal.html',
+                controller: 'zgradaPosebniDijeloviMasterModalCtrl',
+                templateUrl: 'app/zgrade/zgradaPosebniDijeloviMasterModal.html',
                 //parent: angular.element(document.body),
                 //targetEvent: ev,
                 clickOutsideToClose: false,

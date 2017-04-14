@@ -42,12 +42,7 @@ namespace ZgradaApp.Controllers
             {
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
-                //var pripadci = await _db.Pripadci.Where(p => p.CompanyId == companyId).ToListAsync();
                 var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == Id && p.CompanyId == companyId);
-                //foreach (var pripadak in zgrada.Zgrade_Pripadci)
-                //{
-                //    pripadak.VrstaNaziv = pripadci.FirstOrDefault(p => p.Id == pripadak.PripadakId).Naziv;
-                //}
                 return Ok(zgrada);
             }
             catch (Exception ex)
@@ -91,15 +86,15 @@ namespace ZgradaApp.Controllers
                         }
                         
                     }
-                    foreach (var item in zgrada.Zgrade_PosebniDijelovi)
+                    foreach (var item in zgrada.Zgrade_PosebniDijeloviMaster)
                     {
                         switch (item.Status)
                         {
                             case "a":
-                                _db.Zgrade_PosebniDijelovi.Add(item);
+                                _db.Zgrade_PosebniDijeloviMaster.Add(item);
                                 break;
                             case "u":
-                                _db.Zgrade_PosebniDijelovi.Attach(item);
+                                _db.Zgrade_PosebniDijeloviMaster.Attach(item);
                                 _db.Entry(item).State = EntityState.Modified;
                                 break;
                         }

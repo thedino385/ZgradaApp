@@ -5,6 +5,57 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ZgradaDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
         <EntityType Name="Kompanije">
           <Key>
             <PropertyRef Name="Id" />
@@ -56,25 +107,34 @@
           <Property Name="ObracunPricuvaCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
-        <EntityType Name="PricuvaRezijeMjesec_PD">
+        <EntityType Name="PricuvaRezijeMjesec_PosebniDioChild">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PricuvaRezijeMjesecId" Type="int" Nullable="false" />
           <Property Name="PosebniDioId" Type="int" />
-          <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ObracunPricuvaCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeBrojClanova" Type="int" />
           <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
-        <EntityType Name="PricuvaRezijeMjesec_PD_Pripadci">
+        <EntityType Name="PricuvaRezijeMjesec_PosebniDioChild_Povrsine">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PricuvaRezijeMjesecPosDioId" Type="int" Nullable="false" />
+          <Property Name="PricuvaRezijePosebniDioChildId" Type="int" Nullable="false" />
+          <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PricuvaRezijeMjesec_PosebniDioChild_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PricuvaRezijeMjesecPosDioChildId" Type="int" Nullable="false" />
           <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
@@ -83,7 +143,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PricuvaRezijeMjesecId" Type="int" Nullable="false" />
+          <Property Name="PricuvaRezijeMjesecPosDioChildId" Type="int" Nullable="false" />
           <Property Name="VlasnikId" Type="int" />
           <Property Name="Udio" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
@@ -106,6 +166,18 @@
           <Property Name="Opis" Type="varchar" MaxLength="200" />
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="PrihodiRashodi_Rashodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrihodiRashodiGodId" Type="int" Nullable="false" />
+          <Property Name="PosebniDioMasterId" Type="int" />
+          <Property Name="Mjesec" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="datetime" />
+          <Property Name="RashodId" Type="int" />
+          <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="Zgrade">
           <Key>
             <PropertyRef Name="Id" />
@@ -117,7 +189,55 @@
           <Property Name="Mjesto" Type="varchar" MaxLength="200" />
           <Property Name="Napomena" Type="varchar(max)" />
         </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi">
+        <EntityType Name="Zgrade_PosebniDijeloviChild">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZgradaPosDioMasterId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
+          <Property Name="Napomena" Type="varchar(max)" />
+          <Property Name="Zatvoren" Type="bit" />
+          <Property Name="ZatvorenGodina" Type="int" />
+          <Property Name="ZatvorenMjesec" Type="int" />
+          <Property Name="VrijediOdGodina" Type="int" />
+          <Property Name="VrijediOdMjesec" Type="int" />
+        </EntityType>
+        <EntityType Name="Zgrade_PosebniDijeloviChild_Povrsine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PosebniDioChildId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
+          <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Zatvoren" Type="bit" />
+          <Property Name="ZatvorenGodina" Type="int" />
+          <Property Name="ZatvorenMjesec" Type="int" />
+          <Property Name="VrijediOdGodina" Type="int" />
+          <Property Name="VrijediOdMjesec" Type="int" />
+        </EntityType>
+        <EntityType Name="Zgrade_PosebniDijeloviChild_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZgradaPosDioChildId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
+          <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="varchar(max)" />
+          <Property Name="Zatvoren" Type="bit" />
+          <Property Name="ZatvorenGodina" Type="int" />
+          <Property Name="ZatvorenMjesec" Type="int" />
+          <Property Name="VrijediOdGodina" Type="int" />
+          <Property Name="VrijediOdMjesec" Type="int" />
+        </EntityType>
+        <EntityType Name="Zgrade_PosebniDijeloviMaster">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -132,57 +252,23 @@
           <Property Name="VrijediOdGodina" Type="int" />
           <Property Name="VrijediOdMjesec" Type="int" />
         </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_PD">
+        <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ZgradaPosDioId" Type="int" Nullable="false" />
-          <Property Name="Naziv" Type="varchar" MaxLength="50" />
-          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
-          <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Napomena" Type="varchar(max)" />
-          <Property Name="Zatvoren" Type="bit" />
-          <Property Name="ZatvorenGodina" Type="int" />
-          <Property Name="ZatvorenMjesec" Type="int" />
-          <Property Name="VrijediOdGodina" Type="int" />
-          <Property Name="VrijediOdMjesec" Type="int" />
-        </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_PD_Pripadci">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ZgradaPosDioPDId" Type="int" Nullable="false" />
-          <Property Name="Naziv" Type="varchar" MaxLength="50" />
-          <Property Name="Oznaka" Type="varchar" MaxLength="50" />
-          <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Koef" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Napomena" Type="varchar(max)" />
-          <Property Name="Zatvoren" Type="bit" />
-          <Property Name="ZatvorenGodina" Type="int" />
-          <Property Name="ZatvorenMjesec" Type="int" />
-          <Property Name="VrijediOdGodina" Type="int" />
-          <Property Name="VrijediOdMjesec" Type="int" />
-        </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_VlasniciPeriod">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PosebniDioId" Type="int" Nullable="false" />
+          <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
           <Property Name="VrijediOdMjesec" Type="int" Nullable="false" />
           <Property Name="VrijediOdGodina" Type="int" Nullable="false" />
           <Property Name="VrijediDoMjesec" Type="int" />
           <Property Name="VrijediDoGodina" Type="int" />
         </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici">
+        <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PosebniDioPeriodId" Type="int" />
+          <Property Name="VlasniciPeriodId" Type="int" Nullable="false" />
           <Property Name="StanarId" Type="int" Nullable="false" />
           <Property Name="Udio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
@@ -212,6 +298,62 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="Mjesto" Type="varchar" MaxLength="200" />
           <Property Name="Napomena" Type="varchar(max)" />
         </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PricuvaRezijeGodina_Zgrade">
           <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
           <End Role="PricuvaRezijeGodina" Type="Self.PricuvaRezijeGodina" Multiplicity="*" />
@@ -224,26 +366,14 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
-          <End Role="PricuvaRezijeMjesec_PD" Type="Self.PricuvaRezijeMjesec_PD" Multiplicity="1" />
-          <End Role="PricuvaRezijeMjesec_PD_Pripadci" Type="Self.PricuvaRezijeMjesec_PD_Pripadci" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PricuvaRezijeMjesec_PD">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PricuvaRezijeMjesec_PD_Pripadci">
-              <PropertyRef Name="PricuvaRezijeMjesecPosDioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
+        <Association Name="FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec">
           <End Role="PricuvaRezijeMjesec" Type="Self.PricuvaRezijeMjesec" Multiplicity="1" />
-          <End Role="PricuvaRezijeMjesec_PD" Type="Self.PricuvaRezijeMjesec_PD" Multiplicity="*" />
+          <End Role="PricuvaRezijeMjesec_PosebniDioChild" Type="Self.PricuvaRezijeMjesec_PosebniDioChild" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PricuvaRezijeMjesec">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PricuvaRezijeMjesec_PD">
+            <Dependent Role="PricuvaRezijeMjesec_PosebniDioChild">
               <PropertyRef Name="PricuvaRezijeMjesecId" />
             </Dependent>
           </ReferentialConstraint>
@@ -260,15 +390,15 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec">
-          <End Role="PricuvaRezijeMjesec" Type="Self.PricuvaRezijeMjesec" Multiplicity="1" />
+        <Association Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild">
+          <End Role="PricuvaRezijeMjesec_PosebniDioChild" Type="Self.PricuvaRezijeMjesec_PosebniDioChild" Multiplicity="1" />
           <End Role="PricuvaRezijeMjesec_Vlasnici" Type="Self.PricuvaRezijeMjesec_Vlasnici" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PricuvaRezijeMjesec">
+            <Principal Role="PricuvaRezijeMjesec_PosebniDioChild">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PricuvaRezijeMjesec_Vlasnici">
-              <PropertyRef Name="PricuvaRezijeMjesecId" />
+              <PropertyRef Name="PricuvaRezijeMjesecPosDioChildId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -280,6 +410,18 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PrihodiRashodi_Prihodi">
+              <PropertyRef Name="PrihodiRashodiGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
+          <End Role="PrihodiRashodi" Type="Self.PrihodiRashodi" Multiplicity="1" />
+          <End Role="PrihodiRashodi_Rashodi" Type="Self.PrihodiRashodi_Rashodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrihodiRashodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrihodiRashodi_Rashodi">
               <PropertyRef Name="PrihodiRashodiGodId" />
             </Dependent>
           </ReferentialConstraint>
@@ -296,62 +438,74 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD">
-          <End Role="Zgrade_PosebniDijelovi_PD" Type="Self.Zgrade_PosebniDijelovi_PD" Multiplicity="1" />
-          <End Role="Zgrade_PosebniDijelovi_PD_Pripadci" Type="Self.Zgrade_PosebniDijelovi_PD_Pripadci" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild">
+          <End Role="Zgrade_PosebniDijeloviChild" Type="Self.Zgrade_PosebniDijeloviChild" Multiplicity="1" />
+          <End Role="Zgrade_PosebniDijeloviChild_Povrsine" Type="Self.Zgrade_PosebniDijeloviChild_Povrsine" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi_PD">
+            <Principal Role="Zgrade_PosebniDijeloviChild">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_PD_Pripadci">
-              <PropertyRef Name="ZgradaPosDioPDId" />
+            <Dependent Role="Zgrade_PosebniDijeloviChild_Povrsine">
+              <PropertyRef Name="PosebniDioChildId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi">
-          <End Role="Zgrade_PosebniDijelovi" Type="Self.Zgrade_PosebniDijelovi" Multiplicity="1" />
-          <End Role="Zgrade_PosebniDijelovi_PD" Type="Self.Zgrade_PosebniDijelovi_PD" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild">
+          <End Role="Zgrade_PosebniDijeloviChild" Type="Self.Zgrade_PosebniDijeloviChild" Multiplicity="1" />
+          <End Role="Zgrade_PosebniDijeloviChild_Pripadci" Type="Self.Zgrade_PosebniDijeloviChild_Pripadci" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi">
+            <Principal Role="Zgrade_PosebniDijeloviChild">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_PD">
-              <PropertyRef Name="ZgradaPosDioId" />
+            <Dependent Role="Zgrade_PosebniDijeloviChild_Pripadci">
+              <PropertyRef Name="ZgradaPosDioChildId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod">
-          <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod" Type="Self.Zgrade_PosebniDijelovi_VlasniciPeriod" Multiplicity="0..1" />
-          <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" Type="Self.Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster">
+          <End Role="Zgrade_PosebniDijeloviMaster" Type="Self.Zgrade_PosebniDijeloviMaster" Multiplicity="1" />
+          <End Role="Zgrade_PosebniDijeloviChild" Type="Self.Zgrade_PosebniDijeloviChild" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi_VlasniciPeriod">
+            <Principal Role="Zgrade_PosebniDijeloviMaster">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici">
-              <PropertyRef Name="PosebniDioPeriodId" />
+            <Dependent Role="Zgrade_PosebniDijeloviChild">
+              <PropertyRef Name="ZgradaPosDioMasterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi">
-          <End Role="Zgrade_PosebniDijelovi" Type="Self.Zgrade_PosebniDijelovi" Multiplicity="1" />
-          <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod" Type="Self.Zgrade_PosebniDijelovi_VlasniciPeriod" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+          <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Type="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Multiplicity="1" />
+          <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Type="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi">
+            <Principal Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_VlasniciPeriod">
-              <PropertyRef Name="PosebniDioId" />
+            <Dependent Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+              <PropertyRef Name="VlasniciPeriodId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_Zgrade">
+        <Association Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster">
+          <End Role="Zgrade_PosebniDijeloviMaster" Type="Self.Zgrade_PosebniDijeloviMaster" Multiplicity="1" />
+          <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Type="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zgrade_PosebniDijeloviMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+              <PropertyRef Name="PosebniDioMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zgrade_PosebniDijeloviMaster_Zgrade">
           <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
-          <End Role="Zgrade_PosebniDijelovi" Type="Self.Zgrade_PosebniDijelovi" Multiplicity="*" />
+          <End Role="Zgrade_PosebniDijeloviMaster" Type="Self.Zgrade_PosebniDijeloviMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Zgrade">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi">
+            <Dependent Role="Zgrade_PosebniDijeloviMaster">
               <PropertyRef Name="ZgradaId" />
             </Dependent>
           </ReferentialConstraint>
@@ -369,21 +523,29 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ZgradaDbModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KompanijeUpravitelji" EntityType="Self.KompanijeUpravitelji" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaRezijeGodina" EntityType="Self.PricuvaRezijeGodina" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaRezijeMjesec" EntityType="Self.PricuvaRezijeMjesec" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PricuvaRezijeMjesec_PD" EntityType="Self.PricuvaRezijeMjesec_PD" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PricuvaRezijeMjesec_PD_Pripadci" EntityType="Self.PricuvaRezijeMjesec_PD_Pripadci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricuvaRezijeMjesec_PosebniDioChild" EntityType="Self.PricuvaRezijeMjesec_PosebniDioChild" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricuvaRezijeMjesec_PosebniDioChild_Povrsine" EntityType="Self.PricuvaRezijeMjesec_PosebniDioChild_Povrsine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricuvaRezijeMjesec_PosebniDioChild_Pripadci" EntityType="Self.PricuvaRezijeMjesec_PosebniDioChild_Pripadci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PricuvaRezijeMjesec_Vlasnici" EntityType="Self.PricuvaRezijeMjesec_Vlasnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi" EntityType="Self.PrihodiRashodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="Self.PrihodiRashodi_Prihodi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="Self.PrihodiRashodi_Rashodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Zgrade_PosebniDijelovi" EntityType="Self.Zgrade_PosebniDijelovi" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_PD" EntityType="Self.Zgrade_PosebniDijelovi_PD" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_PD_Pripadci" EntityType="Self.Zgrade_PosebniDijelovi_PD_Pripadci" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_VlasniciPeriod" EntityType="Self.Zgrade_PosebniDijelovi_VlasniciPeriod" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" EntityType="Self.Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade_PosebniDijeloviChild" EntityType="Self.Zgrade_PosebniDijeloviChild" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade_PosebniDijeloviChild_Povrsine" EntityType="Self.Zgrade_PosebniDijeloviChild_Povrsine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade_PosebniDijeloviChild_Pripadci" EntityType="Self.Zgrade_PosebniDijeloviChild_Pripadci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade_PosebniDijeloviMaster" EntityType="Self.Zgrade_PosebniDijeloviMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntityType="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" EntityType="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_Stanari" EntityType="Self.Zgrade_Stanari" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vZgrade" EntityType="Self.vZgrade" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -395,53 +557,73 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     [vZgrade].[Napomena] AS [Napomena]
     FROM [dbo].[vZgrade] AS [vZgrade]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
           <AssociationSet Name="FK_PricuvaRezijeGodina_Zgrade" Association="Self.FK_PricuvaRezijeGodina_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
           </AssociationSet>
-          <AssociationSet Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" Association="Self.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
-            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
-            <End Role="PricuvaRezijeMjesec_PD_Pripadci" EntitySet="PricuvaRezijeMjesec_PD_Pripadci" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" Association="Self.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
+          <AssociationSet Name="FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec" Association="Self.FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec">
             <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
-            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
+            <End Role="PricuvaRezijeMjesec_PosebniDioChild" EntitySet="PricuvaRezijeMjesec_PosebniDioChild" />
           </AssociationSet>
           <AssociationSet Name="FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" Association="Self.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina">
             <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
             <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
           </AssociationSet>
-          <AssociationSet Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec" Association="Self.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec">
-            <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
+          <AssociationSet Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild" Association="Self.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild">
+            <End Role="PricuvaRezijeMjesec_PosebniDioChild" EntitySet="PricuvaRezijeMjesec_PosebniDioChild" />
             <End Role="PricuvaRezijeMjesec_Vlasnici" EntitySet="PricuvaRezijeMjesec_Vlasnici" />
           </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Prihodi_PrihodiRashodi" Association="Self.FK_PrihodiRashodi_Prihodi_PrihodiRashodi">
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
             <End Role="PrihodiRashodi_Prihodi" EntitySet="PrihodiRashodi_Prihodi" />
           </AssociationSet>
+          <AssociationSet Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi" Association="Self.FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
+            <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
+            <End Role="PrihodiRashodi_Rashodi" EntitySet="PrihodiRashodi_Rashodi" />
+          </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="Self.FK_PrihodiRashodi_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD" Association="Self.FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD">
-            <End Role="Zgrade_PosebniDijelovi_PD" EntitySet="Zgrade_PosebniDijelovi_PD" />
-            <End Role="Zgrade_PosebniDijelovi_PD_Pripadci" EntitySet="Zgrade_PosebniDijelovi_PD_Pripadci" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild" Association="Self.FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild">
+            <End Role="Zgrade_PosebniDijeloviChild" EntitySet="Zgrade_PosebniDijeloviChild" />
+            <End Role="Zgrade_PosebniDijeloviChild_Povrsine" EntitySet="Zgrade_PosebniDijeloviChild_Povrsine" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi" Association="Self.FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi">
-            <End Role="Zgrade_PosebniDijelovi" EntitySet="Zgrade_PosebniDijelovi" />
-            <End Role="Zgrade_PosebniDijelovi_PD" EntitySet="Zgrade_PosebniDijelovi_PD" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild" Association="Self.FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild">
+            <End Role="Zgrade_PosebniDijeloviChild" EntitySet="Zgrade_PosebniDijeloviChild" />
+            <End Role="Zgrade_PosebniDijeloviChild_Pripadci" EntitySet="Zgrade_PosebniDijeloviChild_Pripadci" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod" Association="Self.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod">
-            <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod" />
-            <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" Association="Self.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster">
+            <End Role="Zgrade_PosebniDijeloviMaster" EntitySet="Zgrade_PosebniDijeloviMaster" />
+            <End Role="Zgrade_PosebniDijeloviChild" EntitySet="Zgrade_PosebniDijeloviChild" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi" Association="Self.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi">
-            <End Role="Zgrade_PosebniDijelovi" EntitySet="Zgrade_PosebniDijelovi" />
-            <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Association="Self.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+            <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+            <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_Zgrade" Association="Self.FK_Zgrade_PosebniDijelovi_Zgrade">
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" Association="Self.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster">
+            <End Role="Zgrade_PosebniDijeloviMaster" EntitySet="Zgrade_PosebniDijeloviMaster" />
+            <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviMaster_Zgrade" Association="Self.FK_Zgrade_PosebniDijeloviMaster_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
-            <End Role="Zgrade_PosebniDijelovi" EntitySet="Zgrade_PosebniDijelovi" />
+            <End Role="Zgrade_PosebniDijeloviMaster" EntitySet="Zgrade_PosebniDijeloviMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_Zgrade_Stanari_Zgrade" Association="Self.FK_Zgrade_Stanari_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
@@ -453,22 +635,38 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <edmx:ConceptualModels>
       <Schema Namespace="ZgradaDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ZgradaDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="ZgradaDbModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="ZgradaDbModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="ZgradaDbModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="ZgradaDbModel.AspNetUsers" />
           <EntitySet Name="Kompanije" EntityType="ZgradaDbModel.Kompanije" />
           <EntitySet Name="KompanijeUpravitelji" EntityType="ZgradaDbModel.KompanijeUpravitelji" />
           <EntitySet Name="PricuvaRezijeGodina" EntityType="ZgradaDbModel.PricuvaRezijeGodina" />
           <EntitySet Name="PricuvaRezijeMjesec" EntityType="ZgradaDbModel.PricuvaRezijeMjesec" />
-          <EntitySet Name="PricuvaRezijeMjesec_PD" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PD" />
-          <EntitySet Name="PricuvaRezijeMjesec_PD_Pripadci" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PD_Pripadci" />
+          <EntitySet Name="PricuvaRezijeMjesec_PosebniDioChild" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild" />
+          <EntitySet Name="PricuvaRezijeMjesec_PosebniDioChild_Povrsine" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild_Povrsine" />
+          <EntitySet Name="PricuvaRezijeMjesec_PosebniDioChild_Pripadci" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild_Pripadci" />
           <EntitySet Name="PricuvaRezijeMjesec_Vlasnici" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_Vlasnici" />
           <EntitySet Name="PrihodiRashodi" EntityType="ZgradaDbModel.PrihodiRashodi" />
           <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" />
+          <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi" />
           <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
-          <EntitySet Name="Zgrade_PosebniDijelovi" EntityType="ZgradaDbModel.Zgrade_PosebniDijelovi" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_PD" EntityType="ZgradaDbModel.Zgrade_PosebniDijelovi_PD" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_PD_Pripadci" EntityType="ZgradaDbModel.Zgrade_PosebniDijelovi_PD_Pripadci" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_VlasniciPeriod" EntityType="ZgradaDbModel.Zgrade_PosebniDijelovi_VlasniciPeriod" />
-          <EntitySet Name="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" EntityType="ZgradaDbModel.Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" />
+          <EntitySet Name="Zgrade_PosebniDijeloviChild" EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild" />
+          <EntitySet Name="Zgrade_PosebniDijeloviChild_Povrsine" EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Povrsine" />
+          <EntitySet Name="Zgrade_PosebniDijeloviChild_Pripadci" EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Pripadci" />
+          <EntitySet Name="Zgrade_PosebniDijeloviMaster" EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" />
+          <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+          <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" />
           <EntitySet Name="Zgrade_Stanari" EntityType="ZgradaDbModel.Zgrade_Stanari" />
+          <EntitySet Name="vZgrade" EntityType="ZgradaDbModel.vZgrade" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ZgradaDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ZgradaDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
           <AssociationSet Name="FK_PricuvaRezijeGodina_Zgrade" Association="ZgradaDbModel.FK_PricuvaRezijeGodina_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
@@ -477,52 +675,108 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
             <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
           </AssociationSet>
-          <AssociationSet Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
+          <AssociationSet Name="FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec">
             <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
-            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
+            <End Role="PricuvaRezijeMjesec_PosebniDioChild" EntitySet="PricuvaRezijeMjesec_PosebniDioChild" />
           </AssociationSet>
-          <AssociationSet Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec">
-            <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
+          <AssociationSet Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild">
+            <End Role="PricuvaRezijeMjesec_PosebniDioChild" EntitySet="PricuvaRezijeMjesec_PosebniDioChild" />
             <End Role="PricuvaRezijeMjesec_Vlasnici" EntitySet="PricuvaRezijeMjesec_Vlasnici" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
-            <End Role="PricuvaRezijeMjesec_PD" EntitySet="PricuvaRezijeMjesec_PD" />
-            <End Role="PricuvaRezijeMjesec_PD_Pripadci" EntitySet="PricuvaRezijeMjesec_PD_Pripadci" />
           </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Prihodi_PrihodiRashodi" Association="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi">
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
             <End Role="PrihodiRashodi_Prihodi" EntitySet="PrihodiRashodi_Prihodi" />
           </AssociationSet>
+          <AssociationSet Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi" Association="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
+            <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
+            <End Role="PrihodiRashodi_Rashodi" EntitySet="PrihodiRashodi_Rashodi" />
+          </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="ZgradaDbModel.FK_PrihodiRashodi_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_Zgrade" Association="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_Zgrade">
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviMaster_Zgrade" Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
-            <End Role="Zgrade_PosebniDijelovi" EntitySet="Zgrade_PosebniDijelovi" />
+            <End Role="Zgrade_PosebniDijeloviMaster" EntitySet="Zgrade_PosebniDijeloviMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_Zgrade_Stanari_Zgrade" Association="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="Zgrade_Stanari" EntitySet="Zgrade_Stanari" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi" Association="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi">
-            <End Role="Zgrade_PosebniDijelovi" EntitySet="Zgrade_PosebniDijelovi" />
-            <End Role="Zgrade_PosebniDijelovi_PD" EntitySet="Zgrade_PosebniDijelovi_PD" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild" Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild">
+            <End Role="Zgrade_PosebniDijeloviChild" EntitySet="Zgrade_PosebniDijeloviChild" />
+            <End Role="Zgrade_PosebniDijeloviChild_Povrsine" EntitySet="Zgrade_PosebniDijeloviChild_Povrsine" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi" Association="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi">
-            <End Role="Zgrade_PosebniDijelovi" EntitySet="Zgrade_PosebniDijelovi" />
-            <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild" Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild">
+            <End Role="Zgrade_PosebniDijeloviChild" EntitySet="Zgrade_PosebniDijeloviChild" />
+            <End Role="Zgrade_PosebniDijeloviChild_Pripadci" EntitySet="Zgrade_PosebniDijeloviChild_Pripadci" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD" Association="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD">
-            <End Role="Zgrade_PosebniDijelovi_PD" EntitySet="Zgrade_PosebniDijelovi_PD" />
-            <End Role="Zgrade_PosebniDijelovi_PD_Pripadci" EntitySet="Zgrade_PosebniDijelovi_PD_Pripadci" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster">
+            <End Role="Zgrade_PosebniDijeloviMaster" EntitySet="Zgrade_PosebniDijeloviMaster" />
+            <End Role="Zgrade_PosebniDijeloviChild" EntitySet="Zgrade_PosebniDijeloviChild" />
           </AssociationSet>
-          <AssociationSet Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod" Association="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod">
-            <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod" />
-            <End Role="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" EntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster">
+            <End Role="Zgrade_PosebniDijeloviMaster" EntitySet="Zgrade_PosebniDijeloviMaster" />
+            <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
           </AssociationSet>
-          <EntitySet Name="vZgrade" EntityType="ZgradaDbModel.vZgrade" />
+          <AssociationSet Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+            <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+            <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="ZgradaDbModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ZgradaDbModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ZgradaDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ZgradaDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="ZgradaDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="ZgradaDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="ZgradaDbModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
         <EntityType Name="Kompanije">
           <Key>
             <PropertyRef Name="Id" />
@@ -576,43 +830,50 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="ObracunPricuvaCijenaUkupno" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeCijenaUkupno" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PricuvaRezijeGodina" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeGodina" />
-          <NavigationProperty Name="PricuvaRezijeMjesec_PD" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeMjesec_PD" />
-          <NavigationProperty Name="PricuvaRezijeMjesec_Vlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeMjesec_Vlasnici" />
+          <NavigationProperty Name="PricuvaRezijeMjesec_PosebniDioChild" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeMjesec_PosebniDioChild" />
         </EntityType>
-        <EntityType Name="PricuvaRezijeMjesec_PD">
+        <EntityType Name="PricuvaRezijeMjesec_PosebniDioChild">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PricuvaRezijeMjesecId" Type="Int32" Nullable="false" />
           <Property Name="PosebniDioId" Type="Int32" />
-          <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ObracunPricuvaCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeBrojClanova" Type="Int32" />
           <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_PD" ToRole="PricuvaRezijeMjesec" />
-          <NavigationProperty Name="PricuvaRezijeMjesec_PD_Pripadci" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" FromRole="PricuvaRezijeMjesec_PD" ToRole="PricuvaRezijeMjesec_PD_Pripadci" />
+          <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_PosebniDioChild" ToRole="PricuvaRezijeMjesec" />
+          <NavigationProperty Name="PricuvaRezijeMjesec_Vlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild" FromRole="PricuvaRezijeMjesec_PosebniDioChild" ToRole="PricuvaRezijeMjesec_Vlasnici" />
         </EntityType>
-        <EntityType Name="PricuvaRezijeMjesec_PD_Pripadci">
+        <EntityType Name="PricuvaRezijeMjesec_PosebniDioChild_Povrsine">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PricuvaRezijeMjesecPosDioId" Type="Int32" Nullable="false" />
+          <Property Name="PricuvaRezijePosebniDioChildId" Type="Int32" Nullable="false" />
           <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="PricuvaRezijeMjesec_PD" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci" FromRole="PricuvaRezijeMjesec_PD_Pripadci" ToRole="PricuvaRezijeMjesec_PD" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PricuvaRezijeMjesec_PosebniDioChild_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PricuvaRezijeMjesecPosDioChildId" Type="Int32" Nullable="false" />
+          <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PricuvaRezijeMjesec_Vlasnici">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PricuvaRezijeMjesecId" Type="Int32" Nullable="false" />
+          <Property Name="PricuvaRezijeMjesecPosDioChildId" Type="Int32" Nullable="false" />
           <Property Name="VlasnikId" Type="Int32" />
           <Property Name="Udio" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_Vlasnici" ToRole="PricuvaRezijeMjesec" />
+          <NavigationProperty Name="PricuvaRezijeMjesec_PosebniDioChild" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild" FromRole="PricuvaRezijeMjesec_Vlasnici" ToRole="PricuvaRezijeMjesec_PosebniDioChild" />
         </EntityType>
         <EntityType Name="PrihodiRashodi">
           <Key>
@@ -622,6 +883,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="ZgradaId" Type="Int32" Nullable="false" />
           <Property Name="Godina" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PrihodiRashodi_Prihodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" FromRole="PrihodiRashodi" ToRole="PrihodiRashodi_Prihodi" />
+          <NavigationProperty Name="PrihodiRashodi_Rashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi" ToRole="PrihodiRashodi_Rashodi" />
           <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Zgrade" FromRole="PrihodiRashodi" ToRole="Zgrade" />
         </EntityType>
         <EntityType Name="PrihodiRashodi_Prihodi">
@@ -636,6 +898,19 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" FromRole="PrihodiRashodi_Prihodi" ToRole="PrihodiRashodi" />
         </EntityType>
+        <EntityType Name="PrihodiRashodi_Rashodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrihodiRashodiGodId" Type="Int32" Nullable="false" />
+          <Property Name="PosebniDioMasterId" Type="Int32" />
+          <Property Name="Mjesec" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Precision="3" />
+          <Property Name="RashodId" Type="Int32" />
+          <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
+        </EntityType>
         <EntityType Name="Zgrade">
           <Key>
             <PropertyRef Name="Id" />
@@ -648,10 +923,63 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PricuvaRezijeGodina" Relationship="ZgradaDbModel.FK_PricuvaRezijeGodina_Zgrade" FromRole="Zgrade" ToRole="PricuvaRezijeGodina" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Zgrade" FromRole="Zgrade" ToRole="PrihodiRashodi" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PosebniDijelovi" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviMaster" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PosebniDijeloviMaster" />
           <NavigationProperty Name="Zgrade_Stanari" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade" ToRole="Zgrade_Stanari" />
         </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi">
+        <EntityType Name="Zgrade_PosebniDijeloviChild">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZgradaPosDioMasterId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Zatvoren" Type="Boolean" />
+          <Property Name="ZatvorenGodina" Type="Int32" />
+          <Property Name="ZatvorenMjesec" Type="Int32" />
+          <Property Name="VrijediOdGodina" Type="Int32" />
+          <Property Name="VrijediOdMjesec" Type="Int32" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviChild_Povrsine" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild" FromRole="Zgrade_PosebniDijeloviChild" ToRole="Zgrade_PosebniDijeloviChild_Povrsine" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviChild_Pripadci" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild" FromRole="Zgrade_PosebniDijeloviChild" ToRole="Zgrade_PosebniDijeloviChild_Pripadci" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviMaster" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviChild" ToRole="Zgrade_PosebniDijeloviMaster" />
+        </EntityType>
+        <EntityType Name="Zgrade_PosebniDijeloviChild_Povrsine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PosebniDioChildId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Zatvoren" Type="Boolean" />
+          <Property Name="ZatvorenGodina" Type="Int32" />
+          <Property Name="ZatvorenMjesec" Type="Int32" />
+          <Property Name="VrijediOdGodina" Type="Int32" />
+          <Property Name="VrijediOdMjesec" Type="Int32" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviChild" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild" FromRole="Zgrade_PosebniDijeloviChild_Povrsine" ToRole="Zgrade_PosebniDijeloviChild" />
+        </EntityType>
+        <EntityType Name="Zgrade_PosebniDijeloviChild_Pripadci">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZgradaPosDioChildId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Zatvoren" Type="Boolean" />
+          <Property Name="ZatvorenGodina" Type="Int32" />
+          <Property Name="ZatvorenMjesec" Type="Int32" />
+          <Property Name="VrijediOdGodina" Type="Int32" />
+          <Property Name="VrijediOdMjesec" Type="Int32" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviChild" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild" FromRole="Zgrade_PosebniDijeloviChild_Pripadci" ToRole="Zgrade_PosebniDijeloviChild" />
+        </EntityType>
+        <EntityType Name="Zgrade_PosebniDijeloviMaster">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -665,69 +993,32 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="ZatvorenMjesec" Type="Int32" />
           <Property Name="VrijediOdGodina" Type="Int32" />
           <Property Name="VrijediOdMjesec" Type="Int32" />
-          <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_Zgrade" FromRole="Zgrade_PosebniDijelovi" ToRole="Zgrade" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi_PD" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi" FromRole="Zgrade_PosebniDijelovi" ToRole="Zgrade_PosebniDijelovi_PD" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi" FromRole="Zgrade_PosebniDijelovi" ToRole="Zgrade_PosebniDijelovi_VlasniciPeriod" />
+          <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviChild" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade_PosebniDijeloviChild" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
         </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_PD">
+        <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ZgradaPosDioId" Type="Int32" Nullable="false" />
-          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Zatvoren" Type="Boolean" />
-          <Property Name="ZatvorenGodina" Type="Int32" />
-          <Property Name="ZatvorenMjesec" Type="Int32" />
-          <Property Name="VrijediOdGodina" Type="Int32" />
-          <Property Name="VrijediOdMjesec" Type="Int32" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi" FromRole="Zgrade_PosebniDijelovi_PD" ToRole="Zgrade_PosebniDijelovi" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi_PD_Pripadci" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD" FromRole="Zgrade_PosebniDijelovi_PD" ToRole="Zgrade_PosebniDijelovi_PD_Pripadci" />
-        </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_PD_Pripadci">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ZgradaPosDioPDId" Type="Int32" Nullable="false" />
-          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Oznaka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Koef" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Zatvoren" Type="Boolean" />
-          <Property Name="ZatvorenGodina" Type="Int32" />
-          <Property Name="ZatvorenMjesec" Type="Int32" />
-          <Property Name="VrijediOdGodina" Type="Int32" />
-          <Property Name="VrijediOdMjesec" Type="Int32" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi_PD" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD" FromRole="Zgrade_PosebniDijelovi_PD_Pripadci" ToRole="Zgrade_PosebniDijelovi_PD" />
-        </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_VlasniciPeriod">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PosebniDioId" Type="Int32" Nullable="false" />
+          <Property Name="PosebniDioMasterId" Type="Int32" Nullable="false" />
           <Property Name="VrijediOdMjesec" Type="Int32" Nullable="false" />
           <Property Name="VrijediOdGodina" Type="Int32" Nullable="false" />
           <Property Name="VrijediDoMjesec" Type="Int32" />
           <Property Name="VrijediDoGodina" Type="Int32" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi" FromRole="Zgrade_PosebniDijelovi_VlasniciPeriod" ToRole="Zgrade_PosebniDijelovi" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod" FromRole="Zgrade_PosebniDijelovi_VlasniciPeriod" ToRole="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviMaster" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" ToRole="Zgrade_PosebniDijeloviMaster" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" />
         </EntityType>
-        <EntityType Name="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici">
+        <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PosebniDioPeriodId" Type="Int32" />
+          <Property Name="VlasniciPeriodId" Type="Int32" Nullable="false" />
           <Property Name="StanarId" Type="Int32" Nullable="false" />
           <Property Name="Udio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="Zgrade_PosebniDijelovi_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod" FromRole="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" ToRole="Zgrade_PosebniDijelovi_VlasniciPeriod" />
+          <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
         </EntityType>
         <EntityType Name="Zgrade_Stanari">
           <Key>
@@ -742,6 +1033,46 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade_Stanari" ToRole="Zgrade" />
         </EntityType>
+        <EntityType Name="vZgrade">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Adresa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Mjesto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="ZgradaDbModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ZgradaDbModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="ZgradaDbModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ZgradaDbModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PricuvaRezijeGodina_Zgrade">
           <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
           <End Type="ZgradaDbModel.PricuvaRezijeGodina" Role="PricuvaRezijeGodina" Multiplicity="*" />
@@ -766,39 +1097,27 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PricuvaRezijeMjesec_PosebniDijelovi_PricuvaRezijeMjesec">
+        <Association Name="FK_PricuvaRezijeMjesec_PosebniDioChild_PricuvaRezijeMjesec">
           <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="1" />
-          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PD" Role="PricuvaRezijeMjesec_PD" Multiplicity="*" />
+          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild" Role="PricuvaRezijeMjesec_PosebniDioChild" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PricuvaRezijeMjesec">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PricuvaRezijeMjesec_PD">
+            <Dependent Role="PricuvaRezijeMjesec_PosebniDioChild">
               <PropertyRef Name="PricuvaRezijeMjesecId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec">
-          <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="1" />
+        <Association Name="FK_PricuvaRezijeMjesec_Vlasnici_PricuvaRezijeMjesec_PosebniDioChild">
+          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild" Role="PricuvaRezijeMjesec_PosebniDioChild" Multiplicity="1" />
           <End Type="ZgradaDbModel.PricuvaRezijeMjesec_Vlasnici" Role="PricuvaRezijeMjesec_Vlasnici" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PricuvaRezijeMjesec">
+            <Principal Role="PricuvaRezijeMjesec_PosebniDioChild">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PricuvaRezijeMjesec_Vlasnici">
-              <PropertyRef Name="PricuvaRezijeMjesecId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PricuvaRezijeMjesec_PD_Pripadci_PricuvaRezijeMjesec_PD_Pripadci">
-          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PD" Role="PricuvaRezijeMjesec_PD" Multiplicity="1" />
-          <End Type="ZgradaDbModel.PricuvaRezijeMjesec_PD_Pripadci" Role="PricuvaRezijeMjesec_PD_Pripadci" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PricuvaRezijeMjesec_PD">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PricuvaRezijeMjesec_PD_Pripadci">
-              <PropertyRef Name="PricuvaRezijeMjesecPosDioId" />
+              <PropertyRef Name="PricuvaRezijeMjesecPosDioChildId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -810,6 +1129,18 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PrihodiRashodi_Prihodi">
+              <PropertyRef Name="PrihodiRashodiGodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrihodiRashodi_Rashodi_PrihodiRashodi">
+          <End Type="ZgradaDbModel.PrihodiRashodi" Role="PrihodiRashodi" Multiplicity="1" />
+          <End Type="ZgradaDbModel.PrihodiRashodi_Rashodi" Role="PrihodiRashodi_Rashodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrihodiRashodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrihodiRashodi_Rashodi">
               <PropertyRef Name="PrihodiRashodiGodId" />
             </Dependent>
           </ReferentialConstraint>
@@ -826,14 +1157,14 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_Zgrade">
+        <Association Name="FK_Zgrade_PosebniDijeloviMaster_Zgrade">
           <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi" Role="Zgrade_PosebniDijelovi" Multiplicity="*" />
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" Role="Zgrade_PosebniDijeloviMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Zgrade">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi">
+            <Dependent Role="Zgrade_PosebniDijeloviMaster">
               <PropertyRef Name="ZgradaId" />
             </Dependent>
           </ReferentialConstraint>
@@ -850,72 +1181,121 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_PD_Zgrade_PosebniDijelovi">
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi" Role="Zgrade_PosebniDijelovi" Multiplicity="1" />
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi_PD" Role="Zgrade_PosebniDijelovi_PD" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild">
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviChild" Role="Zgrade_PosebniDijeloviChild" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Povrsine" Role="Zgrade_PosebniDijeloviChild_Povrsine" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi">
+            <Principal Role="Zgrade_PosebniDijeloviChild">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_PD">
-              <PropertyRef Name="ZgradaPosDioId" />
+            <Dependent Role="Zgrade_PosebniDijeloviChild_Povrsine">
+              <PropertyRef Name="PosebniDioChildId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Zgrade_PosebniDijelovi">
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi" Role="Zgrade_PosebniDijelovi" Multiplicity="1" />
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi_VlasniciPeriod" Role="Zgrade_PosebniDijelovi_VlasniciPeriod" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild">
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviChild" Role="Zgrade_PosebniDijeloviChild" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Pripadci" Role="Zgrade_PosebniDijeloviChild_Pripadci" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi">
+            <Principal Role="Zgrade_PosebniDijeloviChild">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_VlasniciPeriod">
-              <PropertyRef Name="PosebniDioId" />
+            <Dependent Role="Zgrade_PosebniDijeloviChild_Pripadci">
+              <PropertyRef Name="ZgradaPosDioChildId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_PD_Pripadci_Zgrade_PosebniDijelovi_PD">
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi_PD" Role="Zgrade_PosebniDijelovi_PD" Multiplicity="1" />
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi_PD_Pripadci" Role="Zgrade_PosebniDijelovi_PD_Pripadci" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster">
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" Role="Zgrade_PosebniDijeloviMaster" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviChild" Role="Zgrade_PosebniDijeloviChild" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi_PD">
+            <Principal Role="Zgrade_PosebniDijeloviMaster">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_PD_Pripadci">
-              <PropertyRef Name="ZgradaPosDioPDId" />
+            <Dependent Role="Zgrade_PosebniDijeloviChild">
+              <PropertyRef Name="ZgradaPosDioMasterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijelovi_VlasniciPeriod">
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi_VlasniciPeriod" Role="Zgrade_PosebniDijelovi_VlasniciPeriod" Multiplicity="0..1" />
-          <End Type="ZgradaDbModel.Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" Role="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici" Multiplicity="*" />
+        <Association Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster">
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" Role="Zgrade_PosebniDijeloviMaster" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Zgrade_PosebniDijelovi_VlasniciPeriod">
+            <Principal Role="Zgrade_PosebniDijeloviMaster">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici">
-              <PropertyRef Name="PosebniDioPeriodId" />
+            <Dependent Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+              <PropertyRef Name="PosebniDioMasterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vZgrade">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="Naziv" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Adresa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Mjesto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
+        <Association Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Multiplicity="1" />
+          <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+              <PropertyRef Name="VlasniciPeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="ZgradaDbModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="ZgradaDbModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ZgradaDbModelStoreContainer" CdmEntityContainer="ZgradaDbEntities">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="ZgradaDbModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="ZgradaDbModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="ZgradaDbModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="ZgradaDbModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Kompanije">
             <EntityTypeMapping TypeName="ZgradaDbModel.Kompanije">
               <MappingFragment StoreEntitySet="Kompanije">
@@ -971,26 +1351,36 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PricuvaRezijeMjesec_PD">
-            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PD">
-              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PD">
+          <EntitySetMapping Name="PricuvaRezijeMjesec_PosebniDioChild">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild">
+              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PosebniDioChild">
                 <ScalarProperty Name="ObracunRezijeCijenaSlobodanUnos" ColumnName="ObracunRezijeCijenaSlobodanUnos" />
                 <ScalarProperty Name="ObracunRezijeBrojClanova" ColumnName="ObracunRezijeBrojClanova" />
                 <ScalarProperty Name="ObracunPricuvaCijenaSlobodanUnos" ColumnName="ObracunPricuvaCijenaSlobodanUnos" />
-                <ScalarProperty Name="Koef" ColumnName="Koef" />
-                <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
                 <ScalarProperty Name="PosebniDioId" ColumnName="PosebniDioId" />
                 <ScalarProperty Name="PricuvaRezijeMjesecId" ColumnName="PricuvaRezijeMjesecId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PricuvaRezijeMjesec_PD_Pripadci">
-            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PD_Pripadci">
-              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PD_Pripadci">
+          <EntitySetMapping Name="PricuvaRezijeMjesec_PosebniDioChild_Povrsine">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild_Povrsine">
+              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PosebniDioChild_Povrsine">
+                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
                 <ScalarProperty Name="Koef" ColumnName="Koef" />
                 <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
-                <ScalarProperty Name="PricuvaRezijeMjesecPosDioId" ColumnName="PricuvaRezijeMjesecPosDioId" />
+                <ScalarProperty Name="PricuvaRezijePosebniDioChildId" ColumnName="PricuvaRezijePosebniDioChildId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PricuvaRezijeMjesec_PosebniDioChild_Pripadci">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_PosebniDioChild_Pripadci">
+              <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_PosebniDioChild_Pripadci">
+                <ScalarProperty Name="Koef" ColumnName="Koef" />
+                <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
+                <ScalarProperty Name="PricuvaRezijeMjesecPosDioChildId" ColumnName="PricuvaRezijeMjesecPosDioChildId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1000,7 +1390,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_Vlasnici">
                 <ScalarProperty Name="Udio" ColumnName="Udio" />
                 <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
-                <ScalarProperty Name="PricuvaRezijeMjesecId" ColumnName="PricuvaRezijeMjesecId" />
+                <ScalarProperty Name="PricuvaRezijeMjesecPosDioChildId" ColumnName="PricuvaRezijeMjesecPosDioChildId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1026,6 +1416,19 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PrihodiRashodi_Rashodi">
+            <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
+              <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="RashodId" ColumnName="RashodId" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
+                <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
+                <ScalarProperty Name="PrihodiRashodiGodId" ColumnName="PrihodiRashodiGodId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Zgrade">
             <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade">
               <MappingFragment StoreEntitySet="Zgrade">
@@ -1038,9 +1441,60 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Zgrade_PosebniDijelovi">
-            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijelovi">
-              <MappingFragment StoreEntitySet="Zgrade_PosebniDijelovi">
+          <EntitySetMapping Name="Zgrade_PosebniDijeloviChild">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviChild">
+              <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviChild">
+                <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
+                <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
+                <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
+                <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
+                <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="ZgradaPosDioMasterId" ColumnName="ZgradaPosDioMasterId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zgrade_PosebniDijeloviChild_Povrsine">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Povrsine">
+              <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviChild_Povrsine">
+                <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
+                <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
+                <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
+                <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
+                <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
+                <ScalarProperty Name="Koef" ColumnName="Koef" />
+                <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
+                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="PosebniDioChildId" ColumnName="PosebniDioChildId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zgrade_PosebniDijeloviChild_Pripadci">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Pripadci">
+              <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviChild_Pripadci">
+                <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
+                <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
+                <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
+                <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
+                <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+                <ScalarProperty Name="Koef" ColumnName="Koef" />
+                <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
+                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="ZgradaPosDioChildId" ColumnName="ZgradaPosDioChildId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster">
+              <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster">
                 <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
                 <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
                 <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
@@ -1054,60 +1508,24 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Zgrade_PosebniDijelovi_PD">
-            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijelovi_PD">
-              <MappingFragment StoreEntitySet="Zgrade_PosebniDijelovi_PD">
-                <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
-                <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
-                <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
-                <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
-                <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
-                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
-                <ScalarProperty Name="Koef" ColumnName="Koef" />
-                <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
-                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
-                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-                <ScalarProperty Name="ZgradaPosDioId" ColumnName="ZgradaPosDioId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Zgrade_PosebniDijelovi_PD_Pripadci">
-            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijelovi_PD_Pripadci">
-              <MappingFragment StoreEntitySet="Zgrade_PosebniDijelovi_PD_Pripadci">
-                <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
-                <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
-                <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
-                <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
-                <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
-                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
-                <ScalarProperty Name="Koef" ColumnName="Koef" />
-                <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
-                <ScalarProperty Name="Oznaka" ColumnName="Oznaka" />
-                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-                <ScalarProperty Name="ZgradaPosDioPDId" ColumnName="ZgradaPosDioPDId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Zgrade_PosebniDijelovi_VlasniciPeriod">
-            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijelovi_VlasniciPeriod">
-              <MappingFragment StoreEntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod">
+          <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+              <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
                 <ScalarProperty Name="VrijediDoGodina" ColumnName="VrijediDoGodina" />
                 <ScalarProperty Name="VrijediDoMjesec" ColumnName="VrijediDoMjesec" />
                 <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
                 <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
-                <ScalarProperty Name="PosebniDioId" ColumnName="PosebniDioId" />
+                <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici">
-            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici">
-              <MappingFragment StoreEntitySet="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici">
+          <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+            <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+              <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
                 <ScalarProperty Name="Udio" ColumnName="Udio" />
                 <ScalarProperty Name="StanarId" ColumnName="StanarId" />
-                <ScalarProperty Name="PosebniDioPeriodId" ColumnName="PosebniDioPeriodId" />
+                <ScalarProperty Name="VlasniciPeriodId" ColumnName="VlasniciPeriodId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1137,6 +1555,14 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ZgradaDbModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

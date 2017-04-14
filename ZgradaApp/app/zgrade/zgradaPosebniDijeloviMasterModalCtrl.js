@@ -1,4 +1,4 @@
-﻿angularApp.controller('zgradaPosebniDijeloviModalCtrl', ['$scope', '$mdDialog', 'id', 'zgradaObj',
+﻿angularApp.controller('zgradaPosebniDijeloviMasterModalCtrl', ['$scope', '$mdDialog', 'id', 'zgradaObj',
     function ($scope, $mdDialog, id, zgradaObj) {
 
         //$scope.zgradaObj = zgradaObj;
@@ -9,7 +9,7 @@
             $scope.msg = 'Novi posebni dio';
         }
         else {
-            zgradaObj.Zgrade_PosebniDijelovi.forEach(function (posebniDioMaster) {
+            zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (posebniDioMaster) {
                 if (posebniDioMaster.Id == id)
                     $scope.posebniDioMasterObj = posebniDioMaster;
             });
@@ -19,7 +19,7 @@
         $scope.save = function () {
             if (id == 0) {
                 maxId = 1;
-                zgradaObj.Zgrade_PosebniDijelovi.forEach(function (posebniDioMaster) {
+                zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (posebniDioMaster) {
                     if (posebniDioMaster.Id > maxId)
                         maxId = posebniDioMaster.Id;
                 });
@@ -29,8 +29,8 @@
                 zgradaObj.Zgrade_PosebniDijelovi.push($scope.posebniDioMasterObj);
             }
             else {
-                zgradaObj.Zgrade_PosebniDijelovi.forEach(function (posebniDioMaster) {
-                    if (posebniDioMaster.Id > $scope.posebniDioMasterObj.Id) {
+                zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (posebniDioMaster) {
+                    if (posebniDioMaster.Id == $scope.posebniDioMasterObj.Id) {
                         posebniDioMaster.Status = 'u';
                         posebniDioMaster.Zatvoren = false;
                         posebniDioMaster = $scope.posebniDioMasterObj;

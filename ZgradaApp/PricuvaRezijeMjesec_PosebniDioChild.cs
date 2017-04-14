@@ -12,25 +12,23 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class PricuvaRezijeMjesec_PD
+    public partial class PricuvaRezijeMjesec_PosebniDioChild
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PricuvaRezijeMjesec_PD()
+        public PricuvaRezijeMjesec_PosebniDioChild()
         {
-            this.PricuvaRezijeMjesec_PD_Pripadci = new HashSet<PricuvaRezijeMjesec_PD_Pripadci>();
+            this.PricuvaRezijeMjesec_Vlasnici = new HashSet<PricuvaRezijeMjesec_Vlasnici>();
         }
     
         public int Id { get; set; }
         public int PricuvaRezijeMjesecId { get; set; }
         public Nullable<int> PosebniDioId { get; set; }
-        public Nullable<decimal> Povrsina { get; set; }
-        public Nullable<decimal> Koef { get; set; }
         public Nullable<decimal> ObracunPricuvaCijenaSlobodanUnos { get; set; }
         public Nullable<int> ObracunRezijeBrojClanova { get; set; }
         public Nullable<decimal> ObracunRezijeCijenaSlobodanUnos { get; set; }
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PricuvaRezijeMjesec_PD_Pripadci> PricuvaRezijeMjesec_PD_Pripadci { get; set; }
+        public virtual ICollection<PricuvaRezijeMjesec_Vlasnici> PricuvaRezijeMjesec_Vlasnici { get; set; }
     }
 }

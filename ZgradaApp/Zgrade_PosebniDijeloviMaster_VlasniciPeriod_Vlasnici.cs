@@ -12,13 +12,13 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici
+    public partial class Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici
     {
         public int Id { get; set; }
-        public Nullable<int> PosebniDioPeriodId { get; set; }
+        public int VlasniciPeriodId { get; set; }
         public int StanarId { get; set; }
         public decimal Udio { get; set; }
     
-        public virtual Zgrade_PosebniDijelovi_VlasniciPeriod Zgrade_PosebniDijelovi_VlasniciPeriod { get; set; }
+        public virtual Zgrade_PosebniDijeloviMaster_VlasniciPeriod Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
     }
 }

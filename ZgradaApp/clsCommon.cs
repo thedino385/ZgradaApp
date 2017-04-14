@@ -19,7 +19,12 @@ namespace ZgradaApp
         public string Status { get; set; }
     }
 
-    public partial class Zgrade_PosebniDijelovi
+    public partial class Zgrade_PosebniDijeloviMaster
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class Zgrade_PosebniDijeloviChild
     {
         public string Status { get; set; }
     }

@@ -180,6 +180,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AspNetRoles.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserClaims.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserLogins.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUsers.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="clsCommon.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataController.cs" />
@@ -219,10 +231,13 @@
     <Compile Include="PricuvaRezijeMjesec.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaRezijeMjesec_PD.cs">
+    <Compile Include="PricuvaRezijeMjesec_PosebniDioChild.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaRezijeMjesec_PD_Pripadci.cs">
+    <Compile Include="PricuvaRezijeMjesec_PosebniDioChild_Povrsine.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PricuvaRezijeMjesec_PosebniDioChild_Pripadci.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="PricuvaRezijeMjesec_Vlasnici.cs">
@@ -234,6 +249,9 @@
     <Compile Include="PrihodiRashodi_Prihodi.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="PrihodiRashodi_Rashodi.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="vZgrade.cs">
@@ -242,19 +260,22 @@
     <Compile Include="Zgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_PosebniDijelovi.cs">
+    <Compile Include="Zgrade_PosebniDijeloviChild.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_PosebniDijelovi_PD.cs">
+    <Compile Include="Zgrade_PosebniDijeloviChild_Povrsine.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_PosebniDijelovi_PD_Pripadci.cs">
+    <Compile Include="Zgrade_PosebniDijeloviChild_Pripadci.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_PosebniDijelovi_VlasniciPeriod.cs">
+    <Compile Include="Zgrade_PosebniDijeloviMaster.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici.cs">
+    <Compile Include="Zgrade_PosebniDijeloviMaster_VlasniciPeriod.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade_Stanari.cs">
@@ -322,10 +343,20 @@
     <Content Include="app\indexCtrl.js" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\zgrade\dialog1.html" />
+    <Content Include="app\zgrade\PDChild\posebniDijeloviMasterList.html" />
+    <Content Include="app\zgrade\PDChild\posebniDijeloviMasterListCtrl.js" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildModal.html" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildModalCtrl.js" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildPripadciModal.html" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildPovrsinaModal.html" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildPripadciModalCtrl.js" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildPovrsinaModalCtrl.js" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildren.html" />
+    <Content Include="app\zgrade\PDChild\posebniDioChildrenCtrl.js" />
     <Content Include="app\zgrade\zgrada.html" />
     <Content Include="app\zgrade\zgradaCtrl.js" />
-    <Content Include="app\zgrade\zgradaPosebniDijeloviModal.html" />
-    <Content Include="app\zgrade\zgradaPosedniDijeloviModalCtrl.js" />
+    <Content Include="app\zgrade\zgradaPosebniDijeloviMasterModal.html" />
+    <Content Include="app\zgrade\zgradaPosebniDijeloviMasterModalCtrl.js" />
     <Content Include="app\zgrade\zgradaStanariModal.html" />
     <Content Include="app\zgrade\zgradaStanariModalCtrl.js" />
     <Content Include="app\zgrade\zgrade.html" />
@@ -345,6 +376,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\icons\menu.svg" />
+    <Content Include="Content\icons\more_vert.svg" />
+    <Content Include="Content\images\60.jpeg" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\ripples.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />

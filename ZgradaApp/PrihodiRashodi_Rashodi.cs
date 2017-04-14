@@ -12,13 +12,16 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class PricuvaRezijeMjesec_Vlasnici
+    public partial class PrihodiRashodi_Rashodi
     {
         public int Id { get; set; }
-        public int PricuvaRezijeMjesecPosDioChildId { get; set; }
-        public Nullable<int> VlasnikId { get; set; }
-        public Nullable<decimal> Udio { get; set; }
+        public int PrihodiRashodiGodId { get; set; }
+        public Nullable<int> PosebniDioMasterId { get; set; }
+        public int Mjesec { get; set; }
+        public Nullable<System.DateTime> Datum { get; set; }
+        public Nullable<int> RashodId { get; set; }
+        public Nullable<decimal> Iznos { get; set; }
     
-        public virtual PricuvaRezijeMjesec_PosebniDioChild PricuvaRezijeMjesec_PosebniDioChild { get; set; }
+        public virtual PrihodiRashodi PrihodiRashodi { get; set; }
     }
 }

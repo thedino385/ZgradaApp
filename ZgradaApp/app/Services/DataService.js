@@ -1,11 +1,6 @@
 ﻿angularApp.factory('DataService', ['$http', '$rootScope', '$q', function ($http, $rootScope, $q) {
 
-    var listZgrade = [];
-    var listPripadci = [];
-    var listStanovi = [];
-    var selectedZgrada = null;
-    var selectedStan = null;
-    var selectedPosebniDio = null;
+    var currZgrada = null;
 
     // zgrade
     var getZgrade = function() {
@@ -26,7 +21,9 @@
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
-        zgradaCreateOrUpdate: zgradaCreateOrUpdate
+        zgradaCreateOrUpdate: zgradaCreateOrUpdate,
+
+        currZgrada: currZgrada
     }
 
 

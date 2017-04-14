@@ -25,21 +25,28 @@ namespace ZgradaApp
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Kompanije> Kompanije { get; set; }
         public virtual DbSet<KompanijeUpravitelji> KompanijeUpravitelji { get; set; }
         public virtual DbSet<PricuvaRezijeGodina> PricuvaRezijeGodina { get; set; }
         public virtual DbSet<PricuvaRezijeMjesec> PricuvaRezijeMjesec { get; set; }
-        public virtual DbSet<PricuvaRezijeMjesec_PD> PricuvaRezijeMjesec_PD { get; set; }
-        public virtual DbSet<PricuvaRezijeMjesec_PD_Pripadci> PricuvaRezijeMjesec_PD_Pripadci { get; set; }
+        public virtual DbSet<PricuvaRezijeMjesec_PosebniDioChild> PricuvaRezijeMjesec_PosebniDioChild { get; set; }
+        public virtual DbSet<PricuvaRezijeMjesec_PosebniDioChild_Povrsine> PricuvaRezijeMjesec_PosebniDioChild_Povrsine { get; set; }
+        public virtual DbSet<PricuvaRezijeMjesec_PosebniDioChild_Pripadci> PricuvaRezijeMjesec_PosebniDioChild_Pripadci { get; set; }
         public virtual DbSet<PricuvaRezijeMjesec_Vlasnici> PricuvaRezijeMjesec_Vlasnici { get; set; }
         public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
         public virtual DbSet<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
+        public virtual DbSet<PrihodiRashodi_Rashodi> PrihodiRashodi_Rashodi { get; set; }
         public virtual DbSet<Zgrade> Zgrade { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijelovi> Zgrade_PosebniDijelovi { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijelovi_PD> Zgrade_PosebniDijelovi_PD { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijelovi_PD_Pripadci> Zgrade_PosebniDijelovi_PD_Pripadci { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijelovi_VlasniciPeriod> Zgrade_PosebniDijelovi_VlasniciPeriod { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici> Zgrade_PosebniDijelovi_VlasniciPeriod_Vlasnici { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviChild> Zgrade_PosebniDijeloviChild { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviChild_Povrsine> Zgrade_PosebniDijeloviChild_Povrsine { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviChild_Pripadci> Zgrade_PosebniDijeloviChild_Pripadci { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviMaster> Zgrade_PosebniDijeloviMaster { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod> Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici> Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici { get; set; }
         public virtual DbSet<Zgrade_Stanari> Zgrade_Stanari { get; set; }
         public virtual DbSet<vZgrade> vZgrade { get; set; }
     }

@@ -12,20 +12,19 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Zgrade_PosebniDijelovi_PD
+    public partial class Zgrade_PosebniDijeloviMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Zgrade_PosebniDijelovi_PD()
+        public Zgrade_PosebniDijeloviMaster()
         {
-            this.Zgrade_PosebniDijelovi_PD_Pripadci = new HashSet<Zgrade_PosebniDijelovi_PD_Pripadci>();
+            this.Zgrade_PosebniDijeloviChild = new HashSet<Zgrade_PosebniDijeloviChild>();
+            this.Zgrade_PosebniDijeloviMaster_VlasniciPeriod = new HashSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod>();
         }
     
         public int Id { get; set; }
-        public int ZgradaPosDioId { get; set; }
+        public int ZgradaId { get; set; }
         public string Naziv { get; set; }
         public string Oznaka { get; set; }
-        public Nullable<decimal> Povrsina { get; set; }
-        public Nullable<decimal> Koef { get; set; }
         public string Napomena { get; set; }
         public Nullable<bool> Zatvoren { get; set; }
         public Nullable<int> ZatvorenGodina { get; set; }
@@ -33,8 +32,10 @@ namespace ZgradaApp
         public Nullable<int> VrijediOdGodina { get; set; }
         public Nullable<int> VrijediOdMjesec { get; set; }
     
-        public virtual Zgrade_PosebniDijelovi Zgrade_PosebniDijelovi { get; set; }
+        public virtual Zgrade Zgrade { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zgrade_PosebniDijelovi_PD_Pripadci> Zgrade_PosebniDijelovi_PD_Pripadci { get; set; }
+        public virtual ICollection<Zgrade_PosebniDijeloviChild> Zgrade_PosebniDijeloviChild { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Zgrade_PosebniDijeloviMaster_VlasniciPeriod> Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
     }
 }

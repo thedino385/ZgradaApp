@@ -12,10 +12,10 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Zgrade_PosebniDijelovi_PD_Pripadci
+    public partial class Zgrade_PosebniDijeloviChild_Pripadci
     {
         public int Id { get; set; }
-        public int ZgradaPosDioPDId { get; set; }
+        public int ZgradaPosDioChildId { get; set; }
         public string Naziv { get; set; }
         public string Oznaka { get; set; }
         public Nullable<decimal> Povrsina { get; set; }
@@ -27,6 +27,6 @@ namespace ZgradaApp
         public Nullable<int> VrijediOdGodina { get; set; }
         public Nullable<int> VrijediOdMjesec { get; set; }
     
-        public virtual Zgrade_PosebniDijelovi_PD Zgrade_PosebniDijelovi_PD { get; set; }
+        public virtual Zgrade_PosebniDijeloviChild Zgrade_PosebniDijeloviChild { get; set; }
     }
 }

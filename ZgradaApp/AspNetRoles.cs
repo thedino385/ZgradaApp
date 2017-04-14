@@ -12,23 +12,18 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class PrihodiRashodi
+    public partial class AspNetRoles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PrihodiRashodi()
+        public AspNetRoles()
         {
-            this.PrihodiRashodi_Prihodi = new HashSet<PrihodiRashodi_Prihodi>();
-            this.PrihodiRashodi_Rashodi = new HashSet<PrihodiRashodi_Rashodi>();
+            this.AspNetUsers = new HashSet<AspNetUsers>();
         }
     
-        public int Id { get; set; }
-        public int ZgradaId { get; set; }
-        public int Godina { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrihodiRashodi_Rashodi> PrihodiRashodi_Rashodi { get; set; }
-        public virtual Zgrade Zgrade { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }
