@@ -46,10 +46,10 @@
                 $scope.pdMaster = pdMaster;
                 console.log('pdMaster');
                 console.log($scope.pdMaster);
-                }, function (pdMaster) {
+            }, function (pdMaster) {
                 // cancel
-                    console.log(pdMaster);
-                    $scope.pdMaster = pdMaster;
+                console.log(pdMaster);
+                $scope.pdMaster = pdMaster;
             });
         };
 
@@ -73,7 +73,8 @@
             }).then(function (pdMaster) {
                 // save (hide)
                 $scope.pdMaster = pdMaster;
-                }, function (pdMaster) {
+                console.log(pdMaster);
+            }, function (pdMaster) {
                 // cancel
                 console.log(pdMaster);
                 $scope.pdMaster = pdMaster;
@@ -106,6 +107,220 @@
                 $scope.pdMaster = pdMaster;
             });
         };
+
+
+        // __________________________________________________________
+        //          Kill / Zatvori povrsinu
+        // __________________________________________________________
+        $scope.killPovrsina = function (pdChildId, povrsinaId, ev) {
+            // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
+            // u suprotnom, gasi je
+            var brisanjeOk = false;
+            var povrsina = {};
+            $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+                if (pdChild.Id == pdChildId && pdChild.Status == 'a')
+                    brisanjeOk = true;
+                pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
+                    if (povrsina.Id == povrsinaId) {
+                        if (povrsina.Status == 'a')
+                            brisanjeOk = true;
+                        povrsinaNaziv = povrsina.Naziv;
+                        povrsina = povrsina;
+                    }
+                });
+            });
+            var title = brisanjeOk ? 'Želite li obrisati površinu?' : 'Želite li zatvoriti površinu?';
+            var textContent = 'Odabrana površina: ' + povrsinaNaziv;
+            var desc = "Odabrana površina ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
+            var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
+
+            $mdDialog.show({
+                controller: confirmController,
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    title: title,
+                    textContent: textContent,
+                    desc: desc,
+                    brisanjeOk: brisanjeOk,
+                    okBtnCaption: okBtnCaption
+                }
+            })
+                .then(function (o) {
+                    $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+                        if (pdChild.Id == pdChildId) {
+                            pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
+                                if (povrsina.Id == povrsinaId) {
+                                    if (brisanjeOk) {
+                                        var index = pdChild.Zgrade_PosebniDijeloviChild_Povrsine.indexOf(povrsina)
+                                        pdChild.Zgrade_PosebniDijeloviChild_Povrsine.splice(index, 1);
+                                    }
+                                    else {
+                                        povrsina.Zatvoren = true;
+                                        povrsina.ZatvorenGodina = o.godina;
+                                        povrsina.ZatvorenMjesec = o.mjesec;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+                , function () {
+                    //alert('cancel je kliknut');
+                });
+        }
+
+        $scope.killPripadak = function (pdChildId, pripadakId, ev) {
+            // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
+            // u suprotnom, gasi je
+            var brisanjeOk = false;
+            var pripadak = {};
+            $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+                if (pdChild.Id == pdChildId && pdChild.Status == 'a')
+                    brisanjeOk = true;
+                pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
+                    if (prip.Id == pripadakId) {
+                        if (prip.Status == 'a')
+                            brisanjeOk = true;
+                        pripadakNaziv = prip.Naziv;
+                        pripadak = prip;
+                    }
+                });
+            });
+            var title = brisanjeOk ? 'Želite li obrisati pripadak?' : 'Želite li zatvoriti pripadak?';
+            var textContent = 'Odabrani pripadak: ' + pripadakNaziv;
+            var desc = "Odabrani pripadak ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
+            var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
+
+            $mdDialog.show({
+                controller: confirmController,
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    title: title,
+                    textContent: textContent,
+                    desc: desc,
+                    brisanjeOk: brisanjeOk,
+                    okBtnCaption: okBtnCaption
+                }
+            })
+                .then(function (o) {
+                    $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+                        if (pdChild.Id == pdChildId) {
+                            pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
+                                if (prip.Id == pripadakId) {
+                                    if (brisanjeOk) {
+                                        var index = pdChild.Zgrade_PosebniDijeloviChild_Pripadci.indexOf(prip)
+                                        pdChild.Zgrade_PosebniDijeloviChild_Pripadci.splice(index, 1);
+                                    }
+                                    else {
+                                        prip.Zatvoren = true;
+                                        prip.ZatvorenGodina = o.godina;
+                                        prip.ZatvorenMjesec = o.mjesec;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+                , function () {
+                    //alert('cancel je kliknut');
+                });
+        }
+
+
+        //$scope.killPripadak = function (pdChildId, pripadakId, ev) {
+        //    // ako je Status pdChilda 'a' ili ako je status pripadka 'a' - mozes brisati povrsinu
+        //    // u suprotnom, gasi je
+        //    var brisanjeOk = false;
+        //    var pripadakNaziv = '';
+        //    $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+        //        if (pdChild.Id == pdChildId && pdChild.Status == 'a')
+        //            brisanjeOk = true;
+        //        pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
+        //            if (prip.Id == pripadakId) {
+        //                if (prip.Status == 'a')
+        //                    brisanjeOk = true;
+        //                pripadakNaziv = prip.Naziv;
+        //            }
+        //        });
+        //    });
+
+        //    var title = brisanjeOk ? 'Želite li obrisati pripadak?' : 'Želite li zatvoriti pripadak?';
+        //    var textContent = 'Odabrani pripadak: ' + pripadakNaziv;
+
+        //    var confirm = $mdDialog.confirm()
+        //        .title(title)
+        //        .textContent(textContent)
+        //        .ariaLabel('Lucky day')
+        //        .targetEvent(ev)
+        //        .ok('Ok')
+        //        .cancel('Odustani');
+
+        //    $mdDialog.show(confirm).then(function () {
+        //        $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+        //            if (pdChild.Id == pdChildId) {
+        //                pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
+        //                    if (prip.Id == pripadakId) {
+        //                        if (brisanjeOk) {
+        //                            var index = pdChild.Zgrade_PosebniDijeloviChild_Pripadci.indexOf(prip)
+        //                            pdChild.Zgrade_PosebniDijeloviChild_Pripadci.splice(index, 1);
+        //                        }
+        //                        else {
+        //                            prip.Zatvoren = true;
+        //                            prip.ZatvorenGodina = new Date().getFullYear();
+        //                            prip.ZatvorenMjesec = parseInt(new Date().getMonth() + 1);
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //        });
+
+        //    }, function () {
+        //        //alert('cancel');
+        //    });
+        //};
+
+
+
+        //var confirm = $mdDialog.confirm()
+        //    .title(title)
+        //    .textContent(textContent)
+        //    .ariaLabel('Lucky day')
+        //    .targetEvent(ev)
+        //    .ok('Ok')
+        //    .cancel('Odustani');
+
+        //$mdDialog.show(confirm).then(function () {
+        //    $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+        //        if (pdChild.Id == pdChildId) {
+        //            pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
+        //                if (povrsina.Id == povrsinaId) {
+        //                    if (brisanjeOk) {
+        //                        var index = pdChild.Zgrade_PosebniDijeloviChild_Povrsine.indexOf(povrsina)
+        //                        pdChild.Zgrade_PosebniDijeloviChild_Povrsine.splice(index, 1);
+        //                    }
+        //                    else {
+        //                        povrsina.Zatvoren = true;
+        //                        povrsina.ZatvorenGodina = new Date().getFullYear();
+        //                        povrsina.ZatvorenMjesec = parseInt(new Date().getMonth() + 1);
+        //                    }
+        //                }
+        //            });
+        //        }
+        //    });
+
+        //}, function () {
+        //    //alert('cancel');
+        //});
+
+        
 
         $scope.save = function () {
             $rootScope.loaderActive = true;
@@ -149,22 +364,34 @@
         //};
 
 
-        //function DialogController($scope, $mdDialog, id, obj) {
-        //    alert(obj);
-        //    $scope.id = id;
-        //    $scope.obj = obj;
+        function confirmController($scope, $mdDialog, title, textContent, desc, brisanjeOk, okBtnCaption) {
 
-        //    $scope.hide = function () {
-        //        $mdDialog.hide();
-        //    };
+            $scope.vrijediDoGodina = new Date().getFullYear();
+            $scope.vrijediDoMjesec = parseInt(new Date().getMonth());
+            $scope.title = title;
+            $scope.textContent = textContent;
+            $scope.desc = desc;
+            $scope.brisanjeOk = brisanjeOk;
+            $scope.okBtnCaption = okBtnCaption;
 
-        //    $scope.cancel = function () {
-        //        $mdDialog.cancel();
-        //    };
+            //$scope.hide = function () {
+            //    $mdDialog.hide();
+            //};
 
-        //    $scope.save = function (obj) {
-        //        $mdDialog.hide('snimi');
-        //    };
-        //}
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
 
-    }]);
+            $scope.save = function () {
+                var o = { godina: $scope.vrijediDoGodina, mjesec: $scope.vrijediDoMjesec };
+                $mdDialog.hide(o);
+            };
+        }
+
+    }])
+    .config(function ($mdThemingProvider) {
+        $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
+        $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+        $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+        $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+    });

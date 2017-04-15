@@ -343,6 +343,7 @@
     <Content Include="app\indexCtrl.js" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\zgrade\dialog1.html" />
+    <Content Include="app\zgrade\PDChild\confirmDialog.html" />
     <Content Include="app\zgrade\PDChild\posebniDijeloviMasterList.html" />
     <Content Include="app\zgrade\PDChild\posebniDijeloviMasterListCtrl.js" />
     <Content Include="app\zgrade\PDChild\posebniDioChildModal.html" />
@@ -376,10 +377,16 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\icons\delete.svg" />
     <Content Include="Content\icons\menu.svg" />
     <Content Include="Content\icons\more_vert.svg" />
+    <Content Include="Content\icons\plus.png" />
+    <Content Include="Content\icons\plus.svg" />
+    <Content Include="Content\icons\table-edit.svg" />
+    <Content Include="Content\icons\table-edit64.svg" />
     <Content Include="Content\images\60.jpeg" />
     <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\plus.svg" />
     <Content Include="Content\ripples.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="DalEf.Context.tt">

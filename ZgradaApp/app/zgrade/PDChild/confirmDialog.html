@@ -1,0 +1,57 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="color: white; background-color: firebrick">
+                <h2>{{title}}</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2>{{textContent}}</h2>
+
+                <div ng-show="brisanjeOk != true">
+
+                    <br />
+                    <h5 style="color: firebrick">{{desc}}</h5>
+
+
+                    <div class="form-group row">
+
+                        <div layout="column" ng-cloak class="md-inline-form">
+                            <md-content layout-padding>
+                                <div layout-gt-sm="row">
+                                    <div class="col-sm-2"></div>
+                                    <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                        <label>Vrijedi do godina</label>
+                                        <input required type="number" ng-model="vrijediDoGodina">
+
+                                    </md-input-container>
+
+                                    <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                        <label>Vrijedi do mjesec</label>
+                                        <input required type="number" ng-model="vrijediDoMjesec">
+
+                                    </md-input-container>
+                                    <div class="col-sm-2"></div>
+                                </div>
+                        </div>
+                        </md-content>
+                    </div>
+
+                </div>
+
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="cancel()">
+                Odustani
+            </md-button>
+            <md-button class="md-raised md-warn" ng-click="save()">
+                {{okBtnCaption}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

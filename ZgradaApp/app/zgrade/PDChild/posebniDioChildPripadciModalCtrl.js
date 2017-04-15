@@ -10,7 +10,7 @@
         if (pripadakId == 0) {
             $scope.pripadakObj = {
                 Id: 0, ZgradaPosDioChildId: pdMaster.Id, Naziv: '', Oznaka: '', Povrsina: 0, Koef: 0,
-                Napomena: '', Status: ''
+                Napomena: '', Status: '', VrijediOdGodina: new Date().getFullYear(), VrijediOdMjesec: parseInt(new Date().getMonth() + 1 )
             };
             $scope.msg = 'Novi pripadak';
         }
@@ -26,7 +26,7 @@
 
         $scope.save = function () {
             if (pripadakId == 0) {
-                maxId = 1;
+                maxId = 0;
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
                     child.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
                         if (prip.Id > maxId) {
@@ -34,7 +34,7 @@
                         }
                     });
                 });
-                $scope.pripadakObj.Id = maxId;
+                $scope.pripadakObj.Id = maxId + 1;
                 $scope.pripadakObj.Status = 'a';
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
                     if (child.Id == posebniDioChildId) {

@@ -8,7 +8,10 @@
         var tempObj = {};
         angular.copy(pdMaster, tempObj);
         if (povrsinaId == 0) {
-            $scope.povrsinaObj = { Id: 0, PosebniDioChildId: pdMaster.Id, Naziv: '', Oznaka: '', Povrsina: 0, Koef: 0, Status: '' };
+            $scope.povrsinaObj = {
+                Id: 0, PosebniDioChildId: posebniDioChildId, Naziv: '', Oznaka: '', Povrsina: 0,
+                Koef: 0, Status: '', VrijediOdGodina: new Date().getFullYear(), VrijediOdMjesec: parseInt(new Date().getMonth() + 1)
+            };
             $scope.msg = 'Nova površina';
         }
         else {
@@ -23,7 +26,7 @@
 
         $scope.save = function () {
             if (povrsinaId == 0) {
-                maxId = 1;
+                maxId = 0;
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
                     child.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
                         if (povrsina.Id > maxId) {
@@ -31,7 +34,7 @@
                         }
                     });
                 });
-                $scope.povrsinaObj.Id = maxId;
+                $scope.povrsinaObj.Id = maxId + 1;
                 $scope.povrsinaObj.Status = 'a';
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
                     if (child.Id == posebniDioChildId) {

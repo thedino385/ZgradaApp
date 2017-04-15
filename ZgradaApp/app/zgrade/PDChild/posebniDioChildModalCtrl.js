@@ -16,17 +16,17 @@
                 if (posebniDioChild.Id == id)
                     $scope.posebniDioChildObj = posebniDioChild;
             });
-            $scope.msg = 'Uredi stanara';
+            $scope.msg = 'Uredi posebni dio';
         }
 
         $scope.save = function () {
             if (id == 0) {
-                maxId = 1;
+                maxId = 0;
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (posebniDioChild) {
                     if (posebniDioChild.Id > maxId)
                         maxId = posebniDioChild.Id;
                 });
-                $scope.posebniDioChildObj.Id = maxId;
+                $scope.posebniDioChildObj.Id = maxId + 1
                 $scope.posebniDioChildObj.Status = 'a';
                 pdMaster.Zgrade_PosebniDijeloviChild.push($scope.posebniDioChildObj);
             }
