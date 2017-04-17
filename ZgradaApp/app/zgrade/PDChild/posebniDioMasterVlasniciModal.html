@@ -1,0 +1,105 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak name="frm" ng-submit="save()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{msg}}</h2>
+                <!--<span></span>-->
+                <md-button class="md-icon-button" ng-click="dodajVlasnika()" title="Dodaj vlasnika">
+                    <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: white"></md-icon>
+                </md-button>
+            </div>
+            
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <div layout="column" ng-cloak class="md-inline-form">
+                    <md-content layout-padding>
+                        
+
+                        <div ng-repeat="vlasnik in vlasniciPeriod.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+                            <div layout-gt-sm="row">
+                                <div class="col-sm-2"></div>
+                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                    <label>Stanar zgrade</label>
+                                    <md-select ng-model="vlasnik.StanarId">
+                                        <md-option name="stanarId" ng-repeat="stanar in stanari" ng-value="stanar.Id">
+                                            {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="frm.stanarId.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                    <label>Udio</label>
+                                    <input required type="text" name="udio" ng-model="vlasnik.Udio">
+                                    <div ng-messages="frm.udio.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <div class="col-sm-2">
+                                    <md-button class="md-icon-button" ng-click="obrisiVlasnika(vlasnik.Id)" title="Obriši vlasnika">
+                                        <md-icon md-svg-icon="/Content/icons/minus-circle.svg" style="fill: red"></md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
+                        </div> <!--end of repeat-->
+
+                        <!--vrijedi od-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Aktivan od godina</label>
+                                <input required type="number" name="vrijediOdGodina" ng-model="vlasniciPeriod.VrijediOdGodina">
+                                <div ng-messages="frm.vrijediOdGodina.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Aktivan od mjesec</label>
+                                <input required type="number" name="vrijediOdMjesec" ng-model="vlasniciPeriod.VrijediOdMjesec">
+                                <div ng-messages="frm.vrijediOdMjesec.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                    <div ng-message="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                        <!--row napomena-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-8" flex-gt-sm>
+                                <label>Napomena</label>
+                                <textarea rows="3" cols="150" style="min-width: 100%" placeholder="Napomena" ng-model="posebniDioChildObj.Napomena"></textarea>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </md-content>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <!--<span flex></span>-->
+            <md-button class="md-raised" ng-click="cancel()">
+                Odustani
+            </md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

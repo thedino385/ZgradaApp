@@ -261,6 +261,8 @@
     <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
         <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+          <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+          <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
           <ScalarProperty Name="VrijediDoGodina" ColumnName="VrijediDoGodina" />
           <ScalarProperty Name="VrijediDoMjesec" ColumnName="VrijediDoMjesec" />
           <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />

@@ -354,6 +354,8 @@
     <Content Include="app\zgrade\PDChild\posebniDioChildPovrsinaModalCtrl.js" />
     <Content Include="app\zgrade\PDChild\posebniDioChildren.html" />
     <Content Include="app\zgrade\PDChild\posebniDioChildrenCtrl.js" />
+    <Content Include="app\zgrade\PDChild\posebniDioMasterVlasniciModal.html" />
+    <Content Include="app\zgrade\PDChild\posebniDioMasterVlasniciModalCtrl.js" />
     <Content Include="app\zgrade\zgrada.html" />
     <Content Include="app\zgrade\zgradaCtrl.js" />
     <Content Include="app\zgrade\zgradaPosebniDijeloviMasterModal.html" />
@@ -377,9 +379,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\icons\arrow-expand-all.svg" />
     <Content Include="Content\icons\delete.svg" />
     <Content Include="Content\icons\menu.svg" />
+    <Content Include="Content\icons\minus-circle.svg" />
     <Content Include="Content\icons\more_vert.svg" />
+    <Content Include="Content\icons\octicon-repo.svg" />
     <Content Include="Content\icons\plus.png" />
     <Content Include="Content\icons\plus.svg" />
     <Content Include="Content\icons\table-edit.svg" />

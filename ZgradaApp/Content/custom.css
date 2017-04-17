@@ -100,3 +100,7 @@
 md-content {
     background-color: transparent;
 }
+
+.indigoColor {
+    color: rgb(57,73,171);
+}

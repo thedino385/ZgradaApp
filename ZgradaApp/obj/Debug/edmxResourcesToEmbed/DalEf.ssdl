@@ -257,6 +257,8 @@
     <Property Name="VrijediOdGodina" Type="int" Nullable="false" />
     <Property Name="VrijediDoMjesec" Type="int" />
     <Property Name="VrijediDoGodina" Type="int" />
+    <Property Name="Zatvoren" Type="bit" />
+    <Property Name="Napomena" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
     <Key>

@@ -375,6 +375,8 @@
     <Property Name="VrijediDoGodina" Type="Int32" />
     <NavigationProperty Name="Zgrade_PosebniDijeloviMaster" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" ToRole="Zgrade_PosebniDijeloviMaster" />
     <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" />
+    <Property Name="Zatvoren" Type="Boolean" />
+    <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
     <Key>

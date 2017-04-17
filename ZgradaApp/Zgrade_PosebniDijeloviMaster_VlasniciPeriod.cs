@@ -26,6 +26,8 @@ namespace ZgradaApp
         public int VrijediOdGodina { get; set; }
         public Nullable<int> VrijediDoMjesec { get; set; }
         public Nullable<int> VrijediDoGodina { get; set; }
+        public Nullable<bool> Zatvoren { get; set; }
+        public string Napomena { get; set; }
     
         public virtual Zgrade_PosebniDijeloviMaster Zgrade_PosebniDijeloviMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -11,17 +11,20 @@
         return $http.get('../api/data/getzgrada?Id=' + zgradaId);
     }
 
-    
     var zgradaCreateOrUpdate = function (zgrada) {
-        console.log(zgrada);
         return $http.post('../api/data/zgradaCreateOrUpdate', zgrada);
     }
 
+    var posebniDioChildrenCreateOrUpdate = function (posebniDioMaster) {
+        console.log(posebniDioMaster);
+        return $http.post('../api/data/posebniDioChildrenCreateOrUpdate', posebniDioMaster);
+    }
 
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
         zgradaCreateOrUpdate: zgradaCreateOrUpdate,
+        posebniDioChildrenCreateOrUpdate, posebniDioChildrenCreateOrUpdate,
 
         currZgrada: currZgrada
     }

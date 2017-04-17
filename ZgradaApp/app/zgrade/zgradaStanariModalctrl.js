@@ -18,18 +18,18 @@
 
         $scope.save = function () {
             if (id == 0) {
-                maxId = 1;
+                maxId = 0;
                 zgradaObj.Zgrade_Stanari.forEach(function (stanar) {
                     if (stanar.Id > maxId)
                         maxId = stanar.Id;
                 });
-                $scope.stanarObj.Id = maxId;
+                $scope.stanarObj.Id = maxId+1;
                 $scope.stanarObj.Status = 'a';
                 zgradaObj.Zgrade_Stanari.push($scope.stanarObj);
             }
             else {
                 zgradaObj.Zgrade_Stanari.forEach(function (stanar) {
-                    if (stanar.Id > $scope.stanarObj.Id) {
+                    if (stanar.Id == $scope.stanarObj.Id) {
                         stanar.Status = 'u';
                         stanar = $scope.stanarObj;
                     }

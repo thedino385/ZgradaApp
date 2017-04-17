@@ -262,6 +262,8 @@
           <Property Name="VrijediOdGodina" Type="int" Nullable="false" />
           <Property Name="VrijediDoMjesec" Type="int" />
           <Property Name="VrijediDoGodina" Type="int" />
+          <Property Name="Zatvoren" Type="bit" />
+          <Property Name="Napomena" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
           <Key>
@@ -1009,6 +1011,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="VrijediDoGodina" Type="Int32" />
           <NavigationProperty Name="Zgrade_PosebniDijeloviMaster" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" ToRole="Zgrade_PosebniDijeloviMaster" />
           <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" />
+          <Property Name="Zatvoren" Type="Boolean" />
+          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
           <Key>
@@ -1511,6 +1515,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
             <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
               <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+                <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
                 <ScalarProperty Name="VrijediDoGodina" ColumnName="VrijediDoGodina" />
                 <ScalarProperty Name="VrijediDoMjesec" ColumnName="VrijediDoMjesec" />
                 <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
