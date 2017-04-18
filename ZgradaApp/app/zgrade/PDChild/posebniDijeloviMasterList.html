@@ -1,9 +1,9 @@
 ﻿
 <div class="container-grid">
     <div class="col-lg-12 whiteShadow">
-        <div class="bs-callout bs-callout-info">
+        <!--<div class="bs-callout bs-callout-info">
             <h4>Posebni dijelovi</h4>
-        </div>
+        </div>-->
 
         <!--<md-button class="md-primary md-raised" ng-click="nova()">&nbsp;Dodaj zgradu&nbsp;</md-button>-->
 
@@ -11,9 +11,21 @@
 
             <md-toolbar md-scroll-shrink ng-if="true">
                 <div class="md-toolbar-tools">
-                    <h3>
+                    <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                        <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                    </md-button>
+                    <h3 flex md-truncate>
                         <span>{{zgradaMsg}}</span>
                     </h3>
+                   
+                    <md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Prihodi rashodi" ng-click="goToPrihodiRashodi()">
+                        <md-icon md-svg-icon="/Content/icons/trending-up.svg" style="fill: greenyellow"></md-icon>
+                    </md-button>
+
+
+                    <md-button class="md-icon-button" aria-label="More">
+                        <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                    </md-button>
                 </div>
             </md-toolbar>
 

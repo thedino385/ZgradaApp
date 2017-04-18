@@ -341,6 +341,10 @@
     <Content Include="app\angularApp.js" />
     <Content Include="app\index.html" />
     <Content Include="app\indexCtrl.js" />
+    <Content Include="app\prihodiRashodi\index.html" />
+    <Content Include="app\prihodiRashodi\prihodiModal.html" />
+    <Content Include="app\prihodiRashodi\prihodiModalCtrl.js" />
+    <Content Include="app\prihodiRashodi\prihodiRashodiIndexCtrl.js" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\zgrade\dialog1.html" />
     <Content Include="app\zgrade\PDChild\confirmDialog.html" />
@@ -389,6 +393,7 @@
     <Content Include="Content\icons\plus.svg" />
     <Content Include="Content\icons\table-edit.svg" />
     <Content Include="Content\icons\table-edit64.svg" />
+    <Content Include="Content\icons\trending-up.svg" />
     <Content Include="Content\images\60.jpeg" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\plus.svg" />

@@ -34,12 +34,17 @@
             $location.path('/posebniDijeloviMasterList/' + zgradaId);
         }
 
-        $scope.goToPregled = function (zgradaId) {
-            $location.path('/pregled/' + zgradaId);
+        $scope.goToPrihodiRashodi = function (zgradaId) {
+            $location.path('/prihodiRashodi/' + zgradaId);
         }
 
-        $scope.goToZaduzivanje = function (zgradaId) {
-            $location.path('/zaduzivanje/' + zgradaId);
-        }
+
+        //$scope.goToPregled = function (zgradaId) {
+        //    $location.path('/pregled/' + zgradaId);
+        //}
+
+        //$scope.goToZaduzivanje = function (zgradaId) {
+        //    $location.path('/zaduzivanje/' + zgradaId);
+        //}
 
     }]);

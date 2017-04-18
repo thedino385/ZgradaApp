@@ -23,6 +23,11 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/PDChild/posebniDioChildren.html',
             controller: 'posebniDioChildrenCtrl'
         })
+        .when('/prihodiRashodi/:id', { // posebniDioMasterId
+            templateUrl: '../app/prihodiRashodi/index.html',
+            controller: 'prihodiRashodiIndexCtrl'
+        })
+
 
         .when('/pripadak/:id', {
             templateUrl: '../app/Sifarnici/pripadak.html',

@@ -26,16 +26,20 @@
             $location.path('/posebniDioChildren/' + posebniDioMasterId);
         }
 
-        $scope.goToStanovi = function (zgradaId) {
-            $location.path('/stanovi/' + zgradaId);
+        $scope.goToPrihodiRashodi = function () {
+            $location.path('/prihodiRashodi/' + $scope.zgrada.Id);
         }
 
-        $scope.goToPregled = function (zgradaId) {
-            $location.path('/pregled/' + zgradaId);
-        }
+        //$scope.goToStanovi = function (zgradaId) {
+        //    $location.path('/stanovi/' + zgradaId);
+        //}
 
-        $scope.goToZaduzivanje = function (zgradaId) {
-            $location.path('/zaduzivanje/' + zgradaId);
-        }
+        //$scope.goToPregled = function (zgradaId) {
+        //    $location.path('/pregled/' + zgradaId);
+        //}
+
+        //$scope.goToZaduzivanje = function (zgradaId) {
+        //    $location.path('/zaduzivanje/' + zgradaId);
+        //}
 
     }]);
