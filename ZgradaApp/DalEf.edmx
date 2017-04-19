@@ -178,6 +178,15 @@
           <Property Name="RashodId" Type="int" />
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="SifarnikRashoda">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="Zgrade">
           <Key>
             <PropertyRef Name="Id" />
@@ -285,6 +294,7 @@
           <Property Name="OIB" Type="char" MaxLength="11" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
+          <Property Name="OglasnaPloca" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -541,6 +551,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySet Name="PrihodiRashodi" EntityType="Self.PrihodiRashodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="Self.PrihodiRashodi_Prihodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="Self.PrihodiRashodi_Rashodi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SifarnikRashoda" EntityType="Self.SifarnikRashoda" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_PosebniDijeloviChild" EntityType="Self.Zgrade_PosebniDijeloviChild" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_PosebniDijeloviChild_Povrsine" EntityType="Self.Zgrade_PosebniDijeloviChild_Povrsine" Schema="dbo" store:Type="Tables" />
@@ -729,6 +740,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="SifarnikRashoda" EntityType="ZgradaDbModel.SifarnikRashoda" />
         </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -1036,6 +1048,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade_Stanari" ToRole="Zgrade" />
+          <Property Name="OglasnaPloca" Type="Boolean" />
         </EntityType>
         <EntityType Name="vZgrade">
           <Key>
@@ -1249,6 +1262,15 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <End Type="ZgradaDbModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="ZgradaDbModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
+        <EntityType Name="SifarnikRashoda">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1539,6 +1561,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="Zgrade_Stanari">
             <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Stanari">
               <MappingFragment StoreEntitySet="Zgrade_Stanari">
+                <ScalarProperty Name="OglasnaPloca" ColumnName="OglasnaPloca" />
                 <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="OIB" ColumnName="OIB" />
@@ -1569,6 +1592,16 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="SifarnikRashoda">
+            <EntityTypeMapping TypeName="ZgradaDbModel.SifarnikRashoda">
+              <MappingFragment StoreEntitySet="SifarnikRashoda">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

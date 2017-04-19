@@ -23,6 +23,14 @@
                     $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
                     $rootScope.loaderActive = false;
                     $scope.msg = "Uredi zgradu";
+
+                    DataService.getSifarnikRashoda().then(
+                        function (result) {
+                            $scope.sifarnikRashoda = result.data;
+                        },
+                        function (result) {
+                            toastr.error('Dohvat šifarnika rashoda nije uspio');
+                        });
                 },
                 function (result) {
                     // on errr
@@ -52,27 +60,37 @@
         $scope.iznosZaMjesec = function (mjesec, vrsta) {
             if ($scope.prihodRashodZaGodinu == undefined)
                 return;
-            //console.log($scope.prihodRashodZaGodinu);
             var suma = 0;
-            if ($scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi != undefined) {
-                //$scope.zgradaObj.PrihodiRashodi.forEach(function (pr) {
-                //    if (pr.Godina == $scope.selectedGodina) {
+            if (vrsta == 'p' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi != undefined) {
                 $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (prihodMjesec) {
                     if (prihodMjesec.Mjesec == mjesec)
                         suma += parseFloat(prihodMjesec.Iznos);
                 });
-                //    }
-                //});
             }
             else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
-                //$scope.zgradaObj.PrihodiRashodi.forEach(function (pr) {
-                //    if (pr.Godina == $scope.selectedGodina) {
                 $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
                     if (rashodMjesec.Mjesec == mjesec)
                         suma += parseFloat(rashodMjesec.Iznos);
                 });
-                //    }
-                //});
+            }
+            return suma;
+        }
+
+        $scope.iznosZaMjesecRashod = function (mjesec, vrsta) {
+            if ($scope.prihodRashodZaGodinu == undefined)
+                return;
+            var suma = 0;
+            if ($scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
+                $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
+                    if (rashodMjesec.Mjesec == mjesec)
+                        suma += parseFloat(rashodMjesec.Iznos);
+                });
+            }
+            else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
+                $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
+                    if (rashodMjesec.Mjesec == mjesec)
+                        suma += parseFloat(rashodMjesec.Iznos);
+                });
             }
             return suma;
         }
@@ -82,8 +100,12 @@
                 return;
             console.log($scope.novaGodina);
             console.log($scope.godine.indexOf($scope.novaGodina));
-            if ($scope.godine.indexOf($scope.novaGodina) == -1)
+            if ($scope.godine.indexOf($scope.novaGodina) == -1) {
                 $scope.godine.push($scope.novaGodina);
+                var newMaster = { Id: 0, ZgradaId: $scope.zgradaObj.Id, Godina: $scope.novaGodina, Status: 'a', PrihodiRashodi_Prihodi: [], PrihodiRashodi_Rashodi: [] }
+                $scope.zgradaObj.PrihodiRashodi.push(newMaster);
+            }
+                
             else
                 toastr.error('Godina postoji');
             $scope.novaGodina = '';
@@ -126,11 +148,37 @@
         };
 
 
+        // _________________________________________________________
+        //              Modal rashodi
+        // _________________________________________________________
+        $scope.openModalRashodi = function (mjesec) {
+            $mdDialog.show({
+                controller: 'rashodiModalCtrl',
+                templateUrl: 'app/prihodiRashodi/rashodiModal.html',
+                //parent: angular.element(document.body),
+                //targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    prihodRashodZaGodinu: $scope.prihodRashodZaGodinu,
+                    mjesec: mjesec,
+                    godina: $scope.selectedGodina,
+                    sifarnikRashoda: $scope.sifarnikRashoda
+                }
+            }).then(function (prihodRashodZaGodinu) {
+                // save (hide)
+                $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
+                console.log($scope.prihodRashodZaGodinu);
+            }, function (prihodRashodZaGodinu) {
+                // cancel
+                console.log(prihodRashodZaGodinu);
+                $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
+            });
+        };
 
-
-        $scope.save = function () {
+        $scope.saveAll = function () {
             $rootScope.loaderActive = true;
-            DataService.prihodiRashodiCreateOrUpdate($scope.pdMaster).then(
+            DataService.prihodiRashodiCreateOrUpdate($scope.zgradaObj).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;
@@ -148,7 +196,39 @@
             $location.path('/zgrade');
         }
 
-
+        // _________________________________________________________
+        //              Modal sifarnik prihoda
+        // _________________________________________________________
+        $scope.openModalSifarnik = function (ev) {
+            $mdDialog.show({
+                controller: 'sifarnikRashodaModalCtrl',
+                templateUrl: 'app/prihodiRashodi/sifarnikRashodaModal.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    sifarnikRashoda: $scope.sifarnikRashoda,
+                }
+            }).then(function (sifarnikRashoda) {
+                // save (hide)
+                $scope.sifarnikRashoda = sifarnikRashoda;
+                DataService.sifarnikRashodaCrateOrUpdate(sifarnikRashoda).then(
+                    function (result) {
+                        toastr.success('Šifarnik rashoda je snimljen.');
+                    },
+                    function (result) {
+                        toastr.error('Snimanje šiarnika rahoda nije uspjelo!');
+                    });
+                //console.log($scope.prihodRashodZaGodinu);
+                }, function (sifarnikRashoda) {
+                // cancel
+                    $scope.sifarnikRashoda = sifarnikRashoda;
+                //console.log(prihodRashodZaGodinu);
+                //$scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
+            });
+        };
+        
 
         //function confirmController($scope, $mdDialog, title, textContent, desc, brisanjeOk, okBtnCaption) {
 

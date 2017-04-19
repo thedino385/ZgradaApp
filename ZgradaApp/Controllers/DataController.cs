@@ -199,5 +199,101 @@ namespace ZgradaApp.Controllers
             }
             catch (Exception ex) { return InternalServerError(); }
         }
+
+        [HttpGet]
+        [Route("api/data/getSifarnikRashoda")]
+        public async Task<IHttpActionResult> GetSifarnikRashoda()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                return Ok(await _db.SifarnikRashoda.Where(p => p.CompanyId == companyId && p.Active != false).ToListAsync());
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpPost]
+        [Route("api/data/sifarnikRashodaCrateOrUpdate")]
+        public async Task<IHttpActionResult> SifarnikRashodaCrateOrUpdate(List<SifarnikRashoda> list)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                foreach (var item in list)
+                {
+                    item.CompanyId = companyId;
+                    switch(item.Status)
+                    {
+                        case "a":
+                            _db.SifarnikRashoda.Add(item);
+                            break;
+                        case "u":
+                            _db.SifarnikRashoda.Attach(item);
+                            _db.Entry(item).State = EntityState.Modified;
+                            break;
+                        case "d":
+                            var target = await _db.SifarnikRashoda.FirstOrDefaultAsync(p => p.Id == item.Id);
+                            target.Active = false;
+                            break;
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpPost]
+        [Route("api/data/prihodiRashodiCreateOrUpdate")]
+        public async Task<IHttpActionResult> PrihodiRashodiCreateOrUpdate(Zgrade zgradaObj)
+        {
+            try
+            {
+                // zanima nas master - ako je status 'a', insert, inace ne diraj
+                // PrihodiRashodi_Prihodi
+                // PrihodiRashodi_Rashodi
+
+                foreach (var prihodRashod in zgradaObj.PrihodiRashodi)
+                {
+                    prihodRashod.ZgradaId = zgradaObj.Id;
+                    if(prihodRashod.Status == "a")
+                    {
+                        _db.PrihodiRashodi.Add(prihodRashod);
+                    }
+                    else
+                    {
+                        foreach (var pr in prihodRashod.PrihodiRashodi_Prihodi)
+                        {
+                            pr.PrihodiRashodiGodId = prihodRashod.Id;
+                            if (pr.Status == "a")
+                                _db.PrihodiRashodi_Prihodi.Add(pr);
+                            else
+                            {
+                                // Status = 'u'
+                                _db.PrihodiRashodi_Prihodi.Attach(pr);
+                                _db.Entry(pr).State = EntityState.Modified;
+                            }
+                        }
+                        foreach (var ra in prihodRashod.PrihodiRashodi_Rashodi)
+                        {
+                            ra.PrihodiRashodiGodId = prihodRashod.Id;
+                            if (ra.Status == "a")
+                                _db.PrihodiRashodi_Rashodi.Add(ra);
+                            else
+                            {
+                                // Status = 'u'
+                                _db.PrihodiRashodi_Rashodi.Attach(ra);
+                                _db.Entry(ra).State = EntityState.Modified;
+                            }
+                        }
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
     }
 }

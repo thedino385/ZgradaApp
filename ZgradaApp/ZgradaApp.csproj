@@ -253,6 +253,9 @@
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SifarnikRashoda.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="vZgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
@@ -345,7 +348,11 @@
     <Content Include="app\prihodiRashodi\prihodiModal.html" />
     <Content Include="app\prihodiRashodi\prihodiModalCtrl.js" />
     <Content Include="app\prihodiRashodi\prihodiRashodiIndexCtrl.js" />
+    <Content Include="app\prihodiRashodi\rashodiModal.html" />
+    <Content Include="app\prihodiRashodi\rashodiModalCtrl.js" />
+    <Content Include="app\prihodiRashodi\sifarnikRashodaModal.html" />
     <Content Include="app\Services\DataService.js" />
+    <Content Include="app\prihodiRashodi\sifarnikRashodaModalCtrl.js" />
     <Content Include="app\zgrade\dialog1.html" />
     <Content Include="app\zgrade\PDChild\confirmDialog.html" />
     <Content Include="app\zgrade\PDChild\posebniDijeloviMasterList.html" />

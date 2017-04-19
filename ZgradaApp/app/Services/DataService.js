@@ -20,12 +20,26 @@
         return $http.post('../api/data/posebniDioChildrenCreateOrUpdate', posebniDioMaster);
     }
 
+    var getSifarnikRashoda = function () {
+        return $http.get('../api/data/getSifarnikRashoda');
+    }
+
+    var sifarnikRashodaCrateOrUpdate = function (list) {
+        return $http.post('../api/data/sifarnikRashodaCrateOrUpdate', list);
+    }
+
+    var prihodiRashodiCreateOrUpdate = function (zgradaObj) {
+        return $http.post('../api/data/prihodiRashodiCreateOrUpdate', zgradaObj)
+    }
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
         zgradaCreateOrUpdate: zgradaCreateOrUpdate,
+        prihodiRashodiCreateOrUpdate: prihodiRashodiCreateOrUpdate,
         posebniDioChildrenCreateOrUpdate, posebniDioChildrenCreateOrUpdate,
 
+        getSifarnikRashoda: getSifarnikRashoda,
+        sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,
         currZgrada: currZgrada
     }
 

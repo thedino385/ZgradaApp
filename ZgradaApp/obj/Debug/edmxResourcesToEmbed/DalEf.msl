@@ -285,6 +285,7 @@
     <EntitySetMapping Name="Zgrade_Stanari">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Stanari">
         <MappingFragment StoreEntitySet="Zgrade_Stanari">
+          <ScalarProperty Name="OglasnaPloca" ColumnName="OglasnaPloca" />
           <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="OIB" ColumnName="OIB" />
@@ -315,5 +316,15 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="SifarnikRashoda">
+      <EntityTypeMapping TypeName="ZgradaDbModel.SifarnikRashoda">
+        <MappingFragment StoreEntitySet="SifarnikRashoda">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

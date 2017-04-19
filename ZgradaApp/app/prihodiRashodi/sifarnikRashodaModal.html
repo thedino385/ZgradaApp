@@ -1,0 +1,52 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak name="frm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h3>Šifarnik rashoda</h3>
+                <span></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="vertical-align: middle">
+                                Naziv
+                            </th>
+                            <th>
+                                <md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
+                                    <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
+                                </md-button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        
+                        <tr ng-repeat="rec in sifarnikRashoda" style="vertical-align: middle">
+                        <td style="vertical-align: middle">
+                                <input class="form-control" type="text" ng-model="rec.Naziv" />
+                            </td>
+                           
+                            <td style="vertical-align: middle">
+                                <md-button class="md-icon-button" ng-click="delete(pr.Id)" title="Obriši">
+                                    <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="cancel()">
+                Odustani
+            </md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

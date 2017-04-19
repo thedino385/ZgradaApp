@@ -45,6 +45,26 @@ namespace ZgradaApp
         public string Status { get; set; }
     }
 
+    public partial class SifarnikRashoda
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class PrihodiRashodi
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class PrihodiRashodi_Prihodi
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class PrihodiRashodi_Rashodi
+    {
+        public string Status { get; set; }
+    }
+
     // OLD
 
     //public partial class Stanovi_PosebniDijelovi
