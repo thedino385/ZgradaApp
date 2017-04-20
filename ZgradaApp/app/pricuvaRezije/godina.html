@@ -1,0 +1,41 @@
+﻿<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+      
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>Zgrada:&nbsp;{{zgradaObj.Naziv}},&nbsp;{{zgradaObj.Adresa}}</h3>
+
+                <input type="number" class="form-control" ng-model="novaGodina" />
+                <md-button class="md-raised" aria-label="Dodaj godinu" ng-click="dodajGodinu()">
+                    Dodaj godinu
+                </md-button>
+
+                <!--<md-button class="md-raised" aria-label="Dodaj godinu" ng-click="openModalSifarnik($event)">
+                    Šifarnik rashoda
+                </md-button>-->
+
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <br />
+        <div class="btn-group">
+            <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
+        </div>
+        <hr />
+       
+        table ide ovdje
+
+        <hr />
+        <md-button class="md-raised md-primary pull-right" type="button" ng-click="saveAll()">Spremi</md-button>
+        <md-button class="md-raised pull-right" ng-click="cancelReload()">
+            Odustani
+        </md-button>
+    </div>
+</div>

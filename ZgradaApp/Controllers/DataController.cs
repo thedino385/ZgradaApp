@@ -295,5 +295,12 @@ namespace ZgradaApp.Controllers
             }
             catch (Exception ex) { return InternalServerError(); }
         }
+
+        [HttpGet]
+        [Route("api/data/praznaPricuvaRezijeCreate")]
+        public async Task<IHttpActionResult> PraznaPricuvaRezijeCreate(int zgradaId, int godina)
+        {
+            return Ok(new PricuvaRezijeGodina { ZgradaId = zgradaId, Godina = godina, Status = "a" });
+        }
     }
 }

@@ -12,13 +12,13 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUserClaims
+    public partial class PricuvaRezijePosebniDioMasterVlasnici
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
+        public int PricuvaRezijePosebniDioMasterId { get; set; }
+        public Nullable<int> PeriodId { get; set; }
+        public Nullable<int> VlasnikId { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual PricuvaRezijePosebniDioMasteri PricuvaRezijePosebniDioMasteri { get; set; }
     }
 }

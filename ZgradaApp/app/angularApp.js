@@ -27,6 +27,13 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/prihodiRashodi/index.html',
             controller: 'prihodiRashodiIndexCtrl'
         })
+        .when('/pricuvaRezije/:id', { // posebniDioMasterId
+            templateUrl: '../app/pricuvaRezije/godina.html',
+            controller: 'godinaCtrl'
+        })
+
+
+
 
 
         .when('/pripadak/:id', {

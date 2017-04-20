@@ -3,7 +3,7 @@
     var currZgrada = null;
 
     // zgrade
-    var getZgrade = function() {
+    var getZgrade = function () {
         return $http.get('../api/data/getzgrade');
     }
 
@@ -31,12 +31,24 @@
     var prihodiRashodiCreateOrUpdate = function (zgradaObj) {
         return $http.post('../api/data/prihodiRashodiCreateOrUpdate', zgradaObj)
     }
+
+    var praznaPricuvaRezijeCreate = function (zgradaId, godina) {
+        return $http({
+            url: '../api/data/praznaPricuvaRezijeCreate',
+            method: "GET",
+            params: { zgradaId: zgradaId, godina: godina }
+        });
+    }
+
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
         zgradaCreateOrUpdate: zgradaCreateOrUpdate,
         prihodiRashodiCreateOrUpdate: prihodiRashodiCreateOrUpdate,
         posebniDioChildrenCreateOrUpdate, posebniDioChildrenCreateOrUpdate,
+
+        praznaPricuvaRezijeCreate: praznaPricuvaRezijeCreate,
 
         getSifarnikRashoda: getSifarnikRashoda,
         sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,
@@ -70,11 +82,11 @@
     //    //    console.log("dataService listZgrade.length: " + listZgrade.length);
     //    //    defer.resolve(listZgrade);
     //    //}
-            
+
     //    return defer.promise;
     //}
 
-    
+
 
     //var getPripadci = function () {
     //    return $http.get('../api/data/getpripadci');
@@ -145,7 +157,7 @@
     //    //else {
     //    //    defer.resolve(listStanovi);
     //    //}
-            
+
     //        return defer.promise;
     //}
 
@@ -179,7 +191,7 @@
     //    });
     //}
 
-    
+
     //var createEmptyPrihodRashod = function (ZgradaId, Godina) {
     //    return $http({
     //        url: '../api/data/createEmptyPrihodRashod',
@@ -188,7 +200,7 @@
     //    });
     //}
 
-    
+
     //var getPricuva = function (ZgradaId) {
     //    return $http({
     //        url: '../api/data/getpricuva',

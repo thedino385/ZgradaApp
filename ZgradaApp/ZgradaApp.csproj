@@ -180,18 +180,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AspNetRoles.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUserClaims.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUserLogins.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUsers.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
     <Compile Include="clsCommon.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataController.cs" />
@@ -231,16 +219,19 @@
     <Compile Include="PricuvaRezijeMjesec.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaRezijeMjesec_PosebniDioChild.cs">
+    <Compile Include="PricuvaRezijePosebniDioChildPovrsine.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaRezijeMjesec_PosebniDioChild_Povrsine.cs">
+    <Compile Include="PricuvaRezijePosebniDioChildPripadci.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaRezijeMjesec_PosebniDioChild_Pripadci.cs">
+    <Compile Include="PricuvaRezijePosebniDioChildren.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaRezijeMjesec_Vlasnici.cs">
+    <Compile Include="PricuvaRezijePosebniDioMasteri.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PricuvaRezijePosebniDioMasterVlasnici.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="PrihodiRashodi.cs">
@@ -344,6 +335,10 @@
     <Content Include="app\angularApp.js" />
     <Content Include="app\index.html" />
     <Content Include="app\indexCtrl.js" />
+    <Content Include="app\pricuvaRezije\godina.html" />
+    <Content Include="app\pricuvaRezije\godinaCtrl.js" />
+    <Content Include="app\pricuvaRezije\mjesecModal.html" />
+    <Content Include="app\pricuvaRezije\mjesecModalCtrl.js" />
     <Content Include="app\prihodiRashodi\index.html" />
     <Content Include="app\prihodiRashodi\prihodiModal.html" />
     <Content Include="app\prihodiRashodi\prihodiModalCtrl.js" />

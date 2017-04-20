@@ -12,12 +12,16 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUserLogins
+    public partial class PricuvaRezijePosebniDioChildPovrsine
     {
-        public string LoginProvider { get; set; }
-        public string ProviderKey { get; set; }
-        public string UserId { get; set; }
+        public int Id { get; set; }
+        public int PricuvaRezijePosebniDioChildId { get; set; }
+        public Nullable<int> PovrsinaId { get; set; }
+        public Nullable<decimal> Povrsina { get; set; }
+        public Nullable<decimal> Koef { get; set; }
+        public string Naziv { get; set; }
+        public string Oznaka { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual PricuvaRezijePosebniDioChildren PricuvaRezijePosebniDioChildren { get; set; }
     }
 }

@@ -4,7 +4,6 @@
         <!--<div class="bs-callout bs-callout-info">
             <h4>Posebni dijelovi</h4>
         </div>-->
-
         <!--<md-button class="md-primary md-raised" ng-click="nova()">&nbsp;Dodaj zgradu&nbsp;</md-button>-->
 
         <div layout="column" style="height:600px" ng-cloak>
@@ -17,11 +16,16 @@
                     <h3 flex md-truncate>
                         <span>{{zgradaMsg}}</span>
                     </h3>
-                   
+
+                    <md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Pričuva i režije"ng-click="goToPricuvaRezije()">
+                        <md-icon md-svg-icon="/Content/icons/currency-eur.svg" style="fill: greenyellow"></md-icon>
+                    </md-button>
                     <md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Prihodi rashodi" ng-click="goToPrihodiRashodi()">
                         <md-icon md-svg-icon="/Content/icons/trending-up.svg" style="fill: greenyellow"></md-icon>
                     </md-button>
-
+                    <md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Popis posebnih dijelova" ng-click="goToPrihodiRashodi()">
+                        <md-icon md-svg-icon="/Content/icons/account-card-details.svg" style="fill: greenyellow"></md-icon>
+                    </md-button>
 
                     <md-button class="md-icon-button" aria-label="More">
                         <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
@@ -46,7 +50,7 @@
                             </p>
                         </div>
                         <button type="button" class="btn btn-default btn-sm md-avatar" title="Dijelovi" ng-click="edit(pd.Id)">
-                            <span class="glyphicon glyphicon-edit"></span>
+                            <md-icon md-svg-icon="/Content/icons/animation.svg" style="fill: indigo"></md-icon>
                         </button>
                         <md-divider inset></md-divider>
                     </md-list-item>

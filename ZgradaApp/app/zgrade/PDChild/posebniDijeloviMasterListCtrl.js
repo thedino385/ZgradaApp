@@ -29,6 +29,10 @@
         $scope.goToPrihodiRashodi = function () {
             $location.path('/prihodiRashodi/' + $scope.zgrada.Id);
         }
+        
+        $scope.goToPricuvaRezije = function () {
+            $location.path('/pricuvaRezije/' + $scope.zgrada.Id);
+        }
 
         //$scope.goToStanovi = function (zgradaId) {
         //    $location.path('/stanovi/' + zgradaId);

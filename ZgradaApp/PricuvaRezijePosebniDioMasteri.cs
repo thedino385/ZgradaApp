@@ -12,23 +12,30 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class PricuvaRezijeMjesec_PosebniDioChild
+    public partial class PricuvaRezijePosebniDioMasteri
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PricuvaRezijeMjesec_PosebniDioChild()
+        public PricuvaRezijePosebniDioMasteri()
         {
-            this.PricuvaRezijeMjesec_Vlasnici = new HashSet<PricuvaRezijeMjesec_Vlasnici>();
+            this.PricuvaRezijePosebniDioChildren = new HashSet<PricuvaRezijePosebniDioChildren>();
+            this.PricuvaRezijePosebniDioMasterVlasnici = new HashSet<PricuvaRezijePosebniDioMasterVlasnici>();
         }
     
         public int Id { get; set; }
         public int PricuvaRezijeMjesecId { get; set; }
-        public Nullable<int> PosebniDioId { get; set; }
+        public Nullable<int> PosebniDioMasterId { get; set; }
         public Nullable<decimal> ObracunPricuvaCijenaSlobodanUnos { get; set; }
         public Nullable<int> ObracunRezijeBrojClanova { get; set; }
         public Nullable<decimal> ObracunRezijeCijenaSlobodanUnos { get; set; }
+        public Nullable<decimal> DugPretplata { get; set; }
+        public Nullable<decimal> Zaduzenje { get; set; }
+        public Nullable<decimal> Uplaceno { get; set; }
+        public Nullable<decimal> StanjeOd { get; set; }
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PricuvaRezijeMjesec_Vlasnici> PricuvaRezijeMjesec_Vlasnici { get; set; }
+        public virtual ICollection<PricuvaRezijePosebniDioChildren> PricuvaRezijePosebniDioChildren { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
     }
 }

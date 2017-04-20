@@ -17,15 +17,12 @@ namespace ZgradaApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PricuvaRezijeMjesec()
         {
-            this.PricuvaRezijeMjesec_PosebniDioChild = new HashSet<PricuvaRezijeMjesec_PosebniDioChild>();
+            this.PricuvaRezijePosebniDioMasteri = new HashSet<PricuvaRezijePosebniDioMasteri>();
         }
     
         public int Id { get; set; }
         public int PrivuvaRezijeGodId { get; set; }
-        public Nullable<decimal> DugPretplata { get; set; }
-        public Nullable<decimal> Zaduzenje { get; set; }
-        public Nullable<decimal> Uplaceno { get; set; }
-        public Nullable<decimal> StanjeOd { get; set; }
+        public Nullable<int> Mjesec { get; set; }
         public Nullable<byte> NacinObracunaPricuva { get; set; }
         public Nullable<byte> NacinObracunaRezije { get; set; }
         public Nullable<bool> SaKoef { get; set; }
@@ -35,6 +32,6 @@ namespace ZgradaApp
     
         public virtual PricuvaRezijeGodina PricuvaRezijeGodina { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PricuvaRezijeMjesec_PosebniDioChild> PricuvaRezijeMjesec_PosebniDioChild { get; set; }
+        public virtual ICollection<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
     }
 }
