@@ -302,5 +302,19 @@ namespace ZgradaApp.Controllers
         {
             return Ok(new PricuvaRezijeGodina { ZgradaId = zgradaId, Godina = godina, Status = "a" });
         }
+
+        [HttpGet]
+        [Route("api/data/pricuvaZaMjesecCreate")]
+        public async Task<IHttpActionResult> pricuvaZaMjesecCreate(int zgradaId, int prGodId, int mjesec, int godina)
+        {
+            //return Ok(new PricuvaRezijeGodina { ZgradaId = zgradaId, Godina = godina, Status = "a" });
+            var prMj = new PricuvaRezijeMjesec { Id = 0, PrivuvaRezijeGodId = prGodId, Mjesec = mjesec };
+            try
+            {
+                return Ok(await new IsValidHelper().CreatePricuvaMjesec(prMj, godina, zgradaId));
+            }
+            catch (Exception ex) { return InternalServerError(); }
+            
+        }
     }
 }

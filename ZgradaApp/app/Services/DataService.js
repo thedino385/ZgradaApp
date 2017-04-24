@@ -40,6 +40,13 @@
         });
     }
 
+    var pricuvaZaMjesecCreate = function (zgradaId, pricuvaRezijeGodId, mjesec, godina) {
+        return $http({
+            url: '../api/data/pricuvaZaMjesecCreate',
+            method: "GET",
+            params: { zgradaId: zgradaId, prGodId: pricuvaRezijeGodId, mjesec: mjesec, godina: godina }
+        });
+    }
 
     return {
         getZgrade: getZgrade,
@@ -49,6 +56,7 @@
         posebniDioChildrenCreateOrUpdate, posebniDioChildrenCreateOrUpdate,
 
         praznaPricuvaRezijeCreate: praznaPricuvaRezijeCreate,
+        pricuvaZaMjesecCreate: pricuvaZaMjesecCreate,
 
         getSifarnikRashoda: getSifarnikRashoda,
         sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,

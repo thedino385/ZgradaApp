@@ -2,6 +2,7 @@
     function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
 
         $scope.msg = '';
+        $scope.selectedGodina = null;
         if ($routeParams) {
             $rootScope.loaderActive = true;
             DataService.getZgrada($routeParams.id).then(
@@ -42,9 +43,8 @@
             //$scope.prihodRashodZaGodinu = { Id: 0, ZgradaId: $scope.zgradaObj.Id, Godina: godina, PrihodiRashodi_Prihodi: [], PrihodiRashodi_Rashodi: [] }
             $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                 if (pr.Godina == godina) {
-                    console.log('godina changed, prihosdiRashodiza godinu');
+                    $scope.selectedGodina = godina;
                     console.log(pr);
-                    $scope.pricuvaRezijeGodina = pr;
                 }
             });
         }
@@ -67,7 +67,7 @@
                         $scope.novaGodina = '';
                     },
                     function (result) {
-
+                        toastr.error('Godina nije kreriana');
                     }
                 )
             }
@@ -87,7 +87,7 @@
         // _________________________________________________________
         //              Modal openMjesecno
         // _________________________________________________________
-        $scope.openMjesecno = function (mjesec) {
+        $scope.openMjesecno = function (mjesec, ev) {
             $mdDialog.show({
                 controller: 'mjesecModalCtrl',
                 templateUrl: 'app/pricuvaRezije/mjesecModal.html',
@@ -96,8 +96,9 @@
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
-                    pricuvaRezijeGodina: $scope.pricuvaRezijeGodina,
+                    zgradaObj: $scope.zgradaObj,
                     mjesec: mjesec,
+                    godina: $scope.selectedGodina
                 }
             }).then(function (pricuvaRezijeGodina) {
                 // save (hide)

@@ -180,7 +180,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="clsCommon.cs" />
+    <Compile Include="Utils\clsCommon.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\DataControllerOld.cs" />
@@ -248,6 +248,7 @@
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\IsValidHelper.cs" />
     <Compile Include="vZgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -333,6 +334,7 @@
     <Content Include="appOld\zaduzivanja\zaduzivanjePoMj.html" />
     <Content Include="appOld\zaduzivanja\zaduzivanjePoMjCrtl.js" />
     <Content Include="app\angularApp.js" />
+    <Content Include="app\Filters\pricuveFilters.js" />
     <Content Include="app\index.html" />
     <Content Include="app\indexCtrl.js" />
     <Content Include="app\pricuvaRezije\godina.html" />

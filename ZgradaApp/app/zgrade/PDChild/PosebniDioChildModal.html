@@ -51,6 +51,33 @@
                             
                             <div class="col-sm-2"></div>
                         </div>
+
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Aktivan od godina</label>
+                                <input required type="number" name="vrijediOdGodina" ng-model="posebniDioChildObj.VrijediOdGodina">
+                                <div ng-messages="frm.vrijediOdGodina.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Aktivan od mjesec</label>
+                                <input required type="number" name="vrijediOdMjesec" ng-model="posebniDioChildObj.VrijediOdMjesec">
+                                <div ng-messages="frm.vrijediOdMjesec.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                    <div ng-message="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
                     </md-content>
                 </div>
             </div>
