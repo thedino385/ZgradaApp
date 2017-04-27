@@ -1,5 +1,5 @@
-﻿angularApp.controller('godinaCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('godinaCtrl', ['$scope', '$routeParams', '$location', '$route', '$rootScope', 'toastr', 'DataService', '$mdDialog',
+    function ($scope, $routeParams, $location, $route, $rootScope, toastr, DataService, $mdDialog) {
 
         $scope.msg = '';
         $scope.selectedGodina = null;
@@ -40,13 +40,22 @@
             $scope.selectedGodina = godina;
             $scope.tableVisible = true;
             console.log($scope.zgradaObj);
-            //$scope.prihodRashodZaGodinu = { Id: 0, ZgradaId: $scope.zgradaObj.Id, Godina: godina, PrihodiRashodi_Prihodi: [], PrihodiRashodi_Rashodi: [] }
-            $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
-                if (pr.Godina == godina) {
-                    $scope.selectedGodina = godina;
-                    console.log(pr);
+            DataService.getPricuvaRezijeGodinaTable($scope.zgradaObj.Id, godina).then(
+                function (result) {
+                    // success
+                    $scope.godinaTable = result.data;
+                    $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
+                        if (pr.Godina == godina) {
+                            $scope.selectedGodina = godina;
+                            console.log(pr);
+                        }
+                    });
+                },
+                function (result) {
+                    // error
+                    toastr.error('Dohvat godišnjih posataka sa servera nije uspio');
                 }
-            });
+            )
         }
 
 
@@ -100,32 +109,37 @@
                     mjesec: mjesec,
                     godina: $scope.selectedGodina
                 }
-            }).then(function (pricuvaRezijeGodina) {
+            }).then(function (zgradaObj) {
                 // save (hide)
-                $scope.pricuvaRezijeGodina = pricuvaRezijeGodina;
+                $scope.zgradaObj = zgradaObj;
+                save();
                 //console.log($scope.prihodRashodZaGodinu);
-                }, function (pricuvaRezijeGodina) {
+                }, function (zgradaObj) {
                 // cancel
                 //console.log(prihodRashodZaGodinu);
-                    $scope.pricuvaRezijeGodina = pricuvaRezijeGodina;
+                    $scope.zgradaObj = zgradaObj;
             });
         };
 
 
-       
-
         $scope.saveAll = function () {
+            save();
+        }
+
+        function save () {
             $rootScope.loaderActive = true;
-            DataService.prihodiRashodiCreateOrUpdate($scope.zgradaObj).then(
+            DataService.pricuvaRezijeCreateOrUpdate($scope.zgradaObj).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;
                     toastr.success('Promjene su snimljene!', '');
-                    $location.path('/zgrade');
+                    //$location.path('/posebniDijeloviMasterList/' + $scope.zgradaObj.Id);
+                    $route.reload();
                 },
                 function (result) {
                     // on error
                     $rootScope.errMsg = result.Message;
+                    toastr.error('Promjene nisu snimljene!', '');
                 }
             )
         };
@@ -134,8 +148,7 @@
             $location.path('/zgrade');
         }
 
-       
-        
+      
 
     }])
     //.config(function ($mdThemingProvider) {

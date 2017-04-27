@@ -31,6 +31,7 @@ namespace ZgradaApp
                         StanjeOd = 0,
                         Uplaceno = 0,
                         Zaduzenje = 0,
+                        PeriodId = 0,
                         PricuvaRezijePosebniDioChildren = new List<PricuvaRezijePosebniDioChildren>(),
                         PricuvaRezijePosebniDioMasterVlasnici = new List<PricuvaRezijePosebniDioMasterVlasnici>()
                     };
@@ -99,12 +100,14 @@ namespace ZgradaApp
                                     var vlasniciPeriod = new PricuvaRezijePosebniDioMasterVlasnici
                                     {
                                         Id = 0,
-                                        PeriodId = period.Id,
+                                        PeriodId = period.Id, // ovo ovje ni ne treba
                                         VlasnikId = vlasnik.StanarId
                                     };
                                     posDioMaster.PricuvaRezijePosebniDioMasterVlasnici.Add(vlasniciPeriod);
                                 }
                             }
+                            posDioMaster.PeriodId = period.Id;
+                            break; // ovo je za mjesec, znaci samo *jedan* period smije biti validan jer je obracunska jedinica mjesec
                         }
                     }
                 }

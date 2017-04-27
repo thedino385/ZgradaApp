@@ -143,6 +143,127 @@
             });
         };
 
+        // __________________________________________________________
+        //      Kill Master
+        // __________________________________________________________
+        $scope.killMaster = function (ev) {
+            var brisanjeOk = false;
+            if ($scope.pdMaster.Status == 'a')
+                brisanjeOk = true;
+            var title = brisanjeOk ? 'Želite li obrisati posebni dio?' : 'Želite li zatvoriti posebni dio?';
+            var textContent = 'Odabrani posebni dio: ' + $scope.pdMaster.Naziv;
+            var desc = "Odabrana površina ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
+            var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
+
+            $mdDialog.show({
+                controller: confirmController,
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    title: title,
+                    textContent: textContent,
+                    desc: desc,
+                    brisanjeOk: brisanjeOk,
+                    okBtnCaption: okBtnCaption
+                }
+            })
+                .then(function (o) {
+                    if (brisanjeOk) {
+                        var index = DataService.currZgrada.Zgrade_PosebniDijeloviMaster.indexOf($scope.pdMaster)
+                        DataService.currZgrada.Zgrade_PosebniDijeloviMaster.splice(index, 1);
+                    }
+                    else {
+                        $scope.pdMaster.Zatvoren = true;
+                        $scope.pdMaster.ZatvorenGodina = o.godina;
+                        $scope.pdMaster.ZatvorenMjesec = o.mjesec;
+                        $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
+                            child.Zatvoren = true;
+                            child.ZatvorenGodina = o.godina;
+                            child.ZatvorenMjesec = o.mjesec;
+
+                            child.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
+                                povrsina.Zatvoren = true;
+                                povrsina.ZatvorenGodina = o.godina;
+                                povrsina.ZatvorenMjesec = o.mjesec;
+                            });
+                            child.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
+                                prip.Zatvoren = true;
+                                prip.ZatvorenGodina = o.godina;
+                                prip.ZatvorenMjesec = o.mjesec;
+                            });
+                        });
+
+                        $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+                            period.Zatvoren = true;
+                            period.VrijediDoMjesec = o.mjesec;
+                            period.VrijediDoGodina = o.godina;
+
+                        });
+                    }
+                }
+                , function () {
+                    //alert('cancel je kliknut');
+                });
+        }
+
+
+        // __________________________________________________________
+        //          Kill / Zatvori posebni dio child
+        // __________________________________________________________
+        $scope.killpoChild = function (pdChild, ev) {
+            // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
+            // u suprotnom, gasi je
+            var brisanjeOk = false;
+            if (pdChild.Status == 'a')
+                brisanjeOk = true;
+            var title = brisanjeOk ? 'Želite li obrisati posebni dio?' : 'Želite li zatvoriti posebni dio?';
+            var textContent = 'Odabrani posebni dio: ' + pdChild.Naziv;
+            var desc = "Odabrana površina ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
+            var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
+
+            $mdDialog.show({
+                controller: confirmController,
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    title: title,
+                    textContent: textContent,
+                    desc: desc,
+                    brisanjeOk: brisanjeOk,
+                    okBtnCaption: okBtnCaption
+                }
+            })
+                .then(function (o) {
+                    if (brisanjeOk) {
+                        var index = $scope.pdMaster.Zgrade_PosebniDijeloviChild.indexOf(pdChild)
+                        $scope.pdMaster.Zgrade_PosebniDijeloviChild.splice(index, 1);
+                    }
+                    else {
+                        pdChild.Zatvoren = true;
+                        pdChild.ZatvorenGodina = o.godina;
+                        pdChild.ZatvorenMjesec = o.mjesec;
+                        pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
+                            povrsina.Zatvoren = true;
+                            povrsina.ZatvorenGodina = o.godina;
+                            povrsina.ZatvorenMjesec = o.mjesec;
+                        });
+                        pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
+                            prip.Zatvoren = true;
+                            prip.ZatvorenGodina = o.godina;
+                            prip.ZatvorenMjesec = o.mjesec;
+                        });
+                    }
+                }
+                , function () {
+                    //alert('cancel je kliknut');
+                });
+        }
 
         // __________________________________________________________
         //          Kill / Zatvori povrsinu

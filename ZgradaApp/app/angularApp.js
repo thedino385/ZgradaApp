@@ -31,7 +31,7 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/pricuvaRezije/godina.html',
             controller: 'godinaCtrl'
         })
-
+        
 
 
 

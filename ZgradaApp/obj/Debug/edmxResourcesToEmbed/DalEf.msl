@@ -41,6 +41,7 @@
     <EntitySetMapping Name="PricuvaRezijeMjesec">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec">
         <MappingFragment StoreEntitySet="PricuvaRezijeMjesec">
+          <ScalarProperty Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" ColumnName="ObracunRezijaCijenaUkupnoPoBrojuClanova" />
           <ScalarProperty Name="ObracunRezijeCijenaUkupno" ColumnName="ObracunRezijeCijenaUkupno" />
           <ScalarProperty Name="ObracunPricuvaCijenaUkupno" ColumnName="ObracunPricuvaCijenaUkupno" />
           <ScalarProperty Name="ObracunPricuvaCijenaM2" ColumnName="ObracunPricuvaCijenaM2" />
@@ -91,6 +92,7 @@
     <EntitySetMapping Name="PricuvaRezijePosebniDioMasteri">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasteri">
         <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasteri">
+          <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
           <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
           <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
           <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
@@ -283,6 +285,16 @@
           <ScalarProperty Name="Adresa" ColumnName="Adresa" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
           <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PricuvaRezijeGodina_StanjeOd">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeGodina_StanjeOd">
+        <MappingFragment StoreEntitySet="PricuvaRezijeGodina_StanjeOd">
+          <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
+          <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
+          <ScalarProperty Name="PrivuvaRezijeGodId" ColumnName="PrivuvaRezijeGodId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

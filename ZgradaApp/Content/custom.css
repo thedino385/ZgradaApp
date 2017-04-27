@@ -74,14 +74,10 @@
 
 .redCell {
     color: #a94442;
-    height: 100%;
-    width: 100%;
 }
 
 .greenCell {
     color: #449d44;
-    height: 100%;
-    width: 100%;
 }
 
 .greenCellBack {
@@ -103,4 +99,8 @@ md-content {
 
 .indigoColor {
     color: rgb(57,73,171);
+}
+
+.grayColor {
+    color: gray;
 }

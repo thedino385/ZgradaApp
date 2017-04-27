@@ -48,6 +48,18 @@
         });
     }
 
+    var pricuvaRezijeCreateOrUpdate = function (zgradaObj) {
+        return $http.post('../api/data/pricuvaRezijeCreateOrUpdate', zgradaObj);
+    }
+
+    var getPricuvaRezijeGodinaTable = function (zgradaId, godina) {
+        return $http({
+            url: '../api/data/getPricuvaRezijeGodinaTable',
+            method: "GET",
+            params: { zgradaId: zgradaId, godina: godina }
+        });
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -57,6 +69,8 @@
 
         praznaPricuvaRezijeCreate: praznaPricuvaRezijeCreate,
         pricuvaZaMjesecCreate: pricuvaZaMjesecCreate,
+        pricuvaRezijeCreateOrUpdate: pricuvaRezijeCreateOrUpdate,
+        getPricuvaRezijeGodinaTable: getPricuvaRezijeGodinaTable,
 
         getSifarnikRashoda: getSifarnikRashoda,
         sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,

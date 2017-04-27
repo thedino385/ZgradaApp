@@ -316,5 +316,106 @@ namespace ZgradaApp.Controllers
             catch (Exception ex) { return InternalServerError(); }
             
         }
+
+        [HttpPost]
+        [Route("api/data/pricuvaRezijeCreateOrUpdate")]
+        public async Task<IHttpActionResult> PricuvaRezijeCreateOrUpdate(Zgrade zgrada)
+        {
+            try
+            {
+                foreach (var prGod in zgrada.PricuvaRezijeGodina)
+                {
+                    prGod.ZgradaId = zgrada.Id;
+                    if(prGod.Id == 0)
+                    {
+                        _db.PricuvaRezijeGodina.Add(prGod);
+                    }
+                    else
+                    {
+                        // brisanja nema, znaci samo update moze
+                        var target = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.Id == prGod.Id);
+
+                        foreach (var stanje in prGod.PricuvaRezijeGodina_StanjeOd)
+                        {
+                            _db.PricuvaRezijeGodina_StanjeOd.Attach(stanje);
+                            _db.Entry(stanje).State = EntityState.Modified;
+                        }
+
+                        foreach (var prMj in prGod.PricuvaRezijeMjesec)
+                        {
+                            prMj.PrivuvaRezijeGodId = prGod.Id;
+                            if(prMj.Status == "a")
+                            {
+                                _db.PricuvaRezijeMjesec.Add(prMj);
+                            }
+                            else
+                            {
+                                // brisanja nema, dakle status je 'u'
+                                foreach (var master in prMj.PricuvaRezijePosebniDioMasteri)
+                                {
+                                    _db.PricuvaRezijePosebniDioMasteri.Attach(master);
+                                    _db.Entry(master).State = EntityState.Modified;
+
+                                    foreach (var vlasnik in master.PricuvaRezijePosebniDioMasterVlasnici)
+                                    {
+                                        _db.PricuvaRezijePosebniDioMasterVlasnici.Attach(vlasnik);
+                                        _db.Entry(vlasnik).State = EntityState.Modified;
+                                    }
+
+                                    foreach (var child in master.PricuvaRezijePosebniDioChildren)
+                                    {
+                                        _db.PricuvaRezijePosebniDioChildren.Attach(child);
+                                        _db.Entry(child).State = EntityState.Modified;
+
+                                        foreach (var povrsina in child.PricuvaRezijePosebniDioChildPovrsine)
+                                        {
+                                            _db.PricuvaRezijePosebniDioChildPovrsine.Attach(povrsina);
+                                            _db.Entry(povrsina).State = EntityState.Modified;
+                                        }
+                                        foreach (var prip in child.PricuvaRezijePosebniDioChildPripadci)
+                                        {
+                                            _db.PricuvaRezijePosebniDioChildPripadci.Attach(prip);
+                                            _db.Entry(prip).State = EntityState.Modified;
+                                        }
+                                    }
+                                }
+
+                                _db.PricuvaRezijeMjesec.Attach(prMj);
+                                _db.Entry(prMj).State = EntityState.Modified;
+                                // PITANJE: sto je sa njegovima childovima i grandchildovima????????
+                                // PricuvaRezijeGodina
+                                //      --- PricuvaRezijeGodina_StanjeOd ++
+                                //      --- PricuvaMjesec
+                                //              --- PricuvaRezijePosebniDioMasteri
+                                //                      --- PricuvaRezijePosebniDioChildren
+                                //                              --- PricuvaRezijePosebniDioChildPovrsine
+                                //                              --- PricuvaRezijePosebniDioChildPripadci
+                                //               --- PricuvaRezijePosebniDioMasterVlasnici
+                            }
+                        }
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpGet]
+        [Route("api/data/getPricuvaRezijeGodinaTable")]
+        public async Task<IHttpActionResult> GetPricuvaRezijeGodinaTable(int zgradaId, int godina)
+        {
+            try
+            {
+                var prGodina = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.ZgradaId == zgradaId && p.Godina == godina);
+                var masteri = await _db.Zgrade_PosebniDijeloviMaster.Where(p => p.ZgradaId == zgradaId).ToListAsync();
+                var stanari = await _db.Zgrade_Stanari.Where(p => p.ZgradaId == zgradaId).ToListAsync();
+                var masteriIds = masteri.Select(p => p.Id);
+                var pdChildovi = await _db.Zgrade_PosebniDijeloviChild.Where(p => masteriIds.Contains(p.ZgradaPosDioMasterId)).ToListAsync();
+
+                return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari, pdChildovi));
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
     }
 }

@@ -44,6 +44,8 @@
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeGodina_StanjeOd" Width="1.5" PointX="5.25" PointY="34.25" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

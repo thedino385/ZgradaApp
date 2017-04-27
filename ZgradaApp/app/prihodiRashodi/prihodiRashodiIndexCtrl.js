@@ -86,12 +86,13 @@
                         suma += parseFloat(rashodMjesec.Iznos);
                 });
             }
-            else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
-                $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
-                    if (rashodMjesec.Mjesec == mjesec)
-                        suma += parseFloat(rashodMjesec.Iznos);
-                });
-            }
+           
+            //else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
+            //    $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
+            //        if (rashodMjesec.Mjesec == mjesec)
+            //            suma += parseFloat(rashodMjesec.Iznos);
+            //    });
+            //}
             return suma;
         }
 

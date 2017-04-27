@@ -138,10 +138,12 @@
                                     </span>
                                 </div>
                             </td>
-                            <td></td>
+                            <td ng-class="{ greenCell: pdMaster.DugPretplata > 0, redCell: pdMaster.DugPretplata < 0 }">
+                                {{pdMaster.DugPretplata}}
+                            </td>
                             <td>{{pdMaster.Zaduzenje}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{pdMaster.Uplaceno}}</td>
+                            <td>{{pdMaster.StanjeOd}}</td>
                             <td ng-show="cijenaPricuvaVisible"><input type="text" size="5" ng-model="pdMaster.ObracunPricuvaCijenaSlobodanUnos" /></td>
                             <td ng-show="cijenaRezijeZaSvakiVisible"><input type="text" size="5" ng-model="pdMaster.ObracunRezijeCijenaSlobodanUnos" /></td>
                             <td ng-show="cijenaRezijePoBrojuVisible"><input type="text" size="5" ng-model="pdMaster.ObracunRezijeBrojClanova" /></td>

@@ -1,4 +1,16 @@
-﻿angularApp.filter('validZaMjesec', function () {
+﻿angularApp.filter('dugColorFilter', function () {
+    return function (dug) {
+
+        if (parseFloat(dug) < 0)
+            return 'redCell';
+        else
+            return 'greenCell';
+
+    }
+});
+
+
+angularApp.filter('validZaMjesec', function () {
     return function (vlasniciPeriod, mjesec, godina) {
 
         // http://stackoverflow.com/questions/15196161/angularjs-how-to-structure-a-custom-filter-with-ng-repeat-to-return-items-cond

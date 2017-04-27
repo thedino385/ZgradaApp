@@ -55,6 +55,7 @@
             if ($scope.PricuvaRezijeZaMjesec.Id == 0) {
                 zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
                     if (prGod.Godina == godina) {
+                        $scope.PricuvaRezijeZaMjesec.Status = 'a';
                         prGod.PricuvaRezijeMjesec.push($scope.PricuvaRezijeZaMjesec);
                     }
                 });
@@ -64,6 +65,7 @@
                     if (prGod.Godina == godina) {
                         prGod.PricuvaRezijeMjesec.forEach(function (prMj) {
                             if (prMj.Mjesec == mjesec) {
+                                $scope.PricuvaRezijeZaMjesec.Status = 'u';
                                 prMj = $scope.PricuvaRezijeZaMjesec;
                             }
                         });
@@ -99,7 +101,7 @@
                     pdMaster.PricuvaRezijePosebniDioChildren.forEach(function (pdChild) {
                         pdChild.PricuvaRezijePosebniDioChildPovrsine.forEach(function (povrsina) {
                             pricuvaZaMaster += parseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(povrsina.Koef) : 1);
-                           // console.log('PricuvaRezije, povrsine ' + pricuvaZaMaster);
+                            // console.log('PricuvaRezije, povrsine ' + pricuvaZaMaster);
                         });
                         pdChild.PricuvaRezijePosebniDioChildPripadci.forEach(function (prip) {
                             pricuvaZaMaster += parseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(prip.Koef) : 1);
@@ -141,6 +143,9 @@
                             povrsinaPD += parseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(prip.Koef) : 1);
                         });
                     });
+                    console.log('$scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno ' + $scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno);
+                    console.log('povrsinaPD ' + povrsinaPD);
+                    console.log('povrsinaZgrade ' + povrsinaZgrade());
                     rezijeZaMaster = parseFloat(povrsinaPD) / parseFloat(povrsinaZgrade()) * parseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno);
                     console.log('PricuvaRezije, rezije raspodjela od ukupno: ' + rezijeZaMaster);
                 }
@@ -166,6 +171,52 @@
                 }
 
                 pdMaster.Zaduzenje = parseFloat(pricuvaZaMaster + rezijeZaMaster).toFixed(2);
+
+                // Uplaceno  se vuse iz Prihoda - suma prihoda za pdMasterId za ovaj mjesec
+                var uplaceno = 0;
+                $scope.zgradaObj.PrihodiRashodi.forEach(function (prihodiRashodi) {
+                    if (prihodiRashodi.Godina == $scope.godina) {
+                        console.log('CP1');
+                        prihodiRashodi.PrihodiRashodi_Prihodi.forEach(function (prihodi) {
+                            console.log('CP1');
+                            console.log(prihodi.Mjesec == $scope.mjesec);
+                            console.log(prihodi.PosebniDioMasterId == pdMaster.Id);
+                            if (prihodi.Mjesec == $scope.mjesec && prihodi.PosebniDioMasterId == pdMaster.PosebniDioMasterId) {
+                                uplaceno += parseFloat(prihodi.Iznos)
+                            }
+                        });
+                    }
+                });
+                pdMaster.Uplaceno = parseFloat(uplaceno).toFixed(2);
+
+                // StanjeOd - ako je prvi mjesec, stanje se cupa iz PricuvaRezijeGodina_StanjeOd za posebniDioMasterId
+                // za ostale mjesece, StanjeOd je Dug/Pretplata iz proslog mjeseca
+                if ($scope.mjesec == 1) {
+                    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
+                        if (prGod.Godina == godina) {
+                            prGod.PricuvaRezijeGodina_StanjeOd.forEach(function (stanje) {
+                                if (stanje.PosebniDioMasterId == pdMaster)
+                                    pdMaster.StanjeOd = stanje.StanjeOd.toFixed(2);;
+                            });
+                        }
+                    });
+                }
+                else {
+                    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
+                        if (prGod.Godina == godina) {
+                            prGod.PricuvaRezijeMjesec.forEach(function (mjesec) {
+                                if (mjesec.Mjesec == $scope.mjesec - 1)
+                                    mjesec.PricuvaRezijePosebniDioMasteri.forEach(function (m) {
+                                        if (m.PosebniDioMasterId == pdMaster.Id)
+                                            pdMaster.StanjeOd = m.StanjeOd.toFixed(2);;
+                                    });
+                            });
+                        }
+                    });
+                }
+
+                // Dug/Pretplata = Uplaceno + StanjeOd - Zaduzenje
+                pdMaster.DugPretplata = (parseFloat(pdMaster.Uplaceno) + parseFloat(pdMaster.StanjeOd) - parseFloat(pdMaster.Zaduzenje)).toFixed(2);;
             });
             $scope.obracunKreiran = true;
         }
@@ -175,16 +226,36 @@
             $scope.PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (pdMaster) {
                 pdMaster.PricuvaRezijePosebniDioChildren.forEach(function (pdChild) {
                     pdChild.PricuvaRezijePosebniDioChildPovrsine.forEach(function (povrsina) {
-                        total += parseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(povrsina.Koef) : 1);
+                        //total += parseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(povrsina.Koef) : 1);
+                        total += parseFloat(povrsina.Povrsina);
                     });
                     pdChild.PricuvaRezijePosebniDioChildPripadci.forEach(function (prip) {
-                        total += parseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(prip.Koef) : 1);
+                        //total += parseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(prip.Koef) : 1);
+                        total += parseFloat(prip.Povrsina);
                     });
                 });
             });
             console.log('Povrisna zgrade: ' + total);
             return total;
         }
+
+        //var povrsinaZgrade = function () {
+        //    var total = 0;
+        //    $scope.zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
+        //        pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
+        //            pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
+        //                //total += parseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(povrsina.Koef) : 1);
+        //                total += parseFloat(povrsina.Povrsina);
+        //            });
+        //            pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
+        //                //total += parseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(prip.Koef) : 1);
+        //                total += parseFloat(prip.Povrsina);
+        //            });
+        //        });
+        //    });
+        //    console.log('Povrisna zgrade: ' + total);
+        //    return total;
+        //}
 
 
         var ukupanBrojLjudi = function () {

@@ -1,0 +1,70 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak name="frm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>master naziv</h3>
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <br />
+                <div class="btn-group">
+                    <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="3" style="vertical-align: middle">
+                                Prihodi
+                            </th>
+                            <th colspan="2" style="vertical-align: middle">
+                                Zaduženja
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="vertical-align: middle">
+                                Mjesec
+                            </th>
+                            <th style="vertical-align: middle">
+                                Opis
+                            </th>
+                            <th style="vertical-align: middle">
+                                Iznos
+                            </th>
+                            <th style="vertical-align: middle">
+                                Iznos
+                            </th>
+                            <th style="vertical-align: middle">
+                                ???
+                            </th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                      <tr>
+                          <td></td>
+                          <td colspan="2">tablica prihodi</td>
+                          <td colspan="2">tablica zaduzenja</td>
+                      </tr>
+                  </tbody>
+                </table>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="cancel()">
+                Odustani
+            </md-button>
+            <md-button ng-disabled="!obracunKreiran" class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

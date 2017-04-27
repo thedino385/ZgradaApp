@@ -23,9 +23,9 @@
                     <md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Prihodi rashodi" ng-click="goToPrihodiRashodi()">
                         <md-icon md-svg-icon="/Content/icons/trending-up.svg" style="fill: greenyellow"></md-icon>
                     </md-button>
-                    <md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Popis posebnih dijelova" ng-click="goToPrihodiRashodi()">
+                    <!--<md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Popis posebnih dijelova" ng-click="goToPrihodiRashodi()">
                         <md-icon md-svg-icon="/Content/icons/account-card-details.svg" style="fill: greenyellow"></md-icon>
-                    </md-button>
+                    </md-button>-->
 
                     <md-button class="md-icon-button" aria-label="More">
                         <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
@@ -49,6 +49,9 @@
                                 Vlasnik/Vlasnici: Jozo Burgija, Nedjeljko Subotic
                             </p>
                         </div>
+                        <button type="button" class="btn btn-default btn-sm md-avatar" title="Kartica posebnog dijela" ng-click="kartica(pd)">
+                            <md-icon md-svg-icon="/Content/icons/account-card-details.svg" style="fill: indigo"></md-icon>
+                        </button>
                         <button type="button" class="btn btn-default btn-sm md-avatar" title="Dijelovi" ng-click="edit(pd.Id)">
                             <md-icon md-svg-icon="/Content/icons/animation.svg" style="fill: indigo"></md-icon>
                         </button>

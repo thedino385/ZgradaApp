@@ -34,6 +34,15 @@
     <Property Name="ZgradaId" Type="int" Nullable="false" />
     <Property Name="Godina" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="PricuvaRezijeGodina_StanjeOd">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PrivuvaRezijeGodId" Type="int" Nullable="false" />
+    <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
+    <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
   <EntityType Name="PricuvaRezijeMjesec">
     <Key>
       <PropertyRef Name="Id" />
@@ -47,6 +56,7 @@
     <Property Name="ObracunPricuvaCijenaM2" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunPricuvaCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunRezijeCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
     <Key>
@@ -94,6 +104,7 @@
     <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PeriodId" Type="int" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioMasterVlasnici">
     <Key>
@@ -267,6 +278,18 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <Property Name="Mjesto" Type="varchar" MaxLength="200" />
     <Property Name="Napomena" Type="varchar(max)" />
   </EntityType>
+  <Association Name="FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina">
+    <End Role="PricuvaRezijeGodina" Type="Self.PricuvaRezijeGodina" Multiplicity="1" />
+    <End Role="PricuvaRezijeGodina_StanjeOd" Type="Self.PricuvaRezijeGodina_StanjeOd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaRezijeGodina">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaRezijeGodina_StanjeOd">
+        <PropertyRef Name="PrivuvaRezijeGodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PricuvaRezijeGodina_Zgrade">
     <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
     <End Role="PricuvaRezijeGodina" Type="Self.PricuvaRezijeGodina" Multiplicity="*" />
@@ -475,6 +498,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KompanijeUpravitelji" EntityType="Self.KompanijeUpravitelji" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijeGodina" EntityType="Self.PricuvaRezijeGodina" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PricuvaRezijeGodina_StanjeOd" EntityType="Self.PricuvaRezijeGodina_StanjeOd" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijeMjesec" EntityType="Self.PricuvaRezijeMjesec" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijePosebniDioChildPovrsine" EntityType="Self.PricuvaRezijePosebniDioChildPovrsine" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijePosebniDioChildPripadci" EntityType="Self.PricuvaRezijePosebniDioChildPripadci" Schema="dbo" store:Type="Tables" />
@@ -503,6 +527,10 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     [vZgrade].[Napomena] AS [Napomena]
     FROM [dbo].[vZgrade] AS [vZgrade]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina" Association="Self.FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina">
+      <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
+      <End Role="PricuvaRezijeGodina_StanjeOd" EntitySet="PricuvaRezijeGodina_StanjeOd" />
+    </AssociationSet>
     <AssociationSet Name="FK_PricuvaRezijeGodina_Zgrade" Association="Self.FK_PricuvaRezijeGodina_Zgrade">
       <End Role="Zgrade" EntitySet="Zgrade" />
       <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />

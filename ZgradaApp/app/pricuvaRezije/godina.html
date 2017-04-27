@@ -39,9 +39,9 @@
                     <th style="vertical-align: middle">
                         Posebni<br />dio
                     </th>
-                    <th style="vertical-align: middle">
+                    <!--<th style="vertical-align: middle">
                         Posebni<br />dijelovi
-                    </th>
+                    </th>-->
                     <th style="vertical-align: middle">
                         Dug/<br>pretplata
                     </th>
@@ -65,14 +65,102 @@
                     <th style="vertical-align: middle" class="{{clsMjesec12}}" ng-click="openMjesecno(12, $event)">12</th>
 
                     <th style="vertical-align: middle; text-align: end">
-                        Stanje<br />31.12.{{SelectedGodina-1}}.
+                        Stanje<br />31.12.{{selectedGodina-1}}.
                     </th>
                 </tr>
             </thead>
-            <tbody></tbody>
-            <tr>
-                <td>table body</td>
-            </tr>
+            <tbody>
+                <tr ng-repeat="rec in godinaTable">
+                    <td>
+                        <div ng-repeat="vlasnik in rec.Vlasnici">
+                            {{vlasnik}}<br />
+                        </div>
+                    </td>
+                    <td>{{rec.PosebniDioMasterNaziv}}</td>
+                    <td ng-class="{ greenCell: rec.Dug > 0, redCell: rec.Dug < 0 }">
+                        {{rec.Dug | number: 2}}
+                    </td>
+                    <td>
+                        {{rec.Zaduzenje | number: 2}}
+                    </td>
+                    <td>
+                        {{rec.Uplaceno | number: 2}}
+                    </td>
+                    <td>
+                        {{rec.Mj1 | number: 2}} <br />
+                        <div ng-repeat="poChild in rec.PDChildrenMj1">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj2 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj2">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj3 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj3">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj4 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj4">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj5 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj5">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj6 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj6">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj7 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj7">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj8 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj8">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj9 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj9">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj10 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj10">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj11 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj11">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td>
+                        {{rec.Mj12 | number: 2}}
+                        <div ng-repeat="poChild in rec.PDChildrenMj12">
+                            <span style="color: indigo; font-size: 10px">{{poChild}}</span><br />
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
         </table>
 
         <hr />

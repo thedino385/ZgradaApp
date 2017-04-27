@@ -70,6 +70,13 @@ namespace ZgradaApp
         public string Status { get; set; }
     }
 
+    public partial class PricuvaRezijeMjesec
+    {
+        public string Status { get; set; }
+    }
+
+    
+
     // OLD
 
     //public partial class Stanovi_PosebniDijelovi

@@ -1,5 +1,5 @@
-﻿angularApp.controller('posebniDijeloviMasterListCtrl', ['$scope', '$location', '$routeParams', '$rootScope', 'DataService',
-    function ($scope, $location, $routeParams, $rootScope, DataService) {
+﻿angularApp.controller('posebniDijeloviMasterListCtrl', ['$scope', '$location', '$routeParams', '$rootScope', 'DataService', '$mdDialog',
+    function ($scope, $location, $routeParams, $rootScope, DataService, $mdDialog) {
 
         $scope.zgradaMsg = '';
         if ($routeParams) {
@@ -34,16 +34,23 @@
             $location.path('/pricuvaRezije/' + $scope.zgrada.Id);
         }
 
-        //$scope.goToStanovi = function (zgradaId) {
-        //    $location.path('/stanovi/' + zgradaId);
-        //}
-
-        //$scope.goToPregled = function (zgradaId) {
-        //    $location.path('/pregled/' + zgradaId);
-        //}
-
-        //$scope.goToZaduzivanje = function (zgradaId) {
-        //    $location.path('/zaduzivanje/' + zgradaId);
-        //}
-
+        // _________________________________________________________
+        //              Modal kartica
+        // _________________________________________________________
+        $scope.kartica = function (pdMaster, ev) {
+            $mdDialog.show({
+                controller: 'indexKsCtrl',
+                templateUrl: 'app/ks/indexKs.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    zgradaObj: $scope.zgrada,
+                    pdMaster: pdMaster,
+                }
+            }).then(function (zgradaObj) {
+            }, function (zgradaObj) {
+            });
+        };
     }]);
