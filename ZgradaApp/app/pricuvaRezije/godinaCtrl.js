@@ -148,7 +148,33 @@
             $location.path('/zgrade');
         }
 
-      
+        // _________________________________________________________
+        //              Modal kartica
+        // _________________________________________________________
+        $scope.kartica = function (pdMasterId, ev) {
+            console.log(pdMasterId);
+            var pdmaster = null;
+            $scope.zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (master) {
+                console.log(master.Id == pdMasterId);
+                if (parseInt(master.Id) == parseInt(pdMasterId))
+                    pdmaster = master;
+            });
+            console.log(pdmaster);
+            $mdDialog.show({
+                controller: 'indexKsCtrl',
+                templateUrl: 'app/ks/indexKs.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    zgradaObj: $scope.zgradaObj,
+                    pdMaster: pdmaster,
+                }
+            }).then(function () {
+            }, function () {
+            });
+        };
 
     }])
     //.config(function ($mdThemingProvider) {

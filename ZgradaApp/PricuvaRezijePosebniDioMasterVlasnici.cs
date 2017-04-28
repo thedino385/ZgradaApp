@@ -18,6 +18,7 @@ namespace ZgradaApp
         public int PricuvaRezijePosebniDioMasterId { get; set; }
         public Nullable<int> PeriodId { get; set; }
         public Nullable<int> VlasnikId { get; set; }
+        public Nullable<decimal> Udio { get; set; }
     
         public virtual PricuvaRezijePosebniDioMasteri PricuvaRezijePosebniDioMasteri { get; set; }
     }

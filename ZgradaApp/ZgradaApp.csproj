@@ -395,6 +395,7 @@
     <Content Include="Content\custom.css" />
     <Content Include="Content\icons\arrow-expand-all.svg" />
     <Content Include="Content\icons\delete.svg" />
+    <Content Include="Content\icons\domain.svg" />
     <Content Include="Content\icons\menu.svg" />
     <Content Include="Content\icons\minus-circle.svg" />
     <Content Include="Content\icons\more_vert.svg" />

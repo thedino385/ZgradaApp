@@ -109,6 +109,7 @@
     <EntitySetMapping Name="PricuvaRezijePosebniDioMasterVlasnici">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici">
         <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasterVlasnici">
+          <ScalarProperty Name="Udio" ColumnName="Udio" />
           <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
           <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
           <ScalarProperty Name="PricuvaRezijePosebniDioMasterId" ColumnName="PricuvaRezijePosebniDioMasterId" />

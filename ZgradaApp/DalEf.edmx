@@ -119,6 +119,7 @@
           <Property Name="PricuvaRezijePosebniDioMasterId" Type="int" Nullable="false" />
           <Property Name="PeriodId" Type="int" />
           <Property Name="VlasnikId" Type="int" />
+          <Property Name="Udio" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PrihodiRashodi">
           <Key>
@@ -825,6 +826,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="PeriodId" Type="Int32" />
           <Property Name="VlasnikId" Type="Int32" />
           <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasterVlasnici" ToRole="PricuvaRezijePosebniDioMasteri" />
+          <Property Name="Udio" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PrihodiRashodi">
           <Key>
@@ -1348,6 +1350,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PricuvaRezijePosebniDioMasterVlasnici">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici">
               <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasterVlasnici">
+                <ScalarProperty Name="Udio" ColumnName="Udio" />
                 <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
                 <ScalarProperty Name="PricuvaRezijePosebniDioMasterId" ColumnName="PricuvaRezijePosebniDioMasterId" />

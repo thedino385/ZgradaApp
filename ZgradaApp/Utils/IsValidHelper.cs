@@ -101,7 +101,8 @@ namespace ZgradaApp
                                     {
                                         Id = 0,
                                         PeriodId = period.Id, // ovo ovje ni ne treba
-                                        VlasnikId = vlasnik.StanarId
+                                        VlasnikId = vlasnik.StanarId,
+                                        Udio = vlasnik.Udio
                                     };
                                     posDioMaster.PricuvaRezijePosebniDioMasterVlasnici.Add(vlasniciPeriod);
                                 }

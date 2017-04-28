@@ -114,6 +114,7 @@
     <Property Name="PricuvaRezijePosebniDioMasterId" Type="int" Nullable="false" />
     <Property Name="PeriodId" Type="int" />
     <Property Name="VlasnikId" Type="int" />
+    <Property Name="Udio" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PrihodiRashodi">
     <Key>

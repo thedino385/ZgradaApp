@@ -216,6 +216,7 @@
     <Property Name="PeriodId" Type="Int32" />
     <Property Name="VlasnikId" Type="Int32" />
     <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasterVlasnici" ToRole="PricuvaRezijePosebniDioMasteri" />
+    <Property Name="Udio" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PrihodiRashodi">
     <Key>

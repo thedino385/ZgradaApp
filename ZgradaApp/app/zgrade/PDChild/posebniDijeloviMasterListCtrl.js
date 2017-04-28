@@ -49,8 +49,8 @@
                     zgradaObj: $scope.zgrada,
                     pdMaster: pdMaster,
                 }
-            }).then(function (zgradaObj) {
-            }, function (zgradaObj) {
+            }).then(function () {
+            }, function () {
             });
         };
     }]);

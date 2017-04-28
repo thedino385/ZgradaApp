@@ -1,4 +1,14 @@
-﻿<md-dialog flex="80">
+﻿<style>
+    .table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
+        padding: 1px;
+    }
+
+    .borderless td, .borderless th {
+        border: none !important;
+    }
+</style>
+
+<md-dialog flex="80">
     <form ng-cloak name="frm">
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -6,7 +16,7 @@
                     <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
                 </md-button>
 
-                <h3 flex md-truncate>master naziv</h3>
+                <h3 flex md-truncate>{{pdMaster.Naziv}}</h3>
                 <md-button class="md-icon-button" aria-label="More">
                     <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
                 </md-button>
@@ -15,56 +25,133 @@
         <md-dialog-content>
             <div class="md-dialog-content">
 
-                <br />
                 <div class="btn-group">
                     <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
                 </div>
-
-                <table class="table table-hover">
+                <hr />
+                <table class="table table-condensed borderless" ng-show="tableVisible">
                     <thead>
                         <tr>
-                            <th colspan="3" style="vertical-align: middle">
-                                Prihodi
+                            <th style="vertical-align middle; text-align: left">
+                                Mjesec
                             </th>
-                            <th colspan="2" style="vertical-align: middle">
-                                Zaduženja
+                            <th style="vertical-align: middle; text-align: center">
+                                Iznos prihoda
+                            </th>
+                            <th style="vertical-align: middle; text-align: right">
+                                
+                            </th>
+                            <th style="vertical-align: middle; text-align: right">
+                                Iznos zaduženja
+                            </th>
+                            <th style="vertical-align: middle; text-align: right">
+                                
                             </th>
                         </tr>
                         <tr>
-                            <th style="vertical-align: middle">
-                                Mjesec
-                            </th>
-                            <th style="vertical-align: middle">
-                                Opis
-                            </th>
-                            <th style="vertical-align: middle">
-                                Iznos
-                            </th>
-                            <th style="vertical-align: middle">
-                                Iznos
-                            </th>
-                            <th style="vertical-align: middle">
-                                ???
-                            </th>
+                            <td colspan="5"></td>
                         </tr>
                     </thead>
-                  <tbody>
-                      <tr>
-                          <td></td>
-                          <td colspan="2">tablica prihodi</td>
-                          <td colspan="2">tablica zaduzenja</td>
-                      </tr>
-                  </tbody>
+                    <tbody ng-repeat="mjesecBr in mjeseci">
+                        <!--vlasnici-->
+                        <tr>
+                            <td>
+                                <table class="table table-condensed borderless">
+                                    <tr ng-repeat="pr in prihodi | filter: { Mjesec: mjesecBr }">
+                                        <td ng-show="$index == 0" style="color: indigo; vertical-align: middle"><b>{{pr.Mjesec}}.</b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <!--<td>
+                                <table class="table table-condensed borderless">
+                                    <tr ng-repeat="rec in zaduzenja | filter: { Mjesec: mjesecBr }">
+                                        <td style="vertical-align: middle; text-align: center; color: indigo; font-size: 10px">
+                                            <div ng-repeat="master in rec.PricuvaRezijePosebniDioMasteri | filter: { PosebniDioMasterId: pdMaster.Id }">
+                                                <div ng-repeat="prChild in master.PricuvaRezijePosebniDioChildren">
+                                                    <div ng-repeat="zgradaMaster in zgradaObj.Zgrade_PosebniDijeloviMaster | filter: { Id: master.PricuvaRezijePosebniDioMasteri } ">
+                                                        <div ng-repeat="zgradaChild in zgradaMaster.Zgrade_PosebniDijeloviChild | filter: { Id: prChild.PosebniDioChildId }">
+                                                            <span>{{zgradaChild.Naziv}}</span><br>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>-->
+                            <td colspan="2">
+                                <table class="table table-condensed borderless">
+                                    <tr ng-repeat="pr in prihodi | filter: { Mjesec: mjesecBr }">
+                                        <!--<td style="color: indigo; vertical-align: middle"><b>{{pr.Mjesec}}.</b></td>-->
+                                        <td style="vertical-align: middle; text-align: left">{{pr.Opis}}</td>
+                                        <td style="vertical-align: middle; text-align: right">{{pr.Iznos | number: 2}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="table table-condensed borderless">
+                                    <tr ng-repeat="rec in zaduzenja | filter: { Mjesec: mjesecBr }">
+                                        <td style="vertical-align: middle; text-align: right">
+                                            <span ng-repeat="master in rec.PricuvaRezijePosebniDioMasteri">
+                                                {{master.Zaduzenje | number: 2}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td color: indigo; font-size: 11px>Vlasnici:</td>
+                            <td colspan="4" style="vertical-align: middle; text-align: left; color: indigo; font-size: 11px">
+                                <span ng-repeat="rec in zaduzenja | filter: { Mjesec: mjesecBr }">
+                                    <span ng-repeat="master in rec.PricuvaRezijePosebniDioMasteri | filter: { PosebniDioMasterId: pdMaster.Id }">
+                                        <span ng-repeat="vlasnik in master.PricuvaRezijePosebniDioMasterVlasnici | filter: { PeriodId: master.PeriodId }">
+                                            <span ng-repeat="zgradaStanar in zgradaObj.Zgrade_Stanari | filter: { Id: vlasnik.VlasnikId } ">
+                                                {{zgradaStanar.Ime}} {{zgradaStanar.Prezime}}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td color: indigo; font-size: 11px>Posebni dijelovi:</td>
+                            <td colspan="4" style="vertical-align: middle; text-align: left; color: indigo; font-size: 11px">
+                                <span ng-repeat="rec in zaduzenja | filter: { Mjesec: mjesecBr }">
+                                    <span>
+                                        <span ng-repeat="master in rec.PricuvaRezijePosebniDioMasteri | filter: { PosebniDioMasterId: pdMaster.Id }">
+                                            <span ng-repeat="prChild in master.PricuvaRezijePosebniDioChildren">
+                                                <span ng-repeat="zgradaMaster in zgradaObj.Zgrade_PosebniDijeloviMaster | filter: { Id: master.PricuvaRezijePosebniDioMasteri } ">
+                                                    <span ng-repeat="zgradaChild in zgradaMaster.Zgrade_PosebniDijeloviChild | filter: { Id: prChild.PosebniDioChildId }">
+                                                        {{zgradaChild.Naziv}}
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <tr>
+                        <th colspan="2" style="vertical-align:middle; text-align:right">Ukupno</th>
+                        <th style="vertical-align:middle; text-align:right">{{prihodiUkupno | number: 2}}</th>
+                        <th style="vertical-align:middle; text-align:right">{{zaduzenjaUkupno | number: 2}}</th>
+                        <th ng-class="{ greenCell: stanje > 0, redCell: stanje < 0 }" style="vertical-align:middle; text-align:right">{{stanje | number: 2}}</th>
+                    </tr>
+
                 </table>
             </div>
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button class="md-raised" ng-click="cancel()">
-                Odustani
+            <md-button class="md-raised primary" ng-click="cancel()">
+                Zatvori
             </md-button>
-            <md-button ng-disabled="!obracunKreiran" class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
