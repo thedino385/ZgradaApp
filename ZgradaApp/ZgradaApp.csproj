@@ -347,6 +347,8 @@
     <Content Include="app\pricuvaRezije\godinaCtrl.js" />
     <Content Include="app\pricuvaRezije\mjesecModal.html" />
     <Content Include="app\pricuvaRezije\mjesecModalCtrl.js" />
+    <Content Include="app\pricuvaRezije\stanjeZgradeModal.html" />
+    <Content Include="app\pricuvaRezije\stanjeZgradeModalCtrl.js" />
     <Content Include="app\prihodiRashodi\index.html" />
     <Content Include="app\prihodiRashodi\prihodiModal.html" />
     <Content Include="app\prihodiRashodi\prihodiModalCtrl.js" />

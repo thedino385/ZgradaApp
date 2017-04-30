@@ -38,6 +38,8 @@
                 $scope.povrsinaObj.Status = 'a';
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
                     if (child.Id == posebniDioChildId) {
+                        $scope.povrsinaObj.Status = 'a';
+                        child.Status = 'u';
                         child.Zgrade_PosebniDijeloviChild_Povrsine.push($scope.povrsinaObj);
                     }
                 });
@@ -47,6 +49,7 @@
                     child.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
                         if (povrsina.Id == povrsinaId) {
                             povrsina.Status = 'u';
+                            child.Status = 'u';
                             povrsina = $scope.povrsinaObj;
                         }
 

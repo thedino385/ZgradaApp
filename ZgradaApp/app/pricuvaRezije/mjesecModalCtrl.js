@@ -14,11 +14,10 @@
         $scope.cijenaRezijePoBrojuVisible = false;
         $scope.cijenaRezijeZaSvakiVisible = false;
         $scope.obracunKreiran = false;
-
         $scope.PricuvaRezijeZaMjesec = {};
 
         // ako nema pricuveRezije za odabrani mjesec, kreiraj praznu kolekciju za mjesecom i statusom
-        var found = false;
+        $scope.found = false;
         var master = [];
         zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
             if (prGod.Godina == godina) {
@@ -26,12 +25,13 @@
                 prGod.PricuvaRezijeMjesec.forEach(function (prMj) {
                     if (prMj.Mjesec == mjesec) {
                         $scope.PricuvaRezijeZaMjesec = prMj;
-                        found = true;
+                        $scope.found = true;
+                        alert('found');
                     }
                 });
             }
         });
-        if (!found) { // znaci da je novi mjesec za koji nije kreiran obracun
+        if (!$scope.found) { // znaci da je novi mjesec za koji nije kreiran obracun
             // okvako se poziva filter iz controllera
             //$scope.PricuvaRezijeZaMjesec = $filter('pricuvaRezijeMjesec')(master.PricuvaRezijeMjesec, mjesec, master.Godina, zgradaObj, master.Id);
             // ovako iz view-a
@@ -50,6 +50,20 @@
             )
         }
 
+        $scope.delete = function (ev) {
+            var c = confirm("potvrdire da želite obrisati obračuni kreirati ponovo");
+            if (c) {
+                DataService.pricuvaRezijeDeleteAndCreate($scope.zgradaObj.Id, mjesec, godina).then(
+                    function (result) {
+                        $scope.PricuvaRezijeZaMjesec = result.data;
+                    },
+                    function (result) {
+                        toastr.error('Brisanje obracuna nije uspjelo');
+                    }
+                ) 
+            }
+
+        };
 
         $scope.save = function () {
             if ($scope.PricuvaRezijeZaMjesec.Id == 0) {
@@ -91,6 +105,7 @@
             }
             var pricuvaZaMaster = 0;
             var rezijeZaMaster = 0;
+
             // pricuva
             // po m2
             $scope.PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (pdMaster) {
@@ -219,7 +234,10 @@
                 pdMaster.DugPretplata = (parseFloat(pdMaster.Uplaceno) + parseFloat(pdMaster.StanjeOd) - parseFloat(pdMaster.Zaduzenje)).toFixed(2);;
             });
             $scope.obracunKreiran = true;
+
         }
+
+
 
         var povrsinaZgrade = function () {
             var total = 0;

@@ -122,6 +122,29 @@
         };
 
 
+        // _________________________________________________________
+        //              Modal stanjeZgrade
+        // _________________________________________________________
+        $scope.openStanjeZgrade = function (mjesec, ev) {
+            $mdDialog.show({
+                controller: 'stanjeZgradeModalCtrl',
+                templateUrl: 'app/pricuvaRezije/stanjeZgradeModal.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    zgradaObj: $scope.zgradaObj,
+                    mjesec: mjesec,
+                    godina: $scope.selectedGodina
+                }
+            }).then(function () {
+               
+            }, function () {
+               
+            });
+        };
+
         $scope.saveAll = function () {
             save();
         }

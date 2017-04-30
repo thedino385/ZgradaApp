@@ -119,7 +119,7 @@ namespace ZgradaApp.Controllers
                 // posebniDijeloviChild - child mastera
                 foreach (var posebniDioChild in master.Zgrade_PosebniDijeloviChild)
                 {
-                    switch(posebniDioChild.Status)
+                    switch (posebniDioChild.Status)
                     {
                         case "a":
                             _db.Zgrade_PosebniDijeloviChild.Add(posebniDioChild);
@@ -140,7 +140,7 @@ namespace ZgradaApp.Controllers
                             foreach (var povrsina in posebniDioChild.Zgrade_PosebniDijeloviChild_Povrsine)
                             {
                                 povrsina.PosebniDioChildId = posebniDioChild.Id;
-                                switch(povrsina.Status)
+                                switch (povrsina.Status)
                                 {
                                     case "a":
                                         _db.Zgrade_PosebniDijeloviChild_Povrsine.Add(povrsina);
@@ -172,7 +172,7 @@ namespace ZgradaApp.Controllers
 
                 foreach (var period in master.Zgrade_PosebniDijeloviMaster_VlasniciPeriod)
                 {
-                    switch(period.Status)
+                    switch (period.Status)
                     {
                         case "a":
                             _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.Add(period);
@@ -224,7 +224,7 @@ namespace ZgradaApp.Controllers
                 foreach (var item in list)
                 {
                     item.CompanyId = companyId;
-                    switch(item.Status)
+                    switch (item.Status)
                     {
                         case "a":
                             _db.SifarnikRashoda.Add(item);
@@ -258,7 +258,7 @@ namespace ZgradaApp.Controllers
                 foreach (var prihodRashod in zgradaObj.PrihodiRashodi)
                 {
                     prihodRashod.ZgradaId = zgradaObj.Id;
-                    if(prihodRashod.Status == "a")
+                    if (prihodRashod.Status == "a")
                     {
                         _db.PrihodiRashodi.Add(prihodRashod);
                     }
@@ -307,14 +307,83 @@ namespace ZgradaApp.Controllers
         [Route("api/data/pricuvaZaMjesecCreate")]
         public async Task<IHttpActionResult> pricuvaZaMjesecCreate(int zgradaId, int prGodId, int mjesec, int godina)
         {
-            //return Ok(new PricuvaRezijeGodina { ZgradaId = zgradaId, Godina = godina, Status = "a" });
             var prMj = new PricuvaRezijeMjesec { Id = 0, PrivuvaRezijeGodId = prGodId, Mjesec = mjesec };
             try
             {
                 return Ok(await new IsValidHelper().CreatePricuvaMjesec(prMj, godina, zgradaId));
             }
             catch (Exception ex) { return InternalServerError(); }
-            
+
+        }
+
+
+
+        [HttpPost]
+        [Route("api/data/pricuvaRezijeDeleteAndCreate")]
+        public async Task<IHttpActionResult> PricuvaRezijeDeletee(int zgradaId, int mjesec, int godina)
+        {
+            var prMj = new PricuvaRezijeMjesec { Id = 0, Mjesec = mjesec };
+            try
+            {
+                var targetGodina = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.ZgradaId == zgradaId && p.Godina == godina);
+                var targetMjesec = targetGodina.PricuvaRezijeMjesec.FirstOrDefault(p => p.Mjesec == mjesec);
+                var childLIst = new List<int>();
+                var mLIst = new List<int>();
+                // masters
+                foreach (var m in targetMjesec.PricuvaRezijePosebniDioMasteri.ToList())
+                {
+                    mLIst.Add((int)m.PosebniDioMasterId);
+                    //chilovi
+                    foreach (var child in m.PricuvaRezijePosebniDioChildren)
+                    {
+                        // povrsine
+                        foreach (var povr in child.PricuvaRezijePosebniDioChildPovrsine.ToList())
+                        {
+                            //var dbPovrsina = await _db.PricuvaRezijePosebniDioChildPovrsine.FirstOrDefaultAsync(p => p.Id == povr.Id);
+                            //_db.PricuvaRezijePosebniDioChildPovrsine.Remove(dbPovrsina);
+                            _db.PricuvaRezijePosebniDioChildPovrsine.Attach(povr);
+                            _db.Entry(povr).State = EntityState.Deleted;
+                        }
+                        foreach (var prip in child.PricuvaRezijePosebniDioChildPripadci.ToList())
+                        {
+                            //var dbPrip = await _db.PricuvaRezijePosebniDioChildPripadci.FirstOrDefaultAsync(p => p.Id == prip.Id);
+                            //_db.PricuvaRezijePosebniDioChildPripadci.Remove(dbPrip);
+                            _db.PricuvaRezijePosebniDioChildPripadci.Attach(prip);
+                            _db.Entry(prip).State = EntityState.Deleted;
+                        }
+                        //_db.PricuvaRezijePosebniDioChildren.Remove(child);
+                        //var targetChild = await _db.PricuvaRezijePosebniDioChildren.FirstOrDefaultAsync(p => p.Id == child.Id);
+                        //_db.PricuvaRezijePosebniDioChildren.Remove(targetChild);
+                        childLIst.Add(child.PosebniDioChildId);
+                    }
+                    foreach (var vlasnik in m.PricuvaRezijePosebniDioMasterVlasnici.ToList())
+                    {
+                        //var dbVlasnik = await _db.PricuvaRezijePosebniDioMasterVlasnici.FirstOrDefaultAsync(p => p.Id == vlasnik.Id);
+                        //_db.PricuvaRezijePosebniDioMasterVlasnici.Remove(dbVlasnik);
+                        _db.PricuvaRezijePosebniDioMasterVlasnici.Attach(vlasnik);
+                        _db.Entry(vlasnik).State = EntityState.Deleted;
+                    }
+                }
+
+                foreach (var childId in childLIst)
+                {
+                    var targetChild = await _db.PricuvaRezijePosebniDioChildren.FirstOrDefaultAsync(p => p.PosebniDioChildId == childId);
+                    _db.PricuvaRezijePosebniDioChildren.Remove(targetChild);
+                }
+                foreach (var m in mLIst)
+                {
+                    var targetMaster = await _db.PricuvaRezijePosebniDioMasteri.FirstOrDefaultAsync(p => p.PosebniDioMasterId == m);
+                    _db.PricuvaRezijePosebniDioMasteri.Remove(targetMaster);
+                }
+                _db.PricuvaRezijeMjesec.Remove(targetMjesec);
+
+                await _db.SaveChangesAsync();
+                return Ok(await new IsValidHelper().CreatePricuvaMjesec(prMj, godina, zgradaId));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError();
+            }
         }
 
         [HttpPost]
@@ -326,7 +395,7 @@ namespace ZgradaApp.Controllers
                 foreach (var prGod in zgrada.PricuvaRezijeGodina)
                 {
                     prGod.ZgradaId = zgrada.Id;
-                    if(prGod.Id == 0)
+                    if (prGod.Id == 0)
                     {
                         _db.PricuvaRezijeGodina.Add(prGod);
                     }
@@ -344,7 +413,7 @@ namespace ZgradaApp.Controllers
                         foreach (var prMj in prGod.PricuvaRezijeMjesec)
                         {
                             prMj.PrivuvaRezijeGodId = prGod.Id;
-                            if(prMj.Status == "a")
+                            if (prMj.Status == "a")
                             {
                                 _db.PricuvaRezijeMjesec.Add(prMj);
                             }
@@ -382,15 +451,6 @@ namespace ZgradaApp.Controllers
 
                                 _db.PricuvaRezijeMjesec.Attach(prMj);
                                 _db.Entry(prMj).State = EntityState.Modified;
-                                // PITANJE: sto je sa njegovima childovima i grandchildovima????????
-                                // PricuvaRezijeGodina
-                                //      --- PricuvaRezijeGodina_StanjeOd ++
-                                //      --- PricuvaMjesec
-                                //              --- PricuvaRezijePosebniDioMasteri
-                                //                      --- PricuvaRezijePosebniDioChildren
-                                //                              --- PricuvaRezijePosebniDioChildPovrsine
-                                //                              --- PricuvaRezijePosebniDioChildPripadci
-                                //               --- PricuvaRezijePosebniDioMasterVlasnici
                             }
                         }
                     }
@@ -400,6 +460,8 @@ namespace ZgradaApp.Controllers
             }
             catch (Exception ex) { return InternalServerError(); }
         }
+
+
 
         [HttpGet]
         [Route("api/data/getPricuvaRezijeGodinaTable")]

@@ -33,8 +33,8 @@
             else {
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (posebniDioChild) {
                     if (posebniDioChild.Id == $scope.posebniDioChildObj.Id) {
-                        posebniDioChild.Status = 'u';
                         posebniDioChild = $scope.posebniDioChildObj;
+                        posebniDioChild.Status = 'u';
                     }
                 });
             }

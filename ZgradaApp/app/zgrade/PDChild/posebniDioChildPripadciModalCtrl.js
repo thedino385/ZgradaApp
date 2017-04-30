@@ -38,6 +38,8 @@
                 $scope.pripadakObj.Status = 'a';
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
                     if (child.Id == posebniDioChildId) {
+                        $scope.pripadakObj.Status = 'a';
+                        child.Status = 'u';
                         child.Zgrade_PosebniDijeloviChild_Pripadci.push($scope.pripadakObj);
                     }
                 });
@@ -47,6 +49,7 @@
                     child.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
                         if (prip.Id == pripadakId) {
                             prip.Status = 'u';
+                            child.Status = 'u';
                             prip = $scope.pripadakObj;
                         }
 

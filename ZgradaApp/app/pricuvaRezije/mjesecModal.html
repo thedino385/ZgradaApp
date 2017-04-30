@@ -18,6 +18,9 @@
                 <md-button class="md-icon-button" title="Expand" ng-click="settingsExpanded == false ? settingsExpanded = true : settingsExpanded = false">
                     <md-icon md-svg-icon="/Content/icons/arrow-expand-all.svg" ng-style="settingsExpanded == true ? {'fill': 'magenta'} : {'fill': 'yellowgreen'}" style="width: 32px; height: 32px"></md-icon>
                 </md-button>
+                <md-button class="md-icon-button" title="Obriši i kreiraj" ng-click="delete($event)">
+                    <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red; width: 32px; height: 32px"></md-icon>
+                </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content>

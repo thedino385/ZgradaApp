@@ -49,7 +49,7 @@ namespace ZgradaApp
                                 PricuvaRezijePosebniDioChildPripadci = new List<PricuvaRezijePosebniDioChildPripadci>()
                             };
                             posDioMaster.PricuvaRezijePosebniDioChildren.Add(posDioChild);
-                            // ok, sta je sa povrsinama
+                            // povrsine
                             foreach (var povrsina in pdChild.Zgrade_PosebniDijeloviChild_Povrsine)
                             {
                                 if(IsValid(povrsina.VrijediOdMjesec, povrsina.VrijediOdGodina, povrsina.ZatvorenMjesec, povrsina.ZatvorenGodina, povrsina.Zatvoren, godina, prMj.Mjesec))
@@ -65,25 +65,25 @@ namespace ZgradaApp
                                         Povrsina = povrsina.Povrsina
                                     };
                                     posDioChild.PricuvaRezijePosebniDioChildPovrsine.Add(povr);
+                                }
+                            }
 
-                                    // pripadci
-                                    foreach (var prip in pdChild.Zgrade_PosebniDijeloviChild_Pripadci)
+                            // pripadci
+                            foreach (var prip in pdChild.Zgrade_PosebniDijeloviChild_Pripadci)
+                            {
+                                if (IsValid(prip.VrijediOdMjesec, prip.VrijediOdGodina, prip.ZatvorenMjesec, prip.ZatvorenGodina, prip.Zatvoren, godina, prMj.Mjesec))
+                                {
+                                    var prPrip = new PricuvaRezijePosebniDioChildPripadci
                                     {
-                                        if (IsValid(prip.VrijediOdMjesec, prip.VrijediOdGodina, prip.ZatvorenMjesec, prip.ZatvorenGodina, prip.Zatvoren, godina, prMj.Mjesec))
-                                        {
-                                            var prPrip = new PricuvaRezijePosebniDioChildPripadci
-                                            {
-                                                Id = 0,
-                                                PricuvaRezijePosebniDioChildId = pdChild.Id,
-                                                PripadakId = prip.Id,
-                                                Koef = prip.Koef,
-                                                Naziv = prip.Naziv,
-                                                Oznaka = prip.Oznaka,
-                                                Povrsina = prip.Povrsina
-                                            };
-                                            posDioChild.PricuvaRezijePosebniDioChildPripadci.Add(prPrip);
-                                        }
-                                    }
+                                        Id = 0,
+                                        PricuvaRezijePosebniDioChildId = pdChild.Id,
+                                        PripadakId = prip.Id,
+                                        Koef = prip.Koef,
+                                        Naziv = prip.Naziv,
+                                        Oznaka = prip.Oznaka,
+                                        Povrsina = prip.Povrsina
+                                    };
+                                    posDioChild.PricuvaRezijePosebniDioChildPripadci.Add(prPrip);
                                 }
                             }
                         }
