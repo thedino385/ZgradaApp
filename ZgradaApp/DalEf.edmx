@@ -62,6 +62,7 @@
           <Property Name="ObracunPricuvaCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijeCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrocenaSredstva" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
           <Key>
@@ -139,6 +140,8 @@
           <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
           <Property Name="Opis" Type="varchar" MaxLength="200" />
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PrijenosPricuve" Type="bit" />
+          <Property Name="UplataPricuve" Type="bit" />
         </EntityType>
         <EntityType Name="PrihodiRashodi_Rashodi">
           <Key>
@@ -151,6 +154,7 @@
           <Property Name="Datum" Type="datetime" />
           <Property Name="RashodId" Type="int" />
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SifarnikRashoda">
           <Key>
@@ -760,6 +764,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <NavigationProperty Name="PricuvaRezijeGodina" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeGodina" />
           <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijePosebniDioMasteri" />
           <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrocenaSredstva" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
           <Key>
@@ -850,6 +855,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="Opis" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" FromRole="PrihodiRashodi_Prihodi" ToRole="PrihodiRashodi" />
+          <Property Name="PrijenosPricuve" Type="Boolean" />
+          <Property Name="UplataPricuve" Type="Boolean" />
         </EntityType>
         <EntityType Name="PrihodiRashodi_Rashodi">
           <Key>
@@ -863,6 +870,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="RashodId" Type="Int32" />
           <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
+          <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SifarnikRashoda">
           <Key>
@@ -1282,6 +1290,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PricuvaRezijeMjesec">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec">
               <MappingFragment StoreEntitySet="PricuvaRezijeMjesec">
+                <ScalarProperty Name="OrocenaSredstva" ColumnName="OrocenaSredstva" />
                 <ScalarProperty Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" ColumnName="ObracunRezijaCijenaUkupnoPoBrojuClanova" />
                 <ScalarProperty Name="ObracunRezijeCijenaUkupno" ColumnName="ObracunRezijeCijenaUkupno" />
                 <ScalarProperty Name="ObracunPricuvaCijenaUkupno" ColumnName="ObracunPricuvaCijenaUkupno" />
@@ -1370,6 +1379,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PrihodiRashodi_Prihodi">
             <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Prihodi">
               <MappingFragment StoreEntitySet="PrihodiRashodi_Prihodi">
+                <ScalarProperty Name="UplataPricuve" ColumnName="UplataPricuve" />
+                <ScalarProperty Name="PrijenosPricuve" ColumnName="PrijenosPricuve" />
                 <ScalarProperty Name="Iznos" ColumnName="Iznos" />
                 <ScalarProperty Name="Opis" ColumnName="Opis" />
                 <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
@@ -1382,6 +1393,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PrihodiRashodi_Rashodi">
             <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
               <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+                <ScalarProperty Name="Placeno" ColumnName="Placeno" />
                 <ScalarProperty Name="Iznos" ColumnName="Iznos" />
                 <ScalarProperty Name="RashodId" ColumnName="RashodId" />
                 <ScalarProperty Name="Datum" ColumnName="Datum" />

@@ -57,6 +57,7 @@
     <Property Name="ObracunPricuvaCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunRezijeCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OrocenaSredstva" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
     <Key>
@@ -134,6 +135,8 @@
     <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
     <Property Name="Opis" Type="varchar" MaxLength="200" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PrijenosPricuve" Type="bit" />
+    <Property Name="UplataPricuve" Type="bit" />
   </EntityType>
   <EntityType Name="PrihodiRashodi_Rashodi">
     <Key>
@@ -146,6 +149,7 @@
     <Property Name="Datum" Type="datetime" />
     <Property Name="RashodId" Type="int" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="SifarnikRashoda">
     <Key>

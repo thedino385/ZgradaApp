@@ -20,6 +20,8 @@ namespace ZgradaApp
         public int PosebniDioMasterId { get; set; }
         public string Opis { get; set; }
         public Nullable<decimal> Iznos { get; set; }
+        public Nullable<bool> PrijenosPricuve { get; set; }
+        public Nullable<bool> UplataPricuve { get; set; }
     
         public virtual PrihodiRashodi PrihodiRashodi { get; set; }
     }

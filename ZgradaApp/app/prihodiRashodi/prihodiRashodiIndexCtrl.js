@@ -135,7 +135,8 @@
                     prihodRashodZaGodinu: $scope.prihodRashodZaGodinu,
                     mjesec: mjesec,
                     godina: $scope.selectedGodina,
-                    posedbiDijelovi: $scope.posedbiDijelovi
+                    posedbiDijelovi: $scope.posedbiDijelovi,
+                    zgrada: $scope.zgradaObj
                 }
             }).then(function (prihodRashodZaGodinu) {
                 // save (hide)
@@ -231,25 +232,7 @@
         };
         
 
-        //function confirmController($scope, $mdDialog, title, textContent, desc, brisanjeOk, okBtnCaption) {
-
-        //    $scope.vrijediDoGodina = new Date().getFullYear();
-        //    $scope.vrijediDoMjesec = parseInt(new Date().getMonth());
-        //    $scope.title = title;
-        //    $scope.textContent = textContent;
-        //    $scope.desc = desc;
-        //    $scope.brisanjeOk = brisanjeOk;
-        //    $scope.okBtnCaption = okBtnCaption;
-
-        //    $scope.cancel = function () {
-        //        $mdDialog.cancel();
-        //    };
-
-        //    $scope.save = function () {
-        //        var o = { godina: $scope.vrijediDoGodina, mjesec: $scope.vrijediDoMjesec };
-        //        $mdDialog.hide(o);
-        //    };
-        //}
+        
 
     }])
     //.config(function ($mdThemingProvider) {

@@ -26,7 +26,6 @@
                     if (prMj.Mjesec == mjesec) {
                         $scope.PricuvaRezijeZaMjesec = prMj;
                         $scope.found = true;
-                        alert('found');
                     }
                 });
             }
@@ -177,6 +176,7 @@
                     //});
                     //rezijeZaMaster = parseFloat(povrsinaPD) / parseInt(povrsinaZgrade()) * parseFloat(pdMaster.ObracunRezijeBrojClanova);
                     // broj ljudi (upisan) / ukupan broj * cijena
+                    console.log('pdMaster.ObracunRezijeBrojClanova ' + pdMaster.ObracunRezijeBrojClanova);
                     rezijeZaMaster = parseInt(pdMaster.ObracunRezijeBrojClanova) / parseInt(ukupanBrojLjudi()) * parseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijaCijenaUkupnoPoBrojuClanova);
                     console.log('PricuvaRezije, Rezije po bruju clanova: ' + rezijeZaMaster);
                 }

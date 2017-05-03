@@ -150,6 +150,7 @@
     <NavigationProperty Name="PricuvaRezijeGodina" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeGodina" />
     <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijePosebniDioMasteri" />
     <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OrocenaSredstva" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
     <Key>
@@ -240,6 +241,8 @@
     <Property Name="Opis" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" FromRole="PrihodiRashodi_Prihodi" ToRole="PrihodiRashodi" />
+    <Property Name="PrijenosPricuve" Type="Boolean" />
+    <Property Name="UplataPricuve" Type="Boolean" />
   </EntityType>
   <EntityType Name="PrihodiRashodi_Rashodi">
     <Key>
@@ -253,6 +256,7 @@
     <Property Name="RashodId" Type="Int32" />
     <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
+    <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="SifarnikRashoda">
     <Key>

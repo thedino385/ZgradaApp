@@ -47,7 +47,8 @@
                     $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                         if (pr.Godina == godina) {
                             $scope.selectedGodina = godina;
-                            console.log(pr);
+                            console.log(pr.Godina);
+                            farbajMjesece();
                         }
                     });
                 },
@@ -59,7 +60,7 @@
         }
 
 
-      
+
 
         $scope.dodajGodinu = function () {
             if ($scope.novaGodina == undefined || $scope.novaGodina == '')
@@ -114,10 +115,10 @@
                 $scope.zgradaObj = zgradaObj;
                 save();
                 //console.log($scope.prihodRashodZaGodinu);
-                }, function (zgradaObj) {
+            }, function (zgradaObj) {
                 // cancel
                 //console.log(prihodRashodZaGodinu);
-                    $scope.zgradaObj = zgradaObj;
+                $scope.zgradaObj = zgradaObj;
             });
         };
 
@@ -139,9 +140,9 @@
                     godina: $scope.selectedGodina
                 }
             }).then(function () {
-               
+
             }, function () {
-               
+
             });
         };
 
@@ -149,7 +150,7 @@
             save();
         }
 
-        function save () {
+        function save() {
             $rootScope.loaderActive = true;
             DataService.pricuvaRezijeCreateOrUpdate($scope.zgradaObj).then(
                 function (result) {
@@ -199,6 +200,78 @@
             });
         };
 
+        function farbajMjesece(prGodina) {
+            $scope.clsMjesec1 = 'transCellBack';
+            $scope.clsMjesec2 = 'transCellBack';
+            $scope.clsMjesec3 = 'transCellBack';
+            $scope.clsMjesec4 = 'transCellBack';
+            $scope.clsMjesec5 = 'transCellBack';
+            $scope.clsMjesec6 = 'transCellBack';
+            $scope.clsMjesec7 = 'transCellBack';
+            $scope.clsMjesec8 = 'transCellBack';
+            $scope.clsMjesec9 = 'transCellBack';
+            $scope.clsMjesec10 = 'transCellBack';
+            $scope.clsMjesec11 = 'transCellBack';
+            $scope.clsMjesec12 = 'transCellBack';
+
+            $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
+                if (pr.Godina == $scope.selectedGodina) {
+                    pr.PricuvaRezijeMjesec.forEach(function (mj) {
+                        switch (mj.Mjesec) {
+                            case 1:
+                                if (mj.DugPretplata != 0)
+                                    // ok, nema promjena, pricuva postoji
+                                    $scope.clsMjesec1 = 'greenCellBack';
+                                break;
+                            case 2:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec2 = 'greenCellBack';
+                                break;
+                            case 3:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec3 = 'greenCellBack';
+                                break;
+                            case 4:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec4 = 'greenCellBack';
+                                break;
+                            case 5:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec5 = 'greenCellBack';
+                                break;
+                            case 6:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec6 = 'greenCellBack';
+                                break;
+                            case 7:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec7 = 'greenCellBack';
+                                break;
+                            case 8:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec8 = 'greenCellBack';
+                                break;
+                            case 9:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec9 = 'greenCellBack';
+                                break;
+                            case 10:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec10 = 'greenCellBack';
+                                break;
+                            case 11:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec11 = 'greenCellBack';
+                                break;
+                            case 12:
+                                if (mj.DugPretplata != 0)
+                                    $scope.clsMjesec12 = 'greenCellBack';
+                                break;
+                        }
+                    });
+                }
+            });
+        }
     }])
     //.config(function ($mdThemingProvider) {
     //    $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();

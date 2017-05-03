@@ -25,17 +25,17 @@
         <md-dialog-content>
             <div class="md-dialog-content">
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="padding: 1px">
                     <thead>
                         <tr>
                             <th style="vertical-align middle; text-align: left">
-                                PdMaster
+                                Posebni dio
                             </th>
                             <th style="vertical-align: middle; text-align: center">
                                 Vlasnici i udio (%)
                             </th>
                             <th style="vertical-align: middle; text-align: center">
-                                PdChildren
+                                Dijelovi
                             </th>
                             <th style="vertical-align: middle; text-align: right">
                                 Udio u zgradi
@@ -86,6 +86,11 @@
                                                     <td style="vertical-align: middle;">{{povr.povrsina | number: 2}}</td>
                                                     <td style="vertical-align: middle;">{{povr.koef | number: 2}}</td>
                                                 </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPovrsina | number: 2}}</b></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPovrsinaKoef | number: 2}}</b></td>
+                                                </tr>
                                             </table>
                                         </td>
                                         <td>
@@ -104,6 +109,11 @@
                                                     <td style="vertical-align: middle;">{{prip.povrsina | number: 2}}</td>
                                                     <td style="vertical-align: middle;">{{prip.koef | number: 2}}</td>
                                                 </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPrip | number: 2}}</b></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPripKoef | number: 2}}</b></td>
+                                                </tr>
                                             </table>
                                         </td>
                                     </tr>
@@ -111,7 +121,9 @@
 
                                
                             </td>
-                            <td>udio</td>
+                            <td style="vertical-align: middle; text-align: center">
+                                {{row.udioUzgradi | number: 2}}%
+                            </td>
                         </tr>
                         <!--<tr>
                             <td color: indigo; font-size: 11px>Vlasnici:</td>

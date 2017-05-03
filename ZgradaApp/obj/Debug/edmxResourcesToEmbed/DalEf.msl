@@ -41,6 +41,7 @@
     <EntitySetMapping Name="PricuvaRezijeMjesec">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec">
         <MappingFragment StoreEntitySet="PricuvaRezijeMjesec">
+          <ScalarProperty Name="OrocenaSredstva" ColumnName="OrocenaSredstva" />
           <ScalarProperty Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" ColumnName="ObracunRezijaCijenaUkupnoPoBrojuClanova" />
           <ScalarProperty Name="ObracunRezijeCijenaUkupno" ColumnName="ObracunRezijeCijenaUkupno" />
           <ScalarProperty Name="ObracunPricuvaCijenaUkupno" ColumnName="ObracunPricuvaCijenaUkupno" />
@@ -129,6 +130,8 @@
     <EntitySetMapping Name="PrihodiRashodi_Prihodi">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Prihodi">
         <MappingFragment StoreEntitySet="PrihodiRashodi_Prihodi">
+          <ScalarProperty Name="UplataPricuve" ColumnName="UplataPricuve" />
+          <ScalarProperty Name="PrijenosPricuve" ColumnName="PrijenosPricuve" />
           <ScalarProperty Name="Iznos" ColumnName="Iznos" />
           <ScalarProperty Name="Opis" ColumnName="Opis" />
           <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
@@ -141,6 +144,7 @@
     <EntitySetMapping Name="PrihodiRashodi_Rashodi">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
         <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+          <ScalarProperty Name="Placeno" ColumnName="Placeno" />
           <ScalarProperty Name="Iznos" ColumnName="Iznos" />
           <ScalarProperty Name="RashodId" ColumnName="RashodId" />
           <ScalarProperty Name="Datum" ColumnName="Datum" />
