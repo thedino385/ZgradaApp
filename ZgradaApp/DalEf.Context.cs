@@ -32,7 +32,6 @@ namespace ZgradaApp
         public virtual DbSet<PricuvaRezijePosebniDioChildPovrsine> PricuvaRezijePosebniDioChildPovrsine { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioChildPripadci> PricuvaRezijePosebniDioChildPripadci { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioChildren> PricuvaRezijePosebniDioChildren { get; set; }
-        public virtual DbSet<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
         public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
         public virtual DbSet<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
@@ -48,5 +47,8 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade_Stanari> Zgrade_Stanari { get; set; }
         public virtual DbSet<vZgrade> vZgrade { get; set; }
         public virtual DbSet<PricuvaRezijeGodina_StanjeOd> PricuvaRezijeGodina_StanjeOd { get; set; }
+        public virtual DbSet<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
+        public virtual DbSet<Zgrade_PopisUredjaja> Zgrade_PopisUredjaja { get; set; }
+        public virtual DbSet<Zgrade_PopisZajednickihDijelova> Zgrade_PopisZajednickihDijelova { get; set; }
     }
 }

@@ -75,8 +75,20 @@ namespace ZgradaApp
         public string Status { get; set; }
     }
 
-    
+    //public partial class PricuvaRezijePosebniDioMasteri
+    //{
+    //    public decimal DugPretplataProsliMjesec { get; set; }
+    //}
 
+    public partial class Zgrade_PopisZajednickihDijelova
+    {
+        public string Status { get; set; }
+    }
+
+    public partial class Zgrade_PopisUredjaja
+    {
+        public string Status { get; set; }
+    }
     // OLD
 
     //public partial class Stanovi_PosebniDijelovi

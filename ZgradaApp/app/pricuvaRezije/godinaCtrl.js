@@ -272,6 +272,20 @@
                 }
             });
         }
+
+        $scope.setColor = function (index) {
+            switch (index) {
+                case 0:
+                    return { color: "orange" };
+                case 1:
+                    return { color: "blue" };
+                case 2:
+                    return { color: "magenta" };
+                case 3:
+                    return { color: "black" };
+            }
+        }
+
     }])
     //.config(function ($mdThemingProvider) {
     //    $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();

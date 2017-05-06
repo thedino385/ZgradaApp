@@ -90,23 +90,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PricuvaRezijePosebniDioMasteri">
-      <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasteri">
-        <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasteri">
-          <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
-          <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
-          <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
-          <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
-          <ScalarProperty Name="DugPretplata" ColumnName="DugPretplata" />
-          <ScalarProperty Name="ObracunRezijeCijenaSlobodanUnos" ColumnName="ObracunRezijeCijenaSlobodanUnos" />
-          <ScalarProperty Name="ObracunRezijeBrojClanova" ColumnName="ObracunRezijeBrojClanova" />
-          <ScalarProperty Name="ObracunPricuvaCijenaSlobodanUnos" ColumnName="ObracunPricuvaCijenaSlobodanUnos" />
-          <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
-          <ScalarProperty Name="PricuvaRezijeMjesecId" ColumnName="PricuvaRezijeMjesecId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PricuvaRezijePosebniDioMasterVlasnici">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici">
         <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasterVlasnici">
@@ -144,6 +127,8 @@
     <EntitySetMapping Name="PrihodiRashodi_Rashodi">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
         <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+          <ScalarProperty Name="DatumPlacanja" ColumnName="DatumPlacanja" />
+          <ScalarProperty Name="Placen" ColumnName="Placen" />
           <ScalarProperty Name="Placeno" ColumnName="Placeno" />
           <ScalarProperty Name="Iznos" ColumnName="Iznos" />
           <ScalarProperty Name="RashodId" ColumnName="RashodId" />
@@ -300,6 +285,55 @@
           <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
           <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
           <ScalarProperty Name="PrivuvaRezijeGodId" ColumnName="PrivuvaRezijeGodId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PricuvaRezijePosebniDioMasteri">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasteri">
+        <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasteri">
+          <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
+          <ScalarProperty Name="PocetnoStanje" ColumnName="PocetnoStanje" />
+          <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+          <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
+          <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
+          <ScalarProperty Name="DugPretplata" ColumnName="DugPretplata" />
+          <ScalarProperty Name="ObracunRezijeCijenaSlobodanUnos" ColumnName="ObracunRezijeCijenaSlobodanUnos" />
+          <ScalarProperty Name="ObracunRezijeBrojClanova" ColumnName="ObracunRezijeBrojClanova" />
+          <ScalarProperty Name="ObracunPricuvaCijenaSlobodanUnos" ColumnName="ObracunPricuvaCijenaSlobodanUnos" />
+          <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
+          <ScalarProperty Name="PricuvaRezijeMjesecId" ColumnName="PricuvaRezijeMjesecId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zgrade_PopisUredjaja">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PopisUredjaja">
+        <MappingFragment StoreEntitySet="Zgrade_PopisUredjaja">
+          <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
+          <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
+          <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
+          <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
+          <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
+          <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zgrade_PopisZajednickihDijelova">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PopisZajednickihDijelova">
+        <MappingFragment StoreEntitySet="Zgrade_PopisZajednickihDijelova">
+          <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
+          <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
+          <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
+          <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
+          <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
+          <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+          <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

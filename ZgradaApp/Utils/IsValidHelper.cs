@@ -11,7 +11,7 @@ namespace ZgradaApp
     {
         private readonly ZgradaDbEntities _db = new ZgradaDbEntities();
 
-        public async Task<PricuvaRezijeMjesec> CreatePricuvaMjesec(PricuvaRezijeMjesec prMj, int godina, int zgradaId)
+        public async Task<PricuvaRezijeMjesec> CreatePricuvaMjesec(PricuvaRezijeMjesec prMj, int godina, int zgradaId, List<PricuvaRezijeGodina> prGodineSve)
         {
             var listTotal = await _db.Zgrade_PosebniDijeloviMaster.Where(p => p.ZgradaId == zgradaId).ToListAsync();
             foreach (var pdMaster in listTotal)
@@ -32,9 +32,40 @@ namespace ZgradaApp
                         Uplaceno = 0,
                         Zaduzenje = 0,
                         PeriodId = 0,
+                        PocetnoStanje = null,
+                        //Saldo = 0,
+                        //DugPretplataProsliMjesec = 0,
                         PricuvaRezijePosebniDioChildren = new List<PricuvaRezijePosebniDioChildren>(),
                         PricuvaRezijePosebniDioMasterVlasnici = new List<PricuvaRezijePosebniDioMasterVlasnici>()
                     };
+
+                    // ok master je validan, nadji Saldo iz proslog mjeseca i prebaci ga u StanjeOd mjeseca
+                    decimal saldoIzProslog = 0;
+                    if (prMj.Mjesec == 1)
+                    {
+                        // nadji 12.mj prosle godine
+                        int g = godina - 1;
+                        var targetGodina = prGodineSve.FirstOrDefault(p => p.Godina == g);
+                        if(targetGodina != null)
+                        {
+                            var mjTarget = targetGodina.PricuvaRezijeMjesec.FirstOrDefault(p => p.Mjesec == 12);
+                            var master12 = mjTarget.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == pdMaster.Id);
+                            saldoIzProslog = master12.DugPretplata != null ? (decimal)master12.DugPretplata : 0;
+                        }
+                    }
+                    else
+                    {
+                        var targetGodina = prGodineSve.FirstOrDefault(p => p.Godina == godina);
+                        int targetMj = (int)prMj.Mjesec - 1;
+                        if(targetMj > 0)
+                        {
+                            var mjTarget = targetGodina.PricuvaRezijeMjesec.FirstOrDefault(p => p.Mjesec == targetMj);
+                            var masterTarget = mjTarget.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == pdMaster.Id);
+                            saldoIzProslog = masterTarget.DugPretplata != null ? (decimal)masterTarget.DugPretplata : 0;
+                        }
+                    }
+                    posDioMaster.StanjeOd = saldoIzProslog;
+
                     prMj.PricuvaRezijePosebniDioMasteri.Add(posDioMaster);
                     foreach (var pdChild in pdMaster.Zgrade_PosebniDijeloviChild)
                     {

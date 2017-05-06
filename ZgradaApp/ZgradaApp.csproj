@@ -259,6 +259,12 @@
     <Compile Include="Zgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="Zgrade_PopisUredjaja.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_PopisZajednickihDijelova.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="Zgrade_PosebniDijeloviChild.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -372,6 +378,15 @@
     <Content Include="app\zgrade\PDChild\posebniDioChildrenCtrl.js" />
     <Content Include="app\zgrade\PDChild\posebniDioMasterVlasniciModal.html" />
     <Content Include="app\zgrade\PDChild\posebniDioMasterVlasniciModalCtrl.js" />
+    <Content Include="app\zgrade\popisi\dijeloviList.html" />
+    <Content Include="app\zgrade\popisi\dijeloviListCtrl.js" />
+    <Content Include="app\zgrade\popisi\dijeloviModal.html" />
+    <Content Include="app\zgrade\popisi\dijeloviModalCtrl.js" />
+    <Content Include="app\zgrade\popisi\napomenaModal.html" />
+    <Content Include="app\zgrade\popisi\uredjajiList.html" />
+    <Content Include="app\zgrade\popisi\uredjajiListCtrl.js" />
+    <Content Include="app\zgrade\popisi\uredjajiModal.html" />
+    <Content Include="app\zgrade\popisi\uredjajiModalCtrl.js" />
     <Content Include="app\zgrade\zgrada.html" />
     <Content Include="app\zgrade\zgradaCtrl.js" />
     <Content Include="app\zgrade\zgradaPosebniDijeloviMasterModal.html" />
@@ -395,9 +410,15 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\icons\account-card-details.svg" />
+    <Content Include="Content\icons\animation.svg" />
     <Content Include="Content\icons\arrow-expand-all.svg" />
+    <Content Include="Content\icons\battery-charging-100.svg" />
+    <Content Include="Content\icons\book-multiple.svg" />
+    <Content Include="Content\icons\currency-eur.svg" />
     <Content Include="Content\icons\delete.svg" />
     <Content Include="Content\icons\domain.svg" />
+    <Content Include="Content\icons\dots-horizontal.svg" />
     <Content Include="Content\icons\menu.svg" />
     <Content Include="Content\icons\minus-circle.svg" />
     <Content Include="Content\icons\more_vert.svg" />

@@ -8,7 +8,6 @@
     <EntitySet Name="PricuvaRezijePosebniDioChildPovrsine" EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPovrsine" />
     <EntitySet Name="PricuvaRezijePosebniDioChildPripadci" EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPripadci" />
     <EntitySet Name="PricuvaRezijePosebniDioChildren" EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildren" />
-    <EntitySet Name="PricuvaRezijePosebniDioMasteri" EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" />
     <EntitySet Name="PricuvaRezijePosebniDioMasterVlasnici" EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici" />
     <EntitySet Name="PrihodiRashodi" EntityType="ZgradaDbModel.PrihodiRashodi" />
     <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" />
@@ -31,10 +30,6 @@
       <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
       <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
     </AssociationSet>
-    <AssociationSet Name="FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec">
-      <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
-      <End Role="PricuvaRezijePosebniDioMasteri" EntitySet="PricuvaRezijePosebniDioMasteri" />
-    </AssociationSet>
     <AssociationSet Name="FK_PricuvaRezijePosebniDioChildPovrsine_PricuvaRezijePosebniDioChildren" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildPovrsine_PricuvaRezijePosebniDioChildren">
       <End Role="PricuvaRezijePosebniDioChildren" EntitySet="PricuvaRezijePosebniDioChildren" />
       <End Role="PricuvaRezijePosebniDioChildPovrsine" EntitySet="PricuvaRezijePosebniDioChildPovrsine" />
@@ -42,14 +37,6 @@
     <AssociationSet Name="FK_PricuvaRezijePosebniDioChildPripadci_PricuvaRezijePosebniDioChildren" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildPripadci_PricuvaRezijePosebniDioChildren">
       <End Role="PricuvaRezijePosebniDioChildren" EntitySet="PricuvaRezijePosebniDioChildren" />
       <End Role="PricuvaRezijePosebniDioChildPripadci" EntitySet="PricuvaRezijePosebniDioChildPripadci" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri">
-      <End Role="PricuvaRezijePosebniDioMasteri" EntitySet="PricuvaRezijePosebniDioMasteri" />
-      <End Role="PricuvaRezijePosebniDioChildren" EntitySet="PricuvaRezijePosebniDioChildren" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri">
-      <End Role="PricuvaRezijePosebniDioMasteri" EntitySet="PricuvaRezijePosebniDioMasteri" />
-      <End Role="PricuvaRezijePosebniDioMasterVlasnici" EntitySet="PricuvaRezijePosebniDioMasterVlasnici" />
     </AssociationSet>
     <AssociationSet Name="FK_PrihodiRashodi_Prihodi_PrihodiRashodi" Association="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi">
       <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
@@ -95,6 +82,29 @@
     <AssociationSet Name="FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina" Association="ZgradaDbModel.FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina">
       <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
       <End Role="PricuvaRezijeGodina_StanjeOd" EntitySet="PricuvaRezijeGodina_StanjeOd" />
+    </AssociationSet>
+    <EntitySet Name="PricuvaRezijePosebniDioMasteri" EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" />
+    <AssociationSet Name="FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec">
+      <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
+      <End Role="PricuvaRezijePosebniDioMasteri" EntitySet="PricuvaRezijePosebniDioMasteri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri">
+      <End Role="PricuvaRezijePosebniDioMasteri" EntitySet="PricuvaRezijePosebniDioMasteri" />
+      <End Role="PricuvaRezijePosebniDioChildren" EntitySet="PricuvaRezijePosebniDioChildren" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri">
+      <End Role="PricuvaRezijePosebniDioMasteri" EntitySet="PricuvaRezijePosebniDioMasteri" />
+      <End Role="PricuvaRezijePosebniDioMasterVlasnici" EntitySet="PricuvaRezijePosebniDioMasterVlasnici" />
+    </AssociationSet>
+    <EntitySet Name="Zgrade_PopisUredjaja" EntityType="ZgradaDbModel.Zgrade_PopisUredjaja" />
+    <EntitySet Name="Zgrade_PopisZajednickihDijelova" EntityType="ZgradaDbModel.Zgrade_PopisZajednickihDijelova" />
+    <AssociationSet Name="FK_Zgrade_PopisUredjaja_Zgrade" Association="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_PopisUredjaja" EntitySet="Zgrade_PopisUredjaja" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zgrade_PopisZajednickihDijelova_Zgrade" Association="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_PopisZajednickihDijelova" EntitySet="Zgrade_PopisZajednickihDijelova" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Kompanije">
@@ -148,9 +158,9 @@
     <Property Name="ObracunPricuvaCijenaUkupno" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="ObracunRezijeCijenaUkupno" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PricuvaRezijeGodina" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeGodina" />
-    <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijePosebniDioMasteri" />
     <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="OrocenaSredstva" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijePosebniDioMasteri" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
     <Key>
@@ -189,25 +199,6 @@
     <NavigationProperty Name="PricuvaRezijePosebniDioChildPripadci" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildPripadci_PricuvaRezijePosebniDioChildren" FromRole="PricuvaRezijePosebniDioChildren" ToRole="PricuvaRezijePosebniDioChildPripadci" />
     <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioChildren" ToRole="PricuvaRezijePosebniDioMasteri" />
   </EntityType>
-  <EntityType Name="PricuvaRezijePosebniDioMasteri">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PricuvaRezijeMjesecId" Type="Int32" Nullable="false" />
-    <Property Name="PosebniDioMasterId" Type="Int32" />
-    <Property Name="ObracunPricuvaCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ObracunRezijeBrojClanova" Type="Int32" />
-    <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="DugPretplata" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Zaduzenje" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
-    <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijeMjesec" />
-    <NavigationProperty Name="PricuvaRezijePosebniDioChildren" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioChildren" />
-    <NavigationProperty Name="PricuvaRezijePosebniDioMasterVlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioMasterVlasnici" />
-    <Property Name="PeriodId" Type="Int32" />
-  </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioMasterVlasnici">
     <Key>
       <PropertyRef Name="Id" />
@@ -216,8 +207,8 @@
     <Property Name="PricuvaRezijePosebniDioMasterId" Type="Int32" Nullable="false" />
     <Property Name="PeriodId" Type="Int32" />
     <Property Name="VlasnikId" Type="Int32" />
-    <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasterVlasnici" ToRole="PricuvaRezijePosebniDioMasteri" />
     <Property Name="Udio" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasterVlasnici" ToRole="PricuvaRezijePosebniDioMasteri" />
   </EntityType>
   <EntityType Name="PrihodiRashodi">
     <Key>
@@ -257,6 +248,8 @@
     <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
     <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Placen" Type="Boolean" />
+    <Property Name="DatumPlacanja" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="SifarnikRashoda">
     <Key>
@@ -281,6 +274,8 @@
     <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Zgrade" FromRole="Zgrade" ToRole="PrihodiRashodi" />
     <NavigationProperty Name="Zgrade_PosebniDijeloviMaster" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PosebniDijeloviMaster" />
     <NavigationProperty Name="Zgrade_Stanari" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade" ToRole="Zgrade_Stanari" />
+    <NavigationProperty Name="Zgrade_PopisUredjaja" Relationship="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PopisUredjaja" />
+    <NavigationProperty Name="Zgrade_PopisZajednickihDijelova" Relationship="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PopisZajednickihDijelova" />
   </EntityType>
   <EntityType Name="Zgrade_PosebniDijeloviChild">
     <Key>
@@ -428,18 +423,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec">
-    <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="1" />
-    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Role="PricuvaRezijePosebniDioMasteri" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PricuvaRezijeMjesec">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PricuvaRezijePosebniDioMasteri">
-        <PropertyRef Name="PricuvaRezijeMjesecId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PricuvaRezijePosebniDioChildPovrsine_PricuvaRezijePosebniDioChildren">
     <End Type="ZgradaDbModel.PricuvaRezijePosebniDioChildren" Role="PricuvaRezijePosebniDioChildren" Multiplicity="1" />
     <End Type="ZgradaDbModel.PricuvaRezijePosebniDioChildPovrsine" Role="PricuvaRezijePosebniDioChildPovrsine" Multiplicity="*" />
@@ -461,30 +444,6 @@
       </Principal>
       <Dependent Role="PricuvaRezijePosebniDioChildPripadci">
         <PropertyRef Name="PricuvaRezijePosebniDioChildId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri">
-    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Role="PricuvaRezijePosebniDioMasteri" Multiplicity="1" />
-    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioChildren" Role="PricuvaRezijePosebniDioChildren" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PricuvaRezijePosebniDioMasteri">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PricuvaRezijePosebniDioChildren">
-        <PropertyRef Name="PricuvaRezijeMasterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri">
-    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Role="PricuvaRezijePosebniDioMasteri" Multiplicity="1" />
-    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici" Role="PricuvaRezijePosebniDioMasterVlasnici" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PricuvaRezijePosebniDioMasteri">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PricuvaRezijePosebniDioMasterVlasnici">
-        <PropertyRef Name="PricuvaRezijePosebniDioMasterId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -627,6 +586,117 @@
       </Principal>
       <Dependent Role="PricuvaRezijeGodina_StanjeOd">
         <PropertyRef Name="PrivuvaRezijeGodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PricuvaRezijePosebniDioMasteri">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PricuvaRezijeMjesecId" Type="Int32" Nullable="false" />
+    <Property Name="PosebniDioMasterId" Type="Int32" />
+    <Property Name="ObracunPricuvaCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ObracunRezijeBrojClanova" Type="Int32" />
+    <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DugPretplata" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Zaduzenje" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PeriodId" Type="Int32" />
+    <Property Name="PocetnoStanje" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="StanjeOd" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijeMjesec" />
+    <NavigationProperty Name="PricuvaRezijePosebniDioChildren" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioChildren" />
+    <NavigationProperty Name="PricuvaRezijePosebniDioMasterVlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioMasterVlasnici" />
+  </EntityType>
+  <Association Name="FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec">
+    <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="1" />
+    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Role="PricuvaRezijePosebniDioMasteri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaRezijeMjesec">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaRezijePosebniDioMasteri">
+        <PropertyRef Name="PricuvaRezijeMjesecId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri">
+    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Role="PricuvaRezijePosebniDioMasteri" Multiplicity="1" />
+    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioChildren" Role="PricuvaRezijePosebniDioChildren" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaRezijePosebniDioMasteri">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaRezijePosebniDioChildren">
+        <PropertyRef Name="PricuvaRezijeMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri">
+    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Role="PricuvaRezijePosebniDioMasteri" Multiplicity="1" />
+    <End Type="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici" Role="PricuvaRezijePosebniDioMasterVlasnici" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaRezijePosebniDioMasteri">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaRezijePosebniDioMasterVlasnici">
+        <PropertyRef Name="PricuvaRezijePosebniDioMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Zgrade_PopisUredjaja">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="VrijediOdMjesec" Type="Int32" />
+    <Property Name="VrijediOdGodina" Type="Int32" />
+    <Property Name="Zatvoren" Type="Boolean" />
+    <Property Name="ZatvorenGodina" Type="Int32" />
+    <Property Name="ZatvorenMjesec" Type="Int32" />
+    <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" FromRole="Zgrade_PopisUredjaja" ToRole="Zgrade" />
+  </EntityType>
+  <EntityType Name="Zgrade_PopisZajednickihDijelova">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Naziv" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Povrsina" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="VrijediOdMjesec" Type="Int32" />
+    <Property Name="VrijediOdGodina" Type="Int32" />
+    <Property Name="Zatvoren" Type="Boolean" />
+    <Property Name="ZatvorenGodina" Type="Int32" />
+    <Property Name="ZatvorenMjesec" Type="Int32" />
+    <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" FromRole="Zgrade_PopisZajednickihDijelova" ToRole="Zgrade" />
+  </EntityType>
+  <Association Name="FK_Zgrade_PopisUredjaja_Zgrade">
+    <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Zgrade_PopisUredjaja" Role="Zgrade_PopisUredjaja" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_PopisUredjaja">
+        <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Zgrade_PopisZajednickihDijelova_Zgrade">
+    <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Zgrade_PopisZajednickihDijelova" Role="Zgrade_PopisZajednickihDijelova" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_PopisZajednickihDijelova">
+        <PropertyRef Name="ZgradaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

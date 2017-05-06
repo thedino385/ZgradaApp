@@ -68,12 +68,23 @@
         });
     }
 
+    var zajednickiDijeloviCreateOrUpdate = function (zgradaObj) {
+        return $http.post('../api/data/zajednickiDijeloviCreateOrUpdate', zgradaObj);
+    }
+
+    var zajednickiUredjajiCreateOrUpdate = function (zgradaObj) {
+        return $http.post('../api/data/zajednickiUredjajiCreateOrUpdate', zgradaObj);
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
         zgradaCreateOrUpdate: zgradaCreateOrUpdate,
         prihodiRashodiCreateOrUpdate: prihodiRashodiCreateOrUpdate,
         posebniDioChildrenCreateOrUpdate, posebniDioChildrenCreateOrUpdate,
+
+        zajednickiDijeloviCreateOrUpdate: zajednickiDijeloviCreateOrUpdate,
+        zajednickiUredjajiCreateOrUpdate: zajednickiUredjajiCreateOrUpdate,
 
         praznaPricuvaRezijeCreate: praznaPricuvaRezijeCreate,
         pricuvaZaMjesecCreate: pricuvaZaMjesecCreate,

@@ -17,7 +17,7 @@
                             <div class="col-sm-2"></div>
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Naziv</label>
-                                <input required type="text" name="naziv" ng-model="posebniDioMasterObj.Naziv">
+                                <input required type="text" name="naziv" ng-model="zajednickiDio.Naziv">
                                 <div ng-messages="frm.naziv.$error" role="alert">
                                     <div ng-message-exp="['required']">
                                         Obavezno polje
@@ -26,13 +26,10 @@
                             </md-input-container>
 
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                <label>Početno stanje</label>
-                                <input required type="text" name="oznaka" ng-model="posebniDioMasterObj.PocetnoStanje">
-                                <div ng-messages="frm.oznaka.$error" role="alert">
+                                <label>Površina</label>
+                                <input required type="text" name="povr" ng-model="zajednickiDio.Povrsina">
+                                <div ng-messages="frm.povr.$error" role="alert">
                                     <div ng-message-exp="['required']">
-                                        Obavezno polje
-                                    </div>
-                                    <div ng-message="['required']">
                                         Obavezno polje
                                     </div>
                                 </div>
@@ -40,12 +37,13 @@
                             <div class="col-sm-2"></div>
                         </div>
                     </md-content>
+                   
                     <md-content layput-padding>
                         <div layout-gt-sm="row">
                             <div class="col-sm-2"></div>
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Aktivan od godina</label>
-                                <input required type="number" name="vrijediOdGodina" ng-model="posebniDioMasterObj.VrijediOdGodina">
+                                <input required type="number" name="vrijediOdGodina" ng-model="zajednickiDio.VrijediOdGodina">
                                 <div ng-messages="frm.vrijediOdGodina.$error" role="alert">
                                     <div ng-message-exp="['required']">
                                         Obavezno polje
@@ -55,12 +53,9 @@
 
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Aktivan od mjesec</label>
-                                <input required type="number" name="vrijediOdMjesec" ng-model="posebniDioMasterObj.VrijediOdMjesec">
+                                <input required type="number" name="vrijediOdMjesec" ng-model="zajednickiDio.VrijediOdMjesec">
                                 <div ng-messages="frm.vrijediOdMjesec.$error" role="alert">
                                     <div ng-message-exp="['required']">
-                                        Obavezno polje
-                                    </div>
-                                    <div ng-message="['required']">
                                         Obavezno polje
                                     </div>
                                 </div>
@@ -69,7 +64,17 @@
                         </div>
                     </md-content>
                 </div>
+                <div layout-gt-sm="row">
+                    <div class="col-sm-2"></div>
+                    <md-input-container class="md-block col-sm-8" flex-gt-sm>
+                        <label>Napomena</label>
+                        <textarea rows="3" cols="150" style="min-width: 100%" placeholder="Napomena" ng-model="zajednickiDio.Napomena"></textarea>
 
+                    </md-input-container>
+
+
+                    <div class="col-sm-2"></div>
+                </div>
             </div>
         </md-dialog-content>
 

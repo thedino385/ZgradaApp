@@ -165,7 +165,8 @@
                     prihodRashodZaGodinu: $scope.prihodRashodZaGodinu,
                     mjesec: mjesec,
                     godina: $scope.selectedGodina,
-                    sifarnikRashoda: $scope.sifarnikRashoda
+                    sifarnikRashoda: $scope.sifarnikRashoda,
+                    posedbiDijelovi: $scope.posedbiDijelovi,
                 }
             }).then(function (prihodRashodZaGodinu) {
                 // save (hide)

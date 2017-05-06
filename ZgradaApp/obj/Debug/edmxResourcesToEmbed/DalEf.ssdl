@@ -104,8 +104,9 @@
     <Property Name="DugPretplata" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
     <Property Name="PeriodId" Type="int" />
+    <Property Name="PocetnoStanje" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioMasterVlasnici">
     <Key>
@@ -150,6 +151,8 @@
     <Property Name="RashodId" Type="int" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Placen" Type="bit" />
+    <Property Name="DatumPlacanja" Type="datetime" />
   </EntityType>
   <EntityType Name="SifarnikRashoda">
     <Key>
@@ -170,6 +173,35 @@
     <Property Name="Adresa" Type="varchar" MaxLength="200" />
     <Property Name="Mjesto" Type="varchar" MaxLength="200" />
     <Property Name="Napomena" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Zgrade_PopisUredjaja">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ZgradaId" Type="int" Nullable="false" />
+    <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Napomena" Type="varchar(max)" />
+    <Property Name="VrijediOdMjesec" Type="int" />
+    <Property Name="VrijediOdGodina" Type="int" />
+    <Property Name="Zatvoren" Type="bit" />
+    <Property Name="ZatvorenGodina" Type="int" />
+    <Property Name="ZatvorenMjesec" Type="int" />
+  </EntityType>
+  <EntityType Name="Zgrade_PopisZajednickihDijelova">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ZgradaId" Type="int" Nullable="false" />
+    <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Povrsina" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Napomena" Type="varchar(max)" />
+    <Property Name="VrijediOdMjesec" Type="int" />
+    <Property Name="VrijediOdGodina" Type="int" />
+    <Property Name="Zatvoren" Type="bit" />
+    <Property Name="ZatvorenGodina" Type="int" />
+    <Property Name="ZatvorenMjesec" Type="int" />
   </EntityType>
   <EntityType Name="Zgrade_PosebniDijeloviChild">
     <Key>
@@ -415,6 +447,30 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Zgrade_PopisUredjaja_Zgrade">
+    <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
+    <End Role="Zgrade_PopisUredjaja" Type="Self.Zgrade_PopisUredjaja" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_PopisUredjaja">
+        <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Zgrade_PopisZajednickihDijelova_Zgrade">
+    <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
+    <End Role="Zgrade_PopisZajednickihDijelova" Type="Self.Zgrade_PopisZajednickihDijelova" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_PopisZajednickihDijelova">
+        <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild">
     <End Role="Zgrade_PosebniDijeloviChild" Type="Self.Zgrade_PosebniDijeloviChild" Multiplicity="1" />
     <End Role="Zgrade_PosebniDijeloviChild_Povrsine" Type="Self.Zgrade_PosebniDijeloviChild_Povrsine" Multiplicity="*" />
@@ -515,6 +571,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="Self.PrihodiRashodi_Rashodi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SifarnikRashoda" EntityType="Self.SifarnikRashoda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zgrade_PopisUredjaja" EntityType="Self.Zgrade_PopisUredjaja" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zgrade_PopisZajednickihDijelova" EntityType="Self.Zgrade_PopisZajednickihDijelova" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_PosebniDijeloviChild" EntityType="Self.Zgrade_PosebniDijeloviChild" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_PosebniDijeloviChild_Povrsine" EntityType="Self.Zgrade_PosebniDijeloviChild_Povrsine" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_PosebniDijeloviChild_Pripadci" EntityType="Self.Zgrade_PosebniDijeloviChild_Pripadci" Schema="dbo" store:Type="Tables" />
@@ -575,6 +633,14 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="Self.FK_PrihodiRashodi_Zgrade">
       <End Role="Zgrade" EntitySet="Zgrade" />
       <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zgrade_PopisUredjaja_Zgrade" Association="Self.FK_Zgrade_PopisUredjaja_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_PopisUredjaja" EntitySet="Zgrade_PopisUredjaja" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zgrade_PopisZajednickihDijelova_Zgrade" Association="Self.FK_Zgrade_PopisZajednickihDijelova_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_PopisZajednickihDijelova" EntitySet="Zgrade_PopisZajednickihDijelova" />
     </AssociationSet>
     <AssociationSet Name="FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild" Association="Self.FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild">
       <End Role="Zgrade_PosebniDijeloviChild" EntitySet="Zgrade_PosebniDijeloviChild" />

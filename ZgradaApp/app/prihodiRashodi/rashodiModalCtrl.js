@@ -1,8 +1,9 @@
-﻿angularApp.controller('rashodiModalCtrl', ['$scope', '$mdDialog', 'DataService', 'prihodRashodZaGodinu', 'mjesec', 'godina', 'sifarnikRashoda',
-    function ($scope, $mdDialog, DataService, prihodRashodZaGodinu, mjesec, godina, sifarnikRashoda) {
+﻿angularApp.controller('rashodiModalCtrl', ['$scope', '$mdDialog', 'DataService', 'prihodRashodZaGodinu', 'mjesec', 'godina', 'sifarnikRashoda', 'posedbiDijelovi',
+    function ($scope, $mdDialog, DataService, prihodRashodZaGodinu, mjesec, godina, sifarnikRashoda, posedbiDijelovi) {
 
         $scope.sifarnikRashoda = sifarnikRashoda;
         $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
+        $scope.posedbiDijelovi = posedbiDijelovi;
 
         var tempObj = {};
         angular.copy($scope.prihodRashodZaGodinu, tempObj);
@@ -15,10 +16,19 @@
             dodajRec();
         }
 
+        var dateList = [];
+        var dateplacanjeList = [];
+        $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (raMjesec) {
+            dateList.push(new Date(raMjesec.Datum));
+            dateplacanjeList.push(new Date(raMjesec.Datum.DatumPlacanja));
+        });
+        $scope.dateList = dateList;
+        $scope.dateplacanjeList = dateplacanjeList;
+
         function dodajRec(PrijenosIzProlse) {
             var maxId = 0;
-
             $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (raMjesec) {
+
                 if (raMjesec.Id > maxId)
                     maxId = raMjesec.Id;
             })
@@ -65,7 +75,7 @@
                 return;
             var ukupno = 0;
             $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rec) {
-                if (rec.Status != 'd')
+                if (rec.Status != 'd' && rec.Placen != true)
                     ukupno += parseFloat(rec.Iznos);
             })
             $scope.total = ukupno.toFixed(2);

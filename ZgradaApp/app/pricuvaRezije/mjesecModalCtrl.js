@@ -49,6 +49,26 @@
             )
         }
 
+
+        // begin saldo stutt
+        // nadji mastera iz proslog mjeseca i prenesi Saldo u PocetnoStanje
+        //var saldoIzProslog = 0;
+        //if ($scope.mjesec == 1) {
+        //    // trazi 12.mj prosle godine
+        //    $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
+        //        if (parseInt(prGod.Godina) == parseInt(godina) - 1) {
+        //            // sad nadji 12. mj
+        //            prGod.PricuvaRezijeMjesec.forEach(function (prMj) {
+        //                if (parseInt(prMj.Mjesec) == 12) {
+
+        //                }
+                            
+        //            })
+        //        }
+        //    });
+        //}
+
+
         $scope.delete = function (ev) {
             var c = confirm("potvrdire da želite obrisati obračuni kreirati ponovo");
             if (c) {
@@ -59,7 +79,7 @@
                     function (result) {
                         toastr.error('Brisanje obracuna nije uspjelo');
                     }
-                ) 
+                )
             }
 
         };
@@ -206,32 +226,35 @@
 
                 // StanjeOd - ako je prvi mjesec, stanje se cupa iz PricuvaRezijeGodina_StanjeOd za posebniDioMasterId
                 // za ostale mjesece, StanjeOd je Dug/Pretplata iz proslog mjeseca
-                if ($scope.mjesec == 1) {
-                    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
-                        if (prGod.Godina == godina) {
-                            prGod.PricuvaRezijeGodina_StanjeOd.forEach(function (stanje) {
-                                if (stanje.PosebniDioMasterId == pdMaster)
-                                    pdMaster.StanjeOd = stanje.StanjeOd.toFixed(2);;
-                            });
-                        }
-                    });
-                }
-                else {
-                    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
-                        if (prGod.Godina == godina) {
-                            prGod.PricuvaRezijeMjesec.forEach(function (mjesec) {
-                                if (mjesec.Mjesec == $scope.mjesec - 1)
-                                    mjesec.PricuvaRezijePosebniDioMasteri.forEach(function (m) {
-                                        if (m.PosebniDioMasterId == pdMaster.Id)
-                                            pdMaster.StanjeOd = m.StanjeOd.toFixed(2);;
-                                    });
-                            });
-                        }
-                    });
-                }
+                //if ($scope.mjesec == 1) {
+                //    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
+                //        if (prGod.Godina == godina) {
+                //            prGod.PricuvaRezijeGodina_StanjeOd.forEach(function (stanje) {
+                //                if (stanje.PosebniDioMasterId == pdMaster)
+                //                    pdMaster.StanjeOd = stanje.StanjeOd.toFixed(2);;
+                //            });
+                //        }
+                //    });
+                //}
+                //else {
+                //    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
+                //        if (prGod.Godina == godina) {
+                //            prGod.PricuvaRezijeMjesec.forEach(function (mjesec) {
+                //                if (mjesec.Mjesec == $scope.mjesec - 1)
+                //                    mjesec.PricuvaRezijePosebniDioMasteri.forEach(function (m) {
+                //                        if (m.PosebniDioMasterId == pdMaster.Id)
+                //                            pdMaster.StanjeOd = m.StanjeOd.toFixed(2);;
+                //                    });
+                //            });
+                //        }
+                //    });
+                //}
 
-                // Dug/Pretplata = Uplaceno + StanjeOd - Zaduzenje
-                pdMaster.DugPretplata = (parseFloat(pdMaster.Uplaceno) + parseFloat(pdMaster.StanjeOd) - parseFloat(pdMaster.Zaduzenje)).toFixed(2);;
+                // Dug/Pretplata = Uplaceno + StanjeOd - Zaduzenje - PocetnoStanje
+                var ps = 0;
+                if (pdMaster.PocetnoStanje != null)
+                    ps = parseFloat(pdMaster.PocetnoStanje);
+                pdMaster.DugPretplata = (parseFloat(pdMaster.Uplaceno) + parseFloat(pdMaster.StanjeOd) - parseFloat(pdMaster.Zaduzenje) + ps).toFixed(2);;
             });
             $scope.obracunKreiran = true;
 

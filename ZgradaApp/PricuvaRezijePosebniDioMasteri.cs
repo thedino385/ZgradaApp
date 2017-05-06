@@ -30,8 +30,9 @@ namespace ZgradaApp
         public Nullable<decimal> DugPretplata { get; set; }
         public Nullable<decimal> Zaduzenje { get; set; }
         public Nullable<decimal> Uplaceno { get; set; }
-        public Nullable<decimal> StanjeOd { get; set; }
         public Nullable<int> PeriodId { get; set; }
+        public Nullable<decimal> PocetnoStanje { get; set; }
+        public Nullable<decimal> StanjeOd { get; set; }
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

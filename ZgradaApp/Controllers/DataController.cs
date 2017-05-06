@@ -310,7 +310,8 @@ namespace ZgradaApp.Controllers
             var prMj = new PricuvaRezijeMjesec { Id = 0, PrivuvaRezijeGodId = prGodId, Mjesec = mjesec };
             try
             {
-                return Ok(await new IsValidHelper().CreatePricuvaMjesec(prMj, godina, zgradaId));
+                var prGodineSve = await _db.PricuvaRezijeGodina.Where(p => p.ZgradaId == zgradaId).ToListAsync();
+                return Ok(await new IsValidHelper().CreatePricuvaMjesec(prMj, godina, zgradaId, prGodineSve));
             }
             catch (Exception ex) { return InternalServerError(); }
 
@@ -378,7 +379,8 @@ namespace ZgradaApp.Controllers
                 _db.PricuvaRezijeMjesec.Remove(targetMjesec);
 
                 await _db.SaveChangesAsync();
-                return Ok(await new IsValidHelper().CreatePricuvaMjesec(prMj, godina, zgradaId));
+                var prGodineSve = await _db.PricuvaRezijeGodina.Where(p => p.ZgradaId == zgradaId).ToListAsync();
+                return Ok(await new IsValidHelper().CreatePricuvaMjesec(prMj, godina, zgradaId, prGodineSve)); ;
             }
             catch (Exception ex)
             {
@@ -470,12 +472,67 @@ namespace ZgradaApp.Controllers
             try
             {
                 var prGodina = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.ZgradaId == zgradaId && p.Godina == godina);
+                //var prProslaGodina = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.ZgradaId == zgradaId && p.Godina == godina-1);
                 var masteri = await _db.Zgrade_PosebniDijeloviMaster.Where(p => p.ZgradaId == zgradaId).ToListAsync();
                 var stanari = await _db.Zgrade_Stanari.Where(p => p.ZgradaId == zgradaId).ToListAsync();
                 var masteriIds = masteri.Select(p => p.Id);
                 var pdChildovi = await _db.Zgrade_PosebniDijeloviChild.Where(p => masteriIds.Contains(p.ZgradaPosDioMasterId)).ToListAsync();
 
+                //return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari, pdChildovi, prProslaGodina));
                 return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari, pdChildovi));
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpPost]
+        [Route("api/data/zajednickiDijeloviCreateOrUpdate")]
+        public async Task<IHttpActionResult> ZajednickiDijeloviCreateOrUpdate(Zgrade zgradaObj)
+        {
+            try
+            {
+                foreach (var item in zgradaObj.Zgrade_PopisZajednickihDijelova)
+                {
+                    switch(item.Status)
+                    {
+                        case "a":
+                            _db.Zgrade_PopisZajednickihDijelova.Add(item);
+                            break;
+                        case "u":
+                            _db.Zgrade_PopisZajednickihDijelova.Attach(item);
+                            _db.Entry(item).State = EntityState.Modified;
+                            break;
+                    }
+                }
+
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+
+        [HttpPost]
+        [Route("api/data/zajednickiUredjajiCreateOrUpdate")]
+        public async Task<IHttpActionResult> ZajednickiUredjajiCreateOrUpdate(Zgrade zgradaObj)
+        {
+            try
+            {
+                foreach (var item in zgradaObj.Zgrade_PopisUredjaja)
+                {
+                    switch (item.Status)
+                    {
+                        case "a":
+                            _db.Zgrade_PopisUredjaja.Add(item);
+                            break;
+                        case "u":
+                            _db.Zgrade_PopisUredjaja.Attach(item);
+                            _db.Entry(item).State = EntityState.Modified;
+                            break;
+                    }
+                }
+
+                await _db.SaveChangesAsync();
+                return Ok();
             }
             catch (Exception ex) { return InternalServerError(); }
         }

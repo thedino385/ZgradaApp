@@ -22,6 +22,8 @@ namespace ZgradaApp
         public Nullable<int> RashodId { get; set; }
         public Nullable<decimal> Iznos { get; set; }
         public Nullable<decimal> Placeno { get; set; }
+        public Nullable<bool> Placen { get; set; }
+        public Nullable<System.DateTime> DatumPlacanja { get; set; }
     
         public virtual PrihodiRashodi PrihodiRashodi { get; set; }
     }

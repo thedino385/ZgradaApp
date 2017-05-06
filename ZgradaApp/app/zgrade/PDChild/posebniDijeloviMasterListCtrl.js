@@ -34,6 +34,18 @@
             $location.path('/pricuvaRezije/' + $scope.zgrada.Id);
         }
 
+        $scope.goToPopisZD = function () {
+            DataService.currZgrada = $scope.zgrada;
+            $location.path('/popisDijelova');
+        }
+
+        $scope.goToPopisZU = function () {
+            DataService.currZgrada = $scope.zgrada;
+            $location.path('/popisUredjaja');
+        }
+        
+        
+
         // _________________________________________________________
         //              Modal kartica
         // _________________________________________________________
