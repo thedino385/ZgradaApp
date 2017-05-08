@@ -1,10 +1,10 @@
-﻿angularApp.controller('indexKsCtrl', ['$scope', '$mdDialog', 'zgradaObj', 'pdMaster',
-    function ($scope, $mdDialog, zgradaObj, pdMaster) {
+﻿angularApp.controller('indexKsCtrl', ['$scope', '$mdDialog', 'DataService', 'toastr', 'zgradaObj', 'pdMaster',
+    function ($scope, $mdDialog, DataService, toastr, zgradaObj, pdMaster) {
 
         $scope.zgradaObj = zgradaObj;
         $scope.tableVisible = false;
         $scope.pdMaster = pdMaster;
-
+        var tBodyObj = { master: '', godina: null, mjeseci: [], tBodyList: [] };
 
         zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
             var godineList = [];
@@ -41,12 +41,6 @@
             var zaduzenja = [];
             var childovi = [];
             var tBody = [];
-
-
-
-
-
-
 
             $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                 if (pr.Godina == godina) {
@@ -218,9 +212,23 @@
             else {
                 selected.push(mj);
             }
-            alert(selected);
         };
 
+        // var tBodyObj = { master: '', mjeseci: [], tBody: [] };
+        $scope.genPdf = function () {
+            tBodyObj.master = pdMaster;
+            tBodyObj.godina = $scope.selectedGodina;
+            tBodyObj.mjeseci = selected;
+            tBodyObj.tBodyList = $scope.tBody;
+            DataService.genPdfKarticePd(tBodyObj).then(
+                function (result) {
+                    alert(result.data);
+                },
+                function (result) {
+                    toastr.error('Pogreška kod kreiranja izvještaja');
+                }
+            )
+        }
 
         $scope.cancel = function () {
             $mdDialog.cancel();

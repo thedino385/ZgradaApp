@@ -76,6 +76,10 @@
         return $http.post('../api/data/zajednickiUredjajiCreateOrUpdate', zgradaObj);
     }
 
+    var genPdfKarticePd = function (tBodyObj) {
+        return $http.post('../api/pdfgenerator/genPdfKarticePd', tBodyObj);
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -94,7 +98,9 @@
 
         getSifarnikRashoda: getSifarnikRashoda,
         sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,
-        currZgrada: currZgrada
+        currZgrada: currZgrada,
+
+        genPdfKarticePd: genPdfKarticePd
     }
 
 

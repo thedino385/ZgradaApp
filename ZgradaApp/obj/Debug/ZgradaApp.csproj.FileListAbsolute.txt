@@ -265,3 +265,5 @@ C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.Owin.Security.MicrosoftAcc
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.pdb
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.csprojResolveAssemblyReference.cache
+C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\itextsharp.dll
+C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\itextsharp.xml
