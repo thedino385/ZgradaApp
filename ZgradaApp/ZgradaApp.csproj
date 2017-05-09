@@ -185,6 +185,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\PdfGeneratorController.cs" />
+    <Compile Include="KompanijeUseri.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="PricuvaRezijeGodina_StanjeOd.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -213,9 +216,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Kompanije.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="KompanijeUpravitelji.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
@@ -263,6 +263,12 @@
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_DnevnikRada.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_DnevnikRadaDetails.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade_PopisUredjaja.cs">
@@ -371,6 +377,11 @@
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\prihodiRashodi\sifarnikRashodaModalCtrl.js" />
     <Content Include="app\zgrade\dialog1.html" />
+    <Content Include="app\zgrade\dnevnik\dnevnikDetails.html" />
+    <Content Include="app\zgrade\dnevnik\dnevnikDetailsCtrl.js" />
+    <Content Include="app\zgrade\dnevnik\dnevnikIndex.html" />
+    <Content Include="app\zgrade\dnevnik\dnevnikIndexCtrl.js" />
+    <Content Include="app\zgrade\dnevnik\msgModal.html" />
     <Content Include="app\zgrade\PDChild\confirmDialog.html" />
     <Content Include="app\zgrade\PDChild\posebniDijeloviMasterList.html" />
     <Content Include="app\zgrade\PDChild\posebniDijeloviMasterListCtrl.js" />
@@ -425,6 +436,7 @@
     <Content Include="Content\icons\delete.svg" />
     <Content Include="Content\icons\domain.svg" />
     <Content Include="Content\icons\dots-horizontal.svg" />
+    <Content Include="Content\icons\file-document-box.svg" />
     <Content Include="Content\icons\menu.svg" />
     <Content Include="Content\icons\minus-circle.svg" />
     <Content Include="Content\icons\more_vert.svg" />

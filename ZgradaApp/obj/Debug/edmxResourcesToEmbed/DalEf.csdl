@@ -2,7 +2,6 @@
 <Schema Namespace="ZgradaDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="ZgradaDbEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Kompanije" EntityType="ZgradaDbModel.Kompanije" />
-    <EntitySet Name="KompanijeUpravitelji" EntityType="ZgradaDbModel.KompanijeUpravitelji" />
     <EntitySet Name="PricuvaRezijeGodina" EntityType="ZgradaDbModel.PricuvaRezijeGodina" />
     <EntitySet Name="PricuvaRezijeMjesec" EntityType="ZgradaDbModel.PricuvaRezijeMjesec" />
     <EntitySet Name="PricuvaRezijePosebniDioChildPovrsine" EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPovrsine" />
@@ -106,6 +105,17 @@
       <End Role="Zgrade" EntitySet="Zgrade" />
       <End Role="Zgrade_PopisZajednickihDijelova" EntitySet="Zgrade_PopisZajednickihDijelova" />
     </AssociationSet>
+    <EntitySet Name="Zgrade_DnevnikRada" EntityType="ZgradaDbModel.Zgrade_DnevnikRada" />
+    <AssociationSet Name="FK_Zgrade_DnevnikRada_Zgrade" Association="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_DnevnikRada" EntitySet="Zgrade_DnevnikRada" />
+    </AssociationSet>
+    <EntitySet Name="KompanijeUseri" EntityType="ZgradaDbModel.KompanijeUseri" />
+    <EntitySet Name="Zgrade_DnevnikRadaDetails" EntityType="ZgradaDbModel.Zgrade_DnevnikRadaDetails" />
+    <AssociationSet Name="FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" Association="ZgradaDbModel.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada">
+      <End Role="Zgrade_DnevnikRada" EntitySet="Zgrade_DnevnikRada" />
+      <End Role="Zgrade_DnevnikRadaDetails" EntitySet="Zgrade_DnevnikRadaDetails" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -121,17 +131,6 @@
     <Property Name="RegisterDate" Type="DateTime" Precision="3" />
     <Property Name="ActivationDate" Type="DateTime" Precision="3" />
     <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
-  </EntityType>
-  <EntityType Name="KompanijeUpravitelji">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Ime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Prezime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="CompanyId" Type="Int32" Nullable="false" />
-    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-    <Property Name="MasterAcc" Type="Boolean" />
   </EntityType>
   <EntityType Name="PricuvaRezijeGodina">
     <Key>
@@ -276,6 +275,7 @@
     <NavigationProperty Name="Zgrade_Stanari" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade" ToRole="Zgrade_Stanari" />
     <NavigationProperty Name="Zgrade_PopisUredjaja" Relationship="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PopisUredjaja" />
     <NavigationProperty Name="Zgrade_PopisZajednickihDijelova" Relationship="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PopisZajednickihDijelova" />
+    <NavigationProperty Name="Zgrade_DnevnikRada" Relationship="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade" FromRole="Zgrade" ToRole="Zgrade_DnevnikRada" />
   </EntityType>
   <EntityType Name="Zgrade_PosebniDijeloviChild">
     <Key>
@@ -697,6 +697,70 @@
       </Principal>
       <Dependent Role="Zgrade_PopisZajednickihDijelova">
         <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Zgrade_DnevnikRada">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Godina" Type="Int32" Nullable="false" />
+    <Property Name="Mjesec" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Naslov" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Opis" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Odradjeno" Type="Boolean" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade" FromRole="Zgrade_DnevnikRada" ToRole="Zgrade" />
+    <NavigationProperty Name="Zgrade_DnevnikRadaDetails" Relationship="ZgradaDbModel.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" FromRole="Zgrade_DnevnikRada" ToRole="Zgrade_DnevnikRadaDetails" />
+  </EntityType>
+  <Association Name="FK_Zgrade_DnevnikRada_Zgrade">
+    <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Zgrade_DnevnikRada" Role="Zgrade_DnevnikRada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_DnevnikRada">
+        <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="KompanijeUseri">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="MasterAcc" Type="Boolean" />
+    <Property Name="StanariD" Type="Int32" />
+    <Property Name="ZgradaId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Zgrade_DnevnikRadaDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DnevnikRadaId" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Poruka" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="Zgrade_DnevnikRada" Relationship="ZgradaDbModel.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" FromRole="Zgrade_DnevnikRadaDetails" ToRole="Zgrade_DnevnikRada" />
+  </EntityType>
+  <Association Name="FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada">
+    <End Type="ZgradaDbModel.Zgrade_DnevnikRada" Role="Zgrade_DnevnikRada" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Zgrade_DnevnikRadaDetails" Role="Zgrade_DnevnikRadaDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade_DnevnikRada">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_DnevnikRadaDetails">
+        <PropertyRef Name="DnevnikRadaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

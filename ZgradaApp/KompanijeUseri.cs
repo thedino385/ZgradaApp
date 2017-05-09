@@ -12,7 +12,7 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class KompanijeUpravitelji
+    public partial class KompanijeUseri
     {
         public int Id { get; set; }
         public string Ime { get; set; }
@@ -20,5 +20,7 @@ namespace ZgradaApp
         public int CompanyId { get; set; }
         public string UserGuid { get; set; }
         public Nullable<bool> MasterAcc { get; set; }
+        public Nullable<int> StanariD { get; set; }
+        public Nullable<int> ZgradaId { get; set; }
     }
 }

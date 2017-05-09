@@ -89,6 +89,20 @@ namespace ZgradaApp
     {
         public string Status { get; set; }
     }
+
+    public class ZgradaUseri
+    {
+        public Zgrade Zgrada { get; set; }
+        public List<KompanijeUseri> Useri { get; set; }
+        public int userId { get; set; }
+
+    }
+
+    public partial class Zgrade_DnevnikRadaDetails
+    {
+        public string Status { get; set; }
+    }
+
     // OLD
 
     //public partial class Stanovi_PosebniDijelovi

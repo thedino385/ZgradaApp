@@ -2,42 +2,41 @@
     function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
 
         $scope.msg = '';
-        //$scope.dodajVlasnikeBtnDisabled = false;
-        //if (DataService.currZgrada == null) {
-        //    $location.path('/zgrade');
-        //    return;
-        //}
-
+        var zgradaObj = DataService.currZgrada;
+        if (zgradaObj == null) {
+            $location.path('/zgrade');
+            return;
+        }
         if ($routeParams) {
             $rootScope.loaderActive = true;
-            DataService.getZgrada($routeParams.id).then(
-                function (result) {
-                    // on success
-                    $scope.zgradaObj = result.data;
-                    var godineList = [];
-                    $scope.zgradaObj.PrihodiRashodi.forEach(function (pr) {
-                        godineList.push(pr.Godina);
-                    });
-                    $scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
-                    $scope.godine = godineList;
-                    $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
-                    $rootScope.loaderActive = false;
-                    $scope.msg = "Uredi zgradu";
+            //DataService.getZgrada($routeParams.id).then(
+            //function (result) {
+            // on success
+            $scope.zgradaObj = zgradaObj;
+            var godineList = [];
+            $scope.zgradaObj.PrihodiRashodi.forEach(function (pr) {
+                godineList.push(pr.Godina);
+            });
+            $scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
+            $scope.godine = godineList;
+            $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
+            $rootScope.loaderActive = false;
+            $scope.msg = "Uredi zgradu";
 
-                    DataService.getSifarnikRashoda().then(
-                        function (result) {
-                            $scope.sifarnikRashoda = result.data;
-                        },
-                        function (result) {
-                            toastr.error('Dohvat šifarnika rashoda nije uspio');
-                        });
+            DataService.getSifarnikRashoda().then(
+                function (result) {
+                    $scope.sifarnikRashoda = result.data;
                 },
                 function (result) {
-                    // on errr
-                    alert(result.Message);
-                    $rootScope.errMsg = result.Message;
-                }
-            );
+                    toastr.error('Dohvat šifarnika rashoda nije uspio');
+                });
+            //},
+            //function (result) {
+            //    // on errr
+            //    alert(result.Message);
+            //    $rootScope.errMsg = result.Message;
+            //}
+            //;
         }
 
 
@@ -86,7 +85,7 @@
                         suma += parseFloat(rashodMjesec.Iznos);
                 });
             }
-           
+
             //else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
             //    $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
             //        if (rashodMjesec.Mjesec == mjesec)
@@ -106,7 +105,7 @@
                 var newMaster = { Id: 0, ZgradaId: $scope.zgradaObj.Id, Godina: $scope.novaGodina, Status: 'a', PrihodiRashodi_Prihodi: [], PrihodiRashodi_Rashodi: [] }
                 $scope.zgradaObj.PrihodiRashodi.push(newMaster);
             }
-                
+
             else
                 toastr.error('Godina postoji');
             $scope.novaGodina = '';
@@ -224,16 +223,16 @@
                         toastr.error('Snimanje šiarnika rahoda nije uspjelo!');
                     });
                 //console.log($scope.prihodRashodZaGodinu);
-                }, function (sifarnikRashoda) {
+            }, function (sifarnikRashoda) {
                 // cancel
-                    $scope.sifarnikRashoda = sifarnikRashoda;
+                $scope.sifarnikRashoda = sifarnikRashoda;
                 //console.log(prihodRashodZaGodinu);
                 //$scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
             });
         };
-        
 
-        
+
+
 
     }])
     //.config(function ($mdThemingProvider) {

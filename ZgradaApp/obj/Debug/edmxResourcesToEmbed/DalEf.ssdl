@@ -15,7 +15,7 @@
     <Property Name="ActivationDate" Type="datetime" />
     <Property Name="ExpirationDate" Type="datetime" />
   </EntityType>
-  <EntityType Name="KompanijeUpravitelji">
+  <EntityType Name="KompanijeUseri">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -25,6 +25,8 @@
     <Property Name="CompanyId" Type="int" Nullable="false" />
     <Property Name="UserGuid" Type="varchar" MaxLength="128" />
     <Property Name="MasterAcc" Type="bit" />
+    <Property Name="StanariD" Type="int" />
+    <Property Name="ZgradaId" Type="int" />
   </EntityType>
   <EntityType Name="PricuvaRezijeGodina">
     <Key>
@@ -173,6 +175,30 @@
     <Property Name="Adresa" Type="varchar" MaxLength="200" />
     <Property Name="Mjesto" Type="varchar" MaxLength="200" />
     <Property Name="Napomena" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Zgrade_DnevnikRada">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ZgradaId" Type="int" Nullable="false" />
+    <Property Name="Godina" Type="int" Nullable="false" />
+    <Property Name="Mjesec" Type="int" Nullable="false" />
+    <Property Name="Datum" Type="datetime" Nullable="false" />
+    <Property Name="Naslov" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Opis" Type="varchar" MaxLength="1000" />
+    <Property Name="Odradjeno" Type="bit" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Zgrade_DnevnikRadaDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DnevnikRadaId" Type="int" Nullable="false" />
+    <Property Name="Datum" Type="datetime" Nullable="false" />
+    <Property Name="Poruka" Type="varchar" MaxLength="500" />
+    <Property Name="UserId" Type="int" />
   </EntityType>
   <EntityType Name="Zgrade_PopisUredjaja">
     <Key>
@@ -447,6 +473,30 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Zgrade_DnevnikRada_Zgrade">
+    <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
+    <End Role="Zgrade_DnevnikRada" Type="Self.Zgrade_DnevnikRada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_DnevnikRada">
+        <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada">
+    <End Role="Zgrade_DnevnikRada" Type="Self.Zgrade_DnevnikRada" Multiplicity="1" />
+    <End Role="Zgrade_DnevnikRadaDetails" Type="Self.Zgrade_DnevnikRadaDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade_DnevnikRada">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_DnevnikRadaDetails">
+        <PropertyRef Name="DnevnikRadaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Zgrade_PopisUredjaja_Zgrade">
     <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
     <End Role="Zgrade_PopisUredjaja" Type="Self.Zgrade_PopisUredjaja" Multiplicity="*" />
@@ -557,7 +607,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
   </Association>
   <EntityContainer Name="ZgradaDbModelStoreContainer">
     <EntitySet Name="Kompanije" EntityType="Self.Kompanije" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="KompanijeUpravitelji" EntityType="Self.KompanijeUpravitelji" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KompanijeUseri" EntityType="Self.KompanijeUseri" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijeGodina" EntityType="Self.PricuvaRezijeGodina" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijeGodina_StanjeOd" EntityType="Self.PricuvaRezijeGodina_StanjeOd" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijeMjesec" EntityType="Self.PricuvaRezijeMjesec" Schema="dbo" store:Type="Tables" />
@@ -571,6 +621,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="Self.PrihodiRashodi_Rashodi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SifarnikRashoda" EntityType="Self.SifarnikRashoda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zgrade_DnevnikRada" EntityType="Self.Zgrade_DnevnikRada" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zgrade_DnevnikRadaDetails" EntityType="Self.Zgrade_DnevnikRadaDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_PopisUredjaja" EntityType="Self.Zgrade_PopisUredjaja" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_PopisZajednickihDijelova" EntityType="Self.Zgrade_PopisZajednickihDijelova" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_PosebniDijeloviChild" EntityType="Self.Zgrade_PosebniDijeloviChild" Schema="dbo" store:Type="Tables" />
@@ -633,6 +685,14 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="Self.FK_PrihodiRashodi_Zgrade">
       <End Role="Zgrade" EntitySet="Zgrade" />
       <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zgrade_DnevnikRada_Zgrade" Association="Self.FK_Zgrade_DnevnikRada_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_DnevnikRada" EntitySet="Zgrade_DnevnikRada" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" Association="Self.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada">
+      <End Role="Zgrade_DnevnikRada" EntitySet="Zgrade_DnevnikRada" />
+      <End Role="Zgrade_DnevnikRadaDetails" EntitySet="Zgrade_DnevnikRadaDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Zgrade_PopisUredjaja_Zgrade" Association="Self.FK_Zgrade_PopisUredjaja_Zgrade">
       <End Role="Zgrade" EntitySet="Zgrade" />

@@ -17,18 +17,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="KompanijeUpravitelji">
-      <EntityTypeMapping TypeName="ZgradaDbModel.KompanijeUpravitelji">
-        <MappingFragment StoreEntitySet="KompanijeUpravitelji">
-          <ScalarProperty Name="MasterAcc" ColumnName="MasterAcc" />
-          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
-          <ScalarProperty Name="Ime" ColumnName="Ime" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PricuvaRezijeGodina">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeGodina">
         <MappingFragment StoreEntitySet="PricuvaRezijeGodina">
@@ -334,6 +322,46 @@
           <ScalarProperty Name="Povrsina" ColumnName="Povrsina" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
           <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zgrade_DnevnikRada">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_DnevnikRada">
+        <MappingFragment StoreEntitySet="Zgrade_DnevnikRada">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Odradjeno" ColumnName="Odradjeno" />
+          <ScalarProperty Name="Opis" ColumnName="Opis" />
+          <ScalarProperty Name="Naslov" ColumnName="Naslov" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
+          <ScalarProperty Name="Godina" ColumnName="Godina" />
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KompanijeUseri">
+      <EntityTypeMapping TypeName="ZgradaDbModel.KompanijeUseri">
+        <MappingFragment StoreEntitySet="KompanijeUseri">
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+          <ScalarProperty Name="StanariD" ColumnName="StanariD" />
+          <ScalarProperty Name="MasterAcc" ColumnName="MasterAcc" />
+          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+          <ScalarProperty Name="Ime" ColumnName="Ime" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zgrade_DnevnikRadaDetails">
+      <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_DnevnikRadaDetails">
+        <MappingFragment StoreEntitySet="Zgrade_DnevnikRadaDetails">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Poruka" ColumnName="Poruka" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="DnevnikRadaId" ColumnName="DnevnikRadaId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

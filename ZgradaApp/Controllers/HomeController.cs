@@ -17,7 +17,7 @@ namespace ZgradaApp.Controllers
             using (ZgradaDbEntities db = new ZgradaApp.ZgradaDbEntities())
             {
                 var userId = User.Identity.GetUserId();
-                var user = await db.KompanijeUpravitelji.FirstOrDefaultAsync(p => p.UserGuid == userId);
+                var user = await db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
                 var company = await db.Kompanije.FirstOrDefaultAsync(p => p.Id == user.CompanyId);
                 ViewBag.ImePrezime = String.Join(" ", new[] { user.Ime, user.Prezime });
                 ViewBag.Company = company.Naziv;

@@ -1,12 +1,7 @@
 ﻿angularApp.controller('zgradeCtrl', ['$scope', '$location', '$routeParams', '$rootScope', 'DataService',
     function ($scope, $location, $routeParams, $rootScope, DataService) {
 
-        // povuci zgrade
-        //DataService.getZgrade().then(function (result) {
-        //    $scope.zgrade = result;
-        //    console.log($scope.zgrade);
-        //    console.log(result);
-        //});
+        
 
         $rootScope.loaderActive = true;
         DataService.getZgrade().then(
@@ -14,7 +9,7 @@
                 // on success
                 $scope.zgrade = result.data;
                 $rootScope.loaderActive = false;
-                DataService.listZgrade = result.data;
+                //DataService.listZgrade = result.data;
             },
             function (result) {
                 // on errr
@@ -31,11 +26,45 @@
         }
 
         $scope.goToPosebniDjeloviChild = function (zgradaId) {
-            $location.path('/posebniDijeloviMasterList/' + zgradaId);
+            DataService.getZgrada(zgradaId).then(
+                function (result) {
+                    // on success
+                    $scope.zgradaObj = result.data.Zgrada;
+                    DataService.currZgrada = result.data.Zgrada;
+                    DataService.zgradaUseri = result.data.Useri;
+                    DataService.userId = result.data.userId;
+                    $rootScope.loaderActive = false;
+                    $location.path('/posebniDijeloviMasterList/' + zgradaId);
+                },
+                function (result) {
+                    // on errr
+                    alert(result.Message);
+                    $rootScope.errMsg = result.Message;
+                }
+            );
         }
 
         $scope.goToPrihodiRashodi = function (zgradaId) {
-            $location.path('/prihodiRashodi/' + zgradaId);
+            DataService.getZgrada(zgradaId).then(
+                function (result) {
+                    // on success
+                    $scope.zgradaObj = result.data.Zgrada;
+                    DataService.currZgrada = result.data.Zgrada;
+                    DataService.zgradaUseri = result.data.Useri;
+                    DataService.userId = result.data.userId;
+                    $rootScope.loaderActive = false;
+                    $location.path('/prihodiRashodi/' + zgradaId);
+                },
+                function (result) {
+                    // on errr
+                    alert(result.Message);
+                    $rootScope.errMsg = result.Message;
+                }
+            );
+        }
+
+        function getZgrada(id) {
+            
         }
 
 

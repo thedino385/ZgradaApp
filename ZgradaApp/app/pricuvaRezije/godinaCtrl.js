@@ -3,35 +3,42 @@
 
         $scope.msg = '';
         $scope.selectedGodina = null;
+        var zgradaObj = DataService.currZgrada;
+        if (zgradaObj == null) {
+            $location.path('/zgrade');
+            return;
+        }
+
+
         if ($routeParams) {
             $rootScope.loaderActive = true;
-            DataService.getZgrada($routeParams.id).then(
-                function (result) {
-                    // on success
-                    $scope.zgradaObj = result.data;
-                    var godineList = [];
-                    $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
-                        godineList.push(pr.Godina);
-                    });
-                    //$scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
-                    $scope.godine = godineList;
-                    $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
-                    $rootScope.loaderActive = false;
+            //DataService.getZgrada($routeParams.id).then(
+            //function (result) {
+            // on success
+            $scope.zgradaObj = zgradaObj;
+            var godineList = [];
+            $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
+                godineList.push(pr.Godina);
+            });
+            //$scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
+            $scope.godine = godineList;
+            $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
+            $rootScope.loaderActive = false;
 
-                    //DataService.getSifarnikRashoda().then(
-                    //    function (result) {
-                    //        $scope.sifarnikRashoda = result.data;
-                    //    },
-                    //    function (result) {
-                    //        toastr.error('Dohvat šifarnika rashoda nije uspio');
-                    //    });
-                },
-                function (result) {
-                    // on errr
-                    alert(result.Message);
-                    $rootScope.errMsg = result.Message;
-                }
-            );
+            //DataService.getSifarnikRashoda().then(
+            //    function (result) {
+            //        $scope.sifarnikRashoda = result.data;
+            //    },
+            //    function (result) {
+            //        toastr.error('Dohvat šifarnika rashoda nije uspio');
+            //    });
+            //    },
+            //    function (result) {
+            //        // on errr
+            //        alert(result.Message);
+            //        $rootScope.errMsg = result.Message;
+            //    }
+            //);
         }
 
 

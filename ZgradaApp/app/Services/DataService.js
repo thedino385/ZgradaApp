@@ -1,6 +1,8 @@
 ﻿angularApp.factory('DataService', ['$http', '$rootScope', '$q', function ($http, $rootScope, $q) {
 
     var currZgrada = null;
+    var zgradaUseri = [];
+    var userId = null;
 
     // zgrade
     var getZgrade = function () {
@@ -77,12 +79,18 @@
     }
 
     var genPdfKarticePd = function (tBodyObj) {
-        return $http.post('../api/pdfgenerator/genPdfKarticePd', tBodyObj);
+        //return $http.post('../api/pdfgenerator/genPdfKarticePd', tBodyObj);
+        return $http.post('../pdf/genPdfKarticePd', tBodyObj);
+    }
+
+    var dnevnikRadaCreateOrUpdate = function (dnevnik) {
+        return $http.post('../api/data/dnevnikRadaCreateOrUpdate', dnevnik);
     }
 
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
+        zgradaUseri: zgradaUseri,
         zgradaCreateOrUpdate: zgradaCreateOrUpdate,
         prihodiRashodiCreateOrUpdate: prihodiRashodiCreateOrUpdate,
         posebniDioChildrenCreateOrUpdate, posebniDioChildrenCreateOrUpdate,
@@ -99,8 +107,10 @@
         getSifarnikRashoda: getSifarnikRashoda,
         sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,
         currZgrada: currZgrada,
+        userId: userId,
 
-        genPdfKarticePd: genPdfKarticePd
+        genPdfKarticePd: genPdfKarticePd,
+        dnevnikRadaCreateOrUpdate: dnevnikRadaCreateOrUpdate
     }
 
 

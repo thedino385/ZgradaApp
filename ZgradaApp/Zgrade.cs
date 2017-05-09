@@ -23,6 +23,7 @@ namespace ZgradaApp
             this.Zgrade_Stanari = new HashSet<Zgrade_Stanari>();
             this.Zgrade_PopisUredjaja = new HashSet<Zgrade_PopisUredjaja>();
             this.Zgrade_PopisZajednickihDijelova = new HashSet<Zgrade_PopisZajednickihDijelova>();
+            this.Zgrade_DnevnikRada = new HashSet<Zgrade_DnevnikRada>();
         }
     
         public int Id { get; set; }
@@ -44,5 +45,7 @@ namespace ZgradaApp
         public virtual ICollection<Zgrade_PopisUredjaja> Zgrade_PopisUredjaja { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zgrade_PopisZajednickihDijelova> Zgrade_PopisZajednickihDijelova { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Zgrade_DnevnikRada> Zgrade_DnevnikRada { get; set; }
     }
 }

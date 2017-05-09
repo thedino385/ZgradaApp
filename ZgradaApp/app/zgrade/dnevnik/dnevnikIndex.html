@@ -1,0 +1,75 @@
+﻿
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+
+        <div layout="column" style="height:600px" ng-cloak>
+
+            <md-toolbar md-scroll-shrink ng-if="true">
+                <div class="md-toolbar-tools">
+                    <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                        <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                    </md-button>
+                    <h3 flex md-truncate>
+                        <span>Dnevnik rada</span>
+                    </h3>
+
+
+                    <md-button class="md-icon-button" aria-label="Novi događaj" title="Novi događaj" ng-click="gotoDetails(0)">
+                        <md-icon md-svg-icon="/Content/icons/plus.svg"></md-icon>
+                    </md-button>
+
+
+                    <md-button class="md-icon-button" aria-label="More">
+                        <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <div class="btn-group">
+                <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
+            </div>
+            <a href="" class="btn btn-primary" ng-click="godinaChanged(god)">Odabi dogina</a>
+
+
+            <md-content flex>
+                <md-list>
+                    <md-list-item class="md-3-line" ng-repeat="mjesec in mjeseci | orderBy: mjesec">
+                        <img src="/Content/images/60.jpeg" class="md-avatar" />
+                        <div class="md-list-item-text">
+                            <br />
+                            <h3 style="color: indigo">Mjesec: {{mjesec}}.</h3>
+                            <table class="table">
+                                <tbody>
+                                    <tr ng-repeat="dnevnik in zgradaObj.Zgrade_DnevnikRada | filter: { Mjesec: mjesec }">
+                                        <td>
+                                           {{dnevnik.Naslov}}
+                                            <br />
+                                            <span style="font-size: 10px; color: gray" ng-repeat="user in useri | filter: { Id: dnevnik.UserId }">
+                                            Kreirao: {{user.Ime}} {{user.Prezime}} dana {{parseDate(dnevnik.Datum)}}</span>
+                                        </td>
+                                        <td>
+                                            <span style="font-size: 10px; color: gray">Status: </span><span style="font-size: 11px;" ng-class="{ 'greenCell': dnevnik.Odradjeno == true, 'redCell': dnevnik.Odradjeno != true}">{{getStatusText(dnevnik.Odradjeno)}}</span>
+                                            <br />
+                                            <span style="font-size: 10px; color: gray">{{getZadnjiOdgovor(dnevnik.Id)}}</span>
+                                        </td>
+                                        <td style="text-align: end; width: 30px">
+                                            <a href="" class="md-icon-button" ng-click="gotoDetails(dnevnik.Id)" title="Uredi vlasnike">
+                                                <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <md-divider inset></md-divider>
+                    </md-list-item>
+
+                </md-list>
+
+            </md-content>
+
+
+         
+        </div>
+    </div>
+</div>

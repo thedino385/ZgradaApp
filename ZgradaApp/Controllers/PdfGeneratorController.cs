@@ -27,8 +27,11 @@ namespace ZgradaApp.Controllers
 
                 #region pdfCreation
                 var doc = new Document(PageSize.A4, 30, 30, 25, 25);
-                var physicalPath = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download"), "PosebniDio-1223.pdf");
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(physicalPath, FileMode.Create));
+                //var physicalPath = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download"), "PosebniDio-1223.pdf");
+                //PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(physicalPath, FileMode.Create));
+                var output = new MemoryStream();
+                var writer = PdfWriter.GetInstance(doc, output);
+
                 doc.Open();
 
                 var titleFont = FontFactory.GetFont("Arial", 16, Font.BOLD);
@@ -284,7 +287,7 @@ namespace ZgradaApp.Controllers
                 doc.Close();
                 writer.Close();
                 
-                
+                //System.Web.Hosting.HostingEnvironment.
                
                 #endregion
                 return Ok("link");

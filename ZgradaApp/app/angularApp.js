@@ -39,6 +39,15 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/popisi/uredjajiList.html',
             controller: 'uredjajiListCtrl'
         })
+        .when('/dnevnik', { // posebniDioMasterId
+            templateUrl: '../app/zgrade/dnevnik/dnevnikIndex.html',
+            controller: 'dnevnikIndexCtrl'
+        })
+        .when('/dnevnikDetails/:id', { // dnevnikId
+            templateUrl: '../app/zgrade/dnevnik/dnevnikDetails.html',
+            controller: 'dnevnikDetailsCtrl'
+        })
+
 
 
         .when('/pripadak/:id', {

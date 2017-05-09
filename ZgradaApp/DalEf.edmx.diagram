@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="aa149b2c4f8442e2b7da48336a0e39b1" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="ZgradaDbModel.Kompanije" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZgradaDbModel.KompanijeUpravitelji" Width="1.5" PointX="5.75" PointY="4.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeGodina" Width="1.5" PointX="3" PointY="9.125" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeMjesec" Width="1.5" PointX="5.25" PointY="8.625" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPovrsine" Width="1.5" PointX="12" PointY="9.125" />
@@ -50,6 +49,11 @@
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisZajednickihDijelova" Width="1.5" PointX="3" PointY="14.375" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRada" Width="3" PointX="3" PointY="37.375" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade" />
+        <EntityTypeShape EntityType="ZgradaDbModel.KompanijeUseri" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRadaDetails" Width="1.5" PointX="6.75" PointY="37.875" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

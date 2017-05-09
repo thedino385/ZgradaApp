@@ -1,0 +1,40 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak name="frm" ng-submit="save()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{title}}</h2>
+                <span></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <div layout="column" ng-cloak class="md-inline-form">
+                   
+                </div>
+                <div layout-gt-sm="row">
+                    <div class="col-sm-2"></div>
+                    <md-input-container class="md-block col-sm-8" flex-gt-sm>
+                        <label>Poruka</label>
+                        <textarea rows="3" cols="150" style="min-width: 100%" placeholder="Poruka" ng-model="msg"></textarea>
+
+                    </md-input-container>
+
+
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="saveMsg()">
+                Snimi
+            </md-button>
+            <md-button class="md-raised" ng-click="cancel()">
+                Zatvori
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

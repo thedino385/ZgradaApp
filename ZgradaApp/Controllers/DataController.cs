@@ -43,7 +43,10 @@ namespace ZgradaApp.Controllers
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
                 var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == Id && p.CompanyId == companyId);
-                return Ok(zgrada);
+
+                // useri 
+                var useri = await _db.KompanijeUseri.Where(p => p.CompanyId == companyId).ToListAsync();
+                return Ok(new ZgradaUseri { Zgrada = zgrada, Useri = useri, userId = useri.FirstOrDefault(p => p.UserGuid == identity.GetUserId()).Id });
             }
             catch (Exception ex)
             {
@@ -535,6 +538,49 @@ namespace ZgradaApp.Controllers
                 return Ok();
             }
             catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpPost]
+        [Route("api/data/dnevnikRadaCreateOrUpdate")]
+        public async Task<IHttpActionResult> DnevnikRadaCreateOrUpdate(Zgrade_DnevnikRada dnevnik)
+        {
+            try
+            {
+                if (dnevnik.Id == 0)
+                    _db.Zgrade_DnevnikRada.Add(dnevnik);
+                else
+                {
+                    var target = await _db.Zgrade_DnevnikRada.FirstOrDefaultAsync(p => p.Id == dnevnik.Id);
+                    target.Datum = dnevnik.Datum;
+                    target.Godina = dnevnik.Datum.Year;
+                    target.Mjesec = dnevnik.Datum.Month;
+                    target.Naslov = dnevnik.Naslov;
+                    target.Odradjeno = dnevnik.Odradjeno;
+                    target.Opis = dnevnik.Opis;
+
+                    foreach (var item in dnevnik.Zgrade_DnevnikRadaDetails)
+                    {
+                        switch(item.Status)
+                        {
+                            case "a":
+                                target.Zgrade_DnevnikRadaDetails.Add(item);
+                                break;
+                            case "u":
+                                _db.Zgrade_DnevnikRadaDetails.Attach(item);
+                                _db.Entry(item).State = EntityState.Modified;
+                                break;
+                            case "d":
+                                _db.Zgrade_DnevnikRadaDetails.Attach(item);
+                                _db.Entry(item).State = EntityState.Deleted;
+                                break;
+                        }
+                    }
+                }
+
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch(Exception ex) { return InternalServerError(); }
         }
     }
 }

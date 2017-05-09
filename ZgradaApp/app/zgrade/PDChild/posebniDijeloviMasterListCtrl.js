@@ -1,21 +1,16 @@
 ﻿angularApp.controller('posebniDijeloviMasterListCtrl', ['$scope', '$location', '$routeParams', '$rootScope', 'DataService', '$mdDialog',
     function ($scope, $location, $routeParams, $rootScope, DataService, $mdDialog) {
 
+        var zgradaObj = DataService.currZgrada;
+        if (zgradaObj == null) {
+            $location.path('/zgrade');
+            return;
+        }
+
         $scope.zgradaMsg = '';
         if ($routeParams) {
-            $rootScope.loaderActive = true;
-            DataService.getZgrada($routeParams.id).then(
-                function (result) {
-                    // on success
-                    $scope.zgrada = result.data;
-                    $rootScope.loaderActive = false;
-                    $scope.zgradaMsg = $scope.zgrada.Naziv + ' ' + $scope.zgrada.Adresa + ' ' + $scope.zgrada.Mjesto;
-                },
-                function (result) {
-                    // on errr
-                    $rootScope.errMsg = result.Message;
-                }
-            );
+            $scope.zgrada = zgradaObj
+            $scope.zgradaMsg = $scope.zgrada.Naziv + ' ' + $scope.zgrada.Adresa + ' ' + $scope.zgrada.Mjesto;
         }
         //$scope.novaZgrada = function () {
         //    $location.path('/zgrada/0');
@@ -43,7 +38,11 @@
             DataService.currZgrada = $scope.zgrada;
             $location.path('/popisUredjaja');
         }
-        
+
+        $scope.goToDnevnik = function () {
+            DataService.currZgrada = $scope.zgrada;
+            $location.path('/dnevnik');
+        }
         
 
         // _________________________________________________________
