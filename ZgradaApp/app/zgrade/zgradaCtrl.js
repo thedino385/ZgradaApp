@@ -1,27 +1,25 @@
 ﻿angularApp.controller('zgradaCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
     function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
 
-        var zgradaObj = DataService.currZgrada;
-        if (zgradaObj == null) {
-            $location.path('/zgrade');
-            return;
-        }
+
 
         if ($routeParams) {
             if ($routeParams.id > 0) {
-                //$rootScope.loaderActive = true;
-                //DataService.getZgrada($routeParams.id).then(
-                //function (result) {
-                // on success
-                $scope.zgradaObj = zgradaObj;
-                $scope.msg = "Uredi zgradu";
-                //    },
-                //    function (result) {
-                //        // on errr
-                //        alert(result.Message);
-                //        $rootScope.errMsg = result.Message;
-                //    }
-                //);
+                $rootScope.loaderActive = true;
+                DataService.getZgrada($routeParams.id).then(
+                    function (result) {
+                        // on success
+                        $rootScope.loaderActive = false;
+                        $scope.zgradaObj = result.data.Zgrada;
+                        $scope.msg = "Uredi zgradu";
+                    },
+                    function (result) {
+                        // on errr
+                        $rootScope.loaderActive = false;
+                        alert(result.Message);
+                        $rootScope.errMsg = result.Message;
+                    }
+                );
             }
             else {
                 $scope.msg = "Nova zgrada";

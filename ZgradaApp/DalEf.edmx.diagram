@@ -18,7 +18,7 @@
         <EntityTypeShape EntityType="ZgradaDbModel.SifarnikRashoda" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade" Width="1.5" PointX="0.75" PointY="16.125" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild" Width="1.5" PointX="5.25" PointY="20.875" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Povrsine" Width="1.5" PointX="7.5" PointY="23.125" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Povrsine" Width="2.25" PointX="7.5" PointY="23.125" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Pripadci" Width="1.5" PointX="7.5" PointY="18.875" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" Width="1.5" PointX="3" PointY="19.125" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Width="1.5" PointX="5.25" PointY="15.25" />
@@ -45,7 +45,7 @@
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisUredjaja" Width="1.5" PointX="3" PointY="24.25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisUredjaja" Width="1.75" PointX="3" PointY="24.25" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisZajednickihDijelova" Width="1.5" PointX="3" PointY="14.375" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" />

@@ -42,23 +42,30 @@
                         <div layout-gt-sm="row">
                             <div class="col-sm-2"></div>
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                <label>Aktivan od godina</label>
-                                <input required type="number" name="vrijediOdGodina" ng-model="zajednickiUredjaj.VrijediOdGodina">
-                                <div ng-messages="frm.vrijediOdGodina.$error" role="alert">
-                                    <div ng-message-exp="['required']">
-                                        Obavezno polje
-                                    </div>
-                                </div>
+                                <label>Notifikacija</label>
+                                <md-datepicker ng-model="zajednickiUredjaj.Notifikacija_dt" md-placeholder="Datum notiifikacije"></md-datepicker>
                             </md-input-container>
 
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                <label>Aktivan od mjesec</label>
-                                <input required type="number" name="vrijediOdMjesec" ng-model="zajednickiUredjaj.VrijediOdMjesec">
-                                <div ng-messages="frm.vrijediOdMjesec.$error" role="alert">
-                                    <div ng-message-exp="['required']">
-                                        Obavezno polje
-                                    </div>
-                                </div>
+                                <label>Notifikacija</label>
+                                <input required type="text" ng-model="zajednickiUredjaj.NotifikacijaText">
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </md-content>
+
+
+                    <md-content layput-padding>
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Vrijedi do mjesec</label>
+                                <input type="text" ng-model="zajednickiUredjaj.ZatvorenMjesec">
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Vrijedi do godina</label>
+                                <input type="text" ng-model="zajednickiUredjaj.ZatvorenGodina">
                             </md-input-container>
                             <div class="col-sm-2"></div>
                         </div>

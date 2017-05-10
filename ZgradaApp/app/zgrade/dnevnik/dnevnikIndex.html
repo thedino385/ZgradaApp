@@ -13,6 +13,7 @@
                         <span>Dnevnik rada</span>
                     </h3>
 
+                    <h3 style="padding-right: 20px">Godina: {{selectedGodina}}</h3>
 
                     <md-button class="md-icon-button" aria-label="Novi događaj" title="Novi događaj" ng-click="gotoDetails(0)">
                         <md-icon md-svg-icon="/Content/icons/plus.svg"></md-icon>
@@ -28,7 +29,7 @@
             <div class="btn-group">
                 <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
             </div>
-            <a href="" class="btn btn-primary" ng-click="godinaChanged(god)">Odabi dogina</a>
+           
 
 
             <md-content flex>
@@ -47,7 +48,7 @@
                                             <span style="font-size: 10px; color: gray" ng-repeat="user in useri | filter: { Id: dnevnik.UserId }">
                                             Kreirao: {{user.Ime}} {{user.Prezime}} dana {{parseDate(dnevnik.Datum)}}</span>
                                         </td>
-                                        <td>
+                                        <td style="text-align: start">
                                             <span style="font-size: 10px; color: gray">Status: </span><span style="font-size: 11px;" ng-class="{ 'greenCell': dnevnik.Odradjeno == true, 'redCell': dnevnik.Odradjeno != true}">{{getStatusText(dnevnik.Odradjeno)}}</span>
                                             <br />
                                             <span style="font-size: 10px; color: gray">{{getZadnjiOdgovor(dnevnik.Id)}}</span>

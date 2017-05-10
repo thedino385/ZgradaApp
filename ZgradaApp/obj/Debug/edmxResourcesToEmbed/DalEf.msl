@@ -244,6 +244,7 @@
     <EntitySetMapping Name="Zgrade_Stanari">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Stanari">
         <MappingFragment StoreEntitySet="Zgrade_Stanari">
+          <ScalarProperty Name="DnevnikRada" ColumnName="DnevnikRada" />
           <ScalarProperty Name="OglasnaPloca" ColumnName="OglasnaPloca" />
           <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -298,6 +299,9 @@
     <EntitySetMapping Name="Zgrade_PopisUredjaja">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PopisUredjaja">
         <MappingFragment StoreEntitySet="Zgrade_PopisUredjaja">
+          <ScalarProperty Name="NotifikacijaProcitana" ColumnName="NotifikacijaProcitana" />
+          <ScalarProperty Name="NotifikacijaText" ColumnName="NotifikacijaText" />
+          <ScalarProperty Name="Notifikacija_dt" ColumnName="Notifikacija_dt" />
           <ScalarProperty Name="ZatvorenMjesec" ColumnName="ZatvorenMjesec" />
           <ScalarProperty Name="ZatvorenGodina" ColumnName="ZatvorenGodina" />
           <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />

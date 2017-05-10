@@ -41,7 +41,7 @@
 
         $scope.goToDnevnik = function () {
             DataService.currZgrada = $scope.zgrada;
-            $location.path('/dnevnik');
+            $location.path('/dnevnik/' + $scope.zgrada.Id);
         }
         
 

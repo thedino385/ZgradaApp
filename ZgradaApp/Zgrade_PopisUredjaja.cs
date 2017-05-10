@@ -23,6 +23,9 @@ namespace ZgradaApp
         public Nullable<bool> Zatvoren { get; set; }
         public Nullable<int> ZatvorenGodina { get; set; }
         public Nullable<int> ZatvorenMjesec { get; set; }
+        public Nullable<System.DateTime> Notifikacija_dt { get; set; }
+        public string NotifikacijaText { get; set; }
+        public Nullable<bool> NotifikacijaProcitana { get; set; }
     
         public virtual Zgrade Zgrade { get; set; }
     }

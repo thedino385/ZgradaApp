@@ -8,11 +8,12 @@
             $scope.zajednickiUredjaj = {
                 Id: 0, ZgradaId: zgradaObj.Id, Naziv: '', Napomena: '',
                 VrijediOdMjesec: parseInt(new Date().getMonth()) + 1, VrijediOdGodina: new Date().getFullYear(),
-                Zatvoren: false, Status: 'a', ZatvorenGodina: null, ZatvorenMjesec: null
+                Zatvoren: false, Status: 'a', ZatvorenGodina: null, ZatvorenMjesec: null, Notifikacija_dt: null, NotifikacijaText: null
             };
             $scope.msg = 'Novi zajednički uređaj';
         }
         else {
+            console.log(id);
             zgradaObj.Zgrade_PopisUredjaja.forEach(function (u) {
                 if (u.Id == id)
                     $scope.zajednickiUredjaj = u;

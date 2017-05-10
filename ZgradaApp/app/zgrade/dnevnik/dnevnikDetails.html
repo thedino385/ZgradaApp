@@ -74,7 +74,7 @@
             </div>
 
             <hr />
-            <md-button class="md-icon-button pull-right" ng-click="newMsg($event)" aria-label="More">
+            <md-button ng-show="showNewbtn" class="md-icon-button pull-right" ng-click="newMsg(0, $event)" aria-label="More">
                 <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
             </md-button>
 
@@ -116,6 +116,9 @@
                         <span class="vertical-date">
                             <span ng-repeat="user in useri | filter: { Id: d.UserId }">
                                 {{user.Ime}} {{user.Prezime}}
+                                <a href="" class="md-icon-button" ng-click="newMsg(d.Id, $event)" title="Uredi vlasnike">
+                                    <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                                </a>
                             </span>
                             <br />
                             <small>{{parseDate(d.Datum)}}</small>
@@ -126,11 +129,12 @@
             </div>
 
             <hr />
+            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
 
-            <md-button class="md-raised pull-right" ng-click="goBack()">
+            <md-button class="md-raised pull-right" ng-click="cancel()">
                 Odustani
             </md-button>
-            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+            
         </form>
     </div>
 </div>

@@ -43,6 +43,20 @@ namespace ZgradaApp.Controllers
                 {
                     RedirectToAction("LogOffExpired", "Account");
                 }
+
+                // ima li notifikacija za uredjaje?
+                var today = DateTime.Today;
+                var tommorow = today.AddDays(10);
+                var uredjaji = await db.Zgrade_PopisUredjaja.Where(p => p.Notifikacija_dt >= today && p.Notifikacija_dt < tommorow && p.NotifikacijaProcitana != true && p.NotifikacijaText.Length > 0).ToListAsync();
+                if(uredjaji.Count > 0)
+                {
+                    List<NotificationList> list = new List<NotificationList>();
+                    foreach (var item in uredjaji)
+                    {
+                        list.Add(new NotificationList { Datum = ((DateTime)item.Notifikacija_dt).ToShortDateString(), Text = item.NotifikacijaText, Domena = "u", Id = item.Id });
+                    }
+                    ViewData["notifikacije"] = list;
+                }
             }
             return View();
         }
@@ -51,5 +65,13 @@ namespace ZgradaApp.Controllers
         {
             return View();
         }
+    }
+
+    public class NotificationList
+    {
+        public string Datum { get; set; }
+        public string Text { get; set; }
+        public string Domena { get; set; }
+        public int Id { get; set; }
     }
 }
