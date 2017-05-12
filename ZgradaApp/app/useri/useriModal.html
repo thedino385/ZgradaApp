@@ -1,0 +1,105 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak name="frm" ng-submit="save()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{msg}}</h2>
+                <span></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <div layout="column" ng-cloak class="md-inline-form">
+                    <md-content layout-padding>
+                        <!--row 1-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Ime</label>
+                                <input required type="text" name="ime" ng-model="user.Ime">
+                                <div ng-messages="frm.ime.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Prezime</label>
+                                <input required type="text" name="prezime" ng-model="user.Prezime">
+                                <div ng-messages="frm.prezime.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                    <div ng-message="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <!--row 2-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Email</label>
+                                <input required type="text" name="email" ng-model="user.Email">
+                                <div ng-messages="frm.email.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                    <div ng-message="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Aktivan</label>
+                                <md-checkbox ng-model="user.Active">
+                                </md-checkbox>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                        <div layout-gt-sm="row" ng-hide="user.Id > 0">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Lozinka</label>
+                                <input required type="password" name="pass1" ng-model="user.Password">
+                                <div ng-messages="frm.pass1.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm ng-hide="user.Id > 0">
+                                <label>Ponovi lozinku</label>
+                                <input required type="password" name="pass2" ng-model="passwordAgain">
+                                <div ng-messages="frm.pass2.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                    <div ng-message="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </md-content>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="cancel()">
+                Odustani
+            </md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

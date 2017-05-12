@@ -348,8 +348,9 @@
     <EntitySetMapping Name="KompanijeUseri">
       <EntityTypeMapping TypeName="ZgradaDbModel.KompanijeUseri">
         <MappingFragment StoreEntitySet="KompanijeUseri">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Stanarid" ColumnName="Stanarid" />
           <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
-          <ScalarProperty Name="StanariD" ColumnName="StanariD" />
           <ScalarProperty Name="MasterAcc" ColumnName="MasterAcc" />
           <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
           <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
@@ -366,6 +367,22 @@
           <ScalarProperty Name="Poruka" ColumnName="Poruka" />
           <ScalarProperty Name="Datum" ColumnName="Datum" />
           <ScalarProperty Name="DnevnikRadaId" ColumnName="DnevnikRadaId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vKompanijeUseri">
+      <EntityTypeMapping TypeName="ZgradaDbModel.vKompanijeUseri">
+        <MappingFragment StoreEntitySet="vKompanijeUseri">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+          <ScalarProperty Name="Stanarid" ColumnName="Stanarid" />
+          <ScalarProperty Name="MasterAcc" ColumnName="MasterAcc" />
+          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Ime" ColumnName="Ime" />
+          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

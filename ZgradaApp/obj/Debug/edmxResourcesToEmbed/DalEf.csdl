@@ -116,6 +116,7 @@
       <End Role="Zgrade_DnevnikRada" EntitySet="Zgrade_DnevnikRada" />
       <End Role="Zgrade_DnevnikRadaDetails" EntitySet="Zgrade_DnevnikRadaDetails" />
     </AssociationSet>
+    <EntitySet Name="vKompanijeUseri" EntityType="ZgradaDbModel.vKompanijeUseri" />
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -742,8 +743,9 @@
     <Property Name="CompanyId" Type="Int32" Nullable="false" />
     <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="MasterAcc" Type="Boolean" />
-    <Property Name="StanariD" Type="Int32" />
     <Property Name="ZgradaId" Type="Int32" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
   </EntityType>
   <EntityType Name="Zgrade_DnevnikRadaDetails">
     <Key>
@@ -768,4 +770,22 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="vKompanijeUseri">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Prezime" />
+      <PropertyRef Name="Ime" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Prezime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="MasterAcc" Type="Boolean" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="ZgradaId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

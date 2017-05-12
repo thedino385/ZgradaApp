@@ -30,8 +30,9 @@
           <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
           <Property Name="MasterAcc" Type="bit" />
-          <Property Name="StanariD" Type="int" />
+          <Property Name="Stanarid" Type="int" />
           <Property Name="ZgradaId" Type="int" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="PricuvaRezijeGodina">
           <Key>
@@ -335,6 +336,26 @@
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
           <Property Name="OglasnaPloca" Type="bit" />
           <Property Name="DnevnikRada" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vKompanijeUseri' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vKompanijeUseri">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Prezime" />
+            <PropertyRef Name="Ime" />
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Prezime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="UserGuid" Type="varchar" MaxLength="128" />
+          <Property Name="MasterAcc" Type="bit" />
+          <Property Name="Stanarid" Type="int" />
+          <Property Name="ZgradaId" Type="int" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -641,6 +662,20 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntityType="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" EntityType="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_Stanari" EntityType="Self.Zgrade_Stanari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vKompanijeUseri" EntityType="Self.vKompanijeUseri" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vKompanijeUseri].[Id] AS [Id], 
+    [vKompanijeUseri].[Prezime] AS [Prezime], 
+    [vKompanijeUseri].[Ime] AS [Ime], 
+    [vKompanijeUseri].[CompanyId] AS [CompanyId], 
+    [vKompanijeUseri].[UserGuid] AS [UserGuid], 
+    [vKompanijeUseri].[MasterAcc] AS [MasterAcc], 
+    [vKompanijeUseri].[Stanarid] AS [Stanarid], 
+    [vKompanijeUseri].[ZgradaId] AS [ZgradaId], 
+    [vKompanijeUseri].[Active] AS [Active], 
+    [vKompanijeUseri].[Email] AS [Email]
+    FROM [dbo].[vKompanijeUseri] AS [vKompanijeUseri]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vZgrade" EntityType="Self.vZgrade" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vZgrade].[Id] AS [Id], 
@@ -860,6 +895,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             <End Role="Zgrade_DnevnikRada" EntitySet="Zgrade_DnevnikRada" />
             <End Role="Zgrade_DnevnikRadaDetails" EntitySet="Zgrade_DnevnikRadaDetails" />
           </AssociationSet>
+          <EntitySet Name="vKompanijeUseri" EntityType="ZgradaDbModel.vKompanijeUseri" />
         </EntityContainer>
         <EntityType Name="Kompanije">
           <Key>
@@ -1486,8 +1522,9 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="MasterAcc" Type="Boolean" />
-          <Property Name="StanariD" Type="Int32" />
           <Property Name="ZgradaId" Type="Int32" />
+          <Property Name="Stanarid" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="Zgrade_DnevnikRadaDetails">
           <Key>
@@ -1512,6 +1549,24 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vKompanijeUseri">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Prezime" />
+            <PropertyRef Name="Ime" />
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Prezime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="MasterAcc" Type="Boolean" />
+          <Property Name="Stanarid" Type="Int32" />
+          <Property Name="ZgradaId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1865,8 +1920,9 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="KompanijeUseri">
             <EntityTypeMapping TypeName="ZgradaDbModel.KompanijeUseri">
               <MappingFragment StoreEntitySet="KompanijeUseri">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Stanarid" ColumnName="Stanarid" />
                 <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
-                <ScalarProperty Name="StanariD" ColumnName="StanariD" />
                 <ScalarProperty Name="MasterAcc" ColumnName="MasterAcc" />
                 <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
@@ -1883,6 +1939,22 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
                 <ScalarProperty Name="Poruka" ColumnName="Poruka" />
                 <ScalarProperty Name="Datum" ColumnName="Datum" />
                 <ScalarProperty Name="DnevnikRadaId" ColumnName="DnevnikRadaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vKompanijeUseri">
+            <EntityTypeMapping TypeName="ZgradaDbModel.vKompanijeUseri">
+              <MappingFragment StoreEntitySet="vKompanijeUseri">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+                <ScalarProperty Name="Stanarid" ColumnName="Stanarid" />
+                <ScalarProperty Name="MasterAcc" ColumnName="MasterAcc" />
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

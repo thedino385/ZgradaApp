@@ -4,6 +4,7 @@
     var zgradaUseri = [];
     var userId = null;
     var selZgradaId = null;
+    var dnevnikSelGodina = 0;
 
     // zgrade
     var getZgrade = function () {
@@ -88,6 +89,14 @@
         return $http.post('../api/data/dnevnikRadaCreateOrUpdate', dnevnik);
     }
 
+    var getUseri = function () {
+        return $http.get('../Account/getUseri');
+    }
+
+    var editUser = function (user) {
+        return $http.post('../Account/editUser', user);
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -109,10 +118,14 @@
         sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,
         currZgrada: currZgrada,
         userId: userId,
+        dnevnikSelGodina: dnevnikSelGodina,
 
         genPdfKarticePd: genPdfKarticePd,
         dnevnikRadaCreateOrUpdate: dnevnikRadaCreateOrUpdate,
-        selZgradaId: selZgradaId
+        selZgradaId: selZgradaId,
+
+        getUseri: getUseri,
+        editUser: editUser
     }
 
 

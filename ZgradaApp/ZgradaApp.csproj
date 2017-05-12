@@ -259,6 +259,9 @@
     <Compile Include="Utils\IsValidHelper.cs" />
     <Compile Include="Utils\PdfPosebiDio.cs" />
     <Compile Include="Utils\PricuvaRezijeGodinaTable.cs" />
+    <Compile Include="vKompanijeUseri.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="vZgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -376,6 +379,10 @@
     <Content Include="app\prihodiRashodi\sifarnikRashodaModal.html" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\prihodiRashodi\sifarnikRashodaModalCtrl.js" />
+    <Content Include="app\useri\indexUseri.html" />
+    <Content Include="app\useri\indexUseriCtrl.js" />
+    <Content Include="app\useri\useriModal.html" />
+    <Content Include="app\useri\useriModalCtrl.js" />
     <Content Include="app\zgrade\dialog1.html" />
     <Content Include="app\zgrade\dnevnik\dnevnikDetails.html" />
     <Content Include="app\zgrade\dnevnik\dnevnikDetailsCtrl.js" />

@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ZgradaApp.Models;
+using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net.Mail;
+using System.Web.Security;
 
 namespace ZgradaApp.Controllers
 {
@@ -74,21 +78,93 @@ namespace ZgradaApp.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            string userId = (await UserManager.FindByNameAsync(model.Email)).Id;
+            var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
+            if(u.Active == true)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
+                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(model);
+            }
+        }
+
+        public async Task<ActionResult> getUseri()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+
+            return Json(await _db.vKompanijeUseri.Where(p => p.CompanyId == companyId).ToListAsync(), JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> editUser(KompanijeUseri user)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+
+
+                if(user.Id > 0)
+                {
+                    if (companyId == user.CompanyId)
+                    {
+                        var target = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.Id == user.Id);
+                        target.Ime = user.Ime;
+                        target.Prezime = user.Prezime;
+                        target.Active = user.Active;
+
+                        ApplicationDbContext db = new ApplicationDbContext();
+                        var dbUser = await db.Users.FirstOrDefaultAsync(p => p.Id == target.UserGuid);
+                        dbUser.Email = user.Email;
+                        await db.SaveChangesAsync();
+                        await _db.SaveChangesAsync();
+                    }
+                }
+                else
+                {
+                    var newuser = new ApplicationUser { UserName = user.Email, Email = user.Email };
+                    ApplicationDbContext db = new ApplicationDbContext();
+                    // 1. create instance of UserStore and pss in db context
+                    var userStore = new UserStore<ApplicationUser>(db);
+                    // 2. create instance of UserManager and pass in instance of UserStore we've just created
+                    var usermanager = new UserManager<ApplicationUser>(userStore);
+                    var result = usermanager.Create(newuser, user.Password);
+                    if (result.Succeeded)
+                    {
+                        KompanijeUseri u = new KompanijeUseri { Active = user.Active, CompanyId = companyId, Ime = user.Ime, Prezime = user.Prezime,
+                            Stanarid = null, MasterAcc = false, UserGuid = newuser.Id };
+                        _db.KompanijeUseri.Add(u);
+                        await _db.SaveChangesAsync();
+                        return new HttpStatusCodeResult(200);
+                    }
+                        
+                    else
+                        return new HttpStatusCodeResult(500);
+                }
+
+                return new HttpStatusCodeResult(200);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(500);
             }
         }
 
@@ -167,13 +243,15 @@ namespace ZgradaApp.Controllers
                     _db.Kompanije.Add(company);
                     await _db.SaveChangesAsync();
 
-                    await UserManager.AddClaimAsync(user.Id, new Claim("Cid", company.Id.ToString()));
-                    await UserManager.AddClaimAsync(user.Id, new Claim("Comp", company.Naziv));
-
                     KompanijeUseri korisnik = new KompanijeUseri
                     {
-                        Ime = model.Ime, Prezime = model.Prezime, CompanyId = company.Id, UserGuid = user.Id, MasterAcc = true
+                        Ime = model.Ime, Prezime = model.Prezime, CompanyId = company.Id, UserGuid = user.Id, MasterAcc = true, Active = true
                     };
+
+                    await UserManager.AddClaimAsync(user.Id, new Claim("Cid", company.Id.ToString()));
+                    await UserManager.AddClaimAsync(user.Id, new Claim("Comp", company.Naziv));
+                    await UserManager.AddClaimAsync(model.Ime + " " + model.Prezime, new Claim("imePrezime", company.Naziv));
+
                     _db.KompanijeUseri.Add(korisnik);
                     await _db.SaveChangesAsync();
 
@@ -225,7 +303,8 @@ namespace ZgradaApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -233,10 +312,14 @@ namespace ZgradaApp.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                var b = "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a><br><br>";
+                SendEmail(b, user.Email);
+
+                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -249,6 +332,39 @@ namespace ZgradaApp.Controllers
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
+        }
+
+
+        public bool SendEmail(string b, string email)
+        {
+            string server = System.Configuration.ConfigurationManager.AppSettings["server"];
+            string admin = System.Configuration.ConfigurationManager.AppSettings["admin"];
+            string from = System.Configuration.ConfigurationManager.AppSettings["from"];
+            string auth = System.Configuration.ConfigurationManager.AppSettings["auth"];
+            string SmtpUname = System.Configuration.ConfigurationManager.AppSettings["uname"];
+            string SmtpPass = System.Configuration.ConfigurationManager.AppSettings["pass"];
+            string subjectPodaci = System.Configuration.ConfigurationManager.AppSettings["subjectPodaci"];
+
+            string body = b;
+
+            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(admin, email, "Password reset", body);
+            message.IsBodyHtml = true;
+            //message.Bcc.Add(admin);
+            SmtpClient emailClient = new SmtpClient(server);
+            if (auth == "da")
+            {
+                System.Net.NetworkCredential SMTPUserInfo = new System.Net.NetworkCredential(SmtpUname, SmtpPass);
+                emailClient.Credentials = SMTPUserInfo;
+            }
+            try
+            {
+                emailClient.Send(message);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         //

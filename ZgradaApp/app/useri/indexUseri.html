@@ -1,0 +1,57 @@
+﻿<style>
+    tr {
+        line-height: 10px;
+        min-height: 10px;
+        height: 10px;
+    }
+</style>
+
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>Korisnici</h3>
+
+                <md-button class="md-raised" aria-label="Dodaj godinu" ng-click="openModal(0, $event)">
+                    Novi korisnik
+                </md-button>
+
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle">Ime</th>
+                    <th style="text-align: center; vertical-align: middle">Prezime</th>
+                    <th style="text-align: center; vertical-align: middle">Email</th>
+                    <th style="text-align: center; vertical-align: middle">Aktivan</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in useri">
+                    <td style="text-align: center; vertical-align: middle">{{user.Ime}}</td>
+                    <td style="text-align: center; vertical-align: middle">{{user.Prezime}}</td>
+                    <td style="text-align: center; vertical-align: middle">{{user.Email}}</td>
+                    <td style="text-align: center; vertical-align: middle"><md-checkbox ng-model="user.Active"></md-checkbox></td>
+                    <td>
+                        <md-button class="md-icon-button" ng-click="openModal(user.Id, $event)" title="Uredi korisnika">
+                            <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                        </md-button>
+                    </td>
+                </tr>
+        </table>
+
+
+    </div>
+</div>

@@ -1,5 +1,5 @@
-﻿angularApp.controller('indexKsCtrl', ['$scope', '$mdDialog', '$window',  'DataService', 'toastr', 'zgradaObj', 'pdMaster',
-    function ($scope, $mdDialog, $window, DataService, toastr, zgradaObj, pdMaster) {
+﻿angularApp.controller('indexKsCtrl', ['$scope', '$rootScope', '$mdDialog', '$window',  'DataService', 'toastr', 'zgradaObj', 'pdMaster',
+    function ($scope, $rootScope, $mdDialog, $window, DataService, toastr, zgradaObj, pdMaster) {
 
         $scope.zgradaObj = zgradaObj;
         $scope.tableVisible = false;
@@ -220,12 +220,15 @@
             tBodyObj.godina = $scope.selectedGodina;
             tBodyObj.mjeseci = selected;
             tBodyObj.tBodyList = $scope.tBody;
+            $rootScope.loaderActive = true;
             DataService.genPdfKarticePd(tBodyObj).then(
                 function (result) {
                     //$window.open('../pdf/GetPdfPosebniDio', '_blank');
                     $window.open('../pdf/GetPdfPosebniDio');
+                    $rootScope.loaderActive = false;
                 },
                 function (result) {
+                    $rootScope.loaderActive = false;
                     toastr.error('Pogreška kod kreiranja izvještaja');
                 }
             )

@@ -5,34 +5,52 @@
         return;
     }
 
-    //if ($routeParams) {
-    $rootScope.loaderActive = true;
-    DataService.getZgrada(DataService.selZgradaId).then(
-        function (result) {
-            // on success
-            $scope.zgradaObj = result.data.Zgrada;
-            DataService.currZgrada = result.data.Zgrada;
-            $scope.useri = result.data.Useri;
-            DataService.userId = result.data.userId;
-            $rootScope.loaderActive = false;
-            $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
 
-            var godine = [];
-            $scope.zgradaObj.Zgrade_DnevnikRada.forEach(function (d) {
-                //if (mjeseci.indexOf(d.Mjesec) == -1)
-                //    mjeseci.push(d.Mjesec);
-                if (godine.indexOf(d.Godina) == -1)
-                    godine.push(d.Godina);
-            });
-            $scope.godine = godine;
-        },
-        function (result) {
-            // on errr
-            alert(result.Message);
-            $rootScope.errMsg = result.Message;
-        }
-    );
+    if ($routeParams && $routeParams.id > 0) {
+        $scope.zgradaObj = DataService.currZgrada;
+        $scope.useri = DataService.zgradaUseri;
+        var mjeseci = [];
+        $scope.zgradaObj.Zgrade_DnevnikRada.forEach(function (d) {
+            if (d.Godina == DataService.dnevnikSelGodina && mjeseci.indexOf(d.Mjesec) == -1)
+                mjeseci.push(d.Mjesec);
+        });
+        $scope.mjeseci = mjeseci;
+        $scope.selectedGodina = DataService.dnevnikSelGodina;
+        var godine = [];
+        $scope.zgradaObj.Zgrade_DnevnikRada.forEach(function (d) {
+            if (godine.indexOf(d.Godina) == -1)
+                godine.push(d.Godina);
+        });
+        $scope.godine = godine;
+    }
+    else {
 
+        $rootScope.loaderActive = true;
+        DataService.getZgrada(DataService.selZgradaId).then(
+            function (result) {
+                // on success
+                $scope.zgradaObj = result.data.Zgrada;
+                DataService.currZgrada = result.data.Zgrada;
+                DataService.zgradaUseri = result.data.Useri;
+                DataService.userId = result.data.userId;
+                $scope.useri = result.data.Useri;
+                $rootScope.loaderActive = false;
+                $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
+
+                var godine = [];
+                $scope.zgradaObj.Zgrade_DnevnikRada.forEach(function (d) {
+                    if (godine.indexOf(d.Godina) == -1)
+                        godine.push(d.Godina);
+                });
+                $scope.godine = godine;
+            },
+            function (result) {
+                // on errr
+                alert(result.Message);
+                $rootScope.errMsg = result.Message;
+            }
+        );
+    }
 
     $scope.godinaChanged = function (god) {
         var mjeseci = [];
@@ -42,6 +60,7 @@
         });
         $scope.mjeseci = mjeseci;
         $scope.selectedGodina = god;
+        DataService.dnevnikSelGodina = god;
     }
 
     $scope.gotoDetails = function (id) {

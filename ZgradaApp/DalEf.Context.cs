@@ -52,5 +52,6 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade_DnevnikRada> Zgrade_DnevnikRada { get; set; }
         public virtual DbSet<KompanijeUseri> KompanijeUseri { get; set; }
         public virtual DbSet<Zgrade_DnevnikRadaDetails> Zgrade_DnevnikRadaDetails { get; set; }
+        public virtual DbSet<vKompanijeUseri> vKompanijeUseri { get; set; }
     }
 }

@@ -103,6 +103,14 @@ namespace ZgradaApp
         public string Status { get; set; }
     }
 
+    public partial class KompanijeUseri
+    {
+        public string Status { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+    }
+
+
     // OLD
 
     //public partial class Stanovi_PosebniDijelovi

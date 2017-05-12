@@ -21,6 +21,7 @@ namespace ZgradaApp.Controllers
                 var company = await db.Kompanije.FirstOrDefaultAsync(p => p.Id == user.CompanyId);
                 ViewBag.ImePrezime = String.Join(" ", new[] { user.Ime, user.Prezime });
                 ViewBag.Company = company.Naziv;
+                ViewBag.MasterAcc = user.MasterAcc;
 
                 string expGrace = ((DateTime)company.ExpirationDate).AddDays(14).ToShortDateString();
 

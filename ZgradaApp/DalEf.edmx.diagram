@@ -54,6 +54,7 @@
         <EntityTypeShape EntityType="ZgradaDbModel.KompanijeUseri" Width="1.5" PointX="10.375" PointY="0.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRadaDetails" Width="1.5" PointX="6.75" PointY="37.875" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vKompanijeUseri" Width="1.5" PointX="12.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

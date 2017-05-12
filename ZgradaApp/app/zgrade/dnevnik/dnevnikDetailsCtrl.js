@@ -97,7 +97,7 @@
             DataService.dnevnikRadaCreateOrUpdate($scope.obj).then(
                 function (result) {
                     toastr.success("Podaci su snimljeni");
-                    $location.path('/dnevnik/' + $scope.zgradaObj.Id);
+                    $location.path('/dnevnik/0');
                     $rootScope.loaderActive = false;
                 },
                 function (result) {
@@ -108,7 +108,7 @@
         }
 
         $scope.cancel = function () {
-            $location.path('/dnevnik');
+            $location.path('/dnevnik/' + DataService.dnevnikSelGodina);
         }
 
         $scope.parseDate = function (d) {

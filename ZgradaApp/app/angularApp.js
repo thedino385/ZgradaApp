@@ -39,7 +39,7 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/popisi/uredjajiList.html',
             controller: 'uredjajiListCtrl'
         })
-        .when('/dnevnik', { // zgradaId
+        .when('/dnevnik/:id', { // 0 - povlaci sa servera, 2017 - cupaj is DS0-a i prokazi godinu
             templateUrl: '../app/zgrade/dnevnik/dnevnikIndex.html',
             controller: 'dnevnikIndexCtrl'
         })
@@ -47,7 +47,10 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/dnevnik/dnevnikDetails.html',
             controller: 'dnevnikDetailsCtrl'
         })
-
+        .when('/useri', { 
+            templateUrl: '../app/useri/indexUseri.html',
+            controller: 'indexUseriCtrl'
+        })
 
 
         .when('/pripadak/:id', {
