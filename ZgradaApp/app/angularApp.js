@@ -4,8 +4,8 @@
 angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
         .when('/index', {
-            templateUrl: '../app/index.html',
-            controller: 'indexCtrl'
+            templateUrl: '../app/zgrade/zgrade.html',
+            controller: 'zgradeCtrl'
         })
         .when('/zgrade', {
             templateUrl: '../app/zgrade/zgrade.html',
@@ -15,7 +15,7 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/zgrada.html',
             controller: 'zgradaCtrl'
         })
-        .when('/posebniDijeloviMasterList/:id', {
+        .when('/posebniDijeloviMasterList', {
             templateUrl: '../app/zgrade/PDChild/posebniDijeloviMasterList.html',
             controller: 'posebniDijeloviMasterListCtrl'
         })
@@ -23,11 +23,11 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/PDChild/posebniDioChildren.html',
             controller: 'posebniDioChildrenCtrl'
         })
-        .when('/prihodiRashodi/:id', { // posebniDioMasterId
+        .when('/prihodiRashodi', { // posebniDioMasterId
             templateUrl: '../app/prihodiRashodi/index.html',
             controller: 'prihodiRashodiIndexCtrl'
         })
-        .when('/pricuvaRezije/:id', { // posebniDioMasterId
+        .when('/pricuvaRezije', { // posebniDioMasterId
             templateUrl: '../app/pricuvaRezije/godina.html',
             controller: 'godinaCtrl'
         })
@@ -39,7 +39,7 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/popisi/uredjajiList.html',
             controller: 'uredjajiListCtrl'
         })
-        .when('/dnevnik/:id', { // zgradaId
+        .when('/dnevnik', { // zgradaId
             templateUrl: '../app/zgrade/dnevnik/dnevnikIndex.html',
             controller: 'dnevnikIndexCtrl'
         })

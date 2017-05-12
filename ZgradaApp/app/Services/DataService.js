@@ -3,6 +3,7 @@
     var currZgrada = null;
     var zgradaUseri = [];
     var userId = null;
+    var selZgradaId = null;
 
     // zgrade
     var getZgrade = function () {
@@ -110,7 +111,8 @@
         userId: userId,
 
         genPdfKarticePd: genPdfKarticePd,
-        dnevnikRadaCreateOrUpdate: dnevnikRadaCreateOrUpdate
+        dnevnikRadaCreateOrUpdate: dnevnikRadaCreateOrUpdate,
+        selZgradaId: selZgradaId
     }
 
 

@@ -31,40 +31,29 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Naziv aplikacije</a>
+                    <a id="topNavSelectedZgrada" class="navbar-brand navigation" style="color: indigo; display: none" href="#"></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li id="home" class="active"><a href="#!/index" onclick="Mark('home')">Home</a></li>
-                        @*<li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>*@
-                        <li class="dropdown" id="sifarnici">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Šifarnici <span class="caret"></span></a>
+                    <ul class="nav navbar-nav navigation" style="display: none">
+                        <li id="pdMasteri"><a href="#!/posebniDijeloviMasterList" onclick="Mark('pdMasteri')">Posebni dijelovi</a></li>
+                        <li class="dropdown" id="obracun">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Obračun <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#!/pripadci" onclick="Mark('sifarnici')">Pripadci</a></li>
-                                <li><a href="#!/prosebniDIjelovi" onclick="Mark('sifarnici')">Posebni dijelovi</a></li>
-                                @*<li role="separator" class="divider"></li>
-                                    <li class="dropdown-header"></li>
-                                    <li><a href="#!/zgrade" onclick="Mark('sifarnici')">Zgrade</a></li>
-                                    <li><a href="#">Neki link kojii ne vodi nigdje</a></li>*@
+                                <li><a href="#!/prihodiRashodi" onclick="Mark('obracun')">Prihodi i rashodi</a></li>
+                                <li><a href="#!/pricuvaRezije" onclick="Mark('obracun')">Pričuva i režije</a></li>
                             </ul>
                         </li>
-                        <li id="zgrade"><a href="#!/zgrade" onclick="Mark('zgrade')">Zgrade</a></li>
-                        <li class="dropdown" id="obr">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">$$$$ <span class="caret"></span></a>
+                        <li id="dnevnik"><a href="#!/dnevnik" onclick="Mark('dnevnik')">Dnevnik</a></li>
+                        <li class="dropdown" id="popisi">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Popisi <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#!/ks/4" onclick="Mark('obr')">Kartice suvlasnika</a></li>
-                                <li><a href="#!/prihodirashodi" onclick="Mark('obr')">Prihodi / rashodi</a></li>
-                                <li><a href="#!/pricuva" onclick="Mark('obr')">Pričuva</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Action</a></li>
+                                <li><a href="#!/popisDijelova" onclick="Mark('popisi')">Popis zajedničkih dijelova</a></li>
+                                <li><a href="#!/popisUredjaja" onclick="Mark('popisi')">Popis zajedničkih uređaja</a></li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">@DateTime.Today.ToShortDateString()</a></li>
+                        @*<li><a href="#">@DateTime.Today.ToShortDateString()</a></li>*@
                         <li><a href="#">@ViewBag.ImePrezime</a></li>
                         <li>@Html.Partial("_LoginPartial")</li>
                     </ul>
@@ -97,17 +86,17 @@
         }
         if (ViewData["notifikacije"] != null)
         {
-            <div class="alert alert-warning">
-                <table style="width: 100%">
+            <div class="alert alert-warning" id="notMaster">
+                <table style="width: 100%" id="notTable">
                     @*<tr>
                         <td colspan="2" style="text-align: center"><h5>Notifikacije</h5></td>
                     </tr>*@
                     @foreach (var item in (List<NotificationList>)ViewData["notifikacije"])
                     {
-                        <tr>
+                        <tr id="@item.id">
                             <td style="text-align: left; padding-left: 150px; width: 10%; font-size: 10px"><img src="~/Content/icons/alert.png" /></td>
                             <td style="text-align: right; padding-right: 50px; width: 70%">@item.Text</td>
-                            <td style="text-align: right; padding-right: 50px; width: 10%"><button><img src="~/Content/icons/close.svg" /></button></td>
+                            <td style="text-align: right; padding-right: 50px; width: 10%"><button onclick="hideNotification('@item.id')"><img src="~/Content/icons/close.svg" /></button></td>
                         </tr>
 
 
@@ -221,6 +210,17 @@
         function Mark(el) {
             $('li').removeClass('active');
             $('#' + el).addClass('active');
+        }
+
+        function hideNotification(x) {
+            console.log(x);
+            $.post('/Home/TurnOffNotification', { domena: x.split('_')[0], id: x.split('_')[1] }, function (result) {
+                if (result.success == true) {
+                    $('#' + x).fadeOut('slow');
+                }
+                if ($('#notTable tr:visible').children().length == 0)
+                    $('#notMaster').fadeOut('slow');
+            })
         }
 
     </script>

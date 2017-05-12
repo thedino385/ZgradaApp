@@ -2,14 +2,16 @@
     function ($scope, $location, $routeParams, $rootScope, DataService) {
 
         
-
         $rootScope.loaderActive = true;
+        //var zgrade = [];
         DataService.getZgrade().then(
             function (result) {
                 // on success
                 $scope.zgrade = result.data;
+                //zgradaNaziv = result.data.Zgrada;
                 $rootScope.loaderActive = false;
-                //DataService.listZgrade = result.data;
+                $scope.selZgradaId = DataService.selZgradaId;
+                console.log('DataService.selZgradaId: ' + DataService.selZgradaId);
             },
             function (result) {
                 // on errr
@@ -22,49 +24,24 @@
         };
 
         $scope.edit = function (obj) {
+            $('#topNavApp').text(obj.Naziv);
             $location.path('/zgrada/' + obj.Id);
         }
 
         $scope.goToPosebniDjeloviChild = function (zgradaId) {
-            DataService.getZgrada(zgradaId).then(
-                function (result) {
-                    // on success
-                    $scope.zgradaObj = result.data.Zgrada;
-                    DataService.currZgrada = result.data.Zgrada;
-                    DataService.zgradaUseri = result.data.Useri;
-                    DataService.userId = result.data.userId;
-                    $rootScope.loaderActive = false;
-                    $location.path('/posebniDijeloviMasterList/' + zgradaId);
-                },
-                function (result) {
-                    // on errr
-                    alert(result.Message);
-                    $rootScope.errMsg = result.Message;
-                }
-            );
+            $location.path('/posebniDijeloviMasterList/' + zgradaId);
         }
 
         $scope.goToPrihodiRashodi = function (zgradaId) {
-            DataService.getZgrada(zgradaId).then(
-                function (result) {
-                    // on success
-                    $scope.zgradaObj = result.data.Zgrada;
-                    DataService.currZgrada = result.data.Zgrada;
-                    DataService.zgradaUseri = result.data.Useri;
-                    DataService.userId = result.data.userId;
-                    $rootScope.loaderActive = false;
-                    $location.path('/prihodiRashodi/' + zgradaId);
-                },
-                function (result) {
-                    // on errr
-                    alert(result.Message);
-                    $rootScope.errMsg = result.Message;
-                }
-            );
+            $location.path('/prihodiRashodi/' + zgradaId);
+
         }
 
-        function getZgrada(id) {
-            
+        $scope.selectZgrada = function (zgrada) {
+            $('.navigation').fadeIn('slow');
+            $('#topNavSelectedZgrada').text(zgrada.Naziv);
+            DataService.selZgradaId = zgrada.Id;
+            $scope.selZgradaId = zgrada.Id;
         }
 
 

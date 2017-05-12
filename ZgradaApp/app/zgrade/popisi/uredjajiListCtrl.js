@@ -1,15 +1,30 @@
 ﻿angularApp.controller('uredjajiListCtrl', ['$scope', '$rootScope', '$location', 'toastr', '$mdDialog', 'DataService',
     function ($scope, $rootScope, $location, toastr, $mdDialog, DataService) {
 
-        var zgradaObj = DataService.currZgrada;
-        if (zgradaObj == null) {
+        if (DataService.selZgradaId == null) {
             $location.path('/zgrade');
             return;
         }
-
-        $scope.zgradaObj = zgradaObj;
-        $scope.zgradaMsg = 'Popis zajedničkih uređaja';
         $scope.SakrijZatvorene = false;
+
+        $rootScope.loaderActive = true;
+        DataService.getZgrada(DataService.selZgradaId).then(
+            function (result) {
+                // on success
+                $scope.zgradaObj = result.data.Zgrada;
+                var godineList = [];
+                $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
+                    godineList.push(pr.Godina);
+                });
+                //$scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
+                $scope.godine = godineList;
+                $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
+                $rootScope.loaderActive = false;
+            },
+            function (result) {
+                toastr.error('Greška pri dohvačanju podataka sa servera');
+            }
+        );
 
 
         $scope.SakrijZatvoreneChanged = function () {

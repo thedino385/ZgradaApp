@@ -45,7 +45,7 @@ namespace ZgradaApp.Controllers
                 }
 
                 // ima li notifikacija za uredjaje?
-                var today = DateTime.Today;
+                var today = DateTime.Today.AddDays(-3);
                 var tommorow = today.AddDays(10);
                 var uredjaji = await db.Zgrade_PopisUredjaja.Where(p => p.Notifikacija_dt >= today && p.Notifikacija_dt < tommorow && p.NotifikacijaProcitana != true && p.NotifikacijaText.Length > 0).ToListAsync();
                 if(uredjaji.Count > 0)
@@ -53,12 +53,37 @@ namespace ZgradaApp.Controllers
                     List<NotificationList> list = new List<NotificationList>();
                     foreach (var item in uredjaji)
                     {
-                        list.Add(new NotificationList { Datum = ((DateTime)item.Notifikacija_dt).ToShortDateString(), Text = item.NotifikacijaText, Domena = "u", Id = item.Id });
+                        list.Add(new NotificationList { Datum = ((DateTime)item.Notifikacija_dt).ToShortDateString(), Text = item.NotifikacijaText, Domena = "uredjaji", Id = item.Id, id = "uredjaji" + "_" + item.Id });
                     }
                     ViewData["notifikacije"] = list;
                 }
             }
             return View();
+        }
+
+        public async Task<ActionResult> TurnOffNotification(string domena, int id)
+        {
+            bool success = false;
+            try
+            {
+                using (ZgradaDbEntities db = new ZgradaApp.ZgradaDbEntities())
+                {
+                    if (domena == "uredjaji")
+                    {
+                        var u = await db.Zgrade_PopisUredjaja.FirstOrDefaultAsync(p => p.Id == id);
+                        u.NotifikacijaProcitana = true;
+                    }
+
+                    await db.SaveChangesAsync();
+                    success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return Json(new { success = success });
         }
 
         public ActionResult Expired()
@@ -73,5 +98,6 @@ namespace ZgradaApp.Controllers
         public string Text { get; set; }
         public string Domena { get; set; }
         public int Id { get; set; }
+        public string id { get; set; }
     }
 }
