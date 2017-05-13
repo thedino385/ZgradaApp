@@ -1,9 +1,12 @@
-﻿<md-dialog flex="80">
+﻿<md-dialog flex="90">
     <form ng-cloak name="frm">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h3>Rashodi: {{period}}</h3>
+                <h3 flex md-truncate>Rashodi: {{period}}</h3>
                 <span></span>
+                <md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
+                    <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: lightyellow"></md-icon>
+                </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content>
@@ -30,9 +33,7 @@
                                 Datum plaćanja
                             </th>
                             <th>
-                                <md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
-                                    <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
-                                </md-button>
+                               
                             </th>
                         </tr>
                     </thead>
@@ -46,7 +47,7 @@
                             <td style="vertical-align: middle; text-align: end">
                                 <md-input-container flex-gt-sm>
                                     <md-select ng-model="ra.RashodId">
-                                        <md-option name="stanarId" ng-repeat="vrsta in sifarnikRashoda" ng-value="vrsta.Id">
+                                        <md-option name="RashodId" ng-repeat="vrsta in sifarnikRashoda" ng-value="vrsta.Id">
                                             {{vrsta.Naziv}}
                                         </md-option>
                                     </md-select>
@@ -55,9 +56,9 @@
 
                             <td style="vertical-align: middle">
                                 <md-input-container flex-gt-gt>
-                                    <label>Posebni dio</label>
+                                    <!--<label>Posebni dio</label>-->
                                     <md-select ng-model="ra.PosebniDioMasterId">
-                                        <md-option name="stanarId" ng-repeat="pd in posedbiDijelovi" ng-value="pd.Id">
+                                        <md-option name="PosebniDioMasterId" ng-repeat="pd in posedbiDijelovi" ng-value="pd.Id">
                                             {{pd.Naziv}}
                                         </md-option>
                                     </md-select>
@@ -65,7 +66,7 @@
                             </td>
 
                             <td style="vertical-align: middle; text-align: end">
-                                <input ng-change="ukupno()" class="form-control" type="text" ng-model="ra.Iznos" />
+                                <input size="9" type="text" ng-model="ra.Iznos" />
                             </td>
                             <td style="vertical-align: middle; text-align: center">
                                 <md-checkbox ng-model="ra.Placen" aria-label="Checkbox 1">
@@ -73,7 +74,7 @@
                             </td>
 
                             <td style="vertical-align: middle; text-align: center">
-                                <md-datepicker ng-model="dateplacanjeList[$index]" md-placeholder="Enter date"></md-datepicker>
+                                <md-datepicker ng-show="ra.Placen == true" ng-model="dateplacanjeList[$index]" md-placeholder="Enter date"></md-datepicker>
                             </td>
                             
 
@@ -83,21 +84,24 @@
                                 </md-button>
                             </td>
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
                             <td style="vertical-align: middle; text-align: end">{{total}}</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button class="md-raised" ng-click="cancel()">
+                        Odustani
+                    </md-button>
+                    <md-button class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
+                </md-dialog-actions>
+                <br /><br /><br />
             </div>
+            
         </md-dialog-content>
 
-        <md-dialog-actions layout="row">
-            <span flex></span>
-            <md-button class="md-raised" ng-click="cancel()">
-                Odustani
-            </md-button>
-            <md-button class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
-        </md-dialog-actions>
+        
     </form>
 </md-dialog>

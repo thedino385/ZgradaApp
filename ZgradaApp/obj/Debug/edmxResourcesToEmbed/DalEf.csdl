@@ -132,6 +132,7 @@
     <Property Name="RegisterDate" Type="DateTime" Precision="3" />
     <Property Name="ActivationDate" Type="DateTime" Precision="3" />
     <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
+    <Property Name="Active" Type="Boolean" />
   </EntityType>
   <EntityType Name="PricuvaRezijeGodina">
     <Key>
@@ -247,9 +248,10 @@
     <Property Name="RashodId" Type="Int32" />
     <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
-    <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Placen" Type="Boolean" />
     <Property Name="DatumPlacanja" Type="DateTime" Precision="3" />
+    <Property Name="PoslanoZaMjesec" Type="Boolean" />
+    <Property Name="PrenesenIzMjeseca" Type="Int32" />
   </EntityType>
   <EntityType Name="SifarnikRashoda">
     <Key>
@@ -388,6 +390,8 @@
     <Property Name="OglasnaPloca" Type="Boolean" />
     <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade_Stanari" ToRole="Zgrade" />
     <Property Name="DnevnikRada" Type="Boolean" />
+    <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" />
   </EntityType>
   <EntityType Name="vZgrade">
     <Key>

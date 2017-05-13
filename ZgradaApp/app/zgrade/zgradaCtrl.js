@@ -1,5 +1,5 @@
-﻿angularApp.controller('zgradaCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('zgradaCtrl', ['$scope', '$routeParams', '$route', '$location', '$rootScope', 'toastr', 'DataService', 'AccountService', '$mdDialog',
+    function ($scope, $routeParams, $route, $location, $rootScope, toastr, DataService, AccountService, $mdDialog) {
 
 
 
@@ -101,6 +101,17 @@
             $location.path('/zgrade');
         }
 
+        $scope.createAcc = function () {
+            // kreiranje accounta za sve onne koji ga nemaju
+            AccountService.createAccForZgrada($scope.zgradaObj.Id).then(
+                function (result) {
+                    $route.reload();
+                },
+                function (result) {
+                    toastr.error('Kreiranje korisničkih računa nije uspjelo ');
+                }
+            )
+        }
 
         //// test
         //$scope.showAdvanced = function (id) {

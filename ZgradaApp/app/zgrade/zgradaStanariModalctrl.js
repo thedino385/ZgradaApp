@@ -5,7 +5,7 @@
         var tempObj = {};
         angular.copy(zgradaObj, tempObj);
         if (id == 0) {
-            $scope.stanarObj = { Id: 0, ZgradaId: zgradaObj.Id, Ime: '', Prezime: '', OIB: '', Email: '', Status: '' };
+            $scope.stanarObj = { Id: 0, ZgradaId: zgradaObj.Id, Ime: '', Prezime: '', OIB: '', Email: '', Status: '', DnevnikRada: false };
             $scope.msg = 'Novi stanar';
         }
         else {

@@ -2,85 +2,98 @@
     <form ng-cloak name="stanarFrm" ng-submit="save()">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{msg}}</h2>
-                <span></span>
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>{{msg}}</h3>
+
+
+
+                <md-button class="md-icon-button" aria-label="More" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
             </div>
         </md-toolbar>
 
         <md-dialog-content>
             <div class="md-dialog-content">
 
-                    <div layout="column" ng-cloak class="md-inline-form">
-                        <md-content layout-padding>
-                            <!--row 1-->
-                            <div layout-gt-sm="row">
-                                <div class="col-sm-2"></div>
-                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                    <label>Ime</label>
-                                    <input required type="text" name="ime" ng-model="stanarObj.Ime">
-                                    <div ng-messages="stanarFrm.ime.$error" role="alert" >
-                                        <div ng-message-exp="['required']">
-                                            Obavezno polje
-                                        </div>
+                <div layout="column" ng-cloak class="md-inline-form">
+                    <md-content layout-padding>
+                        <!--row 1-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Ime</label>
+                                <input required type="text" name="ime" ng-model="stanarObj.Ime">
+                                <div ng-messages="stanarFrm.ime.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
                                     </div>
-                                </md-input-container>
+                                </div>
+                            </md-input-container>
 
-                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                    <label>Prezime</label>
-                                    <input required type="text" name="prezime" ng-model="stanarObj.Prezime">
-                                    <div ng-messages="stanarFrm.prezime.$error" role="alert">
-                                        <div ng-message-exp="['required']">
-                                            Obavezno polje
-                                        </div>
-                                        <div ng-message="['required']">
-                                            Obavezno polje
-                                        </div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Prezime</label>
+                                <input required type="text" name="prezime" ng-model="stanarObj.Prezime">
+                                <div ng-messages="stanarFrm.prezime.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
                                     </div>
-                                </md-input-container>
-                                <div class="col-sm-2"></div>
+                                    <div ng-message="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <!--row 2-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>OIB</label>
+                                <input required type="text" name="oib" ng-model="stanarObj.OIB">
+                                <div ng-messages="stanarFrm.oib.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Email</label>
+                                <input required type="text" name="email" ng-model="stanarObj.Email">
+                                <div ng-messages="stanarFrm.email.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <!--row 3-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+                                <label style="font-style: normal; padding-right: 30px">Dnevnik rada</label>
+                                <md-checkbox ng-model="stanarObj.DnevnikRada">
+                                </md-checkbox>
                             </div>
-                            <!--row 2-->
-                            <div layout-gt-sm="row">
-                                <div class="col-sm-2"></div>
-                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                    <label>OIB</label>
-                                    <input required type="text" name="oib" ng-model="stanarObj.OIB">
-                                    <div ng-messages="stanarFrm.oib.$error" role="alert">
-                                        <div ng-message-exp="['required']">
-                                            Obavezno polje
-                                        </div>
-                                    </div>
-                                </md-input-container>
-
-                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                    <label>Email</label>
-                                    <input required type="text" name="email" ng-model="stanarObj.Email">
-                                    <div ng-messages="stanarFrm.email.$error" role="alert">
-                                        <div ng-message-exp="['required']">
-                                            Obavezno polje
-                                        </div>
-                                    </div>
-                                </md-input-container>
-                                <div class="col-sm-2"></div>
-                            </div>
-                            <!--row 3-->
-                            <div layout-gt-sm="row">
-                                <div class="col-sm-10"></div>
-                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                    <label>Dnevnik rada</label>
-                                    <md-checkbox ng-model="stanarObj.DnevnikRada">
-                                    </md-checkbox>
-                                </md-input-container>
-
-                                
-                                <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+                                <label style="font-style: normal; padding-right: 30px">Prijava u aplikaciju</label>
+                                <md-checkbox ng-model="stanarObj.Active">
+                                </md-checkbox>
                             </div>
 
-                        </md-content>
-                    </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                    </md-content>
+                </div>
             </div>
         </md-dialog-content>
-        
+
         <md-dialog-actions layout="row">
             <span flex></span>
             <md-button class="md-raised" ng-click="cancel()">

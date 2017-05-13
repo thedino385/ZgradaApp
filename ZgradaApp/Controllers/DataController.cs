@@ -36,14 +36,18 @@ namespace ZgradaApp.Controllers
 
         [HttpGet]
         [Route("api/data/getzgrada")]
-        public async Task<IHttpActionResult> GetZgrada(int Id)
+        public async Task<IHttpActionResult> GetZgrada(int Id, bool prenesiRashodeuTekuciMjesec = false)
         {
             try
             {
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
-                var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == Id && p.CompanyId == companyId);
 
+                if(prenesiRashodeuTekuciMjesec)
+                    // prenesi iz proslog mjeseca u tekuci
+                    await new RashodiPrebaciNeplacene(_db, DateTime.Today.Month).Prebaci();
+
+                var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == Id && p.CompanyId == companyId);
                 // useri 
                 var useri = await _db.KompanijeUseri.Where(p => p.CompanyId == companyId).ToListAsync();
                 return Ok(new ZgradaUseri { Zgrada = zgrada, Useri = useri, userId = useri.FirstOrDefault(p => p.UserGuid == identity.GetUserId()).Id });
@@ -53,6 +57,8 @@ namespace ZgradaApp.Controllers
                 return InternalServerError(ex);
             }
         }
+
+
 
         [HttpPost]
         [Route("api/data/zgradaCreateOrUpdate")]
@@ -294,10 +300,21 @@ namespace ZgradaApp.Controllers
                     }
                 }
                 await _db.SaveChangesAsync();
-                return Ok();
+                return Ok(zgradaObj);
             }
             catch (Exception ex) { return InternalServerError(); }
         }
+
+
+        //[HttpGet]
+        //[Route("api/data/prebaciNeplaceniRashod")]
+        //public async Task<IHttpActionResult> PrebaciNeplaceniRashod(int mjesecZaKojiSeRadiObracun, int godina)
+        //{
+        //        if (await new RashodiPrebaciNeplacene(_db, mjesecZaKojiSeRadiObracun, godina).Prebaci())
+        //            return Ok();
+        //        else
+        //            return InternalServerError();
+        //}
 
         [HttpGet]
         [Route("api/data/praznaPricuvaRezijeCreate")]
@@ -495,7 +512,7 @@ namespace ZgradaApp.Controllers
             {
                 foreach (var item in zgradaObj.Zgrade_PopisZajednickihDijelova)
                 {
-                    switch(item.Status)
+                    switch (item.Status)
                     {
                         case "a":
                             _db.Zgrade_PopisZajednickihDijelova.Add(item);
@@ -560,7 +577,7 @@ namespace ZgradaApp.Controllers
 
                     foreach (var item in dnevnik.Zgrade_DnevnikRadaDetails)
                     {
-                        switch(item.Status)
+                        switch (item.Status)
                         {
                             case "a":
                                 target.Zgrade_DnevnikRadaDetails.Add(item);
@@ -580,7 +597,7 @@ namespace ZgradaApp.Controllers
                 await _db.SaveChangesAsync();
                 return Ok();
             }
-            catch(Exception ex) { return InternalServerError(); }
+            catch (Exception ex) { return InternalServerError(); }
         }
     }
 }

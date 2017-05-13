@@ -62,7 +62,7 @@
         //                if (parseInt(prMj.Mjesec) == 12) {
 
         //                }
-                            
+
         //            })
         //        }
         //    });
@@ -257,7 +257,6 @@
                 pdMaster.DugPretplata = (parseFloat(pdMaster.Uplaceno) + parseFloat(pdMaster.StanjeOd) - parseFloat(pdMaster.Zaduzenje) + ps).toFixed(2);;
             });
             $scope.obracunKreiran = true;
-
         }
 
 

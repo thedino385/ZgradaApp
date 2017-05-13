@@ -1,51 +1,51 @@
-﻿angularApp.controller('prihodiRashodiIndexCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('prihodiRashodiIndexCtrl', ['$scope', '$route', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
+    function ($scope, $route, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
 
         $scope.msg = '';
         if (DataService.selZgradaId == null) {
             $location.path('/zgrade');
             return;
         }
-            
+
 
         //if ($routeParams) {
-            $rootScope.loaderActive = true;
-            DataService.getZgrada(DataService.selZgradaId).then(
-                function (result) {
-                    // on success
-                    $scope.zgradaObj = result.data.Zgrada;
-                    //DataService.currZgrada = result.data.Zgrada;
-                    //DataService.zgradaUseri = result.data.Useri;
-                    //DataService.userId = result.data.userId;
-                    $rootScope.loaderActive = false;
+        $rootScope.loaderActive = true;
+        DataService.getZgrada(DataService.selZgradaId, true).then(
+            function (result) {
+                // on success
+                $scope.zgradaObj = result.data.Zgrada;
+                //DataService.currZgrada = result.data.Zgrada;
+                //DataService.zgradaUseri = result.data.Useri;
+                //DataService.userId = result.data.userId;
+                $rootScope.loaderActive = false;
 
-                    //$scope.zgradaObj = zgradaObj;
-                    var godineList = [];
-                    $scope.zgradaObj.PrihodiRashodi.forEach(function (pr) {
-                        godineList.push(pr.Godina);
+                //$scope.zgradaObj = zgradaObj;
+                var godineList = [];
+                $scope.zgradaObj.PrihodiRashodi.forEach(function (pr) {
+                    godineList.push(pr.Godina);
+                });
+                $scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
+                $scope.godine = godineList;
+                $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
+                $rootScope.loaderActive = false;
+                $scope.msg = "Uredi zgradu";
+
+                DataService.getSifarnikRashoda().then(
+                    function (result) {
+                        $scope.sifarnikRashoda = result.data;
+                    },
+                    function (result) {
+                        toastr.error('Dohvat šifarnika rashoda nije uspio');
                     });
-                    $scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
-                    $scope.godine = godineList;
-                    $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
-                    $rootScope.loaderActive = false;
-                    $scope.msg = "Uredi zgradu";
 
-                    DataService.getSifarnikRashoda().then(
-                        function (result) {
-                            $scope.sifarnikRashoda = result.data;
-                        },
-                        function (result) {
-                            toastr.error('Dohvat šifarnika rashoda nije uspio');
-                        });
+            },
+            function (result) {
+                // on errr
+                alert(result.Message);
+                $rootScope.errMsg = result.Message;
+            }
+        );
 
-                },
-                function (result) {
-                    // on errr
-                    alert(result.Message);
-                    $rootScope.errMsg = result.Message;
-                }
-            );
-            
         //}
 
 
@@ -60,6 +60,7 @@
                     console.log('godina changed, prihosdiRashodiza godinu');
                     console.log(pr);
                     $scope.prihodRashodZaGodinu = pr;
+                    DataService.selGodina = godina;
                 }
             });
         }
@@ -131,12 +132,12 @@
         // _________________________________________________________
         //              Modal prihodi
         // _________________________________________________________
-        $scope.openModalPrihodi = function (mjesec) {
+        $scope.openModalPrihodi = function (mjesec, ev) {
             $mdDialog.show({
                 controller: 'prihodiModalCtrl',
                 templateUrl: 'app/prihodiRashodi/prihodiModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -194,7 +195,11 @@
                     // on success
                     $rootScope.loaderActive = false;
                     toastr.success('Promjene su snimljene!', '');
-                    $location.path('/zgrade');
+                    $scope.zgradaObj = result.data;
+                    $scope.selectedGodina = DataService.selGodina;
+                    $scope.tableVisible = true;
+                    //$location.path('/zgrade');
+                    //$route.reload();
                 },
                 function (result) {
                     // on error

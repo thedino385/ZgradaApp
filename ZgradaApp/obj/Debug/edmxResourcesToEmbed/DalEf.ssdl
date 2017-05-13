@@ -14,6 +14,7 @@
     <Property Name="RegisterDate" Type="datetime" />
     <Property Name="ActivationDate" Type="datetime" />
     <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
   </EntityType>
   <EntityType Name="KompanijeUseri">
     <Key>
@@ -153,9 +154,10 @@
     <Property Name="Datum" Type="datetime" />
     <Property Name="RashodId" Type="int" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Placen" Type="bit" />
     <Property Name="DatumPlacanja" Type="datetime" />
+    <Property Name="PoslanoZaMjesec" Type="bit" />
+    <Property Name="PrenesenIzMjeseca" Type="int" />
   </EntityType>
   <EntityType Name="SifarnikRashoda">
     <Key>
@@ -331,6 +333,8 @@
     <Property Name="UserGuid" Type="varchar" MaxLength="128" />
     <Property Name="OglasnaPloca" Type="bit" />
     <Property Name="DnevnikRada" Type="bit" />
+    <Property Name="Pass" Type="varchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb2.dbo.vKompanijeUseri' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->

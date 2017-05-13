@@ -241,19 +241,19 @@ namespace ZgradaApp.Controllers
                         ExpirationDate = DateTime.Today.AddYears(1)
                     };
                     _db.Kompanije.Add(company);
-                    await _db.SaveChangesAsync();
+                    int kompanijaId =  await _db.SaveChangesAsync();
 
                     KompanijeUseri korisnik = new KompanijeUseri
                     {
                         Ime = model.Ime, Prezime = model.Prezime, CompanyId = company.Id, UserGuid = user.Id, MasterAcc = true, Active = true
                     };
 
-                    await UserManager.AddClaimAsync(user.Id, new Claim("Cid", company.Id.ToString()));
-                    await UserManager.AddClaimAsync(user.Id, new Claim("Comp", company.Naziv));
-                    await UserManager.AddClaimAsync(model.Ime + " " + model.Prezime, new Claim("imePrezime", company.Naziv));
-
                     _db.KompanijeUseri.Add(korisnik);
-                    await _db.SaveChangesAsync();
+                    int uid = await _db.SaveChangesAsync();
+
+                    await UserManager.AddClaimAsync(kompanijaId.ToString(), new Claim("Cid", company.Id.ToString()));
+                    await UserManager.AddClaimAsync(model.Naziv, new Claim("Comp", company.Naziv));
+                    await UserManager.AddClaimAsync(model.Ime + " " + model.Prezime, new Claim("imePrezime", company.Naziv));
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
@@ -271,6 +271,46 @@ namespace ZgradaApp.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        public async Task<ActionResult> createAccForZgrada(int zgradaId)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                if (await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == zgradaId && p.CompanyId == companyId) != null)
+                {
+                    var stanari = await _db.Zgrade_Stanari.Where(p => p.ZgradaId == zgradaId).ToListAsync();
+                    foreach (var s in stanari.Where(p => p.UserGuid != ""))
+                    {
+                        var user = new ApplicationUser { UserName = s.Email, Email = s.Email };
+                        var pass = Membership.GeneratePassword(6, 0);
+                        var result = await UserManager.CreateAsync(user, pass);
+
+                        var company = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
+
+                        await UserManager.AddClaimAsync(company.Id.ToString(), new Claim("Cid", company.Id.ToString()));
+                        await UserManager.AddClaimAsync(company.Naziv, new Claim("Comp", company.Naziv));
+                        await UserManager.AddClaimAsync(s.Ime + " " + s.Prezime, new Claim("imePrezime", company.Naziv));
+
+                        if (result.Succeeded)
+                        {
+                            s.UserGuid = user.Id;
+                            s.Pass = pass;
+                            s.Active = true;
+                        }
+                    }
+                    await _db.SaveChangesAsync();
+                    return new HttpStatusCodeResult(200);
+                }
+            }
+            catch(Exception ex)
+            {
+                return new HttpStatusCodeResult(500);
+            }
+            return new HttpStatusCodeResult(500);
+        }
+
 
         //
         // GET: /Account/ConfirmEmail

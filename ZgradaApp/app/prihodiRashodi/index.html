@@ -37,19 +37,7 @@
                 </md-button>
             </div>
         </md-toolbar>
-       
-        <!--<div class='form-horizontal'>
-            <div class="form-group row">
-                <div class="col-sm-2">
-                    <input type="number" class="form-control" ng-model="novaGodina" />
-                </div>
-                <div class="col-sm-4">
-                    <input type="button" class="btn btn-success" value="Dodaj godinu" ng-click="dodajGodinu()" />
-                </div>
-                <div class="col-sm-6" style="align-content: flex-start">
-                </div>
-            </div>
-        </div>-->
+     
         <br />
         <div class="btn-group">
             <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
@@ -129,10 +117,10 @@
                                 <td style="vertical-align: middle"><a href="" ng-click="openModalPrihodi('12')">od 01.12. do 31.12.</a></td>
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(12, 'p') | number : 2}}</td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td colspan="2" style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
                                 <td style="vertical-align: middle; text-align: end">-----</td>
-                            </tr>
+                            </tr>-->
                         </tbody>
                     </table>
                     
@@ -181,7 +169,7 @@
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">5.</td>
-                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('5')">od 01.05. do 31.05.</a></td>
+                                <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi(5, $event)">od 01.05. do 31.05.</a></td>
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(5, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
@@ -189,14 +177,14 @@
                             <tr>
                                 <td style="vertical-align: middle">6.</td>
                                 <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('6')">od 01.06. do 30.06.</a></td>
-                                <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(5, 'r') | number : 2}}</td>
+                                <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(6, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">7.</td>
                                 <td style="vertical-align: middle"><a href="" ng-click="openModalRashodi('7')">od 01.07. do 31.07.</a></td>
-                                <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(6, 'r') | number : 2}}</td>
+                                <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(7, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                             </tr>
@@ -235,12 +223,12 @@
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td colspan="2" style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
                                 <td style="vertical-align: middle; text-align: end">---</td>
                                 <td style="vertical-align: middle; text-align: end">----</td>
                                 <td style="vertical-align: middle; text-align: end">---</td>
-                            </tr>
+                            </tr>-->
                         </tbody>
                     </table>
                 </td>

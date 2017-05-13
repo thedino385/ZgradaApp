@@ -64,47 +64,48 @@ namespace ZgradaApp.Models
 
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "Kontakt email je obavezno polje")]
         [EmailAddress(ErrorMessage = "Neispravna email adresa")]
         [Display(Name = "Kontakt email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Lozinka je obavezno polje")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Lozinka je obavezno polje")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "Naziv tvrtke je obavezno polje")]
         [Display(Name = "Naziv tvrtke")]
         public string Naziv { get; set; }
 
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "OIB je obavezno polje")]
         public string OIB { get; set; }
 
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "Adresa tvrtke je obavezno polje")]
         public string Adresa { get; set; }
 
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "Mjesto tvrtke je obavezno polje")]
         public string Mjesto { get; set; }
 
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "Ime je obavezno polje")]
         public string Ime { get; set; }
 
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "Prezime je obavezno polje")]
         public string Prezime { get; set; }
 
         [EmailAddress]
-        [Display(Name = "Korisničko ime (email)")]
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Display(Name = "Vaš email")]
+        [Required(ErrorMessage = "Email adresa korisnika je obavezno polje")]
         public string UserEmail { get; set; } // username
 
-        [Required(ErrorMessage = "Obavezno polje")]
+        [Required(ErrorMessage = "Telefon tvrtke je obavezno polje")]
         public string Telefon { get; set; }
     }
 

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Kompanije">
       <EntityTypeMapping TypeName="ZgradaDbModel.Kompanije">
         <MappingFragment StoreEntitySet="Kompanije">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
           <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
@@ -115,9 +116,10 @@
     <EntitySetMapping Name="PrihodiRashodi_Rashodi">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
         <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+          <ScalarProperty Name="PrenesenIzMjeseca" ColumnName="PrenesenIzMjeseca" />
+          <ScalarProperty Name="PoslanoZaMjesec" ColumnName="PoslanoZaMjesec" />
           <ScalarProperty Name="DatumPlacanja" ColumnName="DatumPlacanja" />
           <ScalarProperty Name="Placen" ColumnName="Placen" />
-          <ScalarProperty Name="Placeno" ColumnName="Placeno" />
           <ScalarProperty Name="Iznos" ColumnName="Iznos" />
           <ScalarProperty Name="RashodId" ColumnName="RashodId" />
           <ScalarProperty Name="Datum" ColumnName="Datum" />
@@ -244,6 +246,8 @@
     <EntitySetMapping Name="Zgrade_Stanari">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Stanari">
         <MappingFragment StoreEntitySet="Zgrade_Stanari">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
           <ScalarProperty Name="DnevnikRada" ColumnName="DnevnikRada" />
           <ScalarProperty Name="OglasnaPloca" ColumnName="OglasnaPloca" />
           <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />

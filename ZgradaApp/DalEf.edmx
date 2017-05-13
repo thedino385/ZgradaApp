@@ -19,6 +19,7 @@
           <Property Name="RegisterDate" Type="datetime" />
           <Property Name="ActivationDate" Type="datetime" />
           <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="KompanijeUseri">
           <Key>
@@ -158,9 +159,10 @@
           <Property Name="Datum" Type="datetime" />
           <Property Name="RashodId" Type="int" />
           <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Placeno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Placen" Type="bit" />
           <Property Name="DatumPlacanja" Type="datetime" />
+          <Property Name="PoslanoZaMjesec" Type="bit" />
+          <Property Name="PrenesenIzMjeseca" Type="int" />
         </EntityType>
         <EntityType Name="SifarnikRashoda">
           <Key>
@@ -336,6 +338,8 @@
           <Property Name="UserGuid" Type="varchar" MaxLength="128" />
           <Property Name="OglasnaPloca" Type="bit" />
           <Property Name="DnevnikRada" Type="bit" />
+          <Property Name="Pass" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb2.dbo.vKompanijeUseri' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -911,6 +915,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <Property Name="ActivationDate" Type="DateTime" Precision="3" />
           <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="PricuvaRezijeGodina">
           <Key>
@@ -1026,9 +1031,10 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="RashodId" Type="Int32" />
           <Property Name="Iznos" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
-          <Property Name="Placeno" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Placen" Type="Boolean" />
           <Property Name="DatumPlacanja" Type="DateTime" Precision="3" />
+          <Property Name="PoslanoZaMjesec" Type="Boolean" />
+          <Property Name="PrenesenIzMjeseca" Type="Int32" />
         </EntityType>
         <EntityType Name="SifarnikRashoda">
           <Key>
@@ -1167,6 +1173,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="OglasnaPloca" Type="Boolean" />
           <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade_Stanari" ToRole="Zgrade" />
           <Property Name="DnevnikRada" Type="Boolean" />
+          <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="vZgrade">
           <Key>
@@ -1576,6 +1584,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="Kompanije">
             <EntityTypeMapping TypeName="ZgradaDbModel.Kompanije">
               <MappingFragment StoreEntitySet="Kompanije">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
@@ -1687,9 +1696,10 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PrihodiRashodi_Rashodi">
             <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
               <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+                <ScalarProperty Name="PrenesenIzMjeseca" ColumnName="PrenesenIzMjeseca" />
+                <ScalarProperty Name="PoslanoZaMjesec" ColumnName="PoslanoZaMjesec" />
                 <ScalarProperty Name="DatumPlacanja" ColumnName="DatumPlacanja" />
                 <ScalarProperty Name="Placen" ColumnName="Placen" />
-                <ScalarProperty Name="Placeno" ColumnName="Placeno" />
                 <ScalarProperty Name="Iznos" ColumnName="Iznos" />
                 <ScalarProperty Name="RashodId" ColumnName="RashodId" />
                 <ScalarProperty Name="Datum" ColumnName="Datum" />
@@ -1816,6 +1826,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="Zgrade_Stanari">
             <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Stanari">
               <MappingFragment StoreEntitySet="Zgrade_Stanari">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
                 <ScalarProperty Name="DnevnikRada" ColumnName="DnevnikRada" />
                 <ScalarProperty Name="OglasnaPloca" ColumnName="OglasnaPloca" />
                 <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />

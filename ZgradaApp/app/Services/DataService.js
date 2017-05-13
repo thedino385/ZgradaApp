@@ -4,16 +4,27 @@
     var zgradaUseri = [];
     var userId = null;
     var selZgradaId = null;
-    var dnevnikSelGodina = 0;
+    var selGodina = 0;
 
     // zgrade
     var getZgrade = function () {
         return $http.get('../api/data/getzgrade');
     }
 
-    var getZgrada = function (zgradaId) {
-        return $http.get('../api/data/getzgrada?Id=' + zgradaId);
+    var getZgrada = function (zgradaId, prenesiRashodeuTekuciMjesec) {
+        //return $http.get('../api/data/getzgrada?Id=' + zgradaId);
+        return $http({
+            url: '../api/data/getzgrada',
+            method: "GET",
+            params: { Id: zgradaId, prenesiRashodeuTekuciMjesec: prenesiRashodeuTekuciMjesec }
+        });
     }
+
+    //var getZgradaPrihodiRashodi = function (zgradaId) {
+    //    return $http.get('../api/data/getZgradaPrihodiRashodi?Id=' + zgradaId);
+    //    // isto kao i getZgrada, ali ovdje ce se neplaceni rashodi iz proslog mjeseca prenijeti u tekuci
+    //}
+    
 
     var zgradaCreateOrUpdate = function (zgrada) {
         return $http.post('../api/data/zgradaCreateOrUpdate', zgrada);
@@ -97,6 +108,14 @@
         return $http.post('../Account/editUser', user);
     }
 
+    //var prebaciNeplaceniRashod = function (mjesecZaKojiSeRadiObracun, godina) {
+    //    return $http({
+    //        url: '../api/data/prebaciNeplaceniRashod',
+    //        method: "GET",
+    //        params: { mjesecZaKojiSeRadiObracun: mjesecZaKojiSeRadiObracun, godina: godina }
+    //    });
+    //}
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -118,14 +137,15 @@
         sifarnikRashodaCrateOrUpdate: sifarnikRashodaCrateOrUpdate,
         currZgrada: currZgrada,
         userId: userId,
-        dnevnikSelGodina: dnevnikSelGodina,
+        selGodina: selGodina,
 
         genPdfKarticePd: genPdfKarticePd,
         dnevnikRadaCreateOrUpdate: dnevnikRadaCreateOrUpdate,
         selZgradaId: selZgradaId,
 
         getUseri: getUseri,
-        editUser: editUser
+        editUser: editUser,
+        //prebaciNeplaceniRashod: prebaciNeplaceniRashod
     }
 
 

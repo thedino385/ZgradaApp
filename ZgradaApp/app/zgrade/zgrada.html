@@ -71,6 +71,7 @@
                         <md-tab label="Stanari zgrade">
                             <md-content class="md-padding">
                                 <md-button class="md-primary md-raised" ng-click="openModalStanar(0)">&nbsp;Dodaj stanara&nbsp;</md-button>
+                                <md-button class="md-primary md-raised" ng-click="createAcc()">&nbsp;Kreiraj korisničke račune&nbsp;</md-button>
                                 <table class="table table-hover table-striped table-bordered table-responsive">
                                     <thead>
                                         <tr>
@@ -78,6 +79,10 @@
                                             <th>Prezime</th>
                                             <th>OIB</th>
                                             <th>Email</th>
+                                            <th>Dnevnik rada</th>
+                                            <th>Korisničko ime</th>
+                                            <th>Lozinka</th>
+                                            <th>Dozvoljena prijava</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -87,6 +92,16 @@
                                             <td>{{stanar.Prezime}}</td>
                                             <td>{{stanar.OIB}}</td>
                                             <td>{{stanar.Email}}</td>
+                                            <td>
+                                                <md-checkbox ng-model="stanar.DnevnikRada">
+                                                </md-checkbox>
+                                            </td>
+                                            <td>{{stanar.Email}}</td>
+                                            <td>{{stanar.Pass}}</td>
+                                            <td>
+                                                <md-checkbox ng-model="stanar.Active">
+                                                </md-checkbox>
+                                            </td>
                                             <td>
                                                 <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="openModalStanar(stanar.Id)">
                                                     <span class="glyphicon glyphicon-edit"></span>

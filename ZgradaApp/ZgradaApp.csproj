@@ -259,6 +259,7 @@
     <Compile Include="Utils\IsValidHelper.cs" />
     <Compile Include="Utils\PdfPosebiDio.cs" />
     <Compile Include="Utils\PricuvaRezijeGodinaTable.cs" />
+    <Compile Include="Utils\RashodiPrebaciNeplacene.cs" />
     <Compile Include="vKompanijeUseri.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -379,6 +380,7 @@
     <Content Include="app\prihodiRashodi\sifarnikRashodaModal.html" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\prihodiRashodi\sifarnikRashodaModalCtrl.js" />
+    <Content Include="app\Services\AccountService.js" />
     <Content Include="app\useri\indexUseri.html" />
     <Content Include="app\useri\indexUseriCtrl.js" />
     <Content Include="app\useri\useriModal.html" />

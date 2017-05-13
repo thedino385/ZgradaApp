@@ -11,7 +11,7 @@
         $scope.godina = godina;
         $scope.period = getHeaderText();
 
-        izracunajUkupno();
+        //izracunajUkupno();
         $scope.dodajRecord = function () {
             dodajRec();
         }
@@ -20,7 +20,8 @@
         var dateplacanjeList = [];
         $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (raMjesec) {
             dateList.push(new Date(raMjesec.Datum));
-            dateplacanjeList.push(new Date(raMjesec.Datum.DatumPlacanja));
+            //dateplacanjeList.push(new Date(raMjesec.Datum.DatumPlacanja));
+            dateplacanjeList.push(raMjesec.DatumPlacanja != null ? new Date(raMjesec.DatumPlacanja) : null);
         });
         $scope.dateList = dateList;
         $scope.dateplacanjeList = dateplacanjeList;
@@ -37,6 +38,8 @@
                 Datum: new Date(), Iznos: 0, Status: 'a', PosebniDioMasterId: null, RashodId: null
             };
             $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.push(noviRecord);
+            $scope.dateList.push(new Date());
+            $scope.dateplacanjeList.push(new Date());
             //console.log($scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.length);
         }
 
@@ -63,37 +66,44 @@
                     }
                 })
             }
-            izracunajUkupno();
+            //izracunajUkupno();
         }
 
-        $scope.ukupno = function () {
-            izracunajUkupno();
-        }
+        //$scope.ukupno = function () {
+        //    izracunajUkupno();
+        //}
 
-        function izracunajUkupno() {
-            if ($scope.prihodRashodZaGodinu == undefined)
-                return;
-            var ukupno = 0;
-            $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rec) {
-                if (rec.Status != 'd' && rec.Placen != true)
-                    ukupno += parseFloat(rec.Iznos);
-            })
-            $scope.total = ukupno.toFixed(2);
-            //console.log($scope.total);
-        }
+        //function izracunajUkupno() {
+        //    if ($scope.prihodRashodZaGodinu == undefined)
+        //        return;
+        //    var ukupno = 0;
+        //    $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rec) {
+        //        if (rec.Status != 'd' && rec.Placen != true)
+        //            ukupno += parseFloat(rec.Iznos);
+        //    })
+        //    $scope.total = ukupno.toFixed(2);
+        //    //console.log($scope.total);
+        //}
 
         $scope.save = function () {
             // za sve ostale recorde, stavi status 'u'
             //var Placeno_u_currMjesecu = 0;
+            var index = 0;
             $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rec) {
+                for (var i = 0; i < $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.length; i++) {
+                    if (index == i) {
+                        rec.DatumPlacanja = $scope.dateplacanjeList[i] != null ? new Date($scope.dateplacanjeList[i]) : null;
+                        rec.Datum = $scope.dateList[i] != null ? new Date($scope.dateList[i]) : null;
+                        break;
+                    }
+                }
                 if (rec.Status == null)
                     rec.Status = 'u';
-                //if (rec.Mjesec == mjesec)
-                    //Placeno_u_currMjesecu += parseFloat(rec.Iznos);
+                index++;
             })
             $scope.prihodRashodZaGodinu.Godina = godina;
             $mdDialog.hide($scope.prihodRashodZaGodinu);
-            //console.log($scope.prihodRashodZaGodinu);
+            console.log($scope.prihodRashodZaGodinu);
         };
 
         $scope.cancel = function () {

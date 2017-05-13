@@ -11,11 +11,11 @@
         $scope.useri = DataService.zgradaUseri;
         var mjeseci = [];
         $scope.zgradaObj.Zgrade_DnevnikRada.forEach(function (d) {
-            if (d.Godina == DataService.dnevnikSelGodina && mjeseci.indexOf(d.Mjesec) == -1)
+            if (d.Godina == DataService.selGodina && mjeseci.indexOf(d.Mjesec) == -1)
                 mjeseci.push(d.Mjesec);
         });
         $scope.mjeseci = mjeseci;
-        $scope.selectedGodina = DataService.dnevnikSelGodina;
+        $scope.selectedGodina = DataService.selGodina;
         var godine = [];
         $scope.zgradaObj.Zgrade_DnevnikRada.forEach(function (d) {
             if (godine.indexOf(d.Godina) == -1)
@@ -60,7 +60,7 @@
         });
         $scope.mjeseci = mjeseci;
         $scope.selectedGodina = god;
-        DataService.dnevnikSelGodina = god;
+        DataService.selGodina = god;
     }
 
     $scope.gotoDetails = function (id) {
