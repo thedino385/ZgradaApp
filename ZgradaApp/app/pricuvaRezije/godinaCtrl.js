@@ -11,7 +11,7 @@
 
         //if ($routeParams) {
         $rootScope.loaderActive = true;
-        DataService.getZgrada(DataService.selZgradaId).then(
+        DataService.getZgrada(DataService.selZgradaId, false, false).then(
             function (result) {
                 // on success
                 $scope.zgradaObj = result.data.Zgrada;

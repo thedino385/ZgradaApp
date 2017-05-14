@@ -3,8 +3,11 @@
 
         // $scope.pricuveZaZgraduSveGodine - sve godine za zgradu
         // $scope.pricuveZaZgraduGodina - jedna godina za zgradu
+        if (DataService.selZgradaId == null) {
+            $location.path('/zgrade');
+            return;
+        }
 
-     
         $scope.SelectedGodina = '';
         $scope.zgrada = {};
         $scope.godine = [];
@@ -43,38 +46,38 @@
         }
 
 
-        if ($routeParams) {
-            $rootScope.loaderActive = true;
-            DataService.getPricuva($routeParams.id).then(
-                function (result) {
-                    // on success
-                    DataService.getZgrada($routeParams.id).then(
-                        function (resultZgrada) {
-                            $scope.zgrada = resultZgrada.data;
-                            $scope.pricuveZaZgraduSveGodine = result.data; // ovo su sve godine selected zgrade
-                            $rootScope.loaderActive = false;
-                            if ($scope.pricuveZaZgraduSveGodine.length > 0) {
-                                $scope.pricuveZaZgraduSveGodine.forEach(function (g) {
-                                    gList.push(g.Godina)
-                                });
-                                $scope.godine = gList;
-                            }
-                            else {
-                                $scope.tableVisible = false;
-                            }
-                        },
-                        function (resultZgrada) {
-                            alert('Greska kod dohvacanja podataka za zgradu');
-                        },
-                    )
-                },
-                function (result) {
-                    // on errr - err kod pricuve
-                    alert('Greska kod dohvacanja podataka za pricuvu');
-                    $rootScope.errMsg = result.Message;
-                }
-            );
-        }
+        //if ($routeParams) {
+        $rootScope.loaderActive = true;
+        DataService.getPricuva($routeParams.id).then(
+            function (result) {
+                // on success
+                DataService.getZgrada(DataService.selZgradaId, false, false).then(
+                    function (resultZgrada) {
+                        $scope.zgrada = resultZgrada.data;
+                        $scope.pricuveZaZgraduSveGodine = result.data; // ovo su sve godine selected zgrade
+                        $rootScope.loaderActive = false;
+                        if ($scope.pricuveZaZgraduSveGodine.length > 0) {
+                            $scope.pricuveZaZgraduSveGodine.forEach(function (g) {
+                                gList.push(g.Godina)
+                            });
+                            $scope.godine = gList;
+                        }
+                        else {
+                            $scope.tableVisible = false;
+                        }
+                    },
+                    function (resultZgrada) {
+                        alert('Greska kod dohvacanja podataka za zgradu');
+                    },
+                )
+            },
+            function (result) {
+                // on errr - err kod pricuve
+                alert('Greska kod dohvacanja podataka za pricuvu');
+                $rootScope.errMsg = result.Message;
+            }
+        );
+        //}
 
         $scope.godinaChanged = function (godina) {
             $scope.SelectedGodina = godina;
@@ -142,5 +145,5 @@
             $route.reload();
         }
 
-      
+
     }]);

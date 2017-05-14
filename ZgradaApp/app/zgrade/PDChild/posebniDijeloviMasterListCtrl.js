@@ -9,7 +9,7 @@
         $scope.zgradaMsg = '';
         $rootScope.loaderActive = true;
         //if ($routeParams) {
-        DataService.getZgrada(DataService.selZgradaId).then(
+        DataService.getZgrada(DataService.selZgradaId, false, false).then(
             function (result) {
                 // on success
                 $scope.zgrada = result.data.Zgrada;

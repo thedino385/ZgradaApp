@@ -11,12 +11,12 @@
         return $http.get('../api/data/getzgrade');
     }
 
-    var getZgrada = function (zgradaId, prenesiRashodeuTekuciMjesec) {
+    var getZgrada = function (zgradaId, prenesiRashodeuTekuciMjesec, prenesiDnevnikuTekuciMjesec) {
         //return $http.get('../api/data/getzgrada?Id=' + zgradaId);
         return $http({
             url: '../api/data/getzgrada',
             method: "GET",
-            params: { Id: zgradaId, prenesiRashodeuTekuciMjesec: prenesiRashodeuTekuciMjesec }
+            params: { Id: zgradaId, prenesiRashodeuTekuciMjesec: prenesiRashodeuTekuciMjesec, prenesiDnevnikuTekuciMjesec: prenesiDnevnikuTekuciMjesec }
         });
     }
 
@@ -96,6 +96,11 @@
         return $http.post('../pdf/genPdfKarticePd', tBodyObj);
     }
 
+    var genPdfDnevnik = function (paramObj) {
+        //return $http.post('../api/pdfgenerator/genPdfKarticePd', tBodyObj);
+        return $http.post('../pdf/genDnevnik', paramObj);
+    }
+
     var dnevnikRadaCreateOrUpdate = function (dnevnik) {
         return $http.post('../api/data/dnevnikRadaCreateOrUpdate', dnevnik);
     }
@@ -145,7 +150,7 @@
 
         getUseri: getUseri,
         editUser: editUser,
-        //prebaciNeplaceniRashod: prebaciNeplaceniRashod
+        genPdfDnevnik: genPdfDnevnik
     }
 
 

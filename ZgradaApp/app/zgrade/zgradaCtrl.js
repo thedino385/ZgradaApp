@@ -6,7 +6,7 @@
         if ($routeParams) {
             if ($routeParams.id > 0) {
                 $rootScope.loaderActive = true;
-                DataService.getZgrada($routeParams.id).then(
+                DataService.getZgrada($routeParams.id, false, false).then(
                     function (result) {
                         // on success
                         $rootScope.loaderActive = false;

@@ -36,7 +36,7 @@ namespace ZgradaApp.Controllers
 
         [HttpGet]
         [Route("api/data/getzgrada")]
-        public async Task<IHttpActionResult> GetZgrada(int Id, bool prenesiRashodeuTekuciMjesec = false)
+        public async Task<IHttpActionResult> GetZgrada(int Id, bool prenesiRashodeuTekuciMjesec = false, bool prenesiDnevnikuTekuciMjesec = false)
         {
             try
             {
@@ -46,6 +46,9 @@ namespace ZgradaApp.Controllers
                 if(prenesiRashodeuTekuciMjesec)
                     // prenesi iz proslog mjeseca u tekuci
                     await new RashodiPrebaciNeplacene(_db, DateTime.Today.Month).Prebaci();
+
+                if (prenesiDnevnikuTekuciMjesec)
+                    await new PrebaciOtvoreneStavkeDnevnika().Prebaci(_db, Id);
 
                 var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == Id && p.CompanyId == companyId);
                 // useri 

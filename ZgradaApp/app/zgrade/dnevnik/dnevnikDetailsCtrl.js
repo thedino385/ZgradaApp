@@ -108,7 +108,7 @@
         }
 
         $scope.cancel = function () {
-            $location.path('/dnevnik/' + DataService.dnevnikSelGodina);
+            $location.path('/dnevnik/' + DataService.selGodina);
         }
 
         $scope.parseDate = function (d) {
