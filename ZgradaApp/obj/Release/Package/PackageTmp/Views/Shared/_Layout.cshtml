@@ -1,0 +1,237 @@
+﻿@using ZgradaApp.Controllers
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layout-attributes.css" rel="stylesheet" />
+    <link href="~/Content/angular-toastr.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layouts.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layouts.ie_fixes.css" rel="stylesheet" />
+
+
+</head>
+<body>
+
+    @if (Request.IsAuthenticated)
+    {
+
+        <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a id="topNavSelectedZgrada" class="navbar-brand navigation" style="color: indigo; display: none" href="#"></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navigation" style="display: none">
+                        <li id="pdMasteri"><a href="#!/posebniDijeloviMasterList" onclick="Mark('pdMasteri')">Posebni dijelovi</a></li>
+                        <li class="dropdown" id="obracun">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Obračun <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#!/prihodiRashodi" onclick="Mark('obracun')">Prihodi i rashodi</a></li>
+                                <li><a href="#!/pricuvaRezije" onclick="Mark('obracun')">Pričuva i režije</a></li>
+                            </ul>
+                        </li>
+                        <li id="dnevnik"><a href="#!/dnevnik/0" onclick="Mark('dnevnik')">Dnevnik</a></li>
+                        <li class="dropdown" id="popisi">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Popisi <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#!/popisDijelova" onclick="Mark('popisi')">Popis zajedničkih dijelova</a></li>
+                                <li><a href="#!/popisUredjaja" onclick="Mark('popisi')">Popis zajedničkih uređaja</a></li>
+                            </ul>
+                        </li>
+                        @if (ViewBag.MasterAcc != null && ViewBag.MasterAcc == true)
+                        {
+                            <li id="useri"><a href="#!/useri" onclick="Mark('useri')">Korisnici</a></li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @*<li><a href="#">@DateTime.Today.ToShortDateString()</a></li>*@
+                        <li><a href="#">@ViewBag.ImePrezime</a></li>
+                        <li>@Html.Partial("_LoginPartial")</li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        if (ViewBag.ExpMsg != null)
+        {
+            if (ViewBag.ExpDays >= 15)
+            {
+                <div class="alert alert-warning" style="padding-top: 0px">
+                    <h5 style="color: red; text-align:end; margin-right: 50px">@ViewBag.ExpMsg!</h5>
+                </div>
+            }
+            else if (ViewBag.ExpDays < 15 && ViewBag.ExpDays >= 0)
+            {
+                <div class="alert alert-danger">
+                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
+                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsgGrace</b></h5>
+                </div>
+            }
+
+        }
+        if (ViewData["notifikacije"] != null)
+        {
+            <div class="alert alert-warning" id="notMaster">
+                <table style="width: 100%" id="notTable">
+                    @*<tr>
+                        <td colspan="2" style="text-align: center"><h5>Notifikacije</h5></td>
+                    </tr>*@
+                    @foreach (var item in (List<NotificationList>)ViewData["notifikacije"])
+                    {
+                        <tr id="@item.id">
+                            <td style="text-align: left; padding-left: 150px; width: 10%; font-size: 10px"><img src="~/Content/icons/alert.png" /></td>
+                            <td style="text-align: right; padding-right: 50px; width: 70%">@item.Text</td>
+                            <td style="text-align: right; padding-right: 50px; width: 10%"><button onclick="hideNotification('@item.id')"><img src="~/Content/icons/close.svg" /></button></td>
+                        </tr>
+
+
+                        @*<h5 style="text-align:end; margin-right: 50px">@item.Text</h5>
+                        <h5 style="text-align:end; margin-right: 50px">x</h5>*@
+
+                    }
+                </table>
+            </div>
+        }
+
+    }
+
+
+
+    <div class="mainContainer">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+
+    <script src="~/Scripts/angular-toastr.js"></script>
+    <script src="~/Scripts/angular-toastr.tpls.js"></script>
+    <script src="~/Scripts/angular-messages.js"></script>
+
+    <link href="~/Content/angular-material.css" rel="stylesheet" />
+    <script src="~/Scripts/angular-material/angular-material.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-aria/angular-aria.min.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+    @*material pokusaj*@
+    @*<link href="~/Content/bootstrap-material-design.css" rel="stylesheet" />
+        <link href="~/Content/ripples.css" rel="stylesheet" />
+        <script src="~/Scripts/material.js"></script>
+        <script src="~/Scripts/ripples.js"></script>*@
+
+    <!-- Angular custom stuff -->
+    <script src="~/app/angularApp.js"></script>
+    <script src="~/app/Services/DataService.js"></script>
+    <script src="~/app/Services/AccountService.js"></script>
+
+    <script src="~/app/Filters/pricuveFilters.js"></script>
+    <script src="~/app/indexCtrl.js"></script>
+
+    <script src="~/app/zgrade/zgradeCtrl.js"></script>
+    <script src="~/app/zgrade/zgradaCtrl.js"></script>
+    <script src="~/app/zgrade/zgradaStanariModalCtrl.js"></script>
+    <script src="~/app/zgrade/zgradaPosebniDijeloviMasterModalCtrl.js"></script>
+    <script src="~/app/zgrade/PDChild/posebniDijeloviMasterListCtrl.js"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildrenCtrl.js"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildModalCtrl.js"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildPovrsinaModalCtrl.js"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildPripadciModalCtrl.js"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioMasterVlasniciModalCtrl.js"></script>
+    <script src="~/app/zgrade/popisi/dijeloviListCtrl.js"></script>
+    <script src="~/app/zgrade/popisi/uredjajiListCtrl.js"></script>
+    <script src="~/app/zgrade/popisi/dijeloviModalCtrl.js"></script>
+    <script src="~/app/zgrade/popisi/uredjajiModalCtrl.js"></script>
+
+    <script src="~/app/prihodiRashodi/prihodiRashodiIndexCtrl.js"></script>
+    <script src="~/app/prihodiRashodi/prihodiModalCtrl.js"></script>
+    <script src="~/app/prihodiRashodi/rashodiModalCtrl.js"></script>
+    <script src="~/app/prihodiRashodi/sifarnikRashodaModalCtrl.js"></script>
+
+    <script src="~/app/pricuvaRezije/godinaCtrl.js"></script>
+    <script src="~/app/pricuvaRezije/mjesecModalCtrl.js"></script>
+    <script src="~/app/pricuvaRezije/stanjeZgradeModalCtrl.js"></script>
+
+    <script src="~/app/ks/indexKsCtrl.js"></script>
+    <script src="~/app/zgrade/dnevnik/dnevnikIndexCtrl.js"></script>
+    <script src="~/app/zgrade/dnevnik/dnevnikDetailsCtrl.js"></script>
+
+    <script src="~/app/useri/indexUseriCtrl.js"></script>
+    <script src="~/app/useri/useriModalCtrl.js"></script>
+    @*
+
+
+        <script src="~/app/Sifarnici/pripadciCtrl.js"></script>
+        <script src="~/app/Sifarnici/pripadakCtrl.js"></script>
+        <script src="~/app/Sifarnici/stanoviCtrl.js"></script>
+        <script src="~/app/Sifarnici/stanCtrl.js"></script>
+        <script src="~/app/Sifarnici/modals/posebniDioModalCtrl.js"></script>
+        <script src="~/app/Sifarnici/modals/pripadakModalCtrl.js"></script>
+        <script src="~/app/Sifarnici/modals/stanarModalCtrl.js"></script>
+        <script src="~/app/Sifarnici/modals/pripadakStanCtrl.js"></script>
+        <script src="~/app/Sifarnici/zgradaPregledPripadakaPoStanovimaCtrl.js"></script>
+        <script src="~/app/Sifarnici/prosebniDIjeloviCtrl.js"></script>
+        <script src="~/app/Sifarnici/posebniDioCtrl.js"></script>
+        <script src="~/app/pricuva/editCtrl.js"></script>
+
+        <script src="~/app/zaduzivanja/zaduzivanjePoMjCrtl.js"></script>
+        <script src="~/app/zaduzivanja/zaduzivanjeModalCtrl.js"></script>
+        <script src="~/app/PihRas/indexprhRasCtrl.js"></script>
+        <script src="~/app/PihRas/editPrihRasCtrl.js"></script>
+        <script src="~/app/PihRas/modalPrihodCtrl.js"></script>
+        <script src="~/app/PihRas/modalRashodCtrl.js"></script>
+
+        <script src="~/app/ks/ksDisplayCtrl.js"></script>
+        <script src="~/app/ks/ksksModalCtrl.js"></script>
+
+        <script src="~/app/pricuva/indexPricuvaCtrl.js"></script>
+        <script src="~/app/pricuva/pricuvaMjesecModalCtrl.js"></script>
+        <script src="~/app/pricuva/ksModalCtrl.js"></script>*@
+    <script type="text/javascript">
+
+        function Mark(el) {
+            $('li').removeClass('active');
+            $('#' + el).addClass('active');
+        }
+
+        function hideNotification(x) {
+            console.log(x);
+            $.post('/Home/TurnOffNotification', { domena: x.split('_')[0], id: x.split('_')[1] }, function (result) {
+                if (result.success == true) {
+                    $('#' + x).fadeOut('slow');
+                }
+                if ($('#notTable tr:visible').children().length == 0)
+                    $('#notMaster').fadeOut('slow');
+            })
+        }
+
+    </script>
+</body>
+</html>

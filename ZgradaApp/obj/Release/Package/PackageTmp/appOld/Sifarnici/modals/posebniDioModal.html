@@ -1,0 +1,64 @@
+﻿
+<div class="modal-dialog modal-lg" style="vertical-align: middle;">
+
+    <div class="modal-header" style="padding-bottom: 8px !important">
+        <h4 class="modal-title">Posebni dijelovi</h4>
+    </div>
+
+    <form name="dioFrm" ng-submit="save()">
+        <div class="modal-body">
+                <div class='form-horizontal'>
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2">
+                            <label for="naziv">Naziv</label>
+                        </div>
+                        <div class="col-sm-4" ng-class="{ 'has-error' : dioFrm.dioId.$invalid && !dioFrm.dioId.$pristine }">
+                            <select ng-model="item.PosebniDioId" ng-options="c.Id as c.Naziv for c in posebniDijelovi"
+                               ng-change="posebniDioIdChanged()"     name="dioId" class="form-control" ng-required></select>
+                            <span style="color: red" ng-show="dioFrm.dioId.$invalid && !dioFrm.dioId.$pristine">Obavezno polje</span>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2">
+                            <label for="ozn">Oznaka</label>
+                        </div>
+                        <div class="col-sm-4" ng-class="{ 'has-error' : dioFrm.ozn.$invalid && !dioFrm.ozn.$pristine }">
+                            <input type="text" name="ozn" required class="form-control" ng-model="item.Oznaka" />
+                            <span style="color: red" ng-show="dioFrm.ozn.$invalid && !dioFrm.ozn.$pristine">Obavezno polje</span>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2">
+                            <label for="povrsinam2">Površina (M2)</label>
+                        </div>
+                        <div class="col-sm-4" ng-class="{ 'has-error' : dioFrm.povrsinam2.$invalid && !dioFrm.povrsinam2.$pristine }">
+                            <input type="number" name="povrsinaPosto" required ng-min="1" class="form-control" ng-model="item.PovrsinaM2" />
+                            <span style="color: red" ng-show="dioFrm.povrsinam2.$invalid && !dioFrm.povrsinam2.$pristine">Obavezno polje</span>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2">
+                            <label for="koeficijent">Koeficijent</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="number" name="koeficijent" class="form-control" ng-model="item.Koef" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" value="Odustani" ng-click="cancel()" />
+            <input type="submit" class="btn btn-primary" value="Spremi" ng-disabled="dioFrm.$invalid" />
+
+        </div>
+    </form>
+</div>
+

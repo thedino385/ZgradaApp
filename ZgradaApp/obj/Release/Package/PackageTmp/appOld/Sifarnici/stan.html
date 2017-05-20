@@ -1,0 +1,299 @@
+﻿<style>
+    .spacer {
+        margin-top: 15px; /* define margin as you see fit */
+    }
+
+    .row {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="panel-group">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <strong>{{msg}}</strong>
+                </div>
+                <div class="panel-body">
+                    <!--<div class="col-xs-12 col-sm-12">-->
+                    <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label>Broj stana</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" ng-model="stan.BrojStana" />
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label>Kat</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" ng-model="stan.Kat" />
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label for="naziv">Naziv</label>
+                            </div>
+                            <div class="col-sm-4" ng-class="{ 'has-error' : frm.naziv.$invalid && !frm.naziv.$pristine }">
+                                <input type="text" name="naziv" required class="form-control" ng-model="stan.Naziv" />
+                                <span style="color: red" ng-show="frm.naziv.$invalid && !frm.naziv.$pristine">Obavezno polje</span>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label for="naziv">Oznaka</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" ng-model="stan.Oznaka" />
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label for="povrsinam2">Površina (m2)</label>
+                            </div>
+                            <div class="col-sm-2" ng-class="{ 'has-error' : frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine }">
+                                <input type="number" ng-change="PovrsinaStanaChanged()" ng-min="1" name="povrsinam2" required class="form-control" ng-model="stan.PovrsinaM2" />
+                                <span style="color: red" ng-show="frm.povrsinam2.$invalid && !frm.povrsinam2.$pristine">Obavezno polje</span>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label for="povrsinaposto">Površina (%)</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" name="povrsinam2" ng-readonly="true" class="form-control" ng-model="stan.PovrsinaPosto" />
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label for="sumaPovrsinaM2">Suma površina (m2)</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" ng-readonly="true" name="sumaPovrsinaM2" class="form-control" ng-model="stan.SumaPovrsinaM2" />
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label for="sumaPovrsinaPosto">Suma površina (%)</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" ng-readonly="true" name="sumaPovrsinaPosto" class="form-control" ng-model="stan.SumaPovrsinaPosto" />
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <label>Napomena</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <textarea rows="5" style="width: 100%" ng-model="stan.Napomena"></textarea>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+
+                        <hr />
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Oznaka</th>
+                                    <th>Površina (m2)</th>
+                                    <th>Koeficijent</th>
+                                    <th>Površina sa koeficijentom</th>
+                                    <!--<th>Ukupno</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in tablePovrisne track by $index"">
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.Oznaka}}</td>
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.PovrsinaM2 | number : 2}}</td>
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.Koef | number : 2}}</td>
+                                    <td ng-class="x.class" style="vertical-align: middle">{{x.PovrsinaSaKoef | number : 2}}</td>
+                                    <!--<td ng-class="x.class" style="vertical-align: middle">{{x.Ukupno | number : 2}}</td>-->
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th>Ukupno</th>
+                                    <th style="text-align: right">{{totalM2 | number : 2}}</th>
+                                    <th></th>
+                                    <th style="text-align: right">{{totalM2Koef | number : 2}}</th>
+                                    <!--<th>{{total | number : 2}}</th>-->
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <hr />
+
+                        <!-- ukupno -->
+                        <!--<div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno površina (m2)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaPovrsinaM2}}</h5>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno suma površina (m2)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaSumaPovrsinaM2}}</h5>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno površina (%)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaPovrsinaPosto}}</h5>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <h5 class="alert-success" for="naziv">Ukupno suna površina (%)</h5>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>{{ukupnaSumaPOvrsinaPosto}}</h5>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>-->
+                        <!--tabs-->
+                        <div ng-cloak>
+                            <md-content>
+                                <md-tabs md-dynamic-height md-border-bottom>
+                                    <md-tab label="Posebni dijelovi">
+                                        <md-content class="md-padding">
+                                            <a href="" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalDio(newItemDio)">Dodaj dio</a>
+                                            <table class="table table-hover table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Naziv</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="pd in stan.Stanovi_PosebniDijelovi | filter:{ Status: '!d'}">
+
+                                                        <!--<td style="vertical-align: middle">{{getDataDio(pd.PosebniDioId).Oznaka}}</td>-->
+                                                        <td style="vertical-align: middle">{{pd.Oznaka}}</td>
+                                                        <td style="vertical-align: middle">
+                                                            <button type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalDio(pd)">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </button>
+                                                        </td>
+                                                        <td style="vertical-align: middle">
+                                                            <button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deleteDio(pd)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Pripadci">
+                                        <md-content class="md-padding">
+                                            <input type="button" ng-disabled="stan.PovrsinaM2 == 0" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalPripadak(newItemPripadak)" value="Dodaj pripadak" />
+                                            <table class="table table-hover table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Vrsta</th>
+                                                        <th>Naziv</th>
+                                                        <th>Površina (m2)</th>
+                                                        <th>Površina (%)</th>
+                                                        <th>Koeficijent (%)</th>
+                                                        <th>Vrijedi od (mj/god)</th>
+                                                        <th>Vrijedi do (mj/god)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="pp in stan.Stanovi_Pripadci | filter:{ Status: '!d'}">
+                                                        <!--<tr ng-repeat="pp in obj.Stanovi_Pripadci | filter:{ Status: '!d'} }">-->
+                                                        <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).VrstaNaziv}}</td>
+                                                        <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).Naziv}}</td>
+                                                        <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).PovrsinaM2}}</td>
+                                                        <td style="vertical-align: middle">{{getData(pp.PripadakIZgradaId).PovrsinaPosto}}</td>
+                                                        <td style="vertical-align: middle">{{pp.Koef}}</td>
+                                                        <td style="vertical-align: middle">{{pp.VrijediOdMjesec}}/{{pp.VrijediOdGod}}</td>
+                                                        <td style="vertical-align: middle">{{pp.VrijediDoMjesec}}/{{pp.VrijediDoGod}}</td>
+                                                        <td style="vertical-align: middle; text-align: center">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalPripadak(pp)">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </button>
+                                                        </td>
+                                                        <td style="vertical-align: middle" text-align: center">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deletePripadak(pp)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Stanari">
+                                        <md-content class="md-padding">
+                                            <a href="" class="btn btn-success" style="margin-bottom: 10px" ng-click="openModalStanar(newItemStanar)">Dodaj stanara</a>
+                                            <table class="table table-hover table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Ime</th>
+                                                        <th>Prezime</th>
+                                                        <th>OIB</th>
+                                                        <th>Email</th>
+                                                        <th>Udio</th>
+                                                        <th>Vlasnik</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="st in stan.Stanovi_Stanari | filter:{ Status: '!d'}">
+                                                        <td style="vertical-align: middle">{{st.Ime}}</td>
+                                                        <td style="vertical-align: middle">{{st.Prezime}}</td>
+                                                        <td style="vertical-align: middle">{{st.OIB}}</td>
+                                                        <td style="vertical-align: middle">{{st.Email}}</td>
+                                                        <td style="vertical-align: middle">{{st.Udjel}}</td>
+                                                        <td style="vertical-align: middle">{{st.Vlasnik}}</td>
+                                                        <td style="vertical-align: middle">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Uredi dio" ng-click="openModalStanar(st)">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </button>
+                                                        </td>
+                                                        <td style="vertical-align: middle">
+                                                            <button ng-hide="pp.Active == 'false'" type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="deleteStanar(st)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </md-content>
+                                    </md-tab>
+                                </md-tabs>
+                            </md-content>
+                        </div>
+                        <hr />
+                        <input type="submit" class="btn btn-primary pull-right" value="Spremi" ng-disabled="frm.$invalid" />
+                        <a ng-click="backToStanovi()" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

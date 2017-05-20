@@ -1,0 +1,49 @@
+﻿
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="bs-callout bs-callout-info">
+            <h4>{{msg}}</h4>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Stan</th>
+                    <th>Broj</th>
+                    <th>Kat</th>
+                    <th>Oznaka</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat-start="s in stanovi">
+                    <td>{{s.Naziv}}</td>
+                    <td>{{s.BrojStana}}</td>
+                    <td>{{s.Kat}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="background-color: whitesmoke"><label>Vrsta</label></td>
+                    <td style="background-color: whitesmoke"><label>Oznaka</label></td>
+                    <td style="background-color: whitesmoke"><label>Površina</label></td>
+                </tr>
+                <tr ng-repeat="prip in s.Stanovi_Pripadci">
+                    <td></td>
+                    <td style="background-color: whitesmoke">{{getData(prip.PripadakIZgradaId).VrstaNaziv}}</td>
+                    <td style="background-color: whitesmoke">{{getData(prip.PripadakIZgradaId).Naziv}}</td>
+                    <td style="background-color: whitesmoke">{{getData(prip.PripadakIZgradaId).PovrsinaM2 | number: 2}}&nbsp;m2</td>
+                </tr>
+                <tr ng-repeat-end></tr>
+            </tbody>
+            <!--<tbody>
+                <tr ng-repeat="s in stanovi">
+                    <td>{{s.Naziv}}</td>
+                    <td>{{s.BrojStana}}</td>
+                    <td>{{s.Kat}}</td>
+                </tr>
+            </tbody>-->
+        </table>
+        
+        <a href="#!/zgrade" style="margin-right: 10px" class="btn btn-default pull-right">Povratak</a>&nbsp;
+    </div>
+</div>
+

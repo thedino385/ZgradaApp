@@ -113,13 +113,9 @@
         return $http.post('../Account/editUser', user);
     }
 
-    //var prebaciNeplaceniRashod = function (mjesecZaKojiSeRadiObracun, godina) {
-    //    return $http({
-    //        url: '../api/data/prebaciNeplaceniRashod',
-    //        method: "GET",
-    //        params: { mjesecZaKojiSeRadiObracun: mjesecZaKojiSeRadiObracun, godina: godina }
-    //    });
-    //}
+    var sendUplatniceRashodi = function (list) {
+        return $http.post('../Email/SendRashodi', list);
+    }
 
     return {
         getZgrade: getZgrade,
@@ -150,7 +146,9 @@
 
         getUseri: getUseri,
         editUser: editUser,
-        genPdfDnevnik: genPdfDnevnik
+        genPdfDnevnik: genPdfDnevnik,
+
+        sendUplatniceRashodi: sendUplatniceRashodi 
     }
 
 

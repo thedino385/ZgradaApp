@@ -1,0 +1,11 @@
+﻿- Stan -> Pripadak kolecija, napraviti prijenos oznake pripadka u pojle oznaka i pustiti unos ostatka
+
+- Stan - kolekcije  - dodati property Status i prema statusu filtrirati gridove (ne prokazivati 'd' statuse)
+	- statusi: a u d
+	- DataController - napisati metodu za simanje stana i kolekcije s obzirom na ststus svake kolekcije
+
+
+- linka na managiranja acc-a vodi van iz angular app-a, povratak nemoguc
+- srediti manage mvc view
+
+- client side unos u type="number" sa decimalnim zarezom i racunanje

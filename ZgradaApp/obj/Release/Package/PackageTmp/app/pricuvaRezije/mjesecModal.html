@@ -1,0 +1,199 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak name="frm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>{{period}}</h3>
+
+                <md-checkbox ng-model="PricuvaRezijeZaMjesec.SaKoef" aria-label="Checkbox 1">
+                    Sa koeficijentom
+                </md-checkbox>
+
+                <md-button class="md-raised" style="fill: green" aria-label="Obračunaj pričuvu i režije" ng-click="obracunaj()">
+                    Kreiraj
+                </md-button>
+                <md-button class="md-icon-button" title="Expand" ng-click="settingsExpanded == false ? settingsExpanded = true : settingsExpanded = false">
+                    <md-icon md-svg-icon="/Content/icons/arrow-expand-all.svg" ng-style="settingsExpanded == true ? {'fill': 'magenta'} : {'fill': 'yellowgreen'}" style="width: 32px; height: 32px"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" title="Obriši i kreiraj" ng-click="delete($event)">
+                    <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red; width: 32px; height: 32px"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <table class="table table-hover" ng-show="settingsExpanded">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Pričuva</th>
+                            <th colspan="2">Režije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaPricuva">
+                                    <md-radio-button ng-click="nacinObracunaPricuvaChanged(0)" value="0" class="md-primary">Po m2</md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td><input type="text" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2" /></td>
+                            <td>
+                                <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaRezije">
+                                    <md-radio-button ng-click="nacinObracunaRezijeChanged(0)" value="0" class="md-primary">Raspodjela od ukupno</md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td><input type="text" ng-model="PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaPricuva">
+                                    <md-radio-button ng-click="nacinObracunaPricuvaChanged(1)" value="1" class="md-primary">Raspodjela od ukupno</md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td><input type="text" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno" /></td>
+                            <td>
+                                <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaRezije">
+                                    <md-radio-button ng-click="nacinObracunaRezijeChanged(1)" value="1" class="md-primary">Po broju članova</md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td><input type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunRezijaCijenaUkupnoPoBrojuClanova" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaPricuva">
+                                    <md-radio-button ng-click="nacinObracunaPricuvaChanged(2)" value="2" class="md-primary">Cijena za svakog</md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td></td>
+                            <td>
+                                <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaRezije">
+                                    <md-radio-button ng-click="nacinObracunaRezijeChanged(2)" value="2" class="md-primary">Cijena za svaki PD</md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="vertical-align: middle">
+                                Ime i prezime
+                            </th>
+                            <th style="vertical-align: middle">
+                                Posebni dio
+                            </th>
+                            <th style="vertical-align: middle">
+                                Početno stanje
+                            </th>
+                            <th style="vertical-align: middle">
+                                Posebni dijelovi
+                            </th>
+                            <th style="vertical-align: middle">
+                                Dug/pretplata
+                            </th>
+                            <th style="vertical-align: middle">
+                                Zaduženje
+                            </th>
+                            <th style="vertical-align: middle">
+                                Uplaćeno
+                            </th>
+                            <th style="vertical-align: middle">
+                                Stanje od
+                            </th>
+                            <th ng-show="cijenaPricuvaVisible" style="vertical-align: middle">
+                                Cijena <br />(pričuva)
+                            </th>
+                            <th ng-show="cijenaRezijeZaSvakiVisible" style="vertical-align: middle">
+                                Cijena <br /> (režije)
+                            </th>
+                            <th ng-show="cijenaRezijePoBrojuVisible" style="vertical-align: middle">
+                                Br.članova
+                            </th>
+                            <!--<th>
+                                <md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
+                                    <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
+                                </md-button>
+                            </th>-->
+                        </tr>
+                    </thead>
+                    <!--<tbody ng-repeat="pdMaster in PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri">-->
+                    <tbody>
+                        <tr ng-repeat="pdMaster in PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri">
+                            <td>
+                                <div ng-repeat="periodVlasnici in pdMaster.PricuvaRezijePosebniDioMasterVlasnici">
+                                    <div ng-repeat="stanar in zgradaObj.Zgrade_Stanari | filter: { Id: periodVlasnici.VlasnikId }">
+                                        {{stanar.Ime}}&nbsp;{{stanar.Prezime}}<br>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-repeat="master in zgradaObj.Zgrade_PosebniDijeloviMaster| filter: { Id: pdMaster.PosebniDioMasterId }">
+                                    {{master.Naziv}}
+                                </div>
+                            </td>
+                            <td><input type="text" size="5" ng-model="pdMaster.PocetnoStanje" /></td>
+                            <td>
+                                <div ng-repeat="master in zgradaObj.Zgrade_PosebniDijeloviMaster| filter: { Id: pdMaster.PosebniDioMasterId }">
+                                    <span ng-repeat="posDioChild in master.Zgrade_PosebniDijeloviChild | filter: { ZgradaPosDioMasterId: pdMaster.PosebniDioMasterId }:true">
+                                        {{posDioChild.Naziv}}<br />
+                                    </span>
+                                </div>
+                            </td>
+                            <td ng-class="{ greenCell: pdMaster.DugPretplata > 0, redCell: pdMaster.DugPretplata < 0 }">
+                                {{pdMaster.DugPretplata}}
+                            </td>
+                            <td>{{pdMaster.Zaduzenje | number: 2}}</td>
+                            <td>{{pdMaster.Uplaceno | number: 2}}</td>
+                            <td><input type="text" size="8" ng-model="pdMaster.StanjeOd" /></td>
+                            <td ng-show="cijenaPricuvaVisible"><input type="text" size="5" ng-model="pdMaster.ObracunPricuvaCijenaSlobodanUnos" /></td>
+                            <td ng-show="cijenaRezijeZaSvakiVisible"><input type="text" size="5" ng-model="pdMaster.ObracunRezijeCijenaSlobodanUnos" /></td>
+                            <td ng-show="cijenaRezijePoBrojuVisible"><input type="text" size="5" ng-model="pdMaster.ObracunRezijeBrojClanova" /></td>
+                        </tr>
+
+                        <!--<tr ng-repeat="ra in prihodRashodZaGodinu.PrihodiRashodi_Rashodi | filter:{ Mjesec: mjesec} | filter: { Status: '!d' }" style="vertical-align: middle">
+
+                            <td style="vertical-align: middle">
+                                <input class="form-control" type="text" ng-model="ra.Datum" />
+                            </td>
+                            <td style="vertical-align: middle; text-align: end">
+                                <md-input-container flex-gt-sm>
+                                    <md-select ng-model="ra.RashodId">
+                                        <md-option name="stanarId" ng-repeat="vrsta in sifarnikRashoda" ng-value="vrsta.Id">
+                                            {{vrsta.Naziv}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </td>
+                            <td style="vertical-align: middle; text-align: end">
+                                <input ng-change="ukupno()" class="form-control" type="text" ng-model="ra.Iznos" />
+                            </td>
+                            <td style="vertical-align: middle">
+                                <md-button class="md-icon-button" ng-click="delete(ra.Id)" title="Obriši">
+                                    <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
+                            <td style="vertical-align: middle; text-align: end">{{total}}</td>
+                        </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="cancel()">
+                Odustani
+            </md-button>
+            <md-button ng-disabled="!obracunKreiran" class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

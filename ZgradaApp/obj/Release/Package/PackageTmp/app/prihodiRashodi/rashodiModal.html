@@ -1,0 +1,107 @@
+﻿<md-dialog flex="90">
+    <form ng-cloak name="frm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h3 flex md-truncate>Rashodi: {{period}}</h3>
+                <span></span>
+                <md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
+                    <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: lightyellow"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="vertical-align: middle">
+                                Datum
+                            </th>
+                            <th style="vertical-align: middle">
+                                Vrsta rashoda
+                            </th>
+                            <th style="vertical-align: middle">
+                                Posebni dio
+                            </th>
+                            <th style="vertical-align: middle">
+                                Iznos
+                            </th>
+                            <th style="vertical-align: middle">
+                                Plaćen
+                            </th>
+                            <th style="vertical-align: middle">
+                                Datum plaćanja
+                            </th>
+                            <th>
+                               
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr ng-repeat="ra in prihodRashodZaGodinu.PrihodiRashodi_Rashodi | filter:{ Mjesec: mjesec} | filter: { Status: '!d' }" style="vertical-align: middle">
+
+                            <td style="vertical-align: middle">
+                                <md-datepicker ng-model="dateList[$index]" md-placeholder="Enter date"></md-datepicker>
+                            </td>
+                            <td style="vertical-align: middle; text-align: end">
+                                <md-input-container flex-gt-sm>
+                                    <md-select ng-model="ra.RashodId">
+                                        <md-option name="RashodId" ng-repeat="vrsta in sifarnikRashoda" ng-value="vrsta.Id">
+                                            {{vrsta.Naziv}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </td>
+
+                            <td style="vertical-align: middle">
+                                <md-input-container flex-gt-gt>
+                                    <!--<label>Posebni dio</label>-->
+                                    <md-select ng-model="ra.PosebniDioMasterId">
+                                        <md-option name="PosebniDioMasterId" ng-repeat="pd in posedbiDijelovi" ng-value="pd.Id">
+                                            {{pd.Naziv}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </td>
+
+                            <td style="vertical-align: middle; text-align: end">
+                                <input size="9" type="text" ng-model="ra.Iznos" />
+                            </td>
+                            <td style="vertical-align: middle; text-align: center">
+                                <md-checkbox ng-model="ra.Placen" aria-label="Checkbox 1">
+                                </md-checkbox>
+                            </td>
+
+                            <td style="vertical-align: middle; text-align: center">
+                                <md-datepicker ng-show="ra.Placen == true" ng-model="dateplacanjeList[$index]" md-placeholder="Enter date"></md-datepicker>
+                            </td>
+                            
+
+                            <td style="vertical-align: middle">
+                                <md-button class="md-icon-button" ng-click="delete(ra.Id)" title="Obriši">
+                                    <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
+                            <td style="vertical-align: middle; text-align: end">{{total}}</td>
+                        </tr>-->
+                    </tbody>
+                </table>
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button class="md-raised" ng-click="cancel()">
+                        Odustani
+                    </md-button>
+                    <md-button class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
+                </md-dialog-actions>
+                <br /><br /><br />
+            </div>
+            
+        </md-dialog-content>
+
+        
+    </form>
+</md-dialog>

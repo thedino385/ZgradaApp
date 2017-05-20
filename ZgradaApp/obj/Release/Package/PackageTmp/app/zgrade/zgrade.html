@@ -1,0 +1,48 @@
+﻿
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="bs-callout bs-callout-info">
+            <h4>Zgrade</h4>
+        </div>
+        <!--<button class="btn btn-info" style="margin-bottom: 10px" ng-click="novaZgrada()">Dodaj zgradu</button>-->
+
+
+        <md-button class="md-primary md-raised" ng-click="novaZgrada()">&nbsp;Dodaj zgradu&nbsp;</md-button>
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center">Naziv</th>
+                    <th style="text-align: center">Adresa</th>
+                    <th style="text-align: center">Mjesto</th>
+                    <th style="text-align: center">Uredi</th>
+                    <th style="text-align: center">Odaberi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="z in zgrade" ng-class="{ 'indigoCell': z.Id == selZgradaId, 'transCell': z.Id != selZgradaId}">
+                    <td style="vertical-align: middle; text-align: right; padding-right: 20px">{{z.Naziv}} {{selZgradaId}}</td>
+                    <td style="vertical-align: middle; text-align: right; padding-right: 20px">{{z.Adresa}}</td>
+                    <td style="vertical-align: middle; text-align: right; padding-right: 20px">{{z.Mjesto}}</td>
+                    <td style="vertical-align: middle; text-align: center">
+                        <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="edit(z)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </td>
+                    <td style="vertical-align: middle; text-align: center">
+                        <!--<button type="button" class="btn btn-default btn-sm" title="Dijelovi" ng-click="goToPosebniDjeloviChild(z.Id)">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </button>-->
+                        <button type="button" class="btn btn-default btn-sm" title="Dijelovi" ng-click="selectZgrada(z)">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </button>
+
+                        <!--<button type="button" class="btn btn-default btn-sm" title="Dijelovi" ng-click="goToPrihodiRashodi(z.Id)">
+                            <span class="glyphicon glyphicon-sort"></span>
+                        </button>-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿
+<div class="modal-dialog modal-lg" style="vertical-align: middle;">
+
+    <div class="modal-header" style="padding-bottom: 8px !important">
+        <h4 class="modal-title">Pripadci</h4>
+    </div>
+
+    <form name="stanarFrm" ng-submit="save()">
+        <div class="modal-body">
+            <div class='form-horizontal'>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="ime">Ime</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : stanarFrm.ime.$invalid && !stanarFrm.ime.$pristine }">
+                        <input type="text" name="ime" required ng-min="1" class="form-control" ng-model="item.Ime" />
+                        <span style="color: red" ng-show="stanarFrm.ime.$invalid && !stanarFrm.ime.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="prezime">Prezime</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : stanarFrm.preziem.$invalid && !stanarFrm.preziem.$pristine }">
+                        <input type="text" name="preziem" required ng-min="1" class="form-control" ng-model="item.Prezime" />
+                        <span style="color: red" ng-show="stanarFrm.preziem.$invalid && !stanarFrm.preziem.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="oib">OIB</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : stanarFrm.oib.$invalid && !stanarFrm.oib.$pristine }">
+                        <input type="text" name="oib" required class="form-control" ng-model="item.OIB" />
+                        <span style="color: red" ng-show="stanarFrm.oib.$invalid && !stanarFrm.oib.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : stanarFrm.email.$invalid && !stanarFrm.email.$pristine }">
+                        <input type="text" name="email" required class="form-control" ng-model="item.Email" />
+                        <span style="color: red" ng-show="stanarFrm.email.$invalid && !stanarFrm.email.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label for="udio">Udio</label>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : stanarFrm.udio.$invalid && !stanarFrm.udio.$pristine }">
+                        <input type="number" name="udio" required ng-min="1" class="form-control" ng-model="item.Udjel" />
+                        <span style="color: red" ng-show="stanarFrm.udio.$invalid && !stanarFrm.udio.$pristine">Obavezno polje</span>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <label>Vlasnik</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="checkbox" class="form-control" ng-model="item.Vlasnik" />
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" value="Odustani" ng-click="cancel()" />
+            <input type="submit" class="btn btn-primary" value="Spremi" ng-disabled="stanarFrm.$invalid" />
+
+        </div>
+    </form>
+</div>
+

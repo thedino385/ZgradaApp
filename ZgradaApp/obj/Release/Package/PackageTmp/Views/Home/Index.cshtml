@@ -1,0 +1,36 @@
+﻿
+
+<style>
+
+    .loader {
+        position: fixed;
+        left: 50%;
+        top: 35%;
+        background: transparent url("/Content/images/ajax-loader.gif");
+        z-index: 1000;
+        height: 32px;
+        width: 32px;
+    }
+
+</style>
+
+
+
+<div ng-app="angularApp">
+    <div>
+        @*<img ng-show="$root.loaderActive" class="busy" />*@
+        <div ng-show="$root.loaderActive" class="loader" />
+    </div>
+
+    @*<div class="panel-group" ng-show="$root.loaderActive">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <img ng-show="$root.loaderActive" id="busy"  />
+                <label style="color: red">{{errMsg}}</label>
+            </div>
+        </div>
+    </div>*@
+
+    <div ng-view></div>
+</div>
+

@@ -37,7 +37,7 @@
                 </md-button>
             </div>
         </md-toolbar>
-     
+
         <br />
         <div class="btn-group">
             <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
@@ -123,7 +123,7 @@
                             </tr>-->
                         </tbody>
                     </table>
-                    
+
                 </td>
                 <td style="padding-left: 10px">
                     <table class="table table-hover table-striped table-bordered">
@@ -136,6 +136,7 @@
                                 <th style="text-align: center; vertical-align: middle">Iznos</th>
                                 <th style="text-align: center; vertical-align: middle">Razlika</th>
                                 <th style="text-align: center; vertical-align: middle">Placeno</th>
+                                <th style="text-align: center; vertical-align: middle">Uplatnice</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,6 +146,11 @@
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(1, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
+                                <td style="vertical-align: middle">
+                                    <a href="" ng-click="openModalRashodiUplatnice(1, $event)">
+                                        <md-icon md-svg-icon="/Content/icons/currency-eur.svg" style="fill: greenyellow"></md-icon>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">2.</td>
@@ -152,6 +158,11 @@
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(2, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
+                                <td style="vertical-align: middle">
+                                    <a href="" ng-click="openModalRashodiUplatnice(2, $event)">
+                                        <md-icon md-svg-icon="/Content/icons/currency-eur.svg" style="fill: greenyellow"></md-icon>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">3.</td>
@@ -159,6 +170,11 @@
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(3, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
+                                <td style="vertical-align: middle">
+                                    <a href="" ng-click="openModalRashodiUplatnice(3, $event)">
+                                        <md-icon md-svg-icon="/Content/icons/currency-eur.svg" style="fill: greenyellow"></md-icon>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">4.</td>
@@ -166,6 +182,11 @@
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(4, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
+                                <td style="vertical-align: middle">
+                                    <a href="" ng-click="openModalRashodiUplatnice(4, $event)">
+                                        <md-icon md-svg-icon="/Content/icons/currency-eur.svg" style="fill: greenyellow"></md-icon>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">5.</td>
@@ -173,6 +194,11 @@
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(5, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
+                                <td style="vertical-align: middle">
+                                    <a href="" ng-click="openModalRashodiUplatnice(5, $event)">
+                                        <md-icon md-svg-icon="/Content/icons/currency-eur.svg" style="fill: greenyellow"></md-icon>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">6.</td>
@@ -180,6 +206,11 @@
                                 <td style="vertical-align: middle; text-align: end">{{iznosZaMjesec(6, 'r') | number : 2}}</td>
                                 <td style="vertical-align: middle; text-align: end"></td>
                                 <td style="vertical-align: middle; text-align: end"></td>
+                                <td style="vertical-align: middle">
+                                    <a href="" ng-click="openModalRashodiUplatnice(6, $event)">
+                                        <md-icon md-svg-icon="/Content/icons/currency-eur.svg" style="fill: greenyellow"></md-icon>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">7.</td>
@@ -262,9 +293,9 @@
         <input ng-click="saveAll()" type="button" class="btn btn-primary pull-right" value="Spremi" />
         <a ng-click="cancelReload()" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;-->
         <hr />
-            <md-button class="md-raised md-primary pull-right" type="button" ng-click="saveAll()">Spremi</md-button>
-            <md-button class="md-raised pull-right" ng-click="cancelReload()">
-                Odustani
-            </md-button>
+        <md-button class="md-raised md-primary pull-right" type="button" ng-click="saveAll()">Spremi</md-button>
+        <md-button class="md-raised pull-right" ng-click="cancelReload()">
+            Odustani
+        </md-button>
     </div>
 </div>

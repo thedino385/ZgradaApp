@@ -21,13 +21,24 @@ namespace ZgradaApp
 
     public partial class Zgrade_PosebniDijeloviMaster
     {
+        bool val = false;
         public string Status { get; set; }
+        public bool VlasniciExpanded
+        {
+            get { return val; }
+            set { val = value; }
+        }
     }
 
     public partial class Zgrade_PosebniDijeloviChild
     {
+        bool val = false;
         public string Status { get; set; }
-        public bool Expanded { get; set; } = true;
+        public bool Expanded
+        {
+            get { return val; }
+            set { val = value; }
+        }
     }
 
     public partial class Zgrade_PosebniDijeloviChild_Povrsine

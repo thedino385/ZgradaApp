@@ -1,0 +1,72 @@
+﻿https://material.angularjs.org/latest/img/icons/more_vert.svg
+
+https://materialdesignicons.com/
+
+
+
+ovo ne
+    // povuci pripadke
+    //if (DataService.listPripadci.length == 0) {
+    //    $rootScope.loaderActive = true;
+    //    DataService.getPripadci().then(
+    //        function (result) {
+    //            // on success
+    //            $scope.pripadci = result.data;
+    //            $rootScope.loaderActive = false;
+    //            DataService.listPripadci = result.data;
+    //        },
+    //        function (result) {
+    //            // on errr
+    //            $rootScope.errMsg = result.Message;
+    //        }
+    //    )
+    //}
+    //else {
+    //    $scope.pripadci = DataService.listPripadci;
+    //}
+
+
+ovo da
+    DataService.getPripadci().then(function (result) {
+        $scope.pripadci = result;
+    });
+
+
+var stanovi = [];
+DataService.getStanovi().then(function (result) {
+    result.forEach(function (stan) {
+        if (stan.ZgradaId == zgradaId)
+            stanovi.push(stan);
+    });
+    $scope.stanovi = stanovi;
+});
+
+ var getPripadci = function () {
+        var defer = $q.defer();
+        if (listPripadci.length == 0) {
+            $rootScope.loaderActive = true;
+            $http.get('../api/data/getpripadci').then(
+                function (result) {
+                    // on success
+                    listPripadci = result.data;
+                    console.log('dataService pripadci, pullilng from the server');
+                    $rootScope.loaderActive = false;
+                    defer.resolve(result.data);
+                },
+                function (result) {
+                    // on error
+                    defer.reject(result.data);
+                    $rootScope.errMsg = result.Message;
+                }
+            )
+        }
+        else
+            defer.resolve(listPripadci);
+        return defer.promise;
+    }
+--------------------------------------------------------------------
+
+filter za status kolekcija:
+
+http://stackoverflow.com/questions/22666366/angular-js-filter-not-equals
+https://plnkr.co/edit/y962yQAP5w7d7OF2XM49?p=preview

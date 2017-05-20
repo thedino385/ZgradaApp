@@ -20,8 +20,8 @@ namespace ZgradaApp
         public int CompanyId { get; set; }
         public string UserGuid { get; set; }
         public Nullable<bool> MasterAcc { get; set; }
-        public Nullable<int> ZgradaId { get; set; }
         public Nullable<int> Stanarid { get; set; }
+        public Nullable<int> ZgradaId { get; set; }
         public Nullable<bool> Active { get; set; }
     }
 }

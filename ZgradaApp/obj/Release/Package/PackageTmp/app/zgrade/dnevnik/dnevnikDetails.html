@@ -1,0 +1,142 @@
+﻿
+
+
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>{{msg}}</h3>
+
+                <md-checkbox ng-model="obj.Odradjeno" aria-label="Zatvoren">
+                    Zatvoren
+                </md-checkbox>
+
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
+            <div class="form-group row">
+                <div layout="column" ng-cloak class="md-inline-form">
+                    <md-content layout-padding>
+                        <!--<div layout-gt-sm="row">-->
+                        <!--<div class="col-sm-1"></div>
+                        <md-input-container class="md-block col-sm-5" flex-gt-sm>
+                            <label>Naziv</label>
+                            <input size="150" required type="text" name="naziv" ng-model="detail.Naslov">
+                            <div ng-messages="frm.naziv.$error" role="alert">
+                                <div ng-message-exp="['required']">
+                                    Obavezno polje
+                                </div>
+                            </div>
+                        </md-input-container>-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-6" flex-gt-sm>
+                                <label>Naziv</label>
+                                <textarea rows="1" cols="150" required name="naslov" style="min-width: 100%" placeholder="Napomena" ng-model="obj.Naslov"></textarea>
+                                <div ng-messages="frm.naslov.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+
+
+                            <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                <label>Datum</label>
+                                <md-datepicker name="datum" required ng-model="obj.Datum" md-placeholder=""></md-datepicker>
+                                <div ng-messages="frm.datum.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                    </md-content>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <md-input-container class="md-block col-sm-10" flex-gt-sm>
+                        <label>Opis</label>
+                        <textarea rows="3" cols="150" style="border-color: gray; min-width: 100%" placeholder="Opis" ng-model="obj.Opis"></textarea>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <hr />
+            <md-button ng-show="showNewbtn" class="md-icon-button pull-right" ng-click="newMsg(0, $event)" aria-label="More">
+                <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
+            </md-button>
+
+            <!--<div id="vertical-timeline" class="vertical-container center-orientation light-timeline">
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon red-bg">
+                        <md-icon md-svg-icon="/Content/icons/message-text-outline.svg" style="fill: white; padding-top: 5px"></md-icon>
+                    </div>
+                    <div class="vertical-timeline-content">
+                        <p>Ka zapoceo konverzaciju</p>
+                        <span class="vertical-date">
+                            Jozo Borg<br />
+                            <small>11.11.2015. 09:47</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon blue-bg">
+                        <md-icon md-svg-icon="/Content/icons/message-text-outline.svg" style="fill: white; padding-top: 5px"></md-icon>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <p>Ja odgovorion</p>
+                        <span class="vertical-date">
+                            Petar Veliki<br />
+                            <small>12.11.2015. 08:11</small>
+                        </span>
+                    </div>
+                </div>
+            </div>-->
+
+            <div id="vertical-timeline" class="vertical-container center-orientation light-timeline">
+                <div ng-repeat="d in obj.Zgrade_DnevnikRadaDetails" class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon red-bg">
+                        <md-icon md-svg-icon="/Content/icons/message-text-outline.svg" style="fill: white; padding-top: 5px"></md-icon>
+                    </div>
+                    <div class="vertical-timeline-content">
+                        <p>{{d.Poruka}}</p>
+                        <span class="vertical-date">
+                            <span ng-repeat="user in useri | filter: { Id: d.UserId }">
+                                {{user.Ime}} {{user.Prezime}}
+                                <a href="" class="md-icon-button" ng-click="newMsg(d.Id, $event)" title="Uredi vlasnike">
+                                    <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                                </a>
+                            </span>
+                            <br />
+                            <small>{{parseDate(d.Datum)}}</small>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+
+            <md-button class="md-raised pull-right" ng-click="cancel()">
+                Odustani
+            </md-button>
+            
+        </form>
+    </div>
+</div>
+
+

@@ -26,17 +26,25 @@ namespace ZgradaApp
         }
     
         public virtual DbSet<Kompanije> Kompanije { get; set; }
+        public virtual DbSet<KompanijeUseri> KompanijeUseri { get; set; }
         public virtual DbSet<PricuvaRezijeGodina> PricuvaRezijeGodina { get; set; }
+        public virtual DbSet<PricuvaRezijeGodina_StanjeOd> PricuvaRezijeGodina_StanjeOd { get; set; }
         public virtual DbSet<PricuvaRezijeMjesec> PricuvaRezijeMjesec { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioChildPovrsine> PricuvaRezijePosebniDioChildPovrsine { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioChildPripadci> PricuvaRezijePosebniDioChildPripadci { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioChildren> PricuvaRezijePosebniDioChildren { get; set; }
+        public virtual DbSet<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
         public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
         public virtual DbSet<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
         public virtual DbSet<PrihodiRashodi_Rashodi> PrihodiRashodi_Rashodi { get; set; }
+        public virtual DbSet<PrihodiRashodi_Rashodi_Uplatnice> PrihodiRashodi_Rashodi_Uplatnice { get; set; }
         public virtual DbSet<SifarnikRashoda> SifarnikRashoda { get; set; }
         public virtual DbSet<Zgrade> Zgrade { get; set; }
+        public virtual DbSet<Zgrade_DnevnikRada> Zgrade_DnevnikRada { get; set; }
+        public virtual DbSet<Zgrade_DnevnikRadaDetails> Zgrade_DnevnikRadaDetails { get; set; }
+        public virtual DbSet<Zgrade_PopisUredjaja> Zgrade_PopisUredjaja { get; set; }
+        public virtual DbSet<Zgrade_PopisZajednickihDijelova> Zgrade_PopisZajednickihDijelova { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviChild> Zgrade_PosebniDijeloviChild { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviChild_Povrsine> Zgrade_PosebniDijeloviChild_Povrsine { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviChild_Pripadci> Zgrade_PosebniDijeloviChild_Pripadci { get; set; }
@@ -44,14 +52,7 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod> Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici> Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici { get; set; }
         public virtual DbSet<Zgrade_Stanari> Zgrade_Stanari { get; set; }
-        public virtual DbSet<vZgrade> vZgrade { get; set; }
-        public virtual DbSet<PricuvaRezijeGodina_StanjeOd> PricuvaRezijeGodina_StanjeOd { get; set; }
-        public virtual DbSet<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
-        public virtual DbSet<Zgrade_PopisUredjaja> Zgrade_PopisUredjaja { get; set; }
-        public virtual DbSet<Zgrade_PopisZajednickihDijelova> Zgrade_PopisZajednickihDijelova { get; set; }
-        public virtual DbSet<Zgrade_DnevnikRada> Zgrade_DnevnikRada { get; set; }
-        public virtual DbSet<KompanijeUseri> KompanijeUseri { get; set; }
-        public virtual DbSet<Zgrade_DnevnikRadaDetails> Zgrade_DnevnikRadaDetails { get; set; }
         public virtual DbSet<vKompanijeUseri> vKompanijeUseri { get; set; }
+        public virtual DbSet<vZgrade> vZgrade { get; set; }
     }
 }

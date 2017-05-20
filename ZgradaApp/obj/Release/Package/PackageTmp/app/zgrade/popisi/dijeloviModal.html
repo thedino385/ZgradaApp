@@ -1,0 +1,89 @@
+﻿<md-dialog flex="80">
+    <form ng-cloak name="frm" ng-submit="save()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{msg}}</h2>
+                <span></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <div layout="column" ng-cloak class="md-inline-form">
+                    <md-content layout-padding>
+                        <!--row 1-->
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Naziv</label>
+                                <input required type="text" name="naziv" ng-model="zajednickiDio.Naziv">
+                                <div ng-messages="frm.naziv.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Površina</label>
+                                <input required type="text" name="povr" ng-model="zajednickiDio.Povrsina">
+                                <div ng-messages="frm.povr.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </md-content>
+                   
+                    <md-content layput-padding>
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Aktivan od godina</label>
+                                <input required type="number" name="vrijediOdGodina" ng-model="zajednickiDio.VrijediOdGodina">
+                                <div ng-messages="frm.vrijediOdGodina.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Aktivan od mjesec</label>
+                                <input required type="number" name="vrijediOdMjesec" ng-model="zajednickiDio.VrijediOdMjesec">
+                                <div ng-messages="frm.vrijediOdMjesec.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </md-content>
+                </div>
+                <div layout-gt-sm="row">
+                    <div class="col-sm-2"></div>
+                    <md-input-container class="md-block col-sm-8" flex-gt-sm>
+                        <label>Napomena</label>
+                        <textarea rows="3" cols="150" style="min-width: 100%" placeholder="Napomena" ng-model="zajednickiDio.Napomena"></textarea>
+
+                    </md-input-container>
+
+
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="cancel()">
+                Odustani
+            </md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

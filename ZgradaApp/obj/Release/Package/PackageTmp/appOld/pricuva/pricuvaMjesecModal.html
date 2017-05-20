@@ -1,0 +1,178 @@
+﻿<style>
+    /*.tableFontSmall {
+        font-size: 12px;
+    }*/
+
+    .modal-dialog {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .modal-content {
+        height: auto;
+        min-height: 100%;
+        border-radius: 0;
+    }
+</style>
+
+<div class="modal-dialog modal-lg" style="vertical-align: middle;">
+    <form name="myForm" novalidate>
+        <div class="modal-header" style="padding-bottom: 6px !important">
+            <h4 class="modal-title">Godina: {{godina}}  Mjesec: {{mjesec}}</h4>
+        </div>
+        <div class="modal-body">
+
+            <md-radio-group ng-model="tipObr">
+                <md-radio-button value="0" class="md-primary">Po m2</md-radio-button>
+                <md-radio-button value="1">Raspodjela od ukupno</md-radio-button>
+            </md-radio-group>
+
+            <div class='form-horizontal' ng-show="tipObr == 0">
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label for="pripadakId">Cijena po m2</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" ng-change="kreirajPricuvuZaMjesecOnScope()" ng-model="Cijena" />
+                    </div>
+                    <div class="col-sm-6" style="align-content: flex-start">
+                        <!--<a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()" ng-disabled="Cijena == 0">Kreiraj</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class='form-horizontal' ng-show="tipObr == 1">
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label for="pripadakId">Ukupna cijena</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" ng-change="kreirajPricuvuZaMjesecOnScope()" ng-model="Cijena" />
+                    </div>
+                    <div class="col-sm-6" style="align-content: flex-start">
+                        <!--<a href="" class="btn btn-success" ng-click="kreirajPricuvuZaMjesec()" ng-disabled="Cijena == 0">Kreiraj</a>-->
+                    </div>
+                </div>
+            </div>
+
+            <table class="tableFontSmall table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="vertical-align: middle; text-align: center">
+                            Ime i prezime
+                        </th>
+                        <th style="vertical-align: middle; text-align: center">
+                            Posebni dio
+                        </th>
+                        <th style="vertical-align: middle; text-align: center">
+                            SumaPovrSaKoef
+                        </th>
+                        <th style="vertical-align: middle; text-align: center">
+                            Dug/pretplata
+                        </th>
+                        <th style="vertical-align: middle; text-align: center">
+                            Zaduženje
+                        </th>
+                        <th style="vertical-align: middle; text-align: center">
+                            Uplaćeno
+                        </th>
+                        <th style="vertical-align: middle; text-align: center">
+                            Stanje od {{stanjeOdDatum}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr ng-repeat="pr in pricuveZaZgraduGodina.PricuvaMj">-->
+                    <tr ng-repeat="stan in zgrada.Stanovi">
+                        <td style="vertical-align: middle">
+                            <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                                {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle">
+                            <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
+                                <div>{{dio.Oznaka}}</div>
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle; text-align: center">
+                            {{IzracunajEfektivnuPovrsinuZaStan(stan.Id)}}
+                        </td>
+                        <td style="vertical-align: middle; text-align: end">
+                            <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                                <div ng-class="{greenCell: rec.DugPretplata > 0, redCell: rec.DugPretplata < 0}">
+                                    {{rec.DugPretplata | number: 2}}
+                                </div>
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle; text-align: end">
+                            <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                                {{rec.Zaduzenje | number: 2}}
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle; text-align: end">
+                            <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                                {{rec.Uplaceno | number: 2}}
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle; text-align: end">
+                            <div ng-repeat="rec in pricuveZaZgraduGodina.PricuvaMj | filter: { StanId: stan.Id }:true | filter: { Mjesec: mjesec }:true">
+                                <div ng-class="{greenCell: rec.StanjeOd > 0, redCell: rec.StanjeOd < 0}">
+                                    {{rec.StanjeOd | number: 2}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
+                        <td style="vertical-align: middle; text-align: end">{{totalDugPretplata}}</td>
+                        <td style="vertical-align: middle; text-align: end">{{totalZaduzenje}}</td>
+                        <td style="vertical-align: middle; text-align: end">{{totalUplaceno}}</td>
+                        <td style="vertical-align: middle; text-align: end">{{totalStanjeOd}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4" style="vertical-align: middle; text-align: start">Pričuva od ???</td>
+                        <td style="vertical-align: middle; text-align: end">{{pricuvaOd}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4" style="vertical-align: middle; text-align: start">Pričuva u navedenom razdoblju</td>
+                        <td style="vertical-align: middle; text-align: end">{{totalUplacenoSumm}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4" style="vertical-align: middle; text-align: start; color: red">Ostali prihodi u navedenom razdoblju</td>
+                        <td style="vertical-align: middle; text-align: end">--</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4" style="vertical-align: middle; text-align: start">Rashodi u navedenom razdoblju</td>
+                        <td style="vertical-align: middle; text-align: end">{{rashodi}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4" style="vertical-align: middle; text-align: start">Oročena sredstva pričuve</td>
+                        <td style="vertical-align: middle">
+                                <input type="text"class="form-control"  ng-model="orocenaSredstva" ng-change="izracunSummaryScope(mjesec, true)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4" style="vertical-align: middle; text-align: start"><b>Raspoloživa sredstva pričuve</b></td>
+                        <td style="vertical-align: middle; text-align: end">{{raspolozivaSredstva}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" value="Odustani" ng-click="cancel()" />
+            <input ng-disabled="!OkZaSimanje" type="button" class="btn btn-primary" value="Spremi" ng-click="save()" />
+
+
+        </div>
+    </form>
+</div>

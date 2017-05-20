@@ -208,6 +208,7 @@ C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\ZgradaApp.pdb
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Antlr3.Runtime.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\EntityFramework.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\EntityFramework.SqlServer.dll
+C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\itextsharp.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -236,6 +237,7 @@ C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\System.Web.WebPages.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\System.Web.WebPages.Razor.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\WebGrease.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Antlr3.Runtime.pdb
+C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\itextsharp.xml
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Newtonsoft.Json.xml
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\System.Web.Helpers.xml
@@ -265,5 +267,3 @@ C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.Owin.Security.MicrosoftAcc
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.pdb
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Debug\ZgradaApp.csprojResolveAssemblyReference.cache
-C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\itextsharp.dll
-C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\itextsharp.xml

@@ -1,0 +1,68 @@
+﻿<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div class="bs-callout bs-callout-info">
+            <h4>Kartice suvlasnika</h4>
+            <h5>Zgrada: {{zgrada.Naziv}}&nbsp;Adresa: {{zgrada.Adresa}}</h5>
+            <h5>Godina: <b>{{SelectedGodina}}</b></h5>
+        </div>
+
+        <div class='form-horizontal'>
+            <div class="form-group row">
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" ng-model="novaGodina" />
+                </div>
+                <div class="col-sm-4">
+                    <input type="button" class="btn btn-success" value="Dodaj godinu" ng-click="dodajGodinu()" />
+                </div>
+                <div class="col-sm-6" style="align-content: flex-start">
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
+        </div>
+        <hr />
+        <table class="table table-hover table-striped table-bordered" ng-show="tableVisible">
+            <thead>
+                <tr>
+                    <th style="vertical-align: middle">
+                        Stan
+                    </th>
+                    <th style="vertical-align: middle">
+                        Ime i prezime
+                    </th>
+                    <th style="vertical-align: middle">
+                        Posebni dio
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="stan in zgrada.Stanovi">
+                    <td style="vertical-align: middle">
+                        {{stan.BrojStana}}
+                    </td>
+
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="stanar in stan.Stanovi_Stanari | filter: { Vlasnik: 'true' }">
+                            <a href="" ng-click="openKs(stanar.Id)">{{stanar.Ime}}&nbsp;{{stanar.Prezime}}</a>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <div ng-repeat="dio in stan.Stanovi_PosebniDijelovi">
+                            <div>{{dio.Oznaka}}</div>
+                        </div>
+                    </td>
+                    
+                
+                  
+                </tr>
+            </tbody>
+        </table>
+
+        <hr />
+        <input ng-click="save()" type="button" class="btn btn-primary pull-right" value="Spremi" />
+        <a ng-click="cancelReload()" style="margin-right: 10px" class="btn btn-default pull-right">Odustani</a>&nbsp;
+    </div>
+</div>
+

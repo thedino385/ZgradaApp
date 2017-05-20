@@ -128,6 +128,9 @@ namespace ZgradaApp.Controllers
             // masterPosebniDio se u biti ne snima, on sadrzi posebneDIjeloveChild (sa njihovim kolekcijama) koje cemo snimati ovdje
             try
             {
+                var dbMater = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == master.Id);
+                dbMater.UplatnicaStanarId = master.UplatnicaStanarId;
+
                 // posebniDijeloviChild - child mastera
                 foreach (var posebniDioChild in master.Zgrade_PosebniDijeloviChild)
                 {

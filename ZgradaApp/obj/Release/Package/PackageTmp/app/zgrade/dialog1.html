@@ -1,0 +1,83 @@
+﻿<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Mango (Fruit)</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2>Obj: {{obj}}</h2>
+                <p>
+                    id: {{id}}
+                </p>
+
+                <!--<img style="margin: auto; max-width: 100%;" alt="Lush mango tree" src="img/mangues.jpg">-->
+
+
+                <div class="form-group row">
+
+                    <div layout="column" ng-cloak class="md-inline-form">
+                        <md-content layout-padding>
+
+                            <div layout-gt-sm="row">
+                                <div class="col-sm-2"></div>
+                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                    <label>Ime</label>
+                                    <input required type="text" name="ime" ng-model="stanarObj.Ime">
+                                    <div ng-messages="frm.ime.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                    <label>Prezime</label>
+                                    <input required type="text" name="prezime" ng-model="stanarObj.Prezime">
+                                    <div ng-messages="frm.prezime.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <div class="col-sm-2"></div>
+                            </div>
+
+
+
+                        </md-content>
+                    </div>
+
+                </div>
+
+
+                <p>
+                    The highest concentration of Mangifera genus is in the western part of Malesia (Sumatra, Java and Borneo) and in Burma and India. While other Mangifera species (e.g. horse mango, M. foetida) are also grown on a more localized basis, Mangifera indica&mdash;the "common mango" or "Indian mango"&mdash;is the only mango tree commonly cultivated in many tropical and subtropical regions.
+                </p>
+                <p>
+                    It originated in Indian subcontinent (present day India and Pakistan) and Burma. It is the national fruit of India, Pakistan, and the Philippines, and the national tree of Bangladesh. In several cultures, its fruit and leaves are ritually used as floral decorations at weddings, public celebrations, and religious ceremonies.
+                </p>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                More on Wikipedia
+            </md-button>
+            <span flex></span>
+            <md-button class="md-raised" ng-click="cancel()">
+               Odustani
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="save()">
+                Snimi
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

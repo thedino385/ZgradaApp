@@ -1,0 +1,175 @@
+﻿<style>
+    .table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
+        padding: 1px;
+    }
+
+    .borderless td, .borderless th {
+        border: none !important;
+    }
+</style>
+
+<md-dialog flex="95">
+    <form ng-cloak name="frm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>{{zgradaObj.Naziv}}, Godina: {{godina}}, Mjesec: {{mjesec}}</h3>
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <table class="table table-bordered" style="padding: 1px">
+                    <thead>
+                        <tr>
+                            <th style="vertical-align middle; text-align: left">
+                                Posebni dio
+                            </th>
+                            <th style="vertical-align: middle; text-align: center">
+                                Vlasnici i udio (%)
+                            </th>
+                            <th style="vertical-align: middle; text-align: center">
+                                Dijelovi
+                            </th>
+                            <th style="vertical-align: middle; text-align: right">
+                                Udio u zgradi
+                            </th>
+                        </tr>
+                        <!--<tr><td colspan="4"><hr /></td></tr>-->
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in table">
+                            <td style="vertical-align: middle; text-align:left; color: indigo">
+                                <b>{{row.master}}</b>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <table class="table table-condensed borderless">
+                                    <!--<tr>
+                                        <th>Vlasnik</th>
+                                        <th>Udio</th>
+                                    </tr>-->
+                                    <tr ng-repeat="vlasnik in row.vlasnici">
+                                        <td style="vertical-align: top">
+                                            {{vlasnik.vlasnik}}
+                                        </td>
+                                        <td style="vertical-align: top">
+                                            {{vlasnik.udio | number: 2}}
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td style="vertical-align: middle">
+                                <table class="table table-condensed">
+                                    <tr ng-repeat="child in row.pdChild">
+                                        <td style="vertical-align: middle; text-align:left; color: indigo">
+                                            {{child.child}}</td>
+                                        <td>
+                                            <!--Povrsine-->
+                                            <table class="table table-condensed borderless">
+                                                <tr>
+                                                    <th ng-show="$index == 0" colspan="3" style="text-align: left">Povrsine</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Naziv</th>
+                                                    <th>Povrsina</th>
+                                                    <th>Koeficijent</th>
+                                                </tr>
+                                                <tr style="background-color: aliceblue;" ng-repeat="povr in child.povrsine">
+                                                    <td style="vertical-align: middle;">{{povr.naziv}}</td>
+                                                    <td style="vertical-align: middle;">{{povr.povrsina | number: 2}}</td>
+                                                    <td style="vertical-align: middle;">{{povr.koef | number: 2}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPovrsina | number: 2}}</b></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPovrsinaKoef | number: 2}}</b></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <!--Pripadci-->
+                                            <table class="table table-condensed borderless">
+                                                <tr>
+                                                    <th ng-show="$index == 0" colspan="3" style="text-align: left">Pripadci</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Naziv</th>
+                                                    <th>Povrsina</th>
+                                                    <th>Koeficijent</th>
+                                                </tr>
+                                                <tr style="background-color: papayawhip;" ng-repeat="prip in child.pripadci">
+                                                    <td style="vertical-align: middle;">{{prip.naziv}}</td>
+                                                    <td style="vertical-align: middle;">{{prip.povrsina | number: 2}}</td>
+                                                    <td style="vertical-align: middle;">{{prip.koef | number: 2}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPrip | number: 2}}</b></td>
+                                                    <td style="vertical-align: middle; text-align: right; padding-right: 25px"><b>{{child.ukupnoPripKoef | number: 2}}</b></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                               
+                            </td>
+                            <td style="vertical-align: middle; text-align: center">
+                                {{row.udioUzgradi | number: 2}}%
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td color: indigo; font-size: 11px>Vlasnici:</td>
+                            <td colspan="4" style="vertical-align: middle; text-align: left; color: indigo; font-size: 11px">
+                                <span ng-repeat="rec in zaduzenja | filter: { Mjesec: mjesecBr }">
+                                    <span ng-repeat="master in rec.PricuvaRezijePosebniDioMasteri | filter: { PosebniDioMasterId: pdMaster.Id }">
+                                        <span ng-repeat="vlasnik in master.PricuvaRezijePosebniDioMasterVlasnici | filter: { PeriodId: master.PeriodId }">
+                                            <span ng-repeat="zgradaStanar in zgradaObj.Zgrade_Stanari | filter: { Id: vlasnik.VlasnikId } ">
+                                                {{zgradaStanar.Ime}} {{zgradaStanar.Prezime}}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td color: indigo; font-size: 11px>Posebni dijelovi:</td>
+                            <td colspan="4" style="vertical-align: middle; text-align: left; color: indigo; font-size: 11px">
+                                <span ng-repeat="rec in zaduzenja | filter: { Mjesec: mjesecBr }">
+                                    <span>
+                                        <span ng-repeat="master in rec.PricuvaRezijePosebniDioMasteri | filter: { PosebniDioMasterId: pdMaster.Id }">
+                                            <span ng-repeat="prChild in master.PricuvaRezijePosebniDioChildren">
+                                                <span ng-repeat="zgradaMaster in zgradaObj.Zgrade_PosebniDijeloviMaster | filter: { Id: master.PricuvaRezijePosebniDioMasteri } ">
+                                                    <span ng-repeat="zgradaChild in zgradaMaster.Zgrade_PosebniDijeloviChild | filter: { Id: prChild.PosebniDioChildId }">
+                                                        {{zgradaChild.Naziv}}
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>-->
+                    </tbody>
+
+
+
+                </table>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised primary" ng-click="cancel()">
+                Zatvori
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

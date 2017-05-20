@@ -188,6 +188,40 @@
             });
         };
 
+
+        // _________________________________________________________
+        //              Modal rashodi uplatnice
+        // _________________________________________________________
+        $scope.openModalRashodiUplatnice = function (mjesec, ev) {
+            var rashodi = [];
+            $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (r) {
+                if (r.Mjesec == mjesec)
+                    rashodi.push(r);
+            });
+            $mdDialog.show({
+                controller: 'rashodiUplatniceCtrl',
+                templateUrl: 'app/prihodiRashodi/rashodiUplatnice.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    rashodi: rashodi,
+                    mjesec: mjesec,
+                    godina: $scope.selectedGodina,
+                    sifarnikRashoda: $scope.sifarnikRashoda,
+                    posedbiDijelovi: $scope.posedbiDijelovi,
+                }
+            }).then(function () {
+                // save (hide)
+
+            }, function () {
+                // cancel
+
+            });
+        };
+
+
         $scope.saveAll = function () {
             $rootScope.loaderActive = true;
             DataService.prihodiRashodiCreateOrUpdate($scope.zgradaObj).then(
