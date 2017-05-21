@@ -159,6 +159,7 @@
     <EntitySetMapping Name="PrihodiRashodi_Rashodi">
       <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
         <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+          <ScalarProperty Name="PdfFileName" ColumnName="PdfFileName" />
           <ScalarProperty Name="DatumSlanja" ColumnName="DatumSlanja" />
           <ScalarProperty Name="StatusSlanja" ColumnName="StatusSlanja" />
           <ScalarProperty Name="PrenesenIzMjeseca" ColumnName="PrenesenIzMjeseca" />

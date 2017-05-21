@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,6 +10,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Net.Security;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
@@ -21,6 +23,13 @@ namespace ZgradaApp.Controllers
     {
         private ZgradaDbEntities _db = new ZgradaDbEntities();
         string _physicalPathDir = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download");
+
+        string Opis = "Placanje rashodi";
+        string Poruka = "text za pozdravnu poruku";
+        string Platitelj = "";
+        string IBANPrimatelj = "1234567890";
+        string PozivNaBroj = "";
+        decimal Iznos = 0;
 
         public async Task<JsonResult> SendRashodi(List<UplatniceRashodi> list)
         {
@@ -46,12 +55,7 @@ namespace ZgradaApp.Controllers
             int zgradaId = list[0].zgradaId;
             int mjesec = list[0].mjesec;
 
-            string Opis = "Placanje rashodi";
-            string Poruka = "text za pozdravnu poruku";
-            string Platitelj = "";
-            string IBANPrimatelj = "1234567890";
-            string PozivNaBroj = "";
-            decimal Iznos = 0;
+
             string email = "";
 
             List<UplatniceRashodiPopis> uplatniceList = new List<UplatniceRashodiPopis>();
@@ -79,7 +83,7 @@ namespace ZgradaApp.Controllers
                 var u = new UplatniceRashodiPopis
                 {
                     Email = email,
-                    UplatnicaPath = UplatnicaPdf(Opis, Platitelj, IBANPrimatelj, PozivNaBroj, Iznos),
+                    PdfFileName = UplatnicaPdf(Opis, Platitelj, IBANPrimatelj, PozivNaBroj, Iznos),
                     ZgradaMasterId = zgradaMasterId
                 };
                 uplatniceList.Add(u);
@@ -97,6 +101,7 @@ namespace ZgradaApp.Controllers
                         t.PoslanoZaMjesec = r.Poslano;
                         t.StatusSlanja = r.StatusText;
                         t.DatumSlanja = DateTime.Now;
+                        t.PdfFileName = r.PdfFileName;
 
                         //list.FirstOrDefault(p => p.masterId == t.PosebniDioMasterId).datumSlanja = t.DatumSlanja;
                         //list.FirstOrDefault(p => p.masterId == t.PosebniDioMasterId).poslano = r.Poslano;
@@ -106,6 +111,7 @@ namespace ZgradaApp.Controllers
                             item.datumSlanja = t.DatumSlanja;
                             item.poslano = r.Poslano;
                             item.statusSlanja = r.StatusText;
+                            item.PdfFileName = r.PdfFileName;
                         }
                     }
                 }
@@ -114,6 +120,37 @@ namespace ZgradaApp.Controllers
             //return new HttpStatusCodeResult(200, list.ToString());
             return Json(new { success = true, response = list });
             // kome se salje - pise u pdMasteru u zgradi - email
+        }
+
+        public async Task<ActionResult> CreateUplatnicaManually(int masterId, int godina, int mjesec, int zgradaId = 0)
+        {
+            try
+            {
+                var vlasniciPeriod = await _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.FirstOrDefaultAsync(p => p.PosebniDioMasterId == masterId && p.Zatvoren != true);
+                // period nije zatvoren!
+                var vlasnici = vlasniciPeriod.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Where(p => p.VlasniciPeriodId == vlasniciPeriod.Id);
+                var vlasnik = vlasnici.FirstOrDefault(); // uzeo prvog
+                var vlasnikObj = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == vlasnik.StanarId);
+                Platitelj = vlasnikObj.Ime + " " + vlasnikObj.Prezime;
+                PozivNaBroj = "987654321";
+                var god = await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.Godina == godina);
+                var mj = god.PrihodiRashodi_Rashodi.Where(p => p.Mjesec == mjesec && p.PosebniDioMasterId == masterId);
+                Iznos = (decimal)mj.Where(p => p.PosebniDioMasterId == masterId).Sum(p => p.Iznos);
+
+                var newGuid = UplatnicaPdf(Opis, Platitelj, IBANPrimatelj, PozivNaBroj, Iznos);
+
+                foreach (var item in mj)
+                {
+                    item.PdfFileName = newGuid;
+                }
+                await _db.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch
+            {
+                return Json(new { success = false });
+            }
+            
         }
 
 
@@ -505,7 +542,7 @@ namespace ZgradaApp.Controllers
 
 
 
-            return path;
+            return guid.ToString() + ".pdf";
         }
 
         public async Task<List<UplatniceRashodiPopis>> SendMail(List<UplatniceRashodiPopis> Popis, string Naslov, string Poruka)
@@ -523,29 +560,6 @@ namespace ZgradaApp.Controllers
             {
                 try
                 {
-                    System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(from, item.Email, Naslov, Poruka);
-                    message.IsBodyHtml = true;
-                    SmtpClient emailClient = new SmtpClient(server, Convert.ToInt32(port));
-                    if (EnableSSL == "True")
-                        emailClient.EnableSsl = true;
-                    if (auth == "True")
-                        emailClient.Credentials = new System.Net.NetworkCredential(SmtpUname, SmtpPass);
-                    //message.Attachments.Add(new Attachment(item.Uplatnica, "uplatnica.pdf"));
-                    if (item.UplatnicaPath != null)
-                    {
-
-
-                        Attachment attachment = new Attachment(item.UplatnicaPath, MediaTypeNames.Application.Octet);
-                        ContentDisposition disposition = attachment.ContentDisposition;
-                        //disposition.CreationDate = File.GetCreationTime(attachmentFilename);
-                        //disposition.ModificationDate = File.GetLastWriteTime(attachmentFilename);
-                        //disposition.ReadDate = File.GetLastAccessTime(attachmentFilename);
-                        disposition.FileName = Path.GetFileName("Rashodi.pdf");
-                        //disposition.Size = new FileInfo(item.Uplatnica).Length;
-                        disposition.DispositionType = DispositionTypeNames.Attachment;
-                        message.Attachments.Add(attachment);
-                    }
-
                     // _______________________________________________________
                     //          WARNING, do we trust certificate?
                     // _______________________________________________________
@@ -555,12 +569,40 @@ namespace ZgradaApp.Controllers
                         { return true; };
 
 
-                    await emailClient.SendMailAsync(message);
-                    var path = Path.Combine(_physicalPathDir, item.UplatnicaPath);
-                    //if (System.IO.File.Exists(path))
-                    //    System.IO.File.Delete(path);
-                    item.Poslano = true;
-                    item.StatusText = "Poslano";
+                    System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(from, item.Email, Naslov, Poruka);
+                    message.IsBodyHtml = true;
+                    SmtpClient emailClient = new SmtpClient(server, Convert.ToInt32(port));
+                    if (EnableSSL == "True")
+                        emailClient.EnableSsl = true;
+                    if (auth == "True")
+                        emailClient.Credentials = new System.Net.NetworkCredential(SmtpUname, SmtpPass);
+                    //message.Attachments.Add(new Attachment(item.Uplatnica, "uplatnica.pdf"));
+                    string uplatnicaPath = Path.Combine(_physicalPathDir, item.PdfFileName);
+                    //if (item.UplatnicaPath != null)
+                    if (System.IO.File.Exists(uplatnicaPath))
+                    {
+                        Attachment attachment = new Attachment(uplatnicaPath, MediaTypeNames.Application.Octet);
+                        ContentDisposition disposition = attachment.ContentDisposition;
+                        //disposition.CreationDate = File.GetCreationTime(attachmentFilename);
+                        //disposition.ModificationDate = File.GetLastWriteTime(attachmentFilename);
+                        //disposition.ReadDate = File.GetLastAccessTime(attachmentFilename);
+                        disposition.FileName = Path.GetFileName("Rashodi.pdf");
+                        //disposition.Size = new FileInfo(item.Uplatnica).Length;
+                        disposition.DispositionType = DispositionTypeNames.Attachment;
+                        message.Attachments.Add(attachment);
+
+                        await emailClient.SendMailAsync(message);
+                        //var path = Path.Combine(_physicalPathDir, item.UplatnicaPath);
+                        //if (System.IO.File.Exists(path))
+                        //    System.IO.File.Delete(path);
+                        item.Poslano = true;
+                        item.StatusText = "Poslano";
+                    }
+                    else
+                    {
+                        item.Poslano = false;
+                        item.StatusText = "Uplatnica nije kreirana";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -570,6 +612,30 @@ namespace ZgradaApp.Controllers
                 }
             }
             return Popis;
+        }
+
+        public async Task<ActionResult> getUplatnicaRashod(int godina, int mjesec, int masterId)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+            var god = await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.Godina == godina);
+            var target = god.PrihodiRashodi_Rashodi.FirstOrDefault(p => p.Mjesec == mjesec && p.PosebniDioMasterId == masterId);
+
+            //return Redirect(Server.MapPath("~/Content/download/" + target.PdfLink));
+            return Redirect(GetBaseUrl() + "/Content/download/" + target.PdfFileName);
+        }
+
+
+        public string GetBaseUrl()
+        {
+            var appUrl = HttpRuntime.AppDomainAppVirtualPath;
+
+            if (appUrl != "/")
+                appUrl = "/" + appUrl;
+
+            var baseUrl = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, appUrl);
+
+            return baseUrl;
         }
     }
 
@@ -592,12 +658,13 @@ namespace ZgradaApp.Controllers
         public DateTime? datumSlanja { get; set; }
         public bool isUkupnoRow { get; set; }
         public string bold { get; set; }
+        public string PdfFileName { get; set; }
     }
 
     public class UplatniceRashodiPopis
     {
         public string Email { get; set; }
-        public string UplatnicaPath { get; set; }
+        public string PdfFileName { get; set; }
         public int ZgradaMasterId { get; set; }
         public bool Poslano { get; set; }
         public string StatusText { get; set; }

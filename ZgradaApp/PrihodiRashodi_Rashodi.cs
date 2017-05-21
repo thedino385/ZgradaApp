@@ -33,6 +33,7 @@ namespace ZgradaApp
         public Nullable<int> PrenesenIzMjeseca { get; set; }
         public string StatusSlanja { get; set; }
         public Nullable<System.DateTime> DatumSlanja { get; set; }
+        public string PdfFileName { get; set; }
     
         public virtual PrihodiRashodi PrihodiRashodi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

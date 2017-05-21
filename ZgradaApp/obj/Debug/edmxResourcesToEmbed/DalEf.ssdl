@@ -160,6 +160,7 @@
     <Property Name="PrenesenIzMjeseca" Type="int" />
     <Property Name="StatusSlanja" Type="varchar" MaxLength="1000" />
     <Property Name="DatumSlanja" Type="datetime" />
+    <Property Name="PdfFileName" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="PrihodiRashodi_Rashodi_Uplatnice">
     <Key>

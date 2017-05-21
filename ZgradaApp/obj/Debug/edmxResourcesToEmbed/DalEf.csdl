@@ -304,6 +304,7 @@
     <NavigationProperty Name="PrihodiRashodi_Rashodi_Uplatnice" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi_Rashodi_Uplatnice" />
     <Property Name="StatusSlanja" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="DatumSlanja" Type="DateTime" Precision="3" />
+    <Property Name="PdfFileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="PrihodiRashodi_Rashodi_Uplatnice">
     <Key>

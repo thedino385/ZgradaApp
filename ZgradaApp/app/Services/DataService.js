@@ -117,6 +117,14 @@
         return $http.post('../Email/SendRashodi', list);
     }
 
+    var createUplatnicaManually = function (masterId, godina, mjesec) {
+        return $http({
+            url: '../Email/createUplatnicaManually',
+            method: "POST",
+            params: { masterId: masterId, godina: godina, mjesec: mjesec }
+        });
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -148,7 +156,8 @@
         editUser: editUser,
         genPdfDnevnik: genPdfDnevnik,
 
-        sendUplatniceRashodi: sendUplatniceRashodi 
+        sendUplatniceRashodi: sendUplatniceRashodi,
+        createUplatnicaManually: createUplatnicaManually
     }
 
 

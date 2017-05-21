@@ -165,6 +165,7 @@
           <Property Name="PrenesenIzMjeseca" Type="int" />
           <Property Name="StatusSlanja" Type="varchar" MaxLength="1000" />
           <Property Name="DatumSlanja" Type="datetime" />
+          <Property Name="PdfFileName" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="PrihodiRashodi_Rashodi_Uplatnice">
           <Key>
@@ -1118,6 +1119,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <NavigationProperty Name="PrihodiRashodi_Rashodi_Uplatnice" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi_Rashodi_Uplatnice" />
           <Property Name="StatusSlanja" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="DatumSlanja" Type="DateTime" Precision="3" />
+          <Property Name="PdfFileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PrihodiRashodi_Rashodi_Uplatnice">
           <Key>
@@ -1803,6 +1805,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PrihodiRashodi_Rashodi">
             <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi">
               <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi">
+                <ScalarProperty Name="PdfFileName" ColumnName="PdfFileName" />
                 <ScalarProperty Name="DatumSlanja" ColumnName="DatumSlanja" />
                 <ScalarProperty Name="StatusSlanja" ColumnName="StatusSlanja" />
                 <ScalarProperty Name="PrenesenIzMjeseca" ColumnName="PrenesenIzMjeseca" />

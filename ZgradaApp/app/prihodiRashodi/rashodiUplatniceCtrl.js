@@ -1,5 +1,5 @@
-﻿angularApp.controller('rashodiUplatniceCtrl', ['$scope', '$mdDialog', 'orderByFilter', 'DataService', 'toastr', 'rashodi', 'mjesec', 'godina', 'sifarnikRashoda', 'posedbiDijelovi',
-    function ($scope, $mdDialog, orderBy, DataService, toastr, rashodi, mjesec, godina, sifarnikRashoda, posedbiDijelovi) {
+﻿angularApp.controller('rashodiUplatniceCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'orderByFilter', 'DataService', 'toastr', 'rashodi', 'mjesec', 'godina', 'sifarnikRashoda', 'posedbiDijelovi',
+    function ($scope, $rootScope, $window, $mdDialog, orderBy, DataService, toastr, rashodi, mjesec, godina, sifarnikRashoda, posedbiDijelovi) {
 
         $scope.sifarnikRashoda = sifarnikRashoda;
         $scope.rashodi = rashodi;
@@ -40,7 +40,7 @@
             if (r.Mjesec == mjesec && r.Placen != true) {
                 var row = {
                     zgradaId: DataService.selZgradaId, rashodId: 0, prihodiRashodiGodId: 0, godina: godina, mjesec: mjesec, masterId: 0, masterNaziv: '', rashod: '', iznos: 0, datum: null,
-                    placeno: false, poslano: false, bold: 'normal', statusSlanja: '', datumSlanja: null, isUkupnoRow: false
+                    placeno: false, poslano: false, bold: 'normal', statusSlanja: '', datumSlanja: null, isUkupnoRow: false, PdfFileName: ''
                 };
                 row.rashodId = r.Id;
                 row.prihodiRashodiGodId = r.PrihodiRashodiGodId;
@@ -51,6 +51,7 @@
                 row.poslano = r.PoslanoZaMjesec;
                 row.statusSlanja = r.StatusSlanja;
                 row.mjesec = mjesec;
+                row.PdfFileName = r.PdfFileName;
 
                 //if (r.PosebniDioMasterId == masterId || masterId == -1 || index == rashodi.length) {
                 //    ukupno += parseFloat(r.Iznos);
@@ -69,7 +70,7 @@
                 if (r.PosebniDioMasterId != masterId && masterId != -1) {
                     //console.log('total');
                     var rowTotal = {
-                        rashodId: 0, masterId, masterNaziv: 'Ukupno:', rashod: '', iznos: 0, datumSlanja: '',
+                        rashodId: 0, masterId: masterId, masterNaziv: 'Ukupno:', rashod: '', iznos: 0, datumSlanja: '',
                         placeno: '', poslano: true, bold: 'bold', isUkupnoRow: true
                     };
                     rowTotal.iznos = ukupno;
@@ -132,13 +133,18 @@
         
 
         $scope.send = function () {
+            var c = confirm('Potvrdite slanje uplatnica!\nSamo one uplatnice koje nisu poslane biti će poslane');
+            if (!c)
+                return;
+
+
             //var neplaceni = [];
             //$scope.tbl.forEach(function (r) {
             //    console.log(r);
             //    if (r.poslano != true && r.mjesec == mjesec)
             //        neplaceni.push(r);
             //});
-
+            $rootScope.loaderActive = true;
             DataService.sendUplatniceRashodi($scope.tbl).then(
                 function (result) {
                     //console.log(result.status);
@@ -166,10 +172,11 @@
                                 toastr.error('Jedan ili više mailova nije poslan');
                         }
                         else
-                            toastr.error('Nema rashoda za kreiranje i slanje uplatnica');
+                            toastr.info('Nema rashoda za kreiranje i slanje uplatnica');
                     }
                     else
                         toastr.error('Došlo je do pogreške pri slanju');
+                    $rootScope.loaderActive = false;
 
                 })
         }
@@ -200,6 +207,35 @@
             //);
         }
 
+        $scope.download = function (masterId) {
+            $window.open('../email/getUplatnicaRashod?godina=' + godina + '&mjesec=' + mjesec + '&masterId=' + masterId);
+        }
+
+        $scope.generatemanually = function (masterId) {
+            var masterNaziv = '';
+            $scope.tbl.forEach(function (row) {
+                if (row.masterId == masterId && row.isUkupnoRow == false && row.masterNaziv != '') 
+                    masterNaziv = row.masterNaziv;
+            });
+            $rootScope.loaderActive = true;
+            var c = confirm('Potvrdite kreiranje uplatnice za posebni dio' + masterNaziv + '!\nNakon kreiranja, stara uplatnica (ako postoji) biti će zamjenjena sa novokreiranom');
+            if (!c)
+                return;
+
+            DataService.createUplatnicaManually(masterId, godina, mjesec).then(function (result) {
+                if (result.status == 200) {
+                    if (result.data.success) {
+                        $window.open('../email/getUplatnicaRashod?godina=' + godina + '&mjesec=' + mjesec + '&masterId=' + masterId);
+                    }
+                    else
+                        toastr.error('Došlo je do pogreške pri kreiranju, 200');
+                }
+                else {
+                    toastr.error('Došlo je do pogreške pri kreiranju, 500');
+                }
+                $rootScope.loaderActive = false;
+            })
+        }
 
 
         $scope.cancel = function () {
