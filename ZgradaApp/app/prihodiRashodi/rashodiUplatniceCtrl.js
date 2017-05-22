@@ -130,7 +130,7 @@
             return d.getDate() + '.' + parseInt(d.getMonth() + 1) + '.' + d.getFullYear() + '.';
         }
 
-        
+
 
         $scope.send = function () {
             var c = confirm('Potvrdite slanje uplatnica!\nSamo one uplatnice koje nisu poslane biti će poslane');
@@ -157,7 +157,7 @@
 
                             var scopeFromServer = [];
                             res.forEach(function (row) {
-                                row.datumSlanja =  parseDateJSON(row.datumSlanja);
+                                row.datumSlanja = parseDateJSON(row.datumSlanja);
                             });
                             $scope.tbl = res;
 
@@ -214,15 +214,15 @@
         $scope.generatemanually = function (masterId) {
             var masterNaziv = '';
             $scope.tbl.forEach(function (row) {
-                if (row.masterId == masterId && row.isUkupnoRow == false && row.masterNaziv != '') 
+                if (row.masterId == masterId && row.isUkupnoRow == false && row.masterNaziv != '')
                     masterNaziv = row.masterNaziv;
             });
-            $rootScope.loaderActive = true;
             var c = confirm('Potvrdite kreiranje uplatnice za posebni dio' + masterNaziv + '!\nNakon kreiranja, stara uplatnica (ako postoji) biti će zamjenjena sa novokreiranom');
             if (!c)
                 return;
 
-            DataService.createUplatnicaManually(masterId, godina, mjesec).then(function (result) {
+            $rootScope.loaderActive = true;
+            DataService.createUplatnicaManually(masterId, godina, mjesec, DataService.selZgradaId).then(function (result) {
                 if (result.status == 200) {
                     if (result.data.success) {
                         $window.open('../email/getUplatnicaRashod?godina=' + godina + '&mjesec=' + mjesec + '&masterId=' + masterId);

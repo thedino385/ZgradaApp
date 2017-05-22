@@ -605,5 +605,34 @@ namespace ZgradaApp.Controllers
             }
             catch (Exception ex) { return InternalServerError(); }
         }
+
+        [HttpGet]
+        [Route("api/data/getTvrtka")]
+        public async Task<IHttpActionResult> getTvrtka()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                return Ok(await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId));
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpPost]
+        [Route("api/data/tvrtkaUpdate")]
+        public async Task<IHttpActionResult> tvrtkaUpdate(Kompanije tvrtka)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                _db.Kompanije.Attach(tvrtka);
+                _db.Entry(tvrtka).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
     }
 }

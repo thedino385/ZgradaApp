@@ -101,10 +101,13 @@ namespace ZgradaApp.Controllers
                     // prihodi
                     PdfPTable tblPrihodi = new PdfPTable(2);
                     tblPrihodi.DefaultCell.Border = 0;
-                    foreach (var prihod in mjesec.prihodi)
+                    if(mjesec.prihodi != null)
                     {
-                        tblPrihodi.AddCell(new Phrase(prihod.naziv, cellTableFont));
-                        tblPrihodi.AddCell(new Phrase(String.Format("{0:0.00}", prihod.iznos), cellTableFont));
+                        foreach (var prihod in mjesec.prihodi)
+                        {
+                            tblPrihodi.AddCell(new Phrase(prihod.naziv, cellTableFont));
+                            tblPrihodi.AddCell(new Phrase(String.Format("{0:0.00}", prihod.iznos), cellTableFont));
+                        }
                     }
                     tbl.AddCell(tblPrihodi);
 

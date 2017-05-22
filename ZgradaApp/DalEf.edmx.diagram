@@ -30,7 +30,7 @@
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Pripadci" Width="1.5" PointX="7.5" PointY="23" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" Width="1.5" PointX="3" PointY="26.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Width="1.5" PointX="5.25" PointY="31.375" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Width="1.5" PointX="7.5" PointY="31.875" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Width="5.5" PointX="7.5" PointY="31.875" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_Stanari" Width="1.5" PointX="3" PointY="47.25" />
         <EntityTypeShape EntityType="ZgradaDbModel.vKompanijeUseri" Width="1.5" PointX="7.75" PointY="4.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.vZgrade" Width="1.5" PointX="7.75" PointY="8.75" />

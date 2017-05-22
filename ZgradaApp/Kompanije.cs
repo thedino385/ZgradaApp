@@ -25,5 +25,6 @@ namespace ZgradaApp
         public Nullable<System.DateTime> ActivationDate { get; set; }
         public Nullable<System.DateTime> ExpirationDate { get; set; }
         public Nullable<bool> Active { get; set; }
+        public string IBAN { get; set; }
     }
 }

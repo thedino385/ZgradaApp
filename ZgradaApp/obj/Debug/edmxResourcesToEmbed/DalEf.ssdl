@@ -15,6 +15,7 @@
     <Property Name="ActivationDate" Type="datetime" />
     <Property Name="ExpirationDate" Type="datetime" />
     <Property Name="Active" Type="bit" />
+    <Property Name="IBAN" Type="char" MaxLength="21" />
   </EntityType>
   <EntityType Name="KompanijeUseri">
     <Key>
@@ -334,6 +335,7 @@
     <Property Name="VlasniciPeriodId" Type="int" Nullable="false" />
     <Property Name="StanarId" Type="int" Nullable="false" />
     <Property Name="Udio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="UplatnicaGlasiNaVlasnika" Type="bit" />
   </EntityType>
   <EntityType Name="Zgrade_Stanari">
     <Key>

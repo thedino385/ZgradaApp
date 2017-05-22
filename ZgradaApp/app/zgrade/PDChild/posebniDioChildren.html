@@ -73,6 +73,8 @@
                                     <th style="vertical-align: middle; text-align: start">Ime</th>
                                     <th style="vertical-align: middle; text-align: start; padding-right: 30px">Prezime</th>
                                     <th style="vertical-align: middle; text-align: start; padding-right: 30px">Udio</th>
+                                    <th style="vertical-align: middle; text-align: start; padding-right: 30px">Upl.glasi na vlasnika</th>
+                                    
                                     <th style="vertical-align: middle"></th>
                                 </tr>
                             </thead>
@@ -87,6 +89,10 @@
                                         {{s.Prezime}}
                                     </td>
                                     <td style="vertical-align: middle; text-align: start; padding-right: 30px">{{vlasnik.Udio}}</td>
+                                    <td style="vertical-align: middle; text-align: center">
+                                        <md-checkbox ng-disabled="true" aria-label="Disabled checkbox" ng-model="vlasnik.UplatnicaGlasiNaVlasnika">
+                                        </md-checkbox>
+                                    </td>
                                     <td style="vertical-align: middle;"></td>
 
                                 </tr>

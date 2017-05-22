@@ -11,7 +11,7 @@
             $scope.vlasniciPeriod = {
                 Id: 0, PosebniDioMasterId: pdMaster.Id, VrijediOdMjesec: parseInt(new Date().getMonth() + 1),
                 VrijediOdGodina: new Date().getFullYear(),
-                VrijediDoMjesec: null, VrijediDoGodina: null, Status: 'a',
+                VrijediDoMjesec: null, VrijediDoGodina: null, Status: 'a', 
                 Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici: []
             };
             $scope.msg = 'Dodaj vlasnike';
@@ -33,7 +33,7 @@
                     maxId = vlasnik.Id;
             });
 
-            var vlasnikObj = { Id: maxId+1, VlasniciPeriodId: $scope.vlasniciPeriod.Id, StanarId: 0, Udio: 0 };
+            var vlasnikObj = { Id: maxId + 1, VlasniciPeriodId: $scope.vlasniciPeriod.Id, StanarId: 0, Udio: 0, UplatnicaGlasiNaVlasnika: false };
             $scope.vlasniciPeriod.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.push(vlasnikObj);
         }
 

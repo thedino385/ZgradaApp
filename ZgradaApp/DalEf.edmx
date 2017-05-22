@@ -20,6 +20,7 @@
           <Property Name="ActivationDate" Type="datetime" />
           <Property Name="ExpirationDate" Type="datetime" />
           <Property Name="Active" Type="bit" />
+          <Property Name="IBAN" Type="char" MaxLength="21" />
         </EntityType>
         <EntityType Name="KompanijeUseri">
           <Key>
@@ -339,6 +340,7 @@
           <Property Name="VlasniciPeriodId" Type="int" Nullable="false" />
           <Property Name="StanarId" Type="int" Nullable="false" />
           <Property Name="Udio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UplatnicaGlasiNaVlasnika" Type="bit" />
         </EntityType>
         <EntityType Name="Zgrade_Stanari">
           <Key>
@@ -953,6 +955,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="ActivationDate" Type="DateTime" Precision="3" />
           <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
+          <Property Name="IBAN" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="KompanijeUseri">
           <Key>
@@ -1317,6 +1320,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="StanarId" Type="Int32" Nullable="false" />
           <Property Name="Udio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+          <Property Name="UplatnicaGlasiNaVlasnika" Type="Boolean" />
         </EntityType>
         <EntityType Name="Zgrade_Stanari">
           <Key>
@@ -1650,6 +1654,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="Kompanije">
             <EntityTypeMapping TypeName="ZgradaDbModel.Kompanije">
               <MappingFragment StoreEntitySet="Kompanije">
+                <ScalarProperty Name="IBAN" ColumnName="IBAN" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
@@ -2001,6 +2006,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
             <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
               <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+                <ScalarProperty Name="UplatnicaGlasiNaVlasnika" ColumnName="UplatnicaGlasiNaVlasnika" />
                 <ScalarProperty Name="Udio" ColumnName="Udio" />
                 <ScalarProperty Name="StanarId" ColumnName="StanarId" />
                 <ScalarProperty Name="VlasniciPeriodId" ColumnName="VlasniciPeriodId" />

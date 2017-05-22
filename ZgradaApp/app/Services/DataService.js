@@ -117,12 +117,20 @@
         return $http.post('../Email/SendRashodi', list);
     }
 
-    var createUplatnicaManually = function (masterId, godina, mjesec) {
+    var createUplatnicaManually = function (masterId, godina, mjesec, zgradaId) {
         return $http({
             url: '../Email/createUplatnicaManually',
             method: "POST",
-            params: { masterId: masterId, godina: godina, mjesec: mjesec }
+            params: { masterId: masterId, godina: godina, mjesec: mjesec, zgradaId: zgradaId }
         });
+    }
+
+    var getTvrtka = function () {
+        return $http.get('../api/data/getTvrtka');
+    }
+
+    var tvrtkaUpdate = function (tvrtka) {
+        return $http.post('../api/data/tvrtkaUpdate', tvrtka);
     }
 
     return {
@@ -157,7 +165,9 @@
         genPdfDnevnik: genPdfDnevnik,
 
         sendUplatniceRashodi: sendUplatniceRashodi,
-        createUplatnicaManually: createUplatnicaManually
+        createUplatnicaManually: createUplatnicaManually,
+        getTvrtka: getTvrtka,
+        tvrtkaUpdate: tvrtkaUpdate
     }
 
 

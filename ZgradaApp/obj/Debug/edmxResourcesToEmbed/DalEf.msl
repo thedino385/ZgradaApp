@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Kompanije">
       <EntityTypeMapping TypeName="ZgradaDbModel.Kompanije">
         <MappingFragment StoreEntitySet="Kompanije">
+          <ScalarProperty Name="IBAN" ColumnName="IBAN" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
@@ -355,6 +356,7 @@
     <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
         <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+          <ScalarProperty Name="UplatnicaGlasiNaVlasnika" ColumnName="UplatnicaGlasiNaVlasnika" />
           <ScalarProperty Name="Udio" ColumnName="Udio" />
           <ScalarProperty Name="StanarId" ColumnName="StanarId" />
           <ScalarProperty Name="VlasniciPeriodId" ColumnName="VlasniciPeriodId" />

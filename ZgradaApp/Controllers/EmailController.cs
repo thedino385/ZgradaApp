@@ -1,6 +1,7 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNet.Identity;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,9 +28,10 @@ namespace ZgradaApp.Controllers
         string Opis = "Placanje rashodi";
         string Poruka = "text za pozdravnu poruku";
         string Platitelj = "";
-        string IBANPrimatelj = "1234567890";
-        string PozivNaBroj = "";
+        string IBANPrimatelj = "";
         decimal Iznos = 0;
+        Kompanije _tvrtka = null;
+        Zgrade _zgrada = null;
 
         public async Task<JsonResult> SendRashodi(List<UplatniceRashodi> list)
         {
@@ -39,6 +41,12 @@ namespace ZgradaApp.Controllers
             if (list.Count == 0)
                 return Json(new { success = false });
 
+
+            var identity = (ClaimsIdentity)User.Identity;
+            var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+            var tvrtka = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
+            _tvrtka = tvrtka;
+            IBANPrimatelj = tvrtka.IBAN;
 
             // za svaki master, kreiraj uplatnicu (pdf), qr kod, nadji kome se salje i posalji
             IEnumerable<int> masteri = list.Where(p => p.poslano != true).Select(p => p.masterId).Distinct();
@@ -57,6 +65,8 @@ namespace ZgradaApp.Controllers
 
 
             string email = "";
+            var zgradaObj = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == zgradaId);
+            _zgrada = zgradaObj;
 
             List<UplatniceRashodiPopis> uplatniceList = new List<UplatniceRashodiPopis>();
 
@@ -74,7 +84,7 @@ namespace ZgradaApp.Controllers
                 var vlasnik = vlasnici.FirstOrDefault(); // uzeo prvog
                 var vlasnikObj = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == vlasnik.StanarId);
                 Platitelj = vlasnikObj.Ime + " " + vlasnikObj.Prezime;
-                PozivNaBroj = "987654321";
+                string PozivNaBroj = "987654321";
                 Iznos = list.Where(p => p.masterId == zgradaMasterId && p.godina == godina).Sum(p => p.iznos);
 
                 var zgradaMaster = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == zgradaMasterId);
@@ -83,7 +93,7 @@ namespace ZgradaApp.Controllers
                 var u = new UplatniceRashodiPopis
                 {
                     Email = email,
-                    PdfFileName = UplatnicaPdf(Opis, Platitelj, IBANPrimatelj, PozivNaBroj, Iznos),
+                    PdfFileName = UplatnicaPdf(Opis, Platitelj, zgradaObj.Adresa, zgradaObj.Mjesto, IBANPrimatelj, PozivNaBroj, Iznos),
                     ZgradaMasterId = zgradaMasterId
                 };
                 uplatniceList.Add(u);
@@ -132,12 +142,19 @@ namespace ZgradaApp.Controllers
                 var vlasnik = vlasnici.FirstOrDefault(); // uzeo prvog
                 var vlasnikObj = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == vlasnik.StanarId);
                 Platitelj = vlasnikObj.Ime + " " + vlasnikObj.Prezime;
-                PozivNaBroj = "987654321";
+                string PozivNaBroj = "987654321";
                 var god = await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.Godina == godina);
                 var mj = god.PrihodiRashodi_Rashodi.Where(p => p.Mjesec == mjesec && p.PosebniDioMasterId == masterId);
                 Iznos = (decimal)mj.Where(p => p.PosebniDioMasterId == masterId).Sum(p => p.Iznos);
+                var zgradaObj = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == zgradaId);
+                _zgrada = zgradaObj;
 
-                var newGuid = UplatnicaPdf(Opis, Platitelj, IBANPrimatelj, PozivNaBroj, Iznos);
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                var tvrtka = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
+
+                _tvrtka = tvrtka;
+                var newGuid = UplatnicaPdf(Opis, Platitelj, zgradaObj.Adresa, zgradaObj.Mjesto, tvrtka.IBAN, PozivNaBroj, Iznos);
 
                 foreach (var item in mj)
                 {
@@ -154,7 +171,7 @@ namespace ZgradaApp.Controllers
         }
 
 
-        public string UplatnicaPdf(string Opis, string Platitelj, string IBANPrimatelj, string PozivNaBroj, decimal Iznos)
+        public string UplatnicaPdf(string Opis, string Platitelj, string PlatiteljAdresa, string PlatiteljMjesto, string IBANPrimatelj, string PozivNaBroj, decimal Iznos)
         {
             var doc = new Document(PageSize.A4, 30, 30, 25, 25);
             var guid = Guid.NewGuid();
@@ -182,7 +199,6 @@ namespace ZgradaApp.Controllers
             tbl.WidthPercentage = 100;
             tbl.DefaultCell.Border = 0;
             tbl.SetWidths(new int[] { 6, 1, 2, 2, 3, 3, 3, 7 });
-
 
             #region gornjiSegment
             PdfPCell cell = new PdfPCell(new Phrase("PLATITELJ (naziv/ime i adresa)", normalRed));
@@ -230,7 +246,7 @@ namespace ZgradaApp.Controllers
             cell.BackgroundColor = backColorTamna;
             tbl.AddCell(cell);
 
-            cell = new PdfPCell(new Phrase("=101,44", normalBlackLarge));
+            cell = new PdfPCell(new Phrase("=" + (String.Format("{0:0.00}", Iznos.ToString())), normalBlackLarge));
             cell.HorizontalAlignment = Element.ALIGN_RIGHT;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.PaddingRight = 7;
@@ -238,7 +254,7 @@ namespace ZgradaApp.Controllers
             tbl.AddCell(cell);
 
             // drugi red
-            cell = new PdfPCell(new Phrase("Dino Dragovic \n aaa \n bbb ", normalBlackSamll));
+            cell = new PdfPCell(new Phrase(Platitelj + "\n" + PlatiteljAdresa + "\n" + PlatiteljMjesto, normalBlackSamll));
             cell.Rowspan = 3;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             cell.PaddingLeft = paddingLeft;
@@ -328,10 +344,11 @@ namespace ZgradaApp.Controllers
             cell.BorderColor = borderColor;
             tbl.AddCell(cell);
 
-            cell = new PdfPCell(new Phrase("", normalRed));
+            cell = new PdfPCell(new Phrase(IBANPrimatelj, normalBlackLarge));
             cell.Colspan = 3;
-            cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.PaddingLeft = 10;
             cell.BorderColor = borderColor;
             tbl.AddCell(cell);
             #endregion
@@ -368,7 +385,7 @@ namespace ZgradaApp.Controllers
             tbl.AddCell(cell);
 
             // drugi red
-            cell = new PdfPCell(new Phrase("TELE2 D.O.O. \n ULICCA GRADA VUKOVARA \n 10000 ZAGREB ", normalBlackSamll));
+            cell = new PdfPCell(new Phrase(_tvrtka.Naziv + "\n" + _tvrtka.Adresa + "\n" + _tvrtka.Mjesto, normalBlackSamll));
             cell.Rowspan = 5;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             cell.PaddingLeft = paddingLeft;
@@ -487,7 +504,14 @@ namespace ZgradaApp.Controllers
             #region donjiSegment
 
             // bar code
-            cell = new PdfPCell(new Phrase(" ", normalBlackLarge));
+            //var code = iTextSharp.text.Image.GetInstance(Server.MapPath("~/Images/4guysfromrolla.gif"));
+            var code = iTextSharp.text.Image.GetInstance(ImageToByte(GenQr(Platitelj, PlatiteljAdresa, PlatiteljMjesto)));
+            //code.SetAbsolutePosition(440, 800);
+            cell.PaddingBottom = 2;
+            cell.PaddingLeft = 2;
+            cell.PaddingRight = 2;
+            cell.PaddingTop = 2;
+            cell = new PdfPCell(code);
             cell.HorizontalAlignment = Element.ALIGN_CENTER;
             cell.BorderColor = borderColor;
             cell.FixedHeight = 70;
@@ -543,6 +567,38 @@ namespace ZgradaApp.Controllers
 
 
             return guid.ToString() + ".pdf";
+        }
+
+        public System.Drawing.Bitmap GenQr(string Platitelj, string PlatiteljAdresa, string PlatiteljMjesto)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            string q = "HRVHUB30\n";
+            q += "HRK\n";
+            q += "000000000018144\n";
+            q += Platitelj + "\n";  //q += "Madjar Josipa by Dino\n";
+            q += PlatiteljAdresa + "\n";  //q += "Kninska 3A\n";
+            q += PlatiteljMjesto + "\n"; //q += "31000 Osijek\n";
+            q += "Račun SZP\n";
+            q += _tvrtka.Adresa + "\n";//q += "Kninska 3A\n";
+            q += _tvrtka.Mjesto + "\n"; //q += "31000 Osijek\n";
+            q += _tvrtka.IBAN + "\n"; //q += "HR7523900011300026568\n";
+            q += "HR00\n";
+            q += "011012016\n";
+            q += "OTHR\n";
+            q += Opis; //q += "Pričuva za 01 / 17, stan 11, G6 dospijeće 20.01.2016.stanje 31.12.16. = 0kn";
+
+
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(q, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            System.Drawing.Bitmap qrCodeImage = qrCode.GetGraphic(20, System.Drawing.Color.Black, System.Drawing.Color.White, false);
+            qrCodeImage.Save(Path.Combine(Server.MapPath("~/Content"), "qrH.png"));
+            return qrCodeImage;
+        }
+
+        public static byte[] ImageToByte(System.Drawing.Image img)
+        {
+            System.Drawing.ImageConverter converter = new System.Drawing.ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
         public async Task<List<UplatniceRashodiPopis>> SendMail(List<UplatniceRashodiPopis> Popis, string Naslov, string Poruka)

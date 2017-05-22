@@ -3,15 +3,19 @@
 
         $scope.msg = '';
         $scope.dodajVlasnikeBtnDisabled = false;
-        if (DataService.currZgrada == null) {
+        if (DataService.selZgradaId == null) {
             $location.path('/zgrade');
             return;
         }
 
-        if ($routeParams) {
-            if ($routeParams.id > 0) { // pa uvijek ce i biti, master postoji
-                // nadji posebniDioMaster
-                DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
+        //if ($routeParams) {
+        //if ($routeParams.id > 0) { // pa uvijek ce i biti, master postoji
+        // nadji posebniDioMaster
+        $rootScope.loaderActive = true;
+        DataService.getZgrada(DataService.selZgradaId, false, false).then(
+            function (result) {
+                console.log(result);
+                result.data.Zgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
                     if (pdMaster.Id == $routeParams.id) {
                         $scope.pdMaster = pdMaster;
                         $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
@@ -24,14 +28,23 @@
                     }
                 });
                 $scope.stanari = DataService.currZgrada.Zgrade_Stanari;
+                $rootScope.loaderActive = false;
+            },
+            function (result) {
+                $rootScope.loaderActive = false;
+                toastr.error('Dohvat podataka sa servera nije uspiio.');
             }
-            //else {
-            //    $scope.msg = "Nova zgrada";
-            //    $scope.zgradaObj = {
-            //        Id: 0, Naziv: "", Adresa: "", Mjesto: "", Povrsinam2: 0, Zgrade_PosebniDijelovi: [], Zgrade_Stanari: [], Status: ''
-            //    };
-            //}
-        }
+        );
+
+
+        //}
+        //else {
+        //    $scope.msg = "Nova zgrada";
+        //    $scope.zgradaObj = {
+        //        Id: 0, Naziv: "", Adresa: "", Mjesto: "", Povrsinam2: 0, Zgrade_PosebniDijelovi: [], Zgrade_Stanari: [], Status: ''
+        //    };
+        //}
+        //}
 
         // _________________________________________________________
         //              Modal posebni dio
@@ -414,7 +427,7 @@
                     });
                 }
             });
-            
+
             var desc = "Odabrani pripadak ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
             var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
 
@@ -433,21 +446,21 @@
                     okBtnCaption: okBtnCaption
                 }
             })
-            // od davde
-            .then(function (o) {
-                $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
-                    if (period.Id == periodId) {
-                        if (brisanjeOk) {
-                            var index = $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.indexOf(period)
-                            $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.splice(index, 1);
+                // od davde
+                .then(function (o) {
+                    $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+                        if (period.Id == periodId) {
+                            if (brisanjeOk) {
+                                var index = $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.indexOf(period)
+                                $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.splice(index, 1);
+                            }
+                            else {
+                                period.Zatvoren = true;
+                                period.ZatvorenGodina = o.godina;
+                                period.ZatvorenMjesec = o.mjesec;
+                            }
                         }
-                        else {
-                            period.Zatvoren = true;
-                            period.ZatvorenGodina = o.godina;
-                            period.ZatvorenMjesec = o.mjesec;
-                        }
-                    }
-                })
+                    })
                 }
                 , function () {
                     //alert('cancel je kliknut');
@@ -465,7 +478,7 @@
                     // on success
                     $rootScope.loaderActive = false;
                     toastr.success('Promjene su snimljene!', '');
-                    $location.path('/zgrade');
+                    $location.path('/posebniDijeloviMasterList');
                 },
                 function (result) {
                     // on error
@@ -481,7 +494,7 @@
 
 
         function confirmController($scope, $mdDialog, title, textContent, desc, brisanjeOk, okBtnCaption) {
-           
+
             $scope.vrijediDoGodina = new Date().getFullYear();
             $scope.vrijediDoMjesec = parseInt(new Date().getMonth());
             $scope.title = title;
