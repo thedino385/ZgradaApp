@@ -23,8 +23,8 @@ namespace ZgradaApp
         public string UserGuid { get; set; }
         public Nullable<bool> OglasnaPloca { get; set; }
         public Nullable<bool> DnevnikRada { get; set; }
-        public string Pass { get; set; }
         public Nullable<bool> Active { get; set; }
+        public string Pass { get; set; }
     
         public virtual Zgrade Zgrade { get; set; }
     }

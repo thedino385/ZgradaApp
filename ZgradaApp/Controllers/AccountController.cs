@@ -66,12 +66,19 @@ namespace ZgradaApp.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult LoginStanar(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
         //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, FormCollection col)
         {
             if (!ModelState.IsValid)
             {
@@ -79,31 +86,64 @@ namespace ZgradaApp.Controllers
             }
 
             string userId = (await UserManager.FindByNameAsync(model.Email)).Id;
-            var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
-            if(u.Active == true)
+            string userType = col["userType"];
+            if(userType == "voditelj")
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, change to shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-                switch (result)
+                var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
+                if (u.Active == true)
                 {
-                    case SignInStatus.Success:
-                        return RedirectToLocal(returnUrl);
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                    case SignInStatus.Failure:
-                    default:
-                        ModelState.AddModelError("", "Invalid login attempt.");
-                        return View(model);
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, change to shouldLockout: true
+                    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                    switch (result)
+                    {
+                        case SignInStatus.Success:
+                            return RedirectToLocal(returnUrl);
+                        case SignInStatus.LockedOut:
+                            return View("Lockout");
+                        case SignInStatus.RequiresVerification:
+                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                        case SignInStatus.Failure:
+                        default:
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View(model);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return View(model);
+                var u = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userId);
+                if (u.Active == true)
+                {
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, change to shouldLockout: true
+                    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                    switch (result)
+                    {
+                        case SignInStatus.Success:
+                            return RedirectToAction("StanarView", "Home");
+                        case SignInStatus.LockedOut:
+                            return View("Lockout");
+                        case SignInStatus.RequiresVerification:
+                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                        case SignInStatus.Failure:
+                        default:
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View(model);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View("LoginStanar", model);
+                }
             }
+            
         }
 
         public async Task<ActionResult> getUseri()
@@ -283,22 +323,30 @@ namespace ZgradaApp.Controllers
                     var stanari = await _db.Zgrade_Stanari.Where(p => p.ZgradaId == zgradaId).ToListAsync();
                     foreach (var s in stanari.Where(p => p.UserGuid != ""))
                     {
-                        var user = new ApplicationUser { UserName = s.Email, Email = s.Email };
-                        var pass = Membership.GeneratePassword(6, 0);
-                        var result = await UserManager.CreateAsync(user, pass);
-
-                        var company = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
-
-                        await UserManager.AddClaimAsync(company.Id.ToString(), new Claim("Cid", company.Id.ToString()));
-                        await UserManager.AddClaimAsync(company.Naziv, new Claim("Comp", company.Naziv));
-                        await UserManager.AddClaimAsync(s.Ime + " " + s.Prezime, new Claim("imePrezime", company.Naziv));
-
-                        if (result.Succeeded)
+                        var userKompanija = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.Stanarid == s.Id);
+                        if(userKompanija == null)
                         {
-                            s.UserGuid = user.Id;
-                            s.Pass = pass;
-                            s.Active = true;
+                            var user = new ApplicationUser { UserName = s.Email, Email = s.Email };
+                            var pass = Membership.GeneratePassword(6, 0);
+                            var result = await UserManager.CreateAsync(user, pass);
+
+                            var company = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
+
+                            if (result.Succeeded)
+                            {
+                                //await UserManager.AddClaimAsync(company.Id.ToString(), new Claim("Cid", company.Id.ToString()));
+                                //await UserManager.AddClaimAsync(company.Naziv, new Claim("Comp", company.Naziv));
+                                //await UserManager.AddClaimAsync(s.Ime + " " + s.Prezime, new Claim("imePrezime", company.Naziv));
+
+                                var u = new KompanijeUseri { ZgradaId = zgradaId, CompanyId = company.Id, Stanarid = s.Id, MasterAcc = false, UserGuid = user.Id };
+                                _db.KompanijeUseri.Add(u);
+                                s.UserGuid = user.Id;
+                                s.Pass = pass;
+                                s.Active = true;
+                            }
                         }
+
+                        
                     }
                     await _db.SaveChangesAsync();
                     return new HttpStatusCodeResult(200);

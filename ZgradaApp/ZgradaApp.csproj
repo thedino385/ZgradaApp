@@ -275,6 +275,15 @@
     <Compile Include="vKompanijeUseri.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="vOglasnaPloca.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vOglasnaStanari.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vOglasnaVoditelji.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="vZgrade.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -285,6 +294,9 @@
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade_DnevnikRadaDetails.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_OglasnaPloca.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade_PopisUredjaja.cs">
@@ -377,6 +389,10 @@
     <Content Include="app\indexCtrl.js" />
     <Content Include="app\ks\indexKs.html" />
     <Content Include="app\ks\indexKsCtrl.js" />
+    <Content Include="app\oglasna\dodajOglasModal.html" />
+    <Content Include="app\oglasna\dodajOglasModalCtrl.js" />
+    <Content Include="app\oglasna\indexPloca.html" />
+    <Content Include="app\oglasna\indexPlocaCtrl.js" />
     <Content Include="app\pricuvaRezije\godina.html" />
     <Content Include="app\pricuvaRezije\godinaCtrl.js" />
     <Content Include="app\pricuvaRezije\mjesecModal.html" />
@@ -475,6 +491,8 @@
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\plus.svg" />
     <Content Include="Content\ripples.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="DalEf.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -537,6 +555,8 @@
     <Content Include="Scripts\angular-messages.min.js.map" />
     <Content Include="Content\bootstrap-material-design.css.map" />
     <Content Include="Content\ripples.css.map" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="appOld\angularApp.js" />
@@ -560,6 +580,52 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\ripples.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ar-AR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-bg-BG.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ca-ES.js" />
+    <Content Include="Scripts\summernote\lang\summernote-cs-CZ.js" />
+    <Content Include="Scripts\summernote\lang\summernote-da-DK.js" />
+    <Content Include="Scripts\summernote\lang\summernote-de-DE.js" />
+    <Content Include="Scripts\summernote\lang\summernote-el-GR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-es-ES.js" />
+    <Content Include="Scripts\summernote\lang\summernote-es-EU.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fa-IR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fi-FI.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fr-FR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-gl-ES.js" />
+    <Content Include="Scripts\summernote\lang\summernote-he-IL.js" />
+    <Content Include="Scripts\summernote\lang\summernote-hr-HR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-hu-HU.js" />
+    <Content Include="Scripts\summernote\lang\summernote-id-ID.js" />
+    <Content Include="Scripts\summernote\lang\summernote-it-IT.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ja-JP.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ko-KR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LT.js" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LV.js" />
+    <Content Include="Scripts\summernote\lang\summernote-nb-NO.js" />
+    <Content Include="Scripts\summernote\lang\summernote-nl-NL.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pl-PL.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-BR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-PT.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ro-RO.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ru-RU.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sk-SK.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sl-SI.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS-Latin.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sv-SE.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ta-IN.js" />
+    <Content Include="Scripts\summernote\lang\summernote-th-TH.js" />
+    <Content Include="Scripts\summernote\lang\summernote-tr-TR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-uk-UA.js" />
+    <Content Include="Scripts\summernote\lang\summernote-vi-VN.js" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-CN.js" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-TW.js" />
+    <Content Include="Scripts\summernote\summernote.css" />
+    <Content Include="Scripts\summernote\summernote.js" />
+    <Content Include="Scripts\summernote\summernote.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -596,10 +662,16 @@
     <Content Include="Views\Home\Expired.cshtml" />
     <Content Include="Views\Account\RegisterOrig.cshtml" />
     <Content Include="Scripts\ripples.min.js.map" />
+    <Content Include="Scripts\summernote\font\summernote.eot" />
+    <Content Include="Scripts\summernote\font\summernote.ttf" />
+    <Content Include="Scripts\summernote\font\summernote.woff" />
+    <Content Include="Views\Account\LoginStanar.cshtml" />
+    <Content Include="Views\Home\StanarView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\download\" />
+    <Folder Include="Scripts\summernote\plugin\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Pdf\" />
   </ItemGroup>

@@ -55,7 +55,10 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/tvrtka.html',
             controller: 'tvrtkaCtrl'
         })
-
+        .when('/oglasna', {
+            templateUrl: '../app/oglasna/indexPloca.html',
+            controller: 'indexPlocaCtrl'
+        })
     
 
         .when('/pripadak/:id', {

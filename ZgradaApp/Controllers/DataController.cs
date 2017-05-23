@@ -634,5 +634,55 @@ namespace ZgradaApp.Controllers
             }
             catch (Exception ex) { return InternalServerError(); }
         }
+
+        [HttpGet]
+        [Route("api/data/getOglasna")]
+        public async Task<IHttpActionResult> getOglasna(int zgradaId)
+        {
+            try
+            {
+                return Ok(await _db.vOglasnaPloca.Where(p => p.ZgradaId == p.ZgradaId).OrderByDescending(p => p.Id).ToListAsync());
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpPost]
+        [Route("api/data/oglasnaEditOrCreate")]
+        public async Task<IHttpActionResult> oglasnaEditOrCreate(Zgrade_OglasnaPloca oglas)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                var userGuid = identity.GetUserId();
+                var user = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userGuid);
+                oglas.UserId = user.Id;
+
+                if (oglas.Id == 0)
+                    _db.Zgrade_OglasnaPloca.Add(oglas);
+                else
+                {
+                    _db.Zgrade_OglasnaPloca.Attach(oglas);
+                    _db.Entry(oglas).State = EntityState.Modified;
+                    
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
+
+        [HttpGet]
+        [Route("api/data/getuseriStanari")]
+        public async Task<IHttpActionResult> getuseriStanari(int zgradaId)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                return Ok(await _db.vKompanijeUseri.Where(p => p.CompanyId == companyId && p.ZgradaId == zgradaId).ToListAsync());
+            }
+            catch (Exception ex) { return InternalServerError(); }
+        }
     }
 }

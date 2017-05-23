@@ -41,7 +41,7 @@
 }
 
 .bs-callout {
-    padding: 20px;
+    padding: 10px;
     margin: 20px 0;
     border: 1px solid #eee;
     border-left-width: 5px;
@@ -58,6 +58,13 @@
 
 .bs-callout-info {
     border-left-color: rgb(57,73,171);
+}
+
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: indigo;
 }
 
 .panel-heading {

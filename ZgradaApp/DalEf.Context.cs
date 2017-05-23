@@ -54,5 +54,9 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade_Stanari> Zgrade_Stanari { get; set; }
         public virtual DbSet<vKompanijeUseri> vKompanijeUseri { get; set; }
         public virtual DbSet<vZgrade> vZgrade { get; set; }
+        public virtual DbSet<Zgrade_OglasnaPloca> Zgrade_OglasnaPloca { get; set; }
+        public virtual DbSet<vOglasnaPloca> vOglasnaPloca { get; set; }
+        public virtual DbSet<vOglasnaStanari> vOglasnaStanari { get; set; }
+        public virtual DbSet<vOglasnaVoditelji> vOglasnaVoditelji { get; set; }
     }
 }

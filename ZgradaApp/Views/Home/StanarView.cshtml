@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "StanarView";
+}
+
+<h2 id="title"></h2>
+
+@section scripts
+{
+    <script type="text/javascript">
+        var _oglasi = [];
+
+        $(document).ready(function () {
+            $('#oglasnaS').click(function () {
+                getOglasna();
+            });
+
+            $('#dodaj').click(function () {
+                $('#summernote').summernote('code', '');
+                $('#myModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+            $('#summernote').summernote();
+
+        });
+
+        function editOglas(id) {
+            alert(id);
+            console.log(_oglasi);
+            _oglasi.forEach(function (o) {
+                if (o.Id == id) {
+                    $('#naslovOglasa').val(o.Naslov);
+                    $('#summernote').summernote('code', o.Oglas);
+                    $('#myModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                }
+            });
+        }
+
+    function getOglasna() {
+        $('#loader').fadeIn();
+        var url = '@Url.Action("GetStanarDashBoardDataOglasna", "Home")';
+        $.getJSON(url, function (result) {
+            var html = '';
+            _oglasi = result.oglasna;
+            result.oglasna.forEach(function (oglas) {
+                //html += '<div class="panel-group"><div class="panel panel-info"><div class="panel-heading">';
+                html += '<div class="bs-callout bs-callout-primary">';
+                html += '<h4>' + oglas.Naslov + '</h4>';
+                //html += '<div class="panel-body">';
+                html += '<p>Datum: <b>' + parseDate(oglas.Datum) + '</b></p>';
+                html += '<p>Autor: <b>' + oglas.Ime + '&nbsp;' + oglas.Prezime + '</b></p><br />';
+                html += '<span>' + oglas.Oglas + '</span>';
+                if (parseInt(oglas.UserId) == parseInt('@ViewBag.UserId')) {
+                    html += '<input type="button" class="btn btn-success pull-right" onclick="editOglas(' + oglas.Id + ')" value="Uredi oglas" title="Uredi oglas" /><br /><br />';
+                }
+                //html += '</div></div >';
+                html += '</div></div>';
+            });
+            $('#oglasnaDiv').html(html);
+            $('#title').html('Oglasna ploča');
+            $('#loader').fadeOut();
+            $('#oglasnaContainer').fadeIn('slow');
+        });
+    }
+
+    function parseDate(date) {
+        var d = new Date(parseInt(date.substr(6)));
+        return dodajNulu(d.getDate()) + '.' + dodajNulu(parseInt(d.getMonth() + 1)) + '.' + d.getFullYear() + '.';
+    }
+
+    function dodajNulu(x) {
+        if (x < 10)
+            return '0' + x;
+        return x;
+    }
+
+        function saveOglas() {
+             var url = '@Url.Action("PredajOglas", "Home")';
+            var oglas = $('#summernote').summernote('code');
+
+            if ($('#naslovOglasa').val().length == 0 || oglas.length == 0) {
+                //toastr.error("Naslov i tekst oglasa su obavezni");
+                toastr["warning"]("Naslov i tekst oglasa su obavezni!")
+                return;
+            }
+
+            var oglasObj = { Id: 0, Datum: new Date(), Naslov: $('#naslovOglasa').val(), Oglas: oglas, UserId: 0 };
+
+            $.post(url, { oglasObj: oglasObj }, function (result) {
+                if (result.success == true) {
+                    toastr["success"]("promjene su snimljene");
+                    $('#myModal').modal('hide');
+                    getOglasna();
+                }
+                else
+                    toastr["error"]("Pogreška kod snimanja oglasa");
+            });
+        }
+
+    </script>
+}
+
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+
+        <div id="oglasnaContainer" style="display: none">
+            @if (ViewBag.ShowBtn)
+            {
+                <input type="button" id="dodaj" class="pull-right btn btn-default" value="Dodaj oglas" /><br />
+            }
+            <div id="oglasnaDiv"></div>
+        </div>
+
+    </div>
+</div>
+
+@if (ViewBag.ShowBtn)
+            {
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="naslovOglasa" placeholder="Naslov oglasa" class="form-control" />
+                    <br />
+                    <div id="summernote"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="modalSaveBtn" onclick="saveOglas()">Spremi</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+}

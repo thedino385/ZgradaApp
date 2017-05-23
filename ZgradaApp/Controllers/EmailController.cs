@@ -54,9 +54,7 @@ namespace ZgradaApp.Controllers
             if (masteri.Count() == 0)
                 return Json(new { success = false });
 
-            // tko je vlasnik za ovaj mjesec, ako ih ima vise, na koga glasi uplatnica
-            // za sad uzimam prvoh vlasnika kojeg nadjem
-            // kako god, trazi u procuvi/rezijama, ne u zgradi
+          
 
             //int godina = (await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.Id == list[0].prihodiRashodiGodId)).Godina;
             int godina = list[0].godina;
@@ -81,7 +79,9 @@ namespace ZgradaApp.Controllers
                 var vlasniciPeriod = await _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.FirstOrDefaultAsync(p => p.PosebniDioMasterId == zgradaMasterId && p.Zatvoren != true);
                 // period nije zatvoren!
                 var vlasnici = vlasniciPeriod.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Where(p => p.VlasniciPeriodId == vlasniciPeriod.Id);
-                var vlasnik = vlasnici.FirstOrDefault(); // uzeo prvog
+                var vlasnik = vlasnici.FirstOrDefault(p => p.UplatnicaGlasiNaVlasnika == true); // uzeo prvog
+                if (vlasnik == null)
+                    return Json(new { success = false });
                 var vlasnikObj = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == vlasnik.StanarId);
                 Platitelj = vlasnikObj.Ime + " " + vlasnikObj.Prezime;
                 string PozivNaBroj = "987654321";

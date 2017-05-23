@@ -133,6 +133,18 @@
         return $http.post('../api/data/tvrtkaUpdate', tvrtka);
     }
 
+    var getOglasna = function (zgradaId) {
+        return $http.get('../api/data/getOglasna?zgradaId=' + zgradaId);
+    }
+
+    var oglasnaEditOrCreate = function (oglas) {
+        return $http.post('../api/data/oglasnaEditOrCreate', oglas);
+    }
+
+    var getuseriStanari = function (zgradaId) {
+        return $http.get('../api/data/getuseriStanari?zgradaId=' + zgradaId);
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -167,7 +179,10 @@
         sendUplatniceRashodi: sendUplatniceRashodi,
         createUplatnicaManually: createUplatnicaManually,
         getTvrtka: getTvrtka,
-        tvrtkaUpdate: tvrtkaUpdate
+        tvrtkaUpdate: tvrtkaUpdate,
+        getOglasna: getOglasna,
+        oglasnaEditOrCreate: oglasnaEditOrCreate,
+        getuseriStanari: getuseriStanari
     }
 
 

@@ -57,6 +57,11 @@
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_OglasnaPloca" Width="1.5" PointX="3" PointY="22.75" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_OglasnaPloca_Zgrade" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vOglasnaPloca" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vOglasnaStanari" Width="1.5" PointX="10.375" PointY="8.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vOglasnaVoditelji" Width="1.5" PointX="7.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

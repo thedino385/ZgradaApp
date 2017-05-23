@@ -57,15 +57,16 @@
                                 </span>
                                 <!--Dijelovi: St-01, GA-777, DRV-752-->
                             </p>
-                            <!--<p>
-                                <div ng-repeat="period in pd.Zgrade_PosebniDijeloviMaster_VlasniciPeriod | filter:  PosebniDioMasterId: pd.Id  | filter: Zatvoren != 'true'"></div>
-                                    Vlasnik/Vlasnici:<span ng-repeat="vlasnici in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici | filter: { VlasniciPeriodId: period.Id }">
+                            <p>
+                                <<!--div ng-repeat="period in pd.Zgrade_PosebniDijeloviMaster_VlasniciPeriod | filter:  PosebniDioMasterId: pd.Id  | filter: Zatvoren != 'true'"></div>
+                                    Vlasnik/Vlasnici:<div ng-repeat="vlasnici in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici | filter: { VlasniciPeriodId: period.Id }">
+                                        a
                                         <span ng-repeat="stanar in Zgrade_Stanari | filter: { Id: vlasnici.StanarId }">
                                             {{stanar.Ime}}&nbsp;{{stanar.Prezime}},
                                         </span>
-                                </span>
+                                </div>-->
                                 
-                            </p>-->
+                            </p>
                         </div>
                         <button type="button" class="btn btn-default btn-sm md-avatar" title="Kartica posebnog dijela" ng-click="kartica(pd)">
                             <md-icon md-svg-icon="/Content/icons/account-card-details.svg" style="fill: indigo"></md-icon>

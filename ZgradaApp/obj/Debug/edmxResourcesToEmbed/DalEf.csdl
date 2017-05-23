@@ -122,6 +122,14 @@
       <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
       <End Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" EntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" />
     </AssociationSet>
+    <EntitySet Name="Zgrade_OglasnaPloca" EntityType="ZgradaDbModel.Zgrade_OglasnaPloca" />
+    <AssociationSet Name="FK_Zgrade_OglasnaPloca_Zgrade" Association="ZgradaDbModel.FK_Zgrade_OglasnaPloca_Zgrade">
+      <End Role="Zgrade" EntitySet="Zgrade" />
+      <End Role="Zgrade_OglasnaPloca" EntitySet="Zgrade_OglasnaPloca" />
+    </AssociationSet>
+    <EntitySet Name="vOglasnaPloca" EntityType="ZgradaDbModel.vOglasnaPloca" />
+    <EntitySet Name="vOglasnaStanari" EntityType="ZgradaDbModel.vOglasnaStanari" />
+    <EntitySet Name="vOglasnaVoditelji" EntityType="ZgradaDbModel.vOglasnaVoditelji" />
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -145,8 +153,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Ime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Prezime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="CompanyId" Type="Int32" Nullable="false" />
     <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="MasterAcc" Type="Boolean" />
@@ -345,6 +353,7 @@
     <NavigationProperty Name="Zgrade_PopisZajednickihDijelova" Relationship="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PopisZajednickihDijelova" />
     <NavigationProperty Name="Zgrade_PosebniDijeloviMaster" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade" FromRole="Zgrade" ToRole="Zgrade_PosebniDijeloviMaster" />
     <NavigationProperty Name="Zgrade_Stanari" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade" ToRole="Zgrade_Stanari" />
+    <NavigationProperty Name="Zgrade_OglasnaPloca" Relationship="ZgradaDbModel.FK_Zgrade_OglasnaPloca_Zgrade" FromRole="Zgrade" ToRole="Zgrade_OglasnaPloca" />
   </EntityType>
   <EntityType Name="Zgrade_DnevnikRada">
     <Key>
@@ -518,9 +527,9 @@
     <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="OglasnaPloca" Type="Boolean" />
     <Property Name="DnevnikRada" Type="Boolean" />
-    <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Active" Type="Boolean" />
     <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade_Stanari" ToRole="Zgrade" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="Pass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vKompanijeUseri">
     <Key>
@@ -539,6 +548,11 @@
     <Property Name="ZgradaId" Type="Int32" />
     <Property Name="Active" Type="Boolean" />
     <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Expr1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Expr2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OIB" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+    <Property Name="DnevnikRada" Type="Boolean" />
+    <Property Name="OglasnaPloca" Type="Boolean" />
   </EntityType>
   <EntityType Name="vZgrade">
     <Key>
@@ -828,4 +842,91 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Zgrade_OglasnaPloca">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Naslov" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Oglas" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_OglasnaPloca_Zgrade" FromRole="Zgrade_OglasnaPloca" ToRole="Zgrade" />
+  </EntityType>
+  <Association Name="FK_Zgrade_OglasnaPloca_Zgrade">
+    <End Type="ZgradaDbModel.Zgrade" Role="Zgrade" Multiplicity="1" />
+    <End Type="ZgradaDbModel.Zgrade_OglasnaPloca" Role="Zgrade_OglasnaPloca" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zgrade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Zgrade_OglasnaPloca">
+        <PropertyRef Name="ZgradaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="vOglasnaPloca">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ZgradaId" />
+      <PropertyRef Name="Datum" />
+      <PropertyRef Name="Naslov" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Naslov" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Oglas" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="MasterAcc" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="vOglasnaStanari">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ZgradaId" />
+      <PropertyRef Name="Datum" />
+      <PropertyRef Name="Naslov" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Naslov" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Oglas" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="MasterAcc" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="vOglasnaVoditelji">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ZgradaId" />
+      <PropertyRef Name="Datum" />
+      <PropertyRef Name="Naslov" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Naslov" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Oglas" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="MasterAcc" Type="Boolean" />
+  </EntityType>
 </Schema>
