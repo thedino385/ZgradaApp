@@ -130,6 +130,11 @@
     <EntitySet Name="vOglasnaPloca" EntityType="ZgradaDbModel.vOglasnaPloca" />
     <EntitySet Name="vOglasnaStanari" EntityType="ZgradaDbModel.vOglasnaStanari" />
     <EntitySet Name="vOglasnaVoditelji" EntityType="ZgradaDbModel.vOglasnaVoditelji" />
+    <EntitySet Name="vUseriStanari" EntityType="ZgradaDbModel.vUseriStanari" />
+    <EntitySet Name="vUseriSvi" EntityType="ZgradaDbModel.vUseriSvi" />
+    <EntitySet Name="vUseriVoditelji" EntityType="ZgradaDbModel.vUseriVoditelji" />
+    <EntitySet Name="vDnevnikRadaDetails" EntityType="ZgradaDbModel.vDnevnikRadaDetails" />
+    <EntitySet Name="vDnevnikRada" EntityType="ZgradaDbModel.vDnevnikRada" />
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -928,5 +933,92 @@
     <Property Name="CompanyId" Type="Int32" Nullable="false" />
     <Property Name="Stanarid" Type="Int32" />
     <Property Name="MasterAcc" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="vUseriStanari">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="ZgradaId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="MasterAcc" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vUseriSvi">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="ZgradaId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="MasterAcc" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vUseriVoditelji">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="Stanarid" Type="Int32" />
+    <Property Name="ZgradaId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="MasterAcc" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vDnevnikRadaDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="DnevnikRadaId" />
+      <PropertyRef Name="Datum" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="DnevnikRadaId" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Poruka" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ZgradaId" Type="Int32" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vDnevnikRada">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ZgradaId" />
+      <PropertyRef Name="Godina" />
+      <PropertyRef Name="Mjesec" />
+      <PropertyRef Name="Datum" />
+      <PropertyRef Name="Naslov" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+    <Property Name="Godina" Type="Int32" Nullable="false" />
+    <Property Name="Mjesec" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Naslov" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Opis" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Odradjeno" Type="Boolean" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

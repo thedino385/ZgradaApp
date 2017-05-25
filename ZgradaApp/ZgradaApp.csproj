@@ -189,6 +189,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\PdfGeneratorController.cs" />
@@ -272,6 +273,12 @@
     <Compile Include="Utils\PrebaciOtvoreneStavkeDnevnika.cs" />
     <Compile Include="Utils\PricuvaRezijeGodinaTable.cs" />
     <Compile Include="Utils\RashodiPrebaciNeplacene.cs" />
+    <Compile Include="vDnevnikRada.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vDnevnikRadaDetails.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="vKompanijeUseri.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -282,6 +289,15 @@
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="vOglasnaVoditelji.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUseriStanari.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUseriSvi.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUseriVoditelji.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="vZgrade.cs">
@@ -667,6 +683,8 @@
     <Content Include="Scripts\summernote\font\summernote.woff" />
     <Content Include="Views\Account\LoginStanar.cshtml" />
     <Content Include="Views\Home\StanarView.cshtml" />
+    <Content Include="Views\Home\Uplatnice.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

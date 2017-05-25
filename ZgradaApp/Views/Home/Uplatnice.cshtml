@@ -1,0 +1,103 @@
+﻿@using ZgradaApp.Controllers
+@model List<Uplatnice>
+
+@{
+    ViewBag.Title = "Uplatnice";
+}
+
+<style>
+    .borderless td, .borderless th {
+        border: none;
+    }
+</style>
+
+<h2>Uplatnice</h2>
+@section scripts
+{
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var url = '@Url.Action("GetUplatnice", "Home")';
+        $.post(url, function (result) {
+            if (result.success == true) {
+                drawGodine(result.list);
+            }
+            else
+                toastr["error"]("Pogreška kod snimanja poruke", result.msg);
+
+        });
+    });
+
+        var _list = [];
+        function drawGodine(list) {
+            _list = list;
+            console.log(list);
+            var godine = [];
+            list.forEach(function (g) {
+                if (godine.indexOf(g.Godina))
+                    godine.push(g.Godina);
+            });
+
+            var btns = '<div class="btn-group">';
+            godine.forEach(function (g) {
+                btns += ' <button type="button" onclick=showGodina(' + g + ') class="btn btn-primary">' + g + '</button>'
+            });
+            $('#btnGodine').html(btns);
+        }
+
+        
+
+        function showGodina(g) {
+            var html = '<table class="table table-condensed" style="width: 500px"><thead><tr><th>Godina</th>';
+            //html += '<th></th>';
+            html += '<th>' + g + '</th></tr>';
+
+            html += '<tr><th>Mjesec</th><th>Rashodi</th></tr></thead>';
+            html += '<tbody>';
+            _list.forEach(function (mj) {
+                html += '<tr>';
+                if (mj.UplatnicePosebniDijeloviMaster != null && mj.UplatnicePosebniDijeloviMaster.length > 0) {
+                    var pdCount = mj.UplatnicePosebniDijeloviMaster.length;
+                    if (pdCount == 0)
+                        pdCount = 1;
+                    html += '<td rowspan=' + pdCount + '>' + mj.Mjesec + '.</td>';
+                    mj.UplatnicePosebniDijeloviMaster.forEach(function (pd) {
+                        if (pdCount > 1)
+                            html += '<tr>';
+                        if(pd.Url != "")
+                            html += '<td><a href="' + pd.Url + '" target="_blank">' + pd.PosebniDio + '</a></td>';
+                        else
+                            html += '<td></td>';
+                        //html += '<td>' + pd.Url + '</td>';
+                        if (pdCount > 1)
+                            html += '</tr>';
+                    });
+                }
+                else {
+                    html += '<td>' + mj.Mjesec + '.</td>';
+                    //html += '<td></td>';
+                    html += '<td></td>';
+                }
+
+                html += '</tr>';
+            });
+
+            html += '</tbody>';
+            $('#tbl').html(html);
+        }
+
+    </script>
+}
+
+
+<div id="btnGodine"></div>
+<br />
+<div id="tbl"></div>
+
+@*<table>
+    <tr>
+        <td style="border-bottom: solid; border-left: none; border-right: none; border-top: none"
+    </tr>
+</table>*@

@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ZgradaApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Voditelj")]
     public class DataController : ApiController
     {
         private readonly ZgradaDbEntities _db = new ZgradaDbEntities();
@@ -52,7 +52,8 @@ namespace ZgradaApp.Controllers
 
                 var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == Id && p.CompanyId == companyId);
                 // useri 
-                var useri = await _db.KompanijeUseri.Where(p => p.CompanyId == companyId).ToListAsync();
+                //var useri = await _db.KompanijeUseri.Where(p => p.CompanyId == companyId).ToListAsync();
+                var useri = await _db.vUseriSvi.Where(p => p.CompanyId == companyId).ToListAsync();
                 return Ok(new ZgradaUseri { Zgrada = zgrada, Useri = useri, userId = useri.FirstOrDefault(p => p.UserGuid == identity.GetUserId()).Id });
             }
             catch (Exception ex)

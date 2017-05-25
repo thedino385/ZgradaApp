@@ -23,6 +23,9 @@
                 $scope.godine = godineList;
                 $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
                 $rootScope.loaderActive = false;
+
+                if (DataService.selGodina != null && DataService.selGodina > 0)
+                    getDataForGodina(DataService.selGodina);
             },
             function (result) {
                 toastr.error('Greška pri dohvačanju podataka sa servera');
@@ -30,6 +33,11 @@
         );
 
         $scope.godinaChanged = function (godina) {
+            DataService.selGodina = godina;
+            getDataForGodina(godina);
+        }
+
+        function getDataForGodina(godina) {
             $scope.selectedGodina = godina;
             $scope.tableVisible = true;
             console.log($scope.zgradaObj);
@@ -51,9 +59,6 @@
                 }
             )
         }
-
-
-
 
         $scope.dodajGodinu = function () {
             if ($scope.novaGodina == undefined || $scope.novaGodina == '')

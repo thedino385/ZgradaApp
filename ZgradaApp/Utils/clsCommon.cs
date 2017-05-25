@@ -104,7 +104,7 @@ namespace ZgradaApp
     public class ZgradaUseri
     {
         public Zgrade Zgrada { get; set; }
-        public List<KompanijeUseri> Useri { get; set; }
+        public List<vUseriSvi> Useri { get; set; }
         public int userId { get; set; }
 
     }

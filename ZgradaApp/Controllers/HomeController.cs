@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -13,12 +14,17 @@ namespace ZgradaApp.Controllers
     public class HomeController : Controller
     {
         private ZgradaDbEntities _db = new ZgradaDbEntities();
+        [Authorize(Roles = "Voditelj")]
         public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();
             var user = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
-            if (user == null)
-                RedirectToAction("LogOffExpired", "Account");
+            if (user.Stanarid != null)
+            {
+                ViewData["userType"] = "stanar";
+                return RedirectToAction("StanarView", "Home");
+            }
+
             var company = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == user.CompanyId);
             ViewBag.ImePrezime = String.Join(" ", new[] { user.Ime, user.Prezime });
             ViewBag.Company = company.Naziv;
@@ -95,7 +101,8 @@ namespace ZgradaApp.Controllers
 
         public async Task<ActionResult> StanarView()
         {
-            var userGuid = User.Identity.GetUserId();
+            var identity = (ClaimsIdentity)User.Identity;
+            var userGuid = identity.GetUserId();
             var stanar = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userGuid);
             var user = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.Stanarid == stanar.Id);
             var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == stanar.ZgradaId);
@@ -104,6 +111,7 @@ namespace ZgradaApp.Controllers
 
             ViewData["userType"] = "stanar";
             ViewBag.UserId = user.Id;
+            ViewBag.DnevnikRada = stanar.DnevnikRada ?? false;
             ViewBag.ShowBtn = stanar.OglasnaPloca ?? false;
             return View();
         }
@@ -111,7 +119,8 @@ namespace ZgradaApp.Controllers
 
         public async Task<ActionResult> GetStanarDashBoardDataOglasna()
         {
-            var userGuid = User.Identity.GetUserId();
+            var identity = (ClaimsIdentity)User.Identity;
+            var userGuid = identity.GetUserId();
             var stanar = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userGuid);
             var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == stanar.ZgradaId);
             //var obj = new StanarHomeModel();
@@ -127,11 +136,12 @@ namespace ZgradaApp.Controllers
         {
             try
             {
-                var userGuid = User.Identity.GetUserId();
+                var identity = (ClaimsIdentity)User.Identity;
+                var userGuid = identity.GetUserId();
                 var stanar = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userGuid);
                 var user = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.Stanarid == stanar.Id);
                 var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == user.ZgradaId);
-                if(oglasObj.Id == 0)
+                if (oglasObj.Id == 0)
                 {
                     oglasObj.UserId = user.Id;
                     oglasObj.Datum = DateTime.Now;
@@ -143,15 +153,139 @@ namespace ZgradaApp.Controllers
                     _db.Zgrade_OglasnaPloca.Attach(oglasObj);
                     _db.Entry(oglasObj).State = EntityState.Modified;
                 }
-                
+
                 await _db.SaveChangesAsync();
                 return Json(new { success = true, msg = "" });
 
             }
             catch (Exception ex) { return Json(new { success = false, msg = ex.Message }); }
         }
+
+        public async Task<ActionResult> GetStanarDashBoardDataDnevnik()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userGuid = identity.GetUserId();
+            var stanar = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userGuid);
+            var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == stanar.ZgradaId);
+            //var obj = new StanarHomeModel();
+            var GodineDnevnik = await _db.Zgrade_DnevnikRada.Where(p => p.ZgradaId == zgrada.Id).Select(p => p.Godina).Distinct().ToListAsync();
+
+            var Dnevnik = await _db.vDnevnikRada.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
+            //var DnevnikDetails = await _db.vDnevnikRadaDetails.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
+
+            var listDetails = new List<vDnevnikRadaDetails>();
+            foreach (var d in Dnevnik)
+            {
+                var det = _db.vDnevnikRadaDetails.FirstOrDefault(p => p.DnevnikRadaId == d.Id);
+                if (det != null)
+                    listDetails.Add(det);
+            }
+            return Json(new { godine = GodineDnevnik, dnevnik = Dnevnik, dnevnikDetails = listDetails }, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> NovaPorukaDnevnik(Zgrade_DnevnikRadaDetails poruka)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var userGuid = identity.GetUserId();
+                var stanar = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userGuid);
+                var user = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.Stanarid == stanar.Id);
+                poruka.UserId = user.Id;
+
+                _db.Zgrade_DnevnikRadaDetails.Add(poruka);
+                await _db.SaveChangesAsync();
+                return Json(new { success = true, msg = "" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = ex.Message });
+            }
+        }
+
+        public ActionResult Uplatnice()
+        {
+            return View();
+        }
+
+        public async Task<ActionResult> GetUplatnice()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var userGuid = identity.GetUserId();
+                var stanar = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userGuid);
+                var user = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.Stanarid == stanar.Id);
+                var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == stanar.ZgradaId);
+
+                // rashodi
+                var obracuni = await _db.PricuvaRezijeGodina.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
+                var posebniDijeloviZgrada = await _db.Zgrade_PosebniDijeloviMaster.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
+                var prihodiRashodiMaster = await _db.PrihodiRashodi.Where(p => p.ZgradaId == zgrada.Id).ToListAsync();
+                List<Uplatnice> list = new List<Uplatnice>();
+                foreach (var obrGod in obracuni)
+                {
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        var up = new Uplatnice();
+                        up.Godina = obrGod.Godina;
+                        up.Mjesec = i;
+                        var obrMjesec = obrGod.PricuvaRezijeMjesec.FirstOrDefault(p => p.Mjesec == i);
+                        if (obrMjesec != null)
+                        {
+                            var masteri = obrMjesec.PricuvaRezijePosebniDioMasteri.Where(p => p.PricuvaRezijeMjesecId == obrMjesec.Id);
+                            List<UplatnicaMaster> UplatnicaMaster = new List<UplatnicaMaster>();
+                            foreach (var master in masteri)
+                            {
+                                if (master.PricuvaRezijePosebniDioMasterVlasnici.FirstOrDefault(p => p.VlasnikId == stanar.Id) != null)
+                                {
+                                    // ok stanar je u master.PosebniDioMasterId
+                                    var pdNaziv = posebniDijeloviZgrada.FirstOrDefault(p => p.Id == master.PosebniDioMasterId).Naziv;
+                                    var prihodiRashodiZaGodinu = prihodiRashodiMaster.FirstOrDefault(p => p.Godina == obrGod.Godina);
+                                    var pdMasterRashod = prihodiRashodiZaGodinu.PrihodiRashodi_Rashodi.FirstOrDefault(p => p.Mjesec == i && p.PosebniDioMasterId == master.PosebniDioMasterId);
+
+                                    UplatnicaMaster.Add(new UplatnicaMaster
+                                    {
+                                        PosebniDioId = (int)master.PosebniDioMasterId,
+                                        PosebniDio = pdNaziv,
+                                        Url = pdMasterRashod != null ? GetBaseUrl() + "/Content/download/" + pdMasterRashod.PdfFileName : ""
+                                    });
+
+                                }
+                            }
+                            up.UplatnicePosebniDijeloviMaster = UplatnicaMaster;
+
+                        }
+                        list.Add(up);
+                    }
+                    
+                }
+                ViewData["userType"] = "stanar";
+                return Json(new { success = true, list = list, msg = "" });
+                //return View(list);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, list = new List<Uplatnice>(), msg = ex.Message });
+                //return View(new List<Uplatnice>());
+            }
+        }
+
+        public string GetBaseUrl()
+        {
+            var appUrl = HttpRuntime.AppDomainAppVirtualPath;
+
+            if (appUrl != "/")
+                appUrl = "/" + appUrl;
+
+            var baseUrl = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, appUrl);
+
+            return baseUrl;
+        }
+
     }
-    
+
+
     public class NotificationList
     {
         public string Datum { get; set; }
@@ -166,5 +300,19 @@ namespace ZgradaApp.Controllers
         public List<int> GodineDnevnik { get; set; }
         public List<vOglasnaPloca> Oglasna { get; set; }
         public List<Zgrade_DnevnikRada> Dnevnik { get; set; }
+    }
+
+    public class Uplatnice
+    {
+        public int Godina { get; set; }
+        public int Mjesec { get; set; }
+        public List<UplatnicaMaster> UplatnicePosebniDijeloviMaster { get; set; }
+    }
+
+    public class UplatnicaMaster
+    {
+        public int PosebniDioId { get; set; }
+        public string PosebniDio { get; set; }
+        public string Url { get; set; }
     }
 }

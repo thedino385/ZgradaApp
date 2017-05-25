@@ -58,5 +58,10 @@ namespace ZgradaApp
         public virtual DbSet<vOglasnaPloca> vOglasnaPloca { get; set; }
         public virtual DbSet<vOglasnaStanari> vOglasnaStanari { get; set; }
         public virtual DbSet<vOglasnaVoditelji> vOglasnaVoditelji { get; set; }
+        public virtual DbSet<vUseriStanari> vUseriStanari { get; set; }
+        public virtual DbSet<vUseriSvi> vUseriSvi { get; set; }
+        public virtual DbSet<vUseriVoditelji> vUseriVoditelji { get; set; }
+        public virtual DbSet<vDnevnikRadaDetails> vDnevnikRadaDetails { get; set; }
+        public virtual DbSet<vDnevnikRada> vDnevnikRada { get; set; }
     }
 }

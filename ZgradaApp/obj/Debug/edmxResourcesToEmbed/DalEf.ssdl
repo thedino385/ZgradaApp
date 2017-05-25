@@ -365,6 +365,49 @@
     <Property Name="Pass" Type="varchar" MaxLength="20" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vDnevnikRada' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vDnevnikRada">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ZgradaId" />
+      <PropertyRef Name="Godina" />
+      <PropertyRef Name="Mjesec" />
+      <PropertyRef Name="Datum" />
+      <PropertyRef Name="Naslov" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ZgradaId" Type="int" Nullable="false" />
+    <Property Name="Godina" Type="int" Nullable="false" />
+    <Property Name="Mjesec" Type="int" Nullable="false" />
+    <Property Name="Datum" Type="datetime" Nullable="false" />
+    <Property Name="Naslov" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Opis" Type="varchar" MaxLength="1000" />
+    <Property Name="Odradjeno" Type="bit" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Ime" Type="varchar" MaxLength="50" />
+    <Property Name="Prezime" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vDnevnikRadaDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vDnevnikRadaDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="DnevnikRadaId" />
+      <PropertyRef Name="Datum" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="DnevnikRadaId" Type="int" Nullable="false" />
+    <Property Name="Datum" Type="datetime" Nullable="false" />
+    <Property Name="Poruka" Type="varchar" MaxLength="500" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Ime" Type="varchar" MaxLength="50" />
+    <Property Name="Prezime" Type="varchar" MaxLength="50" />
+    <Property Name="ZgradaId" Type="int" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb2.dbo.vKompanijeUseri' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vKompanijeUseri">
     <Key>
@@ -457,6 +500,60 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vOglasnaVoditelji' does not have a p
     <Property Name="CompanyId" Type="int" Nullable="false" />
     <Property Name="Stanarid" Type="int" />
     <Property Name="MasterAcc" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vUseriStanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vUseriStanari">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="Ime" Type="varchar" MaxLength="50" />
+    <Property Name="Prezime" Type="varchar" MaxLength="50" />
+    <Property Name="UserGuid" Type="varchar" MaxLength="128" />
+    <Property Name="Stanarid" Type="int" />
+    <Property Name="ZgradaId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="MasterAcc" Type="bit" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vUseriSvi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vUseriSvi">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="Ime" Type="varchar" MaxLength="50" />
+    <Property Name="Prezime" Type="varchar" MaxLength="50" />
+    <Property Name="UserGuid" Type="varchar" MaxLength="128" />
+    <Property Name="Stanarid" Type="int" />
+    <Property Name="ZgradaId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="MasterAcc" Type="bit" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vUseriVoditelji' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vUseriVoditelji">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="Ime" Type="varchar" MaxLength="50" />
+    <Property Name="Prezime" Type="varchar" MaxLength="50" />
+    <Property Name="UserGuid" Type="varchar" MaxLength="128" />
+    <Property Name="Stanarid" Type="int" />
+    <Property Name="ZgradaId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="MasterAcc" Type="bit" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -789,6 +886,34 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" EntityType="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" EntityType="Self.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Zgrade_Stanari" EntityType="Self.Zgrade_Stanari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vDnevnikRada" EntityType="Self.vDnevnikRada" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vDnevnikRada].[Id] AS [Id], 
+    [vDnevnikRada].[ZgradaId] AS [ZgradaId], 
+    [vDnevnikRada].[Godina] AS [Godina], 
+    [vDnevnikRada].[Mjesec] AS [Mjesec], 
+    [vDnevnikRada].[Datum] AS [Datum], 
+    [vDnevnikRada].[Naslov] AS [Naslov], 
+    [vDnevnikRada].[Opis] AS [Opis], 
+    [vDnevnikRada].[Odradjeno] AS [Odradjeno], 
+    [vDnevnikRada].[UserId] AS [UserId], 
+    [vDnevnikRada].[Ime] AS [Ime], 
+    [vDnevnikRada].[Prezime] AS [Prezime]
+    FROM [dbo].[vDnevnikRada] AS [vDnevnikRada]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vDnevnikRadaDetails" EntityType="Self.vDnevnikRadaDetails" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vDnevnikRadaDetails].[Id] AS [Id], 
+    [vDnevnikRadaDetails].[DnevnikRadaId] AS [DnevnikRadaId], 
+    [vDnevnikRadaDetails].[Datum] AS [Datum], 
+    [vDnevnikRadaDetails].[Poruka] AS [Poruka], 
+    [vDnevnikRadaDetails].[UserId] AS [UserId], 
+    [vDnevnikRadaDetails].[Ime] AS [Ime], 
+    [vDnevnikRadaDetails].[Prezime] AS [Prezime], 
+    [vDnevnikRadaDetails].[ZgradaId] AS [ZgradaId], 
+    [vDnevnikRadaDetails].[CompanyId] AS [CompanyId]
+    FROM [dbo].[vDnevnikRadaDetails] AS [vDnevnikRadaDetails]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vKompanijeUseri" EntityType="Self.vKompanijeUseri" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vKompanijeUseri].[Id] AS [Id], 
@@ -852,6 +977,48 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     [vOglasnaVoditelji].[Stanarid] AS [Stanarid], 
     [vOglasnaVoditelji].[MasterAcc] AS [MasterAcc]
     FROM [dbo].[vOglasnaVoditelji] AS [vOglasnaVoditelji]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vUseriStanari" EntityType="Self.vUseriStanari" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vUseriStanari].[Id] AS [Id], 
+    [vUseriStanari].[CompanyId] AS [CompanyId], 
+    [vUseriStanari].[Ime] AS [Ime], 
+    [vUseriStanari].[Prezime] AS [Prezime], 
+    [vUseriStanari].[UserGuid] AS [UserGuid], 
+    [vUseriStanari].[Stanarid] AS [Stanarid], 
+    [vUseriStanari].[ZgradaId] AS [ZgradaId], 
+    [vUseriStanari].[Active] AS [Active], 
+    [vUseriStanari].[MasterAcc] AS [MasterAcc], 
+    [vUseriStanari].[Email] AS [Email]
+    FROM [dbo].[vUseriStanari] AS [vUseriStanari]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vUseriSvi" EntityType="Self.vUseriSvi" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vUseriSvi].[Id] AS [Id], 
+    [vUseriSvi].[CompanyId] AS [CompanyId], 
+    [vUseriSvi].[Ime] AS [Ime], 
+    [vUseriSvi].[Prezime] AS [Prezime], 
+    [vUseriSvi].[UserGuid] AS [UserGuid], 
+    [vUseriSvi].[Stanarid] AS [Stanarid], 
+    [vUseriSvi].[ZgradaId] AS [ZgradaId], 
+    [vUseriSvi].[Active] AS [Active], 
+    [vUseriSvi].[MasterAcc] AS [MasterAcc], 
+    [vUseriSvi].[Email] AS [Email]
+    FROM [dbo].[vUseriSvi] AS [vUseriSvi]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vUseriVoditelji" EntityType="Self.vUseriVoditelji" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vUseriVoditelji].[Id] AS [Id], 
+    [vUseriVoditelji].[CompanyId] AS [CompanyId], 
+    [vUseriVoditelji].[Ime] AS [Ime], 
+    [vUseriVoditelji].[Prezime] AS [Prezime], 
+    [vUseriVoditelji].[UserGuid] AS [UserGuid], 
+    [vUseriVoditelji].[Stanarid] AS [Stanarid], 
+    [vUseriVoditelji].[ZgradaId] AS [ZgradaId], 
+    [vUseriVoditelji].[Active] AS [Active], 
+    [vUseriVoditelji].[MasterAcc] AS [MasterAcc], 
+    [vUseriVoditelji].[Email] AS [Email]
+    FROM [dbo].[vUseriVoditelji] AS [vUseriVoditelji]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vZgrade" EntityType="Self.vZgrade" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

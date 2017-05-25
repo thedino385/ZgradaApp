@@ -85,20 +85,39 @@ namespace ZgradaApp.Controllers
                 return View(model);
             }
 
-            string userId = (await UserManager.FindByNameAsync(model.Email)).Id;
+
+            var user = await UserManager.FindAsync(model.Email, model.Password);
+            var roles = await UserManager.GetRolesAsync(user.Id);
+
+           if(roles[0] == "Admin")
+            {
+                await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                return RedirectToAction("Index", "Admin");
+            }
+                
+            //var user = (await UserManager.FindByNameAsync(model.Email));
+            string userId = user.Id;
             string userType = col["userType"];
             if(userType == "voditelj")
             {
                 var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
                 if (u.Active == true)
                 {
+                    var comp = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == u.CompanyId);
+                    if(comp.Active != true)
+                    {
+                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                    }
+
                     // This doesn't count login failures towards account lockout
                     // To enable password failures to trigger account lockout, change to shouldLockout: true
                     var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
                     switch (result)
                     {
                         case SignInStatus.Success:
-                            return RedirectToLocal(returnUrl);
+                            return RedirectToAction("Index", "Home");  //RedirectToLocal(returnUrl);
                         case SignInStatus.LockedOut:
                             return View("Lockout");
                         case SignInStatus.RequiresVerification:
@@ -151,7 +170,7 @@ namespace ZgradaApp.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
 
-            return Json(await _db.vKompanijeUseri.Where(p => p.CompanyId == companyId).ToListAsync(), JsonRequestBehavior.AllowGet);
+            return Json(await _db.vUseriVoditelji.Where(p => p.CompanyId == companyId).ToListAsync(), JsonRequestBehavior.AllowGet);
         }
 
         public async Task<ActionResult> editUser(KompanijeUseri user)
@@ -274,11 +293,11 @@ namespace ZgradaApp.Controllers
                 {
                     // ok user je kreiran,
                     // sad snimi tvrtku i korisnika
-
+                    UserManager.AddToRole(user.Id, "Voditelj");
                     Kompanije company = new Kompanije {
                         Naziv = model.Naziv, OIB = model.OIB, Adresa = model.Adresa, Mjesto = model.Mjesto,
                         Telefon = model.Telefon, RegisterDate = DateTime.Now, ActivationDate = DateTime.Now,
-                        ExpirationDate = DateTime.Today.AddYears(1)
+                        ExpirationDate = DateTime.Today.AddYears(1), Active = true
                     };
                     _db.Kompanije.Add(company);
                     int kompanijaId =  await _db.SaveChangesAsync();
@@ -337,7 +356,7 @@ namespace ZgradaApp.Controllers
                                 //await UserManager.AddClaimAsync(company.Id.ToString(), new Claim("Cid", company.Id.ToString()));
                                 //await UserManager.AddClaimAsync(company.Naziv, new Claim("Comp", company.Naziv));
                                 //await UserManager.AddClaimAsync(s.Ime + " " + s.Prezime, new Claim("imePrezime", company.Naziv));
-
+                                UserManager.AddToRole(user.Id, "Stanar");
                                 var u = new KompanijeUseri { ZgradaId = zgradaId, CompanyId = company.Id, Stanarid = s.Id, MasterAcc = false, UserGuid = user.Id };
                                 _db.KompanijeUseri.Add(u);
                                 s.UserGuid = user.Id;
