@@ -36,10 +36,10 @@
                     <th colspan="5">
                         <table>
                             <tr>
-                                <td style="padding-right: 10px"><div style="width:10px;height:10px;border:1px solid #000; background-color: orange; padding-right: 10px"></div>&nbsp;Poc. stanje</td>
+                                <td style="padding-right: 10px"><div style="width:10px;height:10px;border:1px solid #000; background-color: darkgreen; padding-right: 10px"></div>&nbsp;Uplata</td>
+                                <td style="padding-right: 10px"><div style="width:10px;height:10px;border:1px solid #000; background-color: chocolate; padding-right: 10px"></div>&nbsp;Poc. stanje</td>
                                 <td style="padding-right: 10px"><div style="width:10px;height:10px;border:1px solid #000; background-color: blue; padding-right: 10px"></div>&nbsp;Zaduženje</td>
-                                <td style="padding-right: 10px"><div style="width:10px;height:10px;border:1px solid #000; background-color: magenta; padding-right: 10px"></div>&nbsp;Uplata</td>
-                                <td><div style="width:10px;height:10px;border:1px solid #000; background-color: black"></div>&nbsp;Saldo</td>
+                                <td><div style="width:10px;height:10px;border:1px solid #000; background-color: darkred"></div>&nbsp;Saldo</td>
                             </tr>
                         </table>
                     </th>
@@ -105,11 +105,11 @@
                     </th>
                     <th style="text-align: center"></th>
                 </tr>
-                <tr>
+                <!--<tr>
                     <th colspan="5"></th>
                     <th colspan="12" style="vertical-align: middle; text-align: center; color: indigo; font-size: 11px">Uplate po mjesecima</th>
                     <th></th>
-                </tr>
+                </tr>-->
                 <tr>
                     <th style="font-size: 12px; vertical-align: middle">
                         Ime<br />prezime
@@ -140,7 +140,7 @@
                     <th style="vertical-align: middle; text-align: center" class="{{clsMjesec12}}" ng-click="openMjesecno(12, $event)">12</th>
 
                     <th style="font-size: 11px; vertical-align: middle; text-align: end">
-                        Stanje<br />31.12.{{selectedGodina-1}}.
+                        <a href="" ng-click="modalStanje($event)">Stanje<br />31.12.{{selectedGodina-1}}.</a>
                     </th>
                 </tr>
             </thead>
@@ -161,80 +161,82 @@
                     <td style="font-size: 12px">
                         {{rec.Uplaceno | number: 2}}
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj1 | number: 2}} <br />
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj1 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj1 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj2 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj2 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj2 track by $index">
                             <!--<span ng-class="{ greenCell: s > 0, redCell: s < 0 }"  style="font-size: 10px">{{s | number: 2}}</span><br />-->
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj3 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj3 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj3 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj4 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj4 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj4 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj5 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj5 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj5 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj6 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj6 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj6 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj7 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj7 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj7 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj8 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj8 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj8 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj9 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj9 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj9 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj10 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj10 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj10 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj11 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj11 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj11 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td style="font-size: 12px">
-                        {{rec.Mj12 | number: 2}}
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px">
+                        <span style="color: darkgreen">{{rec.Mj12 | number: 2}}</span><br />
                         <div ng-repeat="s in rec.SaldoMj12 track by $index">
                             <span ng-style="setColor($index)" style="font-size: 10px">{{s | number: 2}}</span><br />
                         </div>
                     </td>
-                    <td></td>
+                    <td style="font-size: 12px; text-align: right; padding-right: 7px" ng-class="{ greenCell: rec.StanjeOd > 0, redCell: rec.StanjeOd < 0 }">
+                        {{rec.StanjeOd | number: 2}}
+                    </td>
                 </tr>
             </tbody>
         </table>

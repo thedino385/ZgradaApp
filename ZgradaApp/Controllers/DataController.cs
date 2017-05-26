@@ -327,7 +327,7 @@ namespace ZgradaApp.Controllers
         [Route("api/data/praznaPricuvaRezijeCreate")]
         public async Task<IHttpActionResult> PraznaPricuvaRezijeCreate(int zgradaId, int godina)
         {
-            return Ok(new PricuvaRezijeGodina { ZgradaId = zgradaId, Godina = godina, Status = "a" });
+            return Ok(new PricuvaRezijeGodina { ZgradaId = zgradaId, Godina = godina, Status = "a", PricuvaRezijeGodina_StanjeOd = new List<PricuvaRezijeGodina_StanjeOd>() });
         }
 
         [HttpGet]
@@ -433,11 +433,11 @@ namespace ZgradaApp.Controllers
                         // brisanja nema, znaci samo update moze
                         var target = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.Id == prGod.Id);
 
-                        foreach (var stanje in prGod.PricuvaRezijeGodina_StanjeOd)
-                        {
-                            _db.PricuvaRezijeGodina_StanjeOd.Attach(stanje);
-                            _db.Entry(stanje).State = EntityState.Modified;
-                        }
+                        //foreach (var stanje in prGod.PricuvaRezijeGodina_StanjeOd)
+                        //{
+                        //    _db.PricuvaRezijeGodina_StanjeOd.Attach(stanje);
+                        //    _db.Entry(stanje).State = EntityState.Modified;
+                        //}
 
                         foreach (var prMj in prGod.PricuvaRezijeMjesec)
                         {
@@ -490,7 +490,30 @@ namespace ZgradaApp.Controllers
             catch (Exception ex) { return InternalServerError(); }
         }
 
-
+        [HttpPost]
+        [Route("api/data/pricuvaRezijeStanjeOdCreateOrUpdate")]
+        public async Task<IHttpActionResult> pricuvaRezijeStanjeOdCreateOrUpdate(List<PricuvaRezijeGodina_StanjeOd> stanjeOdList)
+        {
+            try
+            {
+                foreach (var item in stanjeOdList)
+                {
+                    if (item.Id == 0)
+                        _db.PricuvaRezijeGodina_StanjeOd.Add(item);
+                    else
+                    {
+                        _db.PricuvaRezijeGodina_StanjeOd.Attach(item);
+                        _db.Entry(item).State = EntityState.Modified;
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return InternalServerError();
+            }
+        }
 
         [HttpGet]
         [Route("api/data/getPricuvaRezijeGodinaTable")]

@@ -67,6 +67,11 @@
         return $http.post('../api/data/pricuvaRezijeCreateOrUpdate', zgradaObj);
     }
 
+    var pricuvaRezijeStanjeOdCreateOrUpdate = function (stanjeOdList) {
+        console.log(stanjeOdList);
+        return $http.post('../api/data/pricuvaRezijeStanjeOdCreateOrUpdate', stanjeOdList);
+    }
+
     var getPricuvaRezijeGodinaTable = function (zgradaId, godina) {
         return $http({
             url: '../api/data/getPricuvaRezijeGodinaTable',
@@ -182,7 +187,9 @@
         tvrtkaUpdate: tvrtkaUpdate,
         getOglasna: getOglasna,
         oglasnaEditOrCreate: oglasnaEditOrCreate,
-        getuseriStanari: getuseriStanari
+        getuseriStanari: getuseriStanari,
+
+        pricuvaRezijeStanjeOdCreateOrUpdate: pricuvaRezijeStanjeOdCreateOrUpdate
     }
 
 

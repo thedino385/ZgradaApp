@@ -121,6 +121,11 @@ namespace ZgradaApp
         public string Email { get; set; }
     }
 
+    public partial class PricuvaRezijeGodina_StanjeOd
+    {
+        public string pdMaster { get; set; }
+    }
+    
 
     // OLD
 

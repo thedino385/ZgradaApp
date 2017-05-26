@@ -40,7 +40,7 @@
         function getDataForGodina(godina) {
             $scope.selectedGodina = godina;
             $scope.tableVisible = true;
-            console.log($scope.zgradaObj);
+            //console.log($scope.zgradaObj);
             DataService.getPricuvaRezijeGodinaTable($scope.zgradaObj.Id, godina).then(
                 function (result) {
                     // success
@@ -48,7 +48,7 @@
                     $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                         if (pr.Godina == godina) {
                             $scope.selectedGodina = godina;
-                            console.log(pr.Godina);
+                            //console.log(pr.Godina);
                             farbajMjesece();
                         }
                     });
@@ -63,15 +63,15 @@
         $scope.dodajGodinu = function () {
             if ($scope.novaGodina == undefined || $scope.novaGodina == '')
                 return;
-            console.log($scope.novaGodina);
-            console.log($scope.godine.indexOf($scope.novaGodina));
-            console.log($scope.godine);
+            //console.log($scope.novaGodina);
+            //console.log($scope.godine.indexOf($scope.novaGodina));
+            //console.log($scope.godine);
             if ($scope.godine.indexOf($scope.novaGodina) == -1) {
                 DataService.praznaPricuvaRezijeCreate($scope.zgradaObj.Id, $scope.novaGodina).then(
                     function (result) {
                         $scope.zgradaObj.PricuvaRezijeGodina.push(result.data);
                         $scope.godine.push($scope.novaGodina);
-                        console.log('$scope.novaGodina: ' + $scope.novaGodina);
+                        //console.log('$scope.novaGodina: ' + $scope.novaGodina);
                         $scope.novaGodina = '';
                     },
                     function (result) {
@@ -144,12 +144,46 @@
             });
         };
 
+        
+        // _________________________________________________________
+        //              Modal stanjeOd
+        // _________________________________________________________
+        $scope.modalStanje = function (ev) {
+            $mdDialog.show({
+                controller: 'stanjeOdModalCtrl',
+                templateUrl: 'app/pricuvaRezije/stanjeOdModal.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    zgradaObj: $scope.zgradaObj,
+                    godinaTable: $scope.godinaTable,
+                }
+            }).then(function (zgradaObj) {
+                $scope.zgradaObj = zgradaObj;
+                console.log($scope.zgradaObj);
+                //save();
+                DataService.pricuvaRezijeStanjeOdCreateOrUpdate(zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd[0]).then(
+                    function (result) {
+                        toastr.success('Promjene su snimljene!', '');
+                    },
+                    function (result) {
+                        toastr.error('Promjene nisu snimljene!', '');
+                    }
+                )
+            }, function () {
+
+            });
+        };
+
         $scope.saveAll = function () {
             save();
         }
 
         function save() {
             $rootScope.loaderActive = true;
+            console.log($scope.zgradaObj);
             DataService.pricuvaRezijeCreateOrUpdate($scope.zgradaObj).then(
                 function (result) {
                     // on success
@@ -174,14 +208,14 @@
         //              Modal kartica
         // _________________________________________________________
         $scope.kartica = function (pdMasterId, ev) {
-            console.log(pdMasterId);
+            //console.log(pdMasterId);
             var pdmaster = null;
             $scope.zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (master) {
-                console.log(master.Id == pdMasterId);
+                //console.log(master.Id == pdMasterId);
                 if (parseInt(master.Id) == parseInt(pdMasterId))
                     pdmaster = master;
             });
-            console.log(pdmaster);
+            //console.log(pdmaster);
             $mdDialog.show({
                 controller: 'indexKsCtrl',
                 templateUrl: 'app/ks/indexKs.html',
@@ -273,14 +307,14 @@
 
         $scope.setColor = function (index) {
             switch (index) {
+                case 3:
+                    return { color: "darkgreen" };
                 case 0:
-                    return { color: "orange" };
+                    return { color: "chocolate" };
                 case 1:
                     return { color: "blue" };
                 case 2:
-                    return { color: "magenta" };
-                case 3:
-                    return { color: "black" };
+                    return { color: "darkred" };
             }
         }
 
