@@ -1,5 +1,5 @@
-﻿angularApp.controller('dodajOglasModalCtrl', ['$scope', '$mdDialog', 'toastr', 'id', 'oglasna',
-    function ($scope, $mdDialog, toastr, id, oglasna) {
+﻿angularApp.controller('dodajOglasModalCtrl', ['$scope', '$mdDialog', 'toastr', 'DataService',  'id', 'oglasna',
+    function ($scope, $mdDialog, toastr, DataService, id, oglasna) {
 
         var tempList = [];
         angular.copy(oglasna, tempList);

@@ -3,6 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <style>
+      .uppercase {
+          text-transform: uppercase;
+      }
+     
+  </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -59,30 +67,30 @@
             <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px">
                 <div class="container">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        @*<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
-                        </button>
-                        <a id="topNavSelectedZgrada" class="navbar-brand navigation" style="color: indigo; display: none" href="#"></a>
+                        </button>*@
+                        <a id="topNavSelectedZgrada" onclick="Mark('topNavSelectedZgrada')" class="navbar-brand navigation" style="padding-top: 25px; color: indigo; display: none; font-weight: bold; text-transform: capitalize" href="#"></a>
                     </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navigation" style="display: none">
+                    <div id="navbar" class="navbar-collapse collapse" style="padding-bottom: 10px; padding-top: 10px">
+                        <ul class="nav navbar-nav navigation uppercase" style="display: none">
                             <li id="pdMasteri"><a href="#!/posebniDijeloviMasterList" onclick="Mark('pdMasteri')">Posebni dijelovi</a></li>
                             <li class="dropdown" id="obracun">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Obračun <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#!/prihodiRashodi" onclick="Mark('obracun')">Prihodi i rashodi</a></li>
-                                    <li><a href="#!/pricuvaRezije" onclick="Mark('obracun')">Pričuva i režije</a></li>
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/prihodiRashodi" onclick="Mark('obracun')">Prihodi i rashodi</a></li>
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/pricuvaRezije" onclick="Mark('obracun')">Pričuva i režije</a></li>
                                 </ul>
                             </li>
                             <li id="dnevnik"><a href="#!/dnevnik/0" onclick="Mark('dnevnik')">Dnevnik</a></li>
                             <li class="dropdown" id="popisi">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Popisi <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#!/popisDijelova" onclick="Mark('popisi')">Popis zajedničkih dijelova</a></li>
-                                    <li><a href="#!/popisUredjaja" onclick="Mark('popisi')">Popis zajedničkih uređaja</a></li>
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/popisDijelova" onclick="Mark('popisi')">Popis zajedničkih dijelova</a></li>
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/popisUredjaja" onclick="Mark('popisi')">Popis zajedničkih uređaja</a></li>
                                 </ul>
                             </li>
                             @if (ViewBag.MasterAcc != null && ViewBag.MasterAcc == true)
@@ -90,8 +98,8 @@
                                 <li class="dropdown" id="tvrtka">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tvrtka <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li id="useri"><a href="#!/useri" onclick="Mark('tvrtka')">Korisnici</a></li>
-                                        <li id="tvrtka"><a href="#!/tvrtka" onclick="Mark('tvrtka')">Tvrtka</a></li>
+                                        <li id="useri"><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/useri" onclick="Mark('tvrtka')">Korisnici</a></li>
+                                        <li id="tvrtka"><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/tvrtka" onclick="Mark('tvrtka')">Tvrtka</a></li>
                                     </ul>
                                 </li>
                             }

@@ -169,7 +169,7 @@
                             if (poslaniSvi)
                                 toastr.success('Svi mailovi su poslani');
                             else
-                                toastr.error('Jedan ili više mailova nije poslan');
+                                toastr.info('Jedan ili više mailova nije poslan');
                         }
                         else
                             toastr.info('Nema rashoda za kreiranje i slanje uplatnica');

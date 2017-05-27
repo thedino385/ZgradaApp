@@ -8,6 +8,10 @@
             return;
         }
 
+        $scope.isVlasniciCollapsed = true;
+        $scope.nePrikazujZatvorene = true;
+        $scope.cb = true;
+
         //if ($routeParams) {
         //if ($routeParams.id > 0) { // pa uvijek ce i biti, master postoji
         // nadji posebniDioMaster
@@ -488,7 +492,7 @@
         };
 
         $scope.goBack = function () {
-            $location.path('/zgrade');
+            $location.path('/posebniDijeloviMasterList');
         }
 
 

@@ -80,23 +80,25 @@ namespace ZgradaApp.Controllers
                 // period nije zatvoren!
                 var vlasnici = vlasniciPeriod.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Where(p => p.VlasniciPeriodId == vlasniciPeriod.Id);
                 var vlasnik = vlasnici.FirstOrDefault(p => p.UplatnicaGlasiNaVlasnika == true); // uzeo prvog
-                if (vlasnik == null)
-                    return Json(new { success = false });
-                var vlasnikObj = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == vlasnik.StanarId);
-                Platitelj = vlasnikObj.Ime + " " + vlasnikObj.Prezime;
-                string PozivNaBroj = "987654321";
-                Iznos = list.Where(p => p.masterId == zgradaMasterId && p.godina == godina).Sum(p => p.iznos);
-
-                var zgradaMaster = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == zgradaMasterId);
-                email = (await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == zgradaMaster.UplatnicaStanarId)).Email;
-
-                var u = new UplatniceRashodiPopis
+                if (vlasnik != null)
                 {
-                    Email = email,
-                    PdfFileName = UplatnicaPdf(Opis, Platitelj, zgradaObj.Adresa, zgradaObj.Mjesto, IBANPrimatelj, PozivNaBroj, Iznos),
-                    ZgradaMasterId = zgradaMasterId
-                };
-                uplatniceList.Add(u);
+                    var vlasnikObj = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == vlasnik.StanarId);
+                    Platitelj = vlasnikObj.Ime + " " + vlasnikObj.Prezime;
+                    string PozivNaBroj = "987654321";
+                    Iznos = list.Where(p => p.masterId == zgradaMasterId && p.godina == godina).Sum(p => p.iznos);
+
+                    var zgradaMaster = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == zgradaMasterId);
+                    email = (await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.Id == zgradaMaster.UplatnicaStanarId)).Email;
+
+                    var u = new UplatniceRashodiPopis
+                    {
+                        Email = email,
+                        PdfFileName = UplatnicaPdf(Opis, Platitelj, zgradaObj.Adresa, zgradaObj.Mjesto, IBANPrimatelj, PozivNaBroj, Iznos),
+                        ZgradaMasterId = zgradaMasterId
+                    };
+                    uplatniceList.Add(u);
+                }
+                
             }
 
             var ret = await SendMail(uplatniceList, Opis, Poruka);

@@ -57,23 +57,26 @@
                                 </span>
                                 <!--Dijelovi: St-01, GA-777, DRV-752-->
                             </p>
-                            <p>
-                                <<!--div ng-repeat="period in pd.Zgrade_PosebniDijeloviMaster_VlasniciPeriod | filter:  PosebniDioMasterId: pd.Id  | filter: Zatvoren != 'true'"></div>
-                                    Vlasnik/Vlasnici:<div ng-repeat="vlasnici in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici | filter: { VlasniciPeriodId: period.Id }">
-                                        a
-                                        <span ng-repeat="stanar in Zgrade_Stanari | filter: { Id: vlasnici.StanarId }">
+                            <p> Vlasnik/Vlasnici:
+                                <span ng-repeat="period in pd.Zgrade_PosebniDijeloviMaster_VlasniciPeriod | filter:  { PosebniDioMasterId: pd.Id }  | filter: { Zatvoren: '!true' }">
+                                    <span ng-repeat="vlasnici in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici | filter: { VlasniciPeriodId: period.Id }">
+                                        <span ng-repeat="stanar in zgrada.Zgrade_Stanari | filter: { Id: vlasnici.StanarId } ">
                                             {{stanar.Ime}}&nbsp;{{stanar.Prezime}},
                                         </span>
-                                </div>-->
+                                    </span>
+                                </span>
                                 
                             </p>
                         </div>
-                        <button type="button" class="btn btn-default btn-sm md-avatar" title="Kartica posebnog dijela" ng-click="kartica(pd)">
+                        <md-button class="md-primary md-hue-1" ng-click="kartica(pd)">Kartica posebnog dijela</md-button>
+                        <md-button class="md-primary md-hue-1" ng-click="edit(pd.Id)">Uredi</md-button>
+
+                        <!--<button type="button" class="btn btn-default btn-sm md-avatar" title="Kartica posebnog dijela" ng-click="kartica(pd)">
                             <md-icon md-svg-icon="/Content/icons/account-card-details.svg" style="fill: indigo"></md-icon>
                         </button>
                         <button type="button" class="btn btn-default btn-sm md-avatar" title="Dijelovi" ng-click="edit(pd.Id)">
                             <md-icon md-svg-icon="/Content/icons/animation.svg" style="fill: indigo"></md-icon>
-                        </button>
+                        </button>-->
                         <md-divider inset></md-divider>
                     </md-list-item>
                 </md-list>

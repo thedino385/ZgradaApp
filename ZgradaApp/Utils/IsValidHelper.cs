@@ -61,7 +61,10 @@ namespace ZgradaApp
                         {
                             var mjTarget = targetGodina.PricuvaRezijeMjesec.FirstOrDefault(p => p.Mjesec == targetMj);
                             var masterTarget = mjTarget.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == pdMaster.Id);
-                            saldoIzProslog = masterTarget.DugPretplata != null ? (decimal)masterTarget.DugPretplata : 0;
+                            if (masterTarget == null)
+                                saldoIzProslog = 0;
+                            else
+                                saldoIzProslog = masterTarget.DugPretplata != null ? (decimal)masterTarget.DugPretplata : 0;
                         }
                     }
                     posDioMaster.StanjeOd = saldoIzProslog;
