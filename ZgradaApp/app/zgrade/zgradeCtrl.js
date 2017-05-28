@@ -40,6 +40,7 @@
         $scope.selectZgrada = function (zgrada) {
             $('.navigation').fadeIn('slow');
             $('#topNavSelectedZgrada').text(zgrada.Naziv);
+            $('#topNavSelectedZgrada').attr('href', '#!/zgrada/' + zgrada.Id);
             DataService.selZgradaId = zgrada.Id;
             $scope.selZgradaId = zgrada.Id;
         }

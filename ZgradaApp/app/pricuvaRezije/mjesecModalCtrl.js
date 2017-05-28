@@ -85,6 +85,7 @@
         };
 
         $scope.save = function () {
+            $('nav').fadeIn();
             if ($scope.PricuvaRezijeZaMjesec.Id == 0) {
                 zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
                     if (prGod.Godina == godina) {
@@ -110,6 +111,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 
@@ -205,7 +207,14 @@
                     rezijeZaMaster = parseFloat(pdMaster.ObracunRezijeCijenaSlobodanUnos);
                 }
 
-                pdMaster.Zaduzenje = parseFloat(pricuvaZaMaster + rezijeZaMaster).toFixed(2);
+                //pdMaster.Zaduzenje = parseFloat(pricuvaZaMaster + rezijeZaMaster).toFixed(2);
+                if (pricuvaZaMaster != null && pricuvaZaMaster != undefined)
+                    pdMaster.ZaduzenjePricuva = parseFloat(pricuvaZaMaster).toFixed();
+                if (rezijeZaMaster != null && rezijeZaMaster != undefined)
+                    pdMaster.ZaduzenjeRezije = parseFloat(rezijeZaMaster).toFixed(2);
+
+                alert(pdMaster.ZaduzenjePricuva);
+                alert(pdMaster.ZaduzenjeRezije);
 
                 // Uplaceno  se vuse iz Prihoda - suma prihoda za pdMasterId za ovaj mjesec
                 var uplaceno = 0;
@@ -224,37 +233,11 @@
                 });
                 pdMaster.Uplaceno = parseFloat(uplaceno).toFixed(2);
 
-                // StanjeOd - ako je prvi mjesec, stanje se cupa iz PricuvaRezijeGodina_StanjeOd za posebniDioMasterId
-                // za ostale mjesece, StanjeOd je Dug/Pretplata iz proslog mjeseca
-                //if ($scope.mjesec == 1) {
-                //    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
-                //        if (prGod.Godina == godina) {
-                //            prGod.PricuvaRezijeGodina_StanjeOd.forEach(function (stanje) {
-                //                if (stanje.PosebniDioMasterId == pdMaster)
-                //                    pdMaster.StanjeOd = stanje.StanjeOd.toFixed(2);;
-                //            });
-                //        }
-                //    });
-                //}
-                //else {
-                //    zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
-                //        if (prGod.Godina == godina) {
-                //            prGod.PricuvaRezijeMjesec.forEach(function (mjesec) {
-                //                if (mjesec.Mjesec == $scope.mjesec - 1)
-                //                    mjesec.PricuvaRezijePosebniDioMasteri.forEach(function (m) {
-                //                        if (m.PosebniDioMasterId == pdMaster.Id)
-                //                            pdMaster.StanjeOd = m.StanjeOd.toFixed(2);;
-                //                    });
-                //            });
-                //        }
-                //    });
-                //}
-
                 // Dug/Pretplata = Uplaceno + StanjeOd - Zaduzenje - PocetnoStanje
                 var ps = 0;
                 if (pdMaster.PocetnoStanje != null)
                     ps = parseFloat(pdMaster.PocetnoStanje);
-                pdMaster.DugPretplata = (parseFloat(pdMaster.Uplaceno) + parseFloat(pdMaster.StanjeOd) - parseFloat(pdMaster.Zaduzenje) + ps).toFixed(2);;
+                pdMaster.DugPretplata = (parseFloat(pdMaster.Uplaceno) + parseFloat(pdMaster.StanjeOd) - parseFloat(pdMaster.ZaduzenjePricuva) - parseFloat(pdMaster.ZaduzenjeRezije) + ps).toFixed(2);;
             });
             $scope.obracunKreiran = true;
         }
@@ -308,10 +291,18 @@
         }
 
         $scope.nacinObracunaPricuvaChanged = function (nacin) {
-            if (nacin == 2)
+            if (nacin == 2) {
+                $scope.cijenaPricuvaPostoVisible = false;
                 $scope.cijenaPricuvaVisible = true;
-            else
+            }
+            else if (nacin == 3) {
+                $scope.cijenaPricuvaPostoVisible = true;
                 $scope.cijenaPricuvaVisible = false;
+            }
+            else {
+                $scope.cijenaPricuvaPostoVisible = false;
+                $scope.cijenaPricuvaVisible = false;
+            }
         }
 
         $scope.nacinObracunaRezijeChanged = function (nacin) {

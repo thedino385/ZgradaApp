@@ -2,10 +2,18 @@
     <form ng-cloak name="frm">
         <md-toolbar>
             <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
                 <h3 flex md-truncate>Rashodi: {{period}}</h3>
-                <span></span>
+                
                 <md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
                     <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: lightyellow"></md-icon>
+                </md-button>
+
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>

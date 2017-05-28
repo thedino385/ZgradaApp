@@ -108,11 +108,12 @@
     <EntitySetMapping Name="PricuvaRezijePosebniDioMasteri">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasteri">
         <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasteri">
+          <ScalarProperty Name="ZaduzenjeRezije" ColumnName="ZaduzenjeRezije" />
+          <ScalarProperty Name="ZaduzenjePricuva" ColumnName="ZaduzenjePricuva" />
           <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
           <ScalarProperty Name="PocetnoStanje" ColumnName="PocetnoStanje" />
           <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
           <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
-          <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
           <ScalarProperty Name="DugPretplata" ColumnName="DugPretplata" />
           <ScalarProperty Name="ObracunRezijeCijenaSlobodanUnos" ColumnName="ObracunRezijeCijenaSlobodanUnos" />
           <ScalarProperty Name="ObracunRezijeBrojClanova" ColumnName="ObracunRezijeBrojClanova" />

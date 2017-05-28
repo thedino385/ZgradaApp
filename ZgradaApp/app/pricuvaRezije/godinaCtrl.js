@@ -96,6 +96,7 @@
         //              Modal openMjesecno
         // _________________________________________________________
         $scope.openMjesecno = function (mjesec, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'mjesecModalCtrl',
                 templateUrl: 'app/pricuvaRezije/mjesecModal.html',
@@ -307,13 +308,15 @@
 
         $scope.setColor = function (index) {
             switch (index) {
-                case 3:
-                    return { color: "darkgreen" };
+                //case 0:
+                //    return { color: "darkgreen" };
                 case 0:
                     return { color: "chocolate" };
                 case 1:
                     return { color: "blue" };
                 case 2:
+                    return { color: "magenta" };
+                case 3:
                     return { color: "darkred" };
             }
         }

@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPovrsine" Width="1.5" PointX="12" PointY="35" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPripadci" Width="1.5" PointX="12" PointY="38.375" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildren" Width="1.5" PointX="9.75" PointY="36.875" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Width="1.5" PointX="7.5" PointY="37.5" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Width="1.5" PointX="7.5" PointY="37.25" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici" Width="1.5" PointX="9.75" PointY="41.625" />
         <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi" Width="1.5" PointX="3" PointY="17.625" />
         <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" Width="1.5" PointX="5.25" PointY="15.25" />

@@ -107,7 +107,8 @@
     <Property Name="ObracunRezijeBrojClanova" Type="int" />
     <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
     <Property Name="DugPretplata" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ZaduzenjePricuva" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ZaduzenjeRezije" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="PeriodId" Type="int" />
     <Property Name="PocetnoStanje" Type="decimal" Precision="18" Scale="2" />

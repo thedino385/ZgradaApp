@@ -112,7 +112,8 @@
           <Property Name="ObracunRezijeBrojClanova" Type="int" />
           <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DugPretplata" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Zaduzenje" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZaduzenjePricuva" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZaduzenjeRezije" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Uplaceno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PeriodId" Type="int" />
           <Property Name="PocetnoStanje" Type="decimal" Precision="18" Scale="2" />
@@ -1390,7 +1391,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="ObracunRezijeBrojClanova" Type="Int32" />
           <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DugPretplata" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Zaduzenje" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PeriodId" Type="Int32" />
           <Property Name="PocetnoStanje" Type="Decimal" Precision="18" Scale="2" />
@@ -1398,6 +1398,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijeMjesec" />
           <NavigationProperty Name="PricuvaRezijePosebniDioChildren" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioChildren" />
           <NavigationProperty Name="PricuvaRezijePosebniDioMasterVlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioMasterVlasnici" />
+          <Property Name="ZaduzenjePricuva" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZaduzenjeRezije" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PricuvaRezijePosebniDioMasterVlasnici">
           <Key>
@@ -2270,11 +2272,12 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PricuvaRezijePosebniDioMasteri">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasteri">
               <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasteri">
+                <ScalarProperty Name="ZaduzenjeRezije" ColumnName="ZaduzenjeRezije" />
+                <ScalarProperty Name="ZaduzenjePricuva" ColumnName="ZaduzenjePricuva" />
                 <ScalarProperty Name="StanjeOd" ColumnName="StanjeOd" />
                 <ScalarProperty Name="PocetnoStanje" ColumnName="PocetnoStanje" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
                 <ScalarProperty Name="Uplaceno" ColumnName="Uplaceno" />
-                <ScalarProperty Name="Zaduzenje" ColumnName="Zaduzenje" />
                 <ScalarProperty Name="DugPretplata" ColumnName="DugPretplata" />
                 <ScalarProperty Name="ObracunRezijeCijenaSlobodanUnos" ColumnName="ObracunRezijeCijenaSlobodanUnos" />
                 <ScalarProperty Name="ObracunRezijeBrojClanova" ColumnName="ObracunRezijeBrojClanova" />

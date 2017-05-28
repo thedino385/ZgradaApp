@@ -2,9 +2,18 @@
     <form ng-cloak name="frm">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h3>Prihodi: {{period}}</h3>
-                <span></span>
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>Prihodi: {{period}}</h3>
+
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
+                </md-button>
             </div>
+
+          
         </md-toolbar>
 
         <md-dialog-content>
@@ -97,7 +106,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table table-hover">
+                <!--<table class="table table-hover">
                     <tr>
                         <td style="vertical-align: middle; text-align: start">Pričuva od ???</td>
                         <td style="vertical-align: middle; text-align: end">{{pricuvaOd}}</td>
@@ -124,7 +133,7 @@
                         <td style="vertical-align: middle; text-align: start"><b>Raspoloživa sredstva pričuve</b></td>
                         <td style="vertical-align: middle; text-align: end">{{raspoloziva}}</td>
                     </tr>
-                </table>
+                </table>-->
             </div>
         </md-dialog-content>
 

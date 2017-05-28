@@ -254,7 +254,6 @@
     <Property Name="ObracunRezijeBrojClanova" Type="Int32" />
     <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="DugPretplata" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Zaduzenje" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Uplaceno" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PeriodId" Type="Int32" />
     <Property Name="PocetnoStanje" Type="Decimal" Precision="18" Scale="2" />
@@ -262,6 +261,8 @@
     <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijeMjesec" />
     <NavigationProperty Name="PricuvaRezijePosebniDioChildren" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioChildren" />
     <NavigationProperty Name="PricuvaRezijePosebniDioMasterVlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioMasterVlasnici" />
+    <Property Name="ZaduzenjePricuva" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ZaduzenjeRezije" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioMasterVlasnici">
     <Key>
