@@ -169,6 +169,7 @@
         }
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel();
         };
     }]);

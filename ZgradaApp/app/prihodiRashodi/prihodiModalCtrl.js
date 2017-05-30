@@ -22,7 +22,42 @@
         $scope.godina = godina;
         $scope.period = getHeaderText();
 
-        izracunajUkupno();
+
+        var dateUnosList = [];
+        var dateObracunList = [];
+        $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (prMjesec) {
+            if (prMjesec.Mjesec == mjesec) {
+                if (prMjesec.DatumUnosa != null) {
+                    dateUnosList.push(new Date(prMjesec.DatumUnosa));
+                }
+                else {
+                    var dejt = new Date();
+                    console.log(dejt);
+                    dateUnosList.push(dejt);
+                    console.log(dateUnosList);
+                }
+
+                if (prMjesec.DatumObracuna != null) {
+                    dateObracunList.push(new Date(prMjesec.DatumObracuna));
+                }
+                else {
+                    var dejt = new Date();
+                    console.log(dejt);
+                    dateObracunList.push(dejt);
+                }
+
+                //dateUnosList.push(prMjesec.DatumUnosa != null ? new Date(prMjesec.DatumUnosa) : new Date());
+                //dateplacanjeList.push(new Date(raMjesec.Datum.DatumPlacanja));
+                //dateObracunList.push(prMjesec.DatumObracuna != null ? new Date(prMjesec.DatumObracuna) : new Date());
+            }
+            
+        });
+        $scope.dateUnosList = dateUnosList;
+        $scope.dateObracunList = dateObracunList;
+        //console.log($scope.dateUnosList);
+
+
+        //izracunajUkupno();
         sumamry();
 
         $scope.dodajRecord = function () {
@@ -38,10 +73,13 @@
             })
             var noviRecord = {
                 Id: maxId + 1, PrihodiRashodiGodId: $scope.prihodRashodZaGodinu.Id, Mjesec: mjesec,
-                Opis: '', Iznos: 0, Status: 'a', PosebniDioMasterId: null
+                Opis: '', Iznos: 0, Status: 'a', PosebniDioMasterId: null, DatumUnosa: new Date(),
+                DatumObracuna: new Date()
             };
             $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.push(noviRecord);
-            sumamry();
+            $scope.dateUnosList.push(new Date());
+            $scope.dateObracunList.push(new Date());
+            //sumamry();
         }
 
         $scope.delete = function (Id) {
@@ -67,27 +105,28 @@
                     }
                 })
             }
-            izracunajUkupno();
-            sumamry();
+            //izracunajUkupno();
+            //sumamry();
         }
 
-        $scope.ukupno = function () {
-            izracunajUkupno();
-        }
+        //$scope.ukupno = function () {
+        //    izracunajUkupno();
+        //}
 
-        function izracunajUkupno() {
-            if ($scope.prihodRashodZaGodinu == undefined)
-                return;
-            var ukupno = 0;
-            $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (rec) {
-                if (rec.Mjesec == mjesec && rec.Status != 'd')
-                    ukupno += parseFloat(rec.Iznos);
-            })
-            $scope.total = (ukupno + parseFloat($scope.uplataPricuve != null ? $scope.uplataPricuve : 0)).toFixed(2);
-            //console.log($scope.total);
-        }
+        //function izracunajUkupno() {
+        //    if ($scope.prihodRashodZaGodinu == undefined)
+        //        return;
+        //    var ukupno = 0;
+        //    $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (rec) {
+        //        if (rec.Mjesec == mjesec && rec.Status != 'd')
+        //            ukupno += parseFloat(rec.Iznos);
+        //    })
+        //    $scope.total = (ukupno + parseFloat($scope.uplataPricuve != null ? $scope.uplataPricuve : 0)).toFixed(2);
+        //    //console.log($scope.total);
+        //}
 
         $scope.save = function () {
+            $('nav').fadeIn();
             // za sve ostale recorde, stavi status 'u'
             var Placeno_u_currMjesecu = 0;
             $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (rec) {
@@ -96,9 +135,35 @@
                 if (rec.Mjesec == mjesec)
                     Placeno_u_currMjesecu += parseFloat(rec.Iznos);
             })
+
+            var index = 0;
+            $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (rec) {
+                if (rec.Mjesec == mjesec) {
+                    console.log($scope.dateUnosList);
+                    //console.log($scope.dateObracunList);
+                    for (var i = 0; i < $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.length; i++) {
+                        if (index == i) {
+                            rec.DatumUnosa = $scope.dateUnosList[i] != null ? new Date($scope.dateUnosList[i]) : null;
+                            alert(new Date($scope.dateUnosList[i]));
+                            rec.DatumObracuna = $scope.dateObracunList[i] != null ? new Date($scope.dateObracunList[i]) : null;
+                            break;
+                        }
+                    }
+                    if (rec.Status == null)
+                        rec.Status = 'u';
+                    index++;
+                }
+            })
+
+
             $scope.prihodRashodZaGodinu.Godina = godina;
             $mdDialog.hide($scope.prihodRashodZaGodinu);
             console.log($scope.prihodRashodZaGodinu);
+
+
+            $scope.parseDate = function (d) {
+                return new Date(d);
+            }
 
             // za prihode treba izracunati samo PlacenoPrihodMj2 za mjesec (godina je odabrana ranije)
             //switch (parseInt(mjesec)) {
@@ -143,6 +208,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

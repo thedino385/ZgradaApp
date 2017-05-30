@@ -22,6 +22,8 @@ namespace ZgradaApp
         public Nullable<decimal> Iznos { get; set; }
         public Nullable<bool> PrijenosPricuve { get; set; }
         public Nullable<bool> UplataPricuve { get; set; }
+        public Nullable<System.DateTime> DatumUnosa { get; set; }
+        public Nullable<System.DateTime> DatumObracuna { get; set; }
     
         public virtual PrihodiRashodi PrihodiRashodi { get; set; }
     }

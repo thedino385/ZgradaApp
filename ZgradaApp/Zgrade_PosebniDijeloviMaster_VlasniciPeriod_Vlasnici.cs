@@ -17,7 +17,7 @@ namespace ZgradaApp
         public int Id { get; set; }
         public int VlasniciPeriodId { get; set; }
         public int StanarId { get; set; }
-        public decimal Udio { get; set; }
+        public string Udio { get; set; }
         public Nullable<bool> UplatnicaGlasiNaVlasnika { get; set; }
     
         public virtual Zgrade_PosebniDijeloviMaster_VlasniciPeriod Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }

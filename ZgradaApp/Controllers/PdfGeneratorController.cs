@@ -53,141 +53,151 @@ namespace ZgradaApp.Controllers
                 //tbl.SpacingBefore = 10;
                 //tbl.SpacingAfter = 10;
                 tbl.DefaultCell.Border = 0;
-                tbl.SetWidths(new int[] { 1, 3, 1, 1, 1, 1 });
+                //tbl.SetWidths(new int[] { 1, 3, 1, 1, 1, 1 });
 
                 BaseColor backColorGray = new BaseColor(252, 252, 252);
                 BaseColor backColorGrayUkupno = new BaseColor(245, 245, 245); 
                 BaseColor borderColor = new BaseColor(230, 230, 230);
 
-                PdfPCell cell = new PdfPCell(new Phrase("Mj", boldTableFont));
+                // rb
+                PdfPCell cell = new PdfPCell(new Phrase("Rb", boldTableFont));
                 //cell.BackgroundColor = new iTextSharp.text.BaseColor(0, 150, 0);
                 cell.BorderColor = borderColor;
                 cell.HorizontalAlignment = Element.ALIGN_CENTER;
                 tbl.AddCell(cell);
 
-                cell = new PdfPCell(new Phrase("Prihodi", boldTableFont));
+                // Mjesec
+                cell = new PdfPCell(new Phrase("Mjesec", boldTableFont));
+                //cell.BackgroundColor = new iTextSharp.text.BaseColor(0, 150, 0);
+                cell.BorderColor = borderColor;
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                tbl.AddCell(cell);
+
+                cell = new PdfPCell(new Phrase("Datum", boldTableFont));
                 cell.HorizontalAlignment = Element.ALIGN_CENTER;
                 cell.BorderColor = borderColor;
                 tbl.AddCell(cell);
 
-                cell = new PdfPCell(new Phrase("Početno stanje", boldTableFont));
+                cell = new PdfPCell(new Phrase("Uplata", boldTableFont));
                 cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 cell.BorderColor = borderColor;
-                tbl.AddCell(cell);
-
-                cell = new PdfPCell(new Phrase("Prošli mjesec", boldTableFont));
-                cell.BorderColor = borderColor;
-                cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 tbl.AddCell(cell);
 
                 cell = new PdfPCell(new Phrase("Zaduženje", boldTableFont));
+                cell.BorderColor = borderColor;
+                cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                tbl.AddCell(cell);
+
+                cell = new PdfPCell(new Phrase(" ", boldTableFont));
                 cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 cell.BorderColor = borderColor;
                 tbl.AddCell(cell);
 
-                cell = new PdfPCell(new Phrase("Dug/Pretplata", boldTableFont));
-                cell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                cell.BorderColor = borderColor;
-                tbl.AddCell(cell);
+                //cell = new PdfPCell(new Phrase("Dug/Pretplata", boldTableFont));
+                //cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                //cell.BorderColor = borderColor;
+                //tbl.AddCell(cell);
 
                 List<int> mjeseci = obj.mjeseci;
                 mjeseci.Sort();
 
                 foreach (var mj in mjeseci)
                 {
-                    var mjesec = obj.tBodyList.FirstOrDefault(p => p.mjesec == mj);
-                    cell = new PdfPCell(new Phrase(mjesec.mjesec.ToString() + ".", cellTableFont));
+                    var rec = obj.tBodyList.FirstOrDefault(p => p.mjesec == mj);
+                    cell = new PdfPCell(new Phrase(rec.rb.ToString() + ".", cellTableFont));
                     cell.BorderColor = borderColor;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     tbl.AddCell(cell);
 
                     // prihodi
-                    PdfPTable tblPrihodi = new PdfPTable(2);
-                    tblPrihodi.DefaultCell.Border = 0;
-                    //tbl.DefaultCell.BackgroundColor = BaseColor.GRAY;
-                    foreach (var prihod in mjesec.prihodi)
-                    {
-                        tblPrihodi.AddCell(new Phrase(prihod.naziv, cellTableFont));
-                        tblPrihodi.AddCell(new Phrase(prihod.iznos.ToString(), cellTableFont));
-                    }
-                    tbl.AddCell(tblPrihodi);
+                    //PdfPTable tblPrihodi = new PdfPTable(2);
+                    //tblPrihodi.DefaultCell.Border = 0;
+                    ////tbl.DefaultCell.BackgroundColor = BaseColor.GRAY;
+                    //foreach (var prihod in mjesec.prihodi)
+                    //{
+                    //    tblPrihodi.AddCell(new Phrase(prihod.naziv, cellTableFont));
+                    //    tblPrihodi.AddCell(new Phrase(prihod.iznos.ToString(), cellTableFont));
+                    //}
+                    //tbl.AddCell(tblPrihodi);
 
-                    cell = new PdfPCell(new Phrase(mjesec.pocStanje.ToString(), cellTableFont));
+                    cell = new PdfPCell(new Phrase(rec.mjesec.ToString(), cellTableFont));
                     cell.HorizontalAlignment = 2; // 0 -left, 1 - center, 2 - right
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.BorderColor = borderColor;
                     tbl.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(mjesec.stanjeOd.ToString(), cellTableFont));
+                    cell = new PdfPCell(new Phrase(rec.datum.ToString(), cellTableFont));
                     cell.HorizontalAlignment = 2; // 0 -left, 1 - center, 2 - right
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.BorderColor = borderColor;
                     tbl.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(mjesec.zaduzenje.ToString(), cellTableFont));
+                    cell = new PdfPCell(new Phrase(rec.zaduzenje.ToString(), cellTableFont));
                     cell.HorizontalAlignment = 2; // 0 -left, 1 - center, 2 - right
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.BorderColor = borderColor;
                     tbl.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(mjesec.dugPretplata.ToString(), cellTableFont));
-                    cell.HorizontalAlignment = 2; // 0 -left, 1 - center, 2 - right
-                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.BorderColor = borderColor;
-                    tbl.AddCell(cell);
+                    //cell = new PdfPCell(new Phrase(mjesec.dugPretplata.ToString(), cellTableFont));
+                    //cell.HorizontalAlignment = 2; // 0 -left, 1 - center, 2 - right
+                    //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    //cell.BorderColor = borderColor;
+                    //tbl.AddCell(cell);
 
 
                     // BEGIN vlasnici
-                    cell = new PdfPCell(new Phrase("", cellTableFont));
-                    //cell.BorderColorBottom = BaseColor.WHITE;
-                    cell.BorderColor = borderColor;
-                    tbl.AddCell(cell);
+                    //cell = new PdfPCell(new Phrase("", cellTableFont));
+                    //cell.BorderColor = borderColor;
+                    //tbl.AddCell(cell);
 
-                    
+                    //cell = new PdfPCell(new Phrase("Vlasnici", cellTableFont));
+                    //cell.BackgroundColor = backColorGray;
+                    //cell.BorderColor = borderColor;
+                    //tbl.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase("Vlasnici", cellTableFont));
-                    cell.BackgroundColor = backColorGray;
-                    cell.BorderColor = borderColor;
-                    tbl.AddCell(cell);
-
-                    var vlasnici = "";
-                    foreach (var v in mjesec.vlasnici)
-                    {
-                        vlasnici += v.imePrezime;
-                    }
-                    cell = new PdfPCell(new Phrase(vlasnici, cellTableFont));
-                    cell.BorderColor = borderColor;
-                    cell.BackgroundColor = backColorGray;
-                    cell.Colspan = 4;
-                    tbl.AddCell(cell);
+                    //var vlasnici = "";
+                    //foreach (var v in rec.vlasnici)
+                    //{
+                    //    vlasnici += v.imePrezime;
+                    //}
+                    //cell = new PdfPCell(new Phrase(vlasnici, cellTableFont));
+                    //cell.BorderColor = borderColor;
+                    //cell.BackgroundColor = backColorGray;
+                    //cell.Colspan = 4;
+                    //tbl.AddCell(cell);
                     // END OF vlasnici
 
                     // BEGIN PosebiDijelovi
-                    cell = new PdfPCell(new Phrase("", cellTableFont));
-                    cell.BorderColor = borderColor;
-                    tbl.AddCell(cell);
+                    //cell = new PdfPCell(new Phrase("", cellTableFont));
+                    //cell.BorderColor = borderColor;
+                    //tbl.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase("Posebni dijelovi", cellTableFont));
-                    cell.BorderColor = borderColor;
-                    cell.BackgroundColor = backColorGray;
-                    tbl.AddCell(cell);
+                    //cell = new PdfPCell(new Phrase("Posebni dijelovi", cellTableFont));
+                    //cell.BorderColor = borderColor;
+                    //cell.BackgroundColor = backColorGray;
+                    //tbl.AddCell(cell);
 
-                    var pdChildren = "";
-                    foreach (var pd in mjesec.posDijelovi)
-                    {
-                        pdChildren += pd.naziv;
-                    }
-                    cell = new PdfPCell(new Phrase(pdChildren, cellTableFont));
-                    cell.BorderColor = borderColor;
-                    cell.BackgroundColor = backColorGray;
-                    cell.Colspan = 4;
-                    tbl.AddCell(cell);
+                    //var pdChildren = "";
+                    //foreach (var pd in mjesec.posDijelovi)
+                    //{
+                    //    pdChildren += pd.naziv;
+                    //}
+                    //cell = new PdfPCell(new Phrase(pdChildren, cellTableFont));
+                    //cell.BorderColor = borderColor;
+                    //cell.BackgroundColor = backColorGray;
+                    //cell.Colspan = 4;
+                    //tbl.AddCell(cell);
                     // END OF PosebiDijelovi
 
-                    if (mjesec.displayTotal)
+                    if (rec.displayTotal)
                     {
-                        //cell = new PdfPCell(new Phrase("", boldTableFont));
-                        //tbl.AddCell(cell);
+                        cell = new PdfPCell(new Phrase(" ", boldTableFont));
+                        cell.BorderColor = borderColor;
+                        cell.BackgroundColor = backColorGrayUkupno;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.Colspan = 2;
+                        cell.FixedHeight = 30;
+                        tbl.AddCell(cell);
 
                         cell = new PdfPCell(new Phrase("Ukupno", boldTableFont));
                         cell.BorderColor = borderColor;
@@ -196,30 +206,30 @@ namespace ZgradaApp.Controllers
                         cell.FixedHeight = 30;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase(mjesec.ukupnoPrihodi.ToString(), boldTableFont));
+                        cell = new PdfPCell(new Phrase(rec.ukupnoPrihodi.ToString(), boldTableFont));
                         cell.BorderColor = borderColor;
                         cell.BackgroundColor = backColorGrayUkupno;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase("", boldTableFont));
+                        cell = new PdfPCell(new Phrase(rec.ukupnoZaduzenje.ToString(), boldTableFont));
                         cell.BorderColor = borderColor;
                         cell.BackgroundColor = backColorGrayUkupno;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.Colspan = 2;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase(mjesec.ukupnoZaduzenje.ToString(), boldTableFont));
+                        cell = new PdfPCell(new Phrase(rec.ukupno.ToString(), boldTableFont));
                         cell.BorderColor = borderColor;
                         cell.BackgroundColor = backColorGrayUkupno;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase(mjesec.ukupnoDugPretplata.ToString(), boldTableFont));
-                        cell.BorderColor = borderColor;
-                        cell.BackgroundColor = backColorGrayUkupno;
-                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        tbl.AddCell(cell);
+                        //cell = new PdfPCell(new Phrase(mjesec.ukupnoDugPretplata.ToString(), boldTableFont));
+                        //cell.BorderColor = borderColor;
+                        //cell.BackgroundColor = backColorGrayUkupno;
+                        //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        //tbl.AddCell(cell);
 
                         // empty row
                         cell = new PdfPCell(new Phrase("  ", boldTableFont));

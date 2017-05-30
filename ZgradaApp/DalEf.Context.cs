@@ -34,7 +34,6 @@ namespace ZgradaApp
         public virtual DbSet<PricuvaRezijePosebniDioChildPripadci> PricuvaRezijePosebniDioChildPripadci { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioChildren> PricuvaRezijePosebniDioChildren { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
-        public virtual DbSet<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
         public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
         public virtual DbSet<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
         public virtual DbSet<PrihodiRashodi_Rashodi> PrihodiRashodi_Rashodi { get; set; }
@@ -50,7 +49,6 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade_PosebniDijeloviChild_Pripadci> Zgrade_PosebniDijeloviChild_Pripadci { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviMaster> Zgrade_PosebniDijeloviMaster { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod> Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici> Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici { get; set; }
         public virtual DbSet<Zgrade_Stanari> Zgrade_Stanari { get; set; }
         public virtual DbSet<vKompanijeUseri> vKompanijeUseri { get; set; }
         public virtual DbSet<vZgrade> vZgrade { get; set; }
@@ -63,5 +61,7 @@ namespace ZgradaApp
         public virtual DbSet<vUseriVoditelji> vUseriVoditelji { get; set; }
         public virtual DbSet<vDnevnikRadaDetails> vDnevnikRadaDetails { get; set; }
         public virtual DbSet<vDnevnikRada> vDnevnikRada { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici> Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici { get; set; }
+        public virtual DbSet<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
     }
 }

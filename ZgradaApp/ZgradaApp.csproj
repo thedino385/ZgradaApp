@@ -192,7 +192,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
-    <Compile Include="Controllers\PdfGeneratorController.cs" />
+    <Compile Include="Controllers\PricuvaRezijeUplatniceController.cs" />
     <Compile Include="Kompanije.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -417,6 +417,8 @@
     <Content Include="app\pricuvaRezije\stanjeOdModal.html" />
     <Content Include="app\pricuvaRezije\stanjeZgradeModal.html" />
     <Content Include="app\pricuvaRezije\stanjeZgradeModalCtrl.js" />
+    <Content Include="app\pricuvaRezije\uplatnicaModal.html" />
+    <Content Include="app\pricuvaRezije\uplatnicaModalCtrl.js" />
     <Content Include="app\prihodiRashodi\index.html" />
     <Content Include="app\prihodiRashodi\prihodiModal.html" />
     <Content Include="app\prihodiRashodi\prihodiModalCtrl.js" />
@@ -695,6 +697,7 @@
     <Folder Include="Scripts\summernote\plugin\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Pdf\" />
+    <Folder Include="Views\PricuvaRezijeUplatnice\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

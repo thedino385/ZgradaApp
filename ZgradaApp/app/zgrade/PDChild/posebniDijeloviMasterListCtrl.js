@@ -67,6 +67,7 @@
         //              Modal kartica
         // _________________________________________________________
         $scope.kartica = function (pdMaster, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'indexKsCtrl',
                 templateUrl: 'app/ks/indexKs.html',

@@ -285,6 +285,12 @@ namespace ZgradaApp.Controllers
                             pr.PrihodiRashodiGodId = prihodRashod.Id;
                             if (pr.Status == "a")
                                 _db.PrihodiRashodi_Prihodi.Add(pr);
+                            else if(pr.Status == "d")
+                            {
+                                var target = await _db.PrihodiRashodi_Prihodi.FirstOrDefaultAsync(p => p.Id == pr.Id);
+                                if (target != null)
+                                    _db.PrihodiRashodi_Prihodi.Remove(target);
+                            }
                             else
                             {
                                 // Status = 'u'
@@ -297,6 +303,12 @@ namespace ZgradaApp.Controllers
                             ra.PrihodiRashodiGodId = prihodRashod.Id;
                             if (ra.Status == "a")
                                 _db.PrihodiRashodi_Rashodi.Add(ra);
+                            else if (ra.Status == "d")
+                            {
+                                var target = await _db.PrihodiRashodi_Rashodi.FirstOrDefaultAsync(p => p.Id == ra.Id);
+                                if (target != null)
+                                    _db.PrihodiRashodi_Rashodi.Remove(target);
+                            }
                             else
                             {
                                 // Status = 'u'

@@ -21,20 +21,20 @@ namespace ZgradaApp
         //                            vlasnici: [], posDijelovi: [], displayTotal: false,
         //                            ukupnoPrihodi: 0, ukupnoZaduzenje: 0, ukupnoDugPretplata: 0, ukupno: 0
         //                        };
-        public int periodId { get; set; }
+        public int rb { get; set; }
         public int mjesec { get; set; }
-        public List<PrihodObj> prihodi { get; set; }
+        public DateTime datum { get; set; }
+        public int prihod { get; set; }
         public decimal zaduzenje { get; set; }
-        public decimal pocStanje { get; set; }
-        public decimal stanjeOd { get; set; }
-        public decimal dugPretplata { get; set; }
-        public List<VlasnikObj> vlasnici { get; set; }
-        public List<posDio> posDijelovi { get; set; }
+        //public List<VlasnikObj> vlasnici { get; set; }
+        //public List<posDio> posDijelovi { get; set; }
         public bool displayTotal { get; set; }
-        public decimal ukupnoPrihodi { get; set; }
+        public decimal ukupnoUplata { get; set; }
         public decimal ukupnoZaduzenje { get; set; }
-        public decimal ukupnoDugPretplata { get; set; }
         public decimal ukupno { get; set; }
+        public bool showUplata { get; set; }
+        public bool showZaduzenje { get; set; }
+
     }
     public class PrihodObj
     {

@@ -106,6 +106,7 @@
     <Property Name="ObracunPricuvaCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunRezijeBrojClanova" Type="int" />
     <Property Name="ObracunRezijeCijenaSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ObracunPricuvaPostoSlobodanUnos" Type="decimal" Precision="18" Scale="2" />
     <Property Name="DugPretplata" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ZaduzenjePricuva" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ZaduzenjeRezije" Type="decimal" Precision="18" Scale="2" />
@@ -122,7 +123,16 @@
     <Property Name="PricuvaRezijePosebniDioMasterId" Type="int" Nullable="false" />
     <Property Name="PeriodId" Type="int" />
     <Property Name="VlasnikId" Type="int" />
-    <Property Name="Udio" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Udio" Type="varchar" MaxLength="5" />
+    <Property Name="UplatnicaRezije" Type="bit" />
+    <Property Name="UplatnicaPricuva" Type="bit" />
+    <Property Name="UplatnicaTip" Type="char" MaxLength="1" />
+    <Property Name="UplatnicaRezijePosto" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UplatnicaPricuvaPosto" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UplatnicaPricuvaIznos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UplatnicaRezijeIznos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UplatnicaSlatiStanarId" Type="int" />
+    <Property Name="UplatnicaId" Type="varchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="PrihodiRashodi">
     <Key>
@@ -142,6 +152,8 @@
     <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
     <Property Name="Opis" Type="varchar" MaxLength="200" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DatumUnosa" Type="datetime" />
+    <Property Name="DatumObracuna" Type="datetime" />
     <Property Name="PrijenosPricuve" Type="bit" />
     <Property Name="UplataPricuve" Type="bit" />
   </EntityType>
@@ -346,7 +358,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="VlasniciPeriodId" Type="int" Nullable="false" />
     <Property Name="StanarId" Type="int" Nullable="false" />
-    <Property Name="Udio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Udio" Type="varchar" MaxLength="5" />
     <Property Name="UplatnicaGlasiNaVlasnika" Type="bit" />
   </EntityType>
   <EntityType Name="Zgrade_Stanari">

@@ -67,22 +67,8 @@
 
 
         $scope.iznosZaMjesec = function (mjesec, vrsta) {
-            if ($scope.prihodRashodZaGodinu == undefined)
-                return;
-            var suma = 0;
-            if (vrsta == 'p' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi != undefined) {
-                $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (prihodMjesec) {
-                    if (prihodMjesec.Mjesec == mjesec)
-                        suma += parseFloat(prihodMjesec.Iznos);
-                });
-            }
-            else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
-                $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
-                    if (rashodMjesec.Mjesec == mjesec)
-                        suma += parseFloat(rashodMjesec.Iznos);
-                });
-            }
-            return suma;
+            console.log('iznosZaMjesec ' + mjesec);
+            return iznosZaMjesecCalc(mjesec, vrsta);
         }
 
         $scope.iznosZaMjesecRashod = function (mjesec, vrsta) {
@@ -102,6 +88,25 @@
             //            suma += parseFloat(rashodMjesec.Iznos);
             //    });
             //}
+            return suma;
+        }
+
+        function iznosZaMjesecCalc(mjesec, vrsta) {
+            if ($scope.prihodRashodZaGodinu == undefined)
+                return;
+            var suma = 0;
+            if (vrsta == 'p' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi != undefined) {
+                $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (prihodMjesec) {
+                    if (prihodMjesec.Mjesec == mjesec)
+                        suma += parseFloat(prihodMjesec.Iznos);
+                });
+            }
+            else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
+                $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
+                    if (rashodMjesec.Mjesec == mjesec)
+                        suma += parseFloat(rashodMjesec.Iznos);
+                });
+            }
             return suma;
         }
 
@@ -133,6 +138,7 @@
         //              Modal prihodi
         // _________________________________________________________
         $scope.openModalPrihodi = function (mjesec, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'prihodiModalCtrl',
                 templateUrl: 'app/prihodiRashodi/prihodiModal.html',
@@ -234,6 +240,19 @@
                     $scope.tableVisible = true;
                     //$location.path('/zgrade');
                     //$route.reload();
+
+                    iznosZaMjesecCalc(1, 'p');
+                    iznosZaMjesecCalc(2, 'p');
+                    iznosZaMjesecCalc(3, 'p');
+                    iznosZaMjesecCalc(4, 'p');
+                    iznosZaMjesecCalc(5, 'p');
+                    iznosZaMjesecCalc(6, 'p');
+                    iznosZaMjesecCalc(7, 'p');
+                    iznosZaMjesecCalc(8, 'p');
+                    iznosZaMjesecCalc(9, 'p');
+                    iznosZaMjesecCalc(10, 'p');
+                    iznosZaMjesecCalc(11, 'p');
+                    iznosZaMjesecCalc(12, 'p');
                 },
                 function (result) {
                     // on error

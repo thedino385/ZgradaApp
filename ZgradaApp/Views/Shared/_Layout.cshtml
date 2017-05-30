@@ -21,7 +21,7 @@
     <link href="~/Content/angular-toastr.css" rel="stylesheet" />
     <link href="~/Content/angular-material.layouts.css" rel="stylesheet" />
     <link href="~/Content/angular-material.layouts.ie_fixes.css" rel="stylesheet" />
-    <link href="~/Content/toastr.css" rel="stylesheet" />
+    
 </head>
 <body>
 
@@ -29,6 +29,8 @@
     {
         if (ViewData["userType"] == null || ViewData["userType"].ToString() == "stanar")
         {
+            <link href="~/Content/toastr.css" rel="stylesheet" />
+
             <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px">
                 <div class="container">
                     <div class="navbar-header">
@@ -233,6 +235,7 @@
     <script src="~/app/pricuvaRezije/mjesecModalCtrl.js"></script>
     <script src="~/app/pricuvaRezije/stanjeZgradeModalCtrl.js"></script>
     <script src="~/app/pricuvaRezije/stanjeOdModalCtrl.js"></script>
+    <script src="~/app/pricuvaRezije/uplatnicaModalCtrl.js"></script>
 
     <script src="~/app/ks/indexKsCtrl.js"></script>
     <script src="~/app/zgrade/dnevnik/dnevnikIndexCtrl.js"></script>

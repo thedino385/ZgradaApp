@@ -31,7 +31,7 @@
                         });
                     }
                 });
-                $scope.stanari = DataService.currZgrada.Zgrade_Stanari;
+                $scope.stanari = DataService.zgradaUseri;
                 $rootScope.loaderActive = false;
             },
             function (result) {

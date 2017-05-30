@@ -310,9 +310,9 @@ namespace ZgradaApp.Controllers
                     _db.KompanijeUseri.Add(korisnik);
                     int uid = await _db.SaveChangesAsync();
 
-                    await UserManager.AddClaimAsync(kompanijaId.ToString(), new Claim("Cid", company.Id.ToString()));
-                    await UserManager.AddClaimAsync(model.Naziv, new Claim("Comp", company.Naziv));
-                    await UserManager.AddClaimAsync(model.Ime + " " + model.Prezime, new Claim("imePrezime", company.Naziv));
+                    await UserManager.AddClaimAsync(user.Id, new Claim("Cid", company.Id.ToString()));
+                    await UserManager.AddClaimAsync(user.Id, new Claim("Comp", company.Naziv));
+                    //await UserManager.AddClaimAsync(model.Ime + " " + model.Prezime, new Claim("imePrezime", company.Naziv));
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

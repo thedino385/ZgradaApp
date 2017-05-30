@@ -126,6 +126,7 @@
         //              Modal stanjeZgrade
         // _________________________________________________________
         $scope.openStanjeZgrade = function (mjesec, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'stanjeZgradeModalCtrl',
                 templateUrl: 'app/pricuvaRezije/stanjeZgradeModal.html',
@@ -145,11 +146,37 @@
             });
         };
 
-        
+
+        // _________________________________________________________
+        //              Modal uplatnice
+        // _________________________________________________________
+        $scope.openModalUplatnica = function (mjesec, ev) {
+            $('nav').fadeOut();
+            $mdDialog.show({
+                controller: 'uplatnicaModalCtrl',
+                templateUrl: 'app/pricuvaRezije/uplatnicaModal.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    zgradaObj: $scope.zgradaObj,
+                    mjesec: mjesec,
+                    godina: $scope.selectedGodina
+                }
+            }).then(function () {
+
+            }, function () {
+
+            });
+        };
+
+
         // _________________________________________________________
         //              Modal stanjeOd
         // _________________________________________________________
         $scope.modalStanje = function (ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'stanjeOdModalCtrl',
                 templateUrl: 'app/pricuvaRezije/stanjeOdModal.html',

@@ -42,7 +42,28 @@
             $('#topNavSelectedZgrada').text(zgrada.Naziv);
             $('#topNavSelectedZgrada').attr('href', '#!/zgrada/' + zgrada.Id);
             DataService.selZgradaId = zgrada.Id;
-            $scope.selZgradaId = zgrada.Id;
+
+            //$rootScope.loaderActive = true;
+            //DataService.getZgrada(zgrada.Id, false, false).then(
+            //    function (result) {
+            //        // on success
+            //        $rootScope.loaderActive = false;
+            //        DataService.zgradaUseri = result.data.Useri;
+            //        DataService.userId = result.data.userId;
+            //        $('.navigation').fadeIn('slow');
+            //        $('#topNavSelectedZgrada').text(zgrada.Naziv);
+            //        $('#topNavSelectedZgrada').attr('href', '#!/zgrada/' + zgrada.Id);
+            //        DataService.selZgradaId = zgrada.Id;
+            //        $scope.selZgradaId = zgrada.Id;
+            //    },
+            //    function (result) {
+            //        // on errr
+            //        $rootScope.loaderActive = false;
+            //    }
+            //);
+
+
+            
         }
 
 

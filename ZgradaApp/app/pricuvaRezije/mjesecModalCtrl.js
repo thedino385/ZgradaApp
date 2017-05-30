@@ -75,6 +75,7 @@
                 DataService.pricuvaRezijeDeleteAndCreate($scope.zgradaObj.Id, mjesec, godina).then(
                     function (result) {
                         $scope.PricuvaRezijeZaMjesec = result.data;
+                        $scope.PricuvaRezijeZaMjesec.Id = 0;
                     },
                     function (result) {
                         toastr.error('Brisanje obracuna nije uspjelo');
@@ -213,8 +214,7 @@
                 if (rezijeZaMaster != null && rezijeZaMaster != undefined)
                     pdMaster.ZaduzenjeRezije = parseFloat(rezijeZaMaster).toFixed(2);
 
-                alert(pdMaster.ZaduzenjePricuva);
-                alert(pdMaster.ZaduzenjeRezije);
+                
 
                 // Uplaceno  se vuse iz Prihoda - suma prihoda za pdMasterId za ovaj mjesec
                 var uplaceno = 0;

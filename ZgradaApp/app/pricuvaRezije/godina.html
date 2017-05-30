@@ -45,9 +45,18 @@
                         </table>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 1. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(1, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
+                        <!--<md-button ng-click="openStanjeZgrade(1, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
                             <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        </md-button>-->
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(1, $event)" href="">Stanje zgrade u 1. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(1, $event)" href="">Uplatnica za 1. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 2. mjesecu">
                         <md-button ng-click="openStanjeZgrade(2, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
