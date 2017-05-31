@@ -12,43 +12,50 @@
         $scope.nePrikazujZatvorene = true;
         $scope.cb = true;
 
-        //if ($routeParams) {
-        //if ($routeParams.id > 0) { // pa uvijek ce i biti, master postoji
-        // nadji posebniDioMaster
-        $rootScope.loaderActive = true;
-        DataService.getZgrada(DataService.selZgradaId, false, false).then(
-            function (result) {
-                console.log(result);
-                result.data.Zgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
-                    if (pdMaster.Id == $routeParams.id) {
-                        $scope.pdMaster = pdMaster;
-                        $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
+        //$rootScope.loaderActive = true;
+        //DataService.getZgrada(DataService.selZgradaId, false, false).then(
+        //    function (result) {
+        //        console.log(result);
+        //        result.data.Zgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
+        //            if (pdMaster.Id == $routeParams.id) {
+        //                $scope.pdMaster = pdMaster;
+        //                $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
 
-                        // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
-                        pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
-                            if (period.Ugasen != true)
-                                $scope.dodajVlasnikeBtnDisabled = true;
-                        });
-                    }
+        //                // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
+        //                pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+        //                    if (period.Ugasen != true)
+        //                        $scope.dodajVlasnikeBtnDisabled = true;
+        //                });
+        //            }
+        //        });
+        //        //$scope.stanari = DataService.zgradaUseri;
+        //        console.clear();
+        //        console.log(result.data);
+        //        $scope.stanari = result.data.Useri;
+        //        $rootScope.loaderActive = false;
+        //    },
+        //    function (result) {
+        //        $rootScope.loaderActive = false;
+        //        toastr.error('Dohvat podataka sa servera nije uspiio.');
+        //    }
+        //);
+
+
+        DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
+            if (pdMaster.Id == $routeParams.id) {
+                $scope.pdMaster = pdMaster;
+                $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
+
+                // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
+                pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+                    if (period.Ugasen != true)
+                        $scope.dodajVlasnikeBtnDisabled = true;
                 });
-                $scope.stanari = DataService.zgradaUseri;
-                $rootScope.loaderActive = false;
-            },
-            function (result) {
-                $rootScope.loaderActive = false;
-                toastr.error('Dohvat podataka sa servera nije uspiio.');
             }
-        );
-
-
-        //}
-        //else {
-        //    $scope.msg = "Nova zgrada";
-        //    $scope.zgradaObj = {
-        //        Id: 0, Naziv: "", Adresa: "", Mjesto: "", Povrsinam2: 0, Zgrade_PosebniDijelovi: [], Zgrade_Stanari: [], Status: ''
-        //    };
-        //}
-        //}
+        });
+        //$scope.stanari = DataService.zgradaUseri;
+        $scope.stanari = DataService.currZgrada.Zgrade_Stanari;
+        $rootScope.loaderActive = false;
 
         // _________________________________________________________
         //              Modal posebni dio

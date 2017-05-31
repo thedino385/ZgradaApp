@@ -135,6 +135,12 @@
       <End Role="PricuvaRezijePosebniDioMasteri" EntitySet="PricuvaRezijePosebniDioMasteri" />
       <End Role="PricuvaRezijePosebniDioMasterVlasnici" EntitySet="PricuvaRezijePosebniDioMasterVlasnici" />
     </AssociationSet>
+    <EntitySet Name="vPopisStanara" EntityType="ZgradaDbModel.vPopisStanara" />
+    <EntitySet Name="PricuvaRezijeMjesec_Uplatnice" EntityType="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice" />
+    <AssociationSet Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
+      <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
+      <End Role="PricuvaRezijeMjesec_Uplatnice" EntitySet="PricuvaRezijeMjesec_Uplatnice" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Kompanije">
     <Key>
@@ -205,6 +211,7 @@
     <Property Name="OrocenaSredstva" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="PricuvaRezijeGodina" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeGodina" />
     <NavigationProperty Name="PricuvaRezijePosebniDioMasteri" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijePosebniDioMasteri" />
+    <NavigationProperty Name="PricuvaRezijeMjesec_Uplatnice" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec" ToRole="PricuvaRezijeMjesec_Uplatnice" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
     <Key>
@@ -517,6 +524,8 @@
     <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" FromRole="Zgrade_Stanari" ToRole="Zgrade" />
     <Property Name="Active" Type="Boolean" />
     <Property Name="Pass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Telefon" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Mobiltel" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vKompanijeUseri">
     <Key>
@@ -989,6 +998,8 @@
     <Property Name="Udio" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="UplatnicaGlasiNaVlasnika" Type="Boolean" />
     <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" FromRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+    <Property Name="Vlasnik" Type="Boolean" />
+    <Property Name="Korisnik" Type="Boolean" />
   </EntityType>
   <Association Name="FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
     <End Type="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Role="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Multiplicity="1" />
@@ -1031,6 +1042,58 @@
       </Principal>
       <Dependent Role="PricuvaRezijePosebniDioMasterVlasnici">
         <PropertyRef Name="PricuvaRezijePosebniDioMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="vPopisStanara">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+      <PropertyRef Name="StanarId" />
+      <PropertyRef Name="ZgradaId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Naziv" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Adresa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Mjesto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telefon" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Mobiltel" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="PosebniDio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Zatvoren" Type="Boolean" />
+    <Property Name="StanarId" Type="Int32" Nullable="false" />
+    <Property Name="ZgradaId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PricuvaRezijeMjesec_Uplatnice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="PricuvaRezijeMjesecId" Type="Int32" />
+    <Property Name="PosebniDioMasterId" Type="Int32" Nullable="false" />
+    <Property Name="PlatiteljId" Type="Int32" Nullable="false" />
+    <Property Name="PrimateljId" Type="Int32" />
+    <Property Name="TipDuga" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="TipPlacanja" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UdioPricuva" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UdioRezije" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IznosRezije" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IznosPricuva" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Uplatnica" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_Uplatnice" ToRole="PricuvaRezijeMjesec" />
+  </EntityType>
+  <Association Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
+    <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="0..1" />
+    <End Type="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice" Role="PricuvaRezijeMjesec_Uplatnice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaRezijeMjesec">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaRezijeMjesec_Uplatnice">
+        <PropertyRef Name="PricuvaRezijeMjesecId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -28,139 +28,86 @@
                                 Posebni dio
                             </th>
                             <th style="vertical-align: middle; text-align: right">
-                                Pričuva
+                                Platitelj
                             </th>
                             <th style="vertical-align: middle; text-align: right">
-                                Režije
+                                Primatelj
                             </th>
                             <th style="vertical-align: middle">
-
+                                Vrsta duga
                             </th>
-
-                            <!--<th style="vertical-align: middle">
-                                Početno stanje
-                            </th>-->
-                            <!--<th style="vertical-align: middle">
-                                Posebni dijelovi
-                            </th>-->
-                            <!--<th style="vertical-align: middle; text-align: right">
-                                Dug/pretplata
+                            <th style="vertical-align: middle">
+                                Vrsta plaćanja
                             </th>
-
-                            <th style="vertical-align: middle; text-align: right">
-                                Uplaćeno
-                            </th>-->
-                            <!--<th style="vertical-align: middle; text-align: right">
-                                Stanje od
-                            </th>-->
-                            <!--<th ng-show="cijenaPricuvaVisible" style="vertical-align: middle">
-                                Cijena <br />(pričuva)
+                            <th style="vertical-align: middle">
+                                Udio režije
                             </th>
-                            <th ng-show="cijenaRezijeZaSvakiVisible" style="vertical-align: middle">
-                                Cijena <br /> (režije)
+                            <th style="vertical-align: middle">
+                                Udio pričuva
                             </th>
-                            <th ng-show="cijenaRezijePoBrojuVisible" style="vertical-align: middle">
-                                Br.članova
+                            <th style="vertical-align: middle">
+                                Iznos pričuva
                             </th>
-                            <th ng-show="cijenaPricuvaPostoVisible" style="vertical-align: middle">
-                                Postotak
-                            </th>-->
+                            <th style="vertical-align: middle">
+                                Iznos režije
+                            </th>
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr ng-repeat="pdMaster in PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri">
+                    <tbody ng-repeat="rec in PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice">
+                        <!--<tr>
+                            <td colspan="9">
+                                <button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 15px; padding-top: 15px" ng-click="rec.Expanded = !poChild.Expanded"><b>Posebni dio: &nbsp;&nbsp;&nbsp; {{poChild.Naziv}}</b></button>
+                            </td>
+                        </tr>-->
+                        <tr class="uib-collapse=" !rec.Expanded"">
                             <td style="vertical-align: middle; text-align: left">
-                                <div ng-repeat="master in zgradaObj.Zgrade_PosebniDijeloviMaster| filter: { Id: pdMaster.PosebniDioMasterId }">
+                                <div ng-repeat="master in zgradaObj.Zgrade_PosebniDijeloviMaster| filter: { Id: rec.PosebniDioMasterId }">
                                     {{master.Naziv}}
+                                    <md-button ng-show="rec.displayBtnAdd == true" class="md-icon-button" ng-click="dodajRecord(rec)" title="Dodaj prihod">
+                                        <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
+                                    </md-button>
                                 </div>
                             </td>
-                            <td style="vertical-align: middle; text-align: right" class="redCell">{{pdMaster.ZaduzenjePricuva | number: 2}}</td>
-                            <td style="vertical-align: middle; text-align: right" class="redCell">{{pdMaster.ZaduzenjeRezije | number: 2}}</td>
+                            <td style="vertical-align: middle; text-align: right" class="redCell">
+                                <div ng-class="{ 'has-error' : itemFrm.sel.$invalid && !itemFrm.sel.$pristine }">
+                                    <select name="sel" ng-model="rec.PlatiteljId" ng-options="c.Id as c.Naziv for c in rec.platitelji"
+                                            id="sel" class="form-control" ng-required></select>
+                                </div>
+                            </td>
+                            <td style="vertical-align: middle; text-align: right" class="redCell">
+                                <div ng-class="{ 'has-error' : itemFrm.sel.$invalid && !itemFrm.sel.$pristine }">
+                                    <select name="sel" ng-model="rec.PrimateljId" ng-options="c.Id as c.Naziv for c in rec.primatelji"
+                                            id="sel" class="form-control" ng-required></select>
+                                </div>
+                            </td>
+                            <td style="vertical-align: middle; text-align: right" class="redCell">
+                                <div ng-class="{ 'has-error' : itemFrm.sel.$invalid && !itemFrm.sel.$pristine }">
+                                    <select name="sel" ng-model="rec.TipDuga" ng-options="c.Id as c.Naziv for c in tipoviDuga"
+                                            id="sel" class="form-control" ng-required></select>
+                                </div>
+                            </td>
                             <td>
-                                <table class="table table-condensed">
-                                    <tr>
-                                        <td></td>
-                                        <td>Režije</td>
-                                        <td>Pričuva</td>
-                                        <td>Tip</td>
-                                        <td>Postotak</td>
-                                        <td>Iznos</td>
-                                        <td></td>
-                                        <td>Uplatnica</td>
-                                    </tr>
-                                    <tr ng-repeat="periodVlasnici in pdMaster.PricuvaRezijePosebniDioMasterVlasnici">
-                                        <td style="width: 150px">
-                                            <div ng-repeat="stanar in zgradaObj.Zgrade_Stanari | filter: { Id: periodVlasnici.VlasnikId }">
-                                                {{stanar.Ime}}&nbsp;{{stanar.Prezime}}<br>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <md-checkbox ng-model="periodVlasnici.UplatnicaRezije" aria-label="Checkbox 1">
-                                            </md-checkbox>
-                                        </td>
-                                        <td>
-                                            <md-checkbox ng-model="periodVlasnici.UplatnicaPricuva" aria-label="Checkbox 1">
-                                            </md-checkbox>
-                                        </td>
-                                        <td>
-                                            <md-radio-group ng-model="periodVlasnici.UplatnicaTip">
-
-                                                <md-radio-button value="u" class="md-primary">Uplatnica</md-radio-button>
-                                                <md-radio-button value="r"> Račun </md-radio-button>
-
-                                            </md-radio-group>
-                                        </td>
-                                        <td>
-                                            <input type="text" size="4" placeholder="%" />
-                                        </td>
-                                        <td>iznos</td>
-                                        <td>
-                                            <md-input-container>
-                                                <label>Slati na</label>
-                                                <md-select ng-model="periodVlasnici.UplatnicaSlatiStanarId" style="background-color: whitesmoke">
-                                                    <md-option name="stanarId" ng-repeat="stanar in stanari" ng-value="stanar.Id">
-                                                        {{stanar.Ime}}&nbsp;{{stanar.Prezime}}
-                                                    </md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                        </td>
-                                        <td>
-                                            link
-                                        </td>
-                                    </tr>
-                                </table>
-
-
-                                <!--<div ng-repeat="periodVlasnici in pdMaster.PricuvaRezijePosebniDioMasterVlasnici">
-                                    <div ng-repeat="stanar in zgradaObj.Zgrade_Stanari | filter: { Id: periodVlasnici.VlasnikId }">
-                                        {{stanar.Ime}}&nbsp;{{stanar.Prezime}}<br>
-                                    </div>
-                                </div>-->
-                            </td>
-
-
-
-                            <!--<td>
-                                <div ng-repeat="master in zgradaObj.Zgrade_PosebniDijeloviMaster| filter: { Id: pdMaster.PosebniDioMasterId }">
-                                    <span ng-repeat="posDioChild in master.Zgrade_PosebniDijeloviChild | filter: { ZgradaPosDioMasterId: pdMaster.PosebniDioMasterId }:true">
-                                        {{posDioChild.Naziv}}<br />
-                                    </span>
+                                <div ng-class="{ 'has-error' : itemFrm.sel.$invalid && !itemFrm.sel.$pristine }">
+                                    <select name="sel" ng-model="rec.TipPlacanja" ng-options="c.Id as c.Naziv for c in tipoviPlacanja"
+                                            id="sel" class="form-control" ng-required></select>
                                 </div>
-                            </td>-->
-                            <!--<td style="vertical-align: middle; text-align: right" ng-class="{ greenCell: pdMaster.DugPretplata > 0, redCell: pdMaster.DugPretplata < 0 }">
-                                {{pdMaster.DugPretplata | number: 2}}
                             </td>
-
-                            <td style="vertical-align: middle; text-align: right">{{pdMaster.Uplaceno | number: 2}}</td>-->
-                            <!--<td style="vertical-align: middle; text-align: right">{{pdMaster.StanjeOd | number: 2}}</td>-->
-                            <!--<td><input type="text" size="8" ng-model="pdMaster.StanjeOd" /></td>-->
-                            <!--<td style="vertical-align: middle;" ng-show="cijenaPricuvaVisible"><input type="text" size="5" ng-model="pdMaster.ObracunPricuvaCijenaSlobodanUnos" /></td>
-                            <td style="vertical-align: middle;" ng-show="cijenaRezijeZaSvakiVisible"><input type="text" size="5" ng-model="pdMaster.ObracunRezijeCijenaSlobodanUnos" /></td>
-                            <td style="vertical-align: middle;" ng-show="cijenaRezijePoBrojuVisible"><input type="text" size="5" ng-model="pdMaster.ObracunRezijeBrojClanova" /></td>
-                            <td style="vertical-align: middle;" ng-show="cijenaPricuvaPostoVisible"><input type="text" size="5" ng-model="pdMaster.ObracunPricuvaPostoSlobodanUnos" /></td>-->
-
-
+                            <td>
+                                <input type="text" class="form-control" size="5" ng-model="rec.UdioRezije" placeholder="Udio za režije" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" size="5" ng-model="rec.UdioPricuva" placeholder="Udio za pričuvu" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" size="10" ng-model="rec.IznosRezije" placeholder="Iznos režija" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" size="10" ng-model="rec.IznosPricuva" placeholder="Iznos pričuve" />
+                            </td>
+                        </tr>
+                        <tr ng-show="rec.displayLine == true">
+                            <td colspan="9"><hr /></td>
                         </tr>
 
                     </tbody>

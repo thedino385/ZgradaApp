@@ -64,6 +64,23 @@
     <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="decimal" Precision="18" Scale="2" />
     <Property Name="OrocenaSredstva" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
+  <EntityType Name="PricuvaRezijeMjesec_Uplatnice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="PricuvaRezijeMjesecId" Type="int" />
+    <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
+    <Property Name="PlatiteljId" Type="int" Nullable="false" />
+    <Property Name="PrimateljId" Type="int" />
+    <Property Name="TipDuga" Type="char" MaxLength="1" />
+    <Property Name="TipPlacanja" Type="char" MaxLength="1" />
+    <Property Name="UdioPricuva" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UdioRezije" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IznosRezije" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IznosPricuva" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Uplatnica" Type="varchar" MaxLength="128" />
+  </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
     <Key>
       <PropertyRef Name="Id" />
@@ -360,6 +377,8 @@
     <Property Name="StanarId" Type="int" Nullable="false" />
     <Property Name="Udio" Type="varchar" MaxLength="5" />
     <Property Name="UplatnicaGlasiNaVlasnika" Type="bit" />
+    <Property Name="Vlasnik" Type="bit" />
+    <Property Name="Korisnik" Type="bit" />
   </EntityType>
   <EntityType Name="Zgrade_Stanari">
     <Key>
@@ -371,6 +390,8 @@
     <Property Name="Prezime" Type="varchar" MaxLength="50" />
     <Property Name="OIB" Type="char" MaxLength="11" />
     <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Telefon" Type="varchar" MaxLength="15" />
+    <Property Name="Mobiltel" Type="varchar" MaxLength="15" />
     <Property Name="UserGuid" Type="varchar" MaxLength="128" />
     <Property Name="OglasnaPloca" Type="bit" />
     <Property Name="DnevnikRada" Type="bit" />
@@ -515,6 +536,30 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vOglasnaVoditelji' does not have a p
     <Property Name="MasterAcc" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'ZgradaDb2.dbo.vPopisStanara' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vPopisStanara">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyId" />
+      <PropertyRef Name="StanarId" />
+      <PropertyRef Name="ZgradaId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="Naziv" Type="varchar" MaxLength="200" />
+    <Property Name="Adresa" Type="varchar" MaxLength="200" />
+    <Property Name="Mjesto" Type="varchar" MaxLength="200" />
+    <Property Name="Ime" Type="varchar" MaxLength="50" />
+    <Property Name="Prezime" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Telefon" Type="varchar" MaxLength="15" />
+    <Property Name="Mobiltel" Type="varchar" MaxLength="15" />
+    <Property Name="PosebniDio" Type="varchar" MaxLength="50" />
+    <Property Name="Zatvoren" Type="bit" />
+    <Property Name="StanarId" Type="int" Nullable="false" />
+    <Property Name="ZgradaId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'ZgradaDb2.dbo.vUseriStanari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vUseriStanari">
     <Key>
@@ -615,6 +660,18 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
       </Principal>
       <Dependent Role="PricuvaRezijeMjesec">
         <PropertyRef Name="PrivuvaRezijeGodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
+    <End Role="PricuvaRezijeMjesec" Type="Self.PricuvaRezijeMjesec" Multiplicity="0..1" />
+    <End Role="PricuvaRezijeMjesec_Uplatnice" Type="Self.PricuvaRezijeMjesec_Uplatnice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PricuvaRezijeMjesec">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PricuvaRezijeMjesec_Uplatnice">
+        <PropertyRef Name="PricuvaRezijeMjesecId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -876,6 +933,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <EntitySet Name="PricuvaRezijeGodina" EntityType="Self.PricuvaRezijeGodina" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijeGodina_StanjeOd" EntityType="Self.PricuvaRezijeGodina_StanjeOd" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijeMjesec" EntityType="Self.PricuvaRezijeMjesec" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PricuvaRezijeMjesec_Uplatnice" EntityType="Self.PricuvaRezijeMjesec_Uplatnice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijePosebniDioChildPovrsine" EntityType="Self.PricuvaRezijePosebniDioChildPovrsine" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijePosebniDioChildPripadci" EntityType="Self.PricuvaRezijePosebniDioChildPripadci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PricuvaRezijePosebniDioChildren" EntityType="Self.PricuvaRezijePosebniDioChildren" Schema="dbo" store:Type="Tables" />
@@ -991,6 +1049,24 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     [vOglasnaVoditelji].[MasterAcc] AS [MasterAcc]
     FROM [dbo].[vOglasnaVoditelji] AS [vOglasnaVoditelji]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vPopisStanara" EntityType="Self.vPopisStanara" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vPopisStanara].[Id] AS [Id], 
+    [vPopisStanara].[CompanyId] AS [CompanyId], 
+    [vPopisStanara].[Naziv] AS [Naziv], 
+    [vPopisStanara].[Adresa] AS [Adresa], 
+    [vPopisStanara].[Mjesto] AS [Mjesto], 
+    [vPopisStanara].[Ime] AS [Ime], 
+    [vPopisStanara].[Prezime] AS [Prezime], 
+    [vPopisStanara].[Email] AS [Email], 
+    [vPopisStanara].[Telefon] AS [Telefon], 
+    [vPopisStanara].[Mobiltel] AS [Mobiltel], 
+    [vPopisStanara].[PosebniDio] AS [PosebniDio], 
+    [vPopisStanara].[Zatvoren] AS [Zatvoren], 
+    [vPopisStanara].[StanarId] AS [StanarId], 
+    [vPopisStanara].[ZgradaId] AS [ZgradaId]
+    FROM [dbo].[vPopisStanara] AS [vPopisStanara]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vUseriStanari" EntityType="Self.vUseriStanari" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vUseriStanari].[Id] AS [Id], 
@@ -1054,6 +1130,10 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
     <AssociationSet Name="FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" Association="Self.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina">
       <End Role="PricuvaRezijeGodina" EntitySet="PricuvaRezijeGodina" />
       <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" Association="Self.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
+      <End Role="PricuvaRezijeMjesec" EntitySet="PricuvaRezijeMjesec" />
+      <End Role="PricuvaRezijeMjesec_Uplatnice" EntitySet="PricuvaRezijeMjesec_Uplatnice" />
     </AssociationSet>
     <AssociationSet Name="FK_PricuvaRezijePosebniDioChildPovrsine_PricuvaRezijePosebniDioChildren" Association="Self.FK_PricuvaRezijePosebniDioChildPovrsine_PricuvaRezijePosebniDioChildren">
       <End Role="PricuvaRezijePosebniDioChildren" EntitySet="PricuvaRezijePosebniDioChildren" />

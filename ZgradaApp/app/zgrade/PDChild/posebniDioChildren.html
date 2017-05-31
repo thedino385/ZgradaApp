@@ -64,7 +64,7 @@
                             <table class="table table-hover table-responsive table-condensed" ng-hide="period.Zatvoren == nePrikazujZatvorene">
                                 <thead style="color: {{period.Zatvoren == true ? 'gray' : 'initial'}}">
                                     <tr>
-                                        <th colspan="3" style="vertical-align: middle; text-align: start; color: {{period.Zatvoren == true ? 'gray' : 'initial'}}">
+                                        <th colspan="5" style="vertical-align: middle; text-align: start; color: {{period.Zatvoren == true ? 'gray' : 'initial'}}">
                                             Vrijedi Od: {{period.VrijediOdMjesec}}/{{period.VrijediOdGodina}}
                                         </th>
                                         <th style="vertical-align: middle; width: 200px">
@@ -81,7 +81,9 @@
                                         <th style="vertical-align: middle; text-align: start">Ime</th>
                                         <th style="vertical-align: middle; text-align: start; padding-right: 30px">Prezime</th>
                                         <th style="vertical-align: middle; text-align: start; padding-right: 30px">Udio</th>
-                                        <th style="vertical-align: middle; text-align: start; padding-right: 30px">Upl.glasi na vlasnika</th>
+                                        <th style="vertical-align: middle; text-align: start; padding-right: 30px">Vlasnik</th>
+                                        <th style="vertical-align: middle; text-align: start; padding-right: 30px">Korisnik</th>
+                                        <!--<th style="vertical-align: middle; text-align: start; padding-right: 30px">Upl.glasi na vlasnika</th>-->
 
                                         <th style="vertical-align: middle"></th>
                                     </tr>
@@ -98,7 +100,11 @@
                                         </td>
                                         <td style="vertical-align: middle; text-align: start; padding-right: 30px">{{vlasnik.Udio}}</td>
                                         <td style="vertical-align: middle; text-align: center">
-                                            <md-checkbox ng-disabled="true" aria-label="Disabled checkbox" ng-model="vlasnik.UplatnicaGlasiNaVlasnika">
+                                            <md-checkbox ng-disabled="true" aria-label="Disabled checkbox" ng-model="vlasnik.Vlasnik">
+                                            </md-checkbox>
+                                        </td>
+                                        <td style="vertical-align: middle; text-align: center">
+                                            <md-checkbox ng-disabled="true" aria-label="Disabled checkbox" ng-model="vlasnik.Korisnik">
                                             </md-checkbox>
                                         </td>
                                         <td style="vertical-align: middle;"></td>

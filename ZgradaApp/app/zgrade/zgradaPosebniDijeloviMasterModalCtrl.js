@@ -17,6 +17,7 @@
         }
 
         $scope.save = function () {
+            $('nav').fadeIn();
             if (id == 0) {
                 maxId = 1;
                 zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (posebniDioMaster) {
@@ -41,6 +42,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

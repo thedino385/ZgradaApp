@@ -208,6 +208,9 @@
     <Compile Include="PricuvaRezijeMjesec.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
+    <Compile Include="PricuvaRezijeMjesec_Uplatnice.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
     <Compile Include="PricuvaRezijePosebniDioChildPovrsine.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -289,6 +292,9 @@
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="vOglasnaVoditelji.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vPopisStanara.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="vUseriStanari.cs">
@@ -465,6 +471,8 @@
     <Content Include="app\zgrade\popisi\uredjajiListCtrl.js" />
     <Content Include="app\zgrade\popisi\uredjajiModal.html" />
     <Content Include="app\zgrade\popisi\uredjajiModalCtrl.js" />
+    <Content Include="app\zgrade\popisStanara.html" />
+    <Content Include="app\zgrade\popisStanaraCtrl.js" />
     <Content Include="app\zgrade\zgrada.html" />
     <Content Include="app\zgrade\zgradaCtrl.js" />
     <Content Include="app\zgrade\zgradaPosebniDijeloviMasterModal.html" />

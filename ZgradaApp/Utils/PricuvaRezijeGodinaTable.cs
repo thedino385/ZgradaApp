@@ -78,8 +78,8 @@ namespace ZgradaApp
                                             zaduzenjeMjesecPricuva = masterUmjesecu1.ZaduzenjePricuva != null ? (decimal)masterUmjesecu1.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu1.ZaduzenjeRezije != null ? (decimal)masterUmjesecu1.ZaduzenjeRezije : 0;
                                             //saldoListMj1.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
-                                            saldoListMj1.Add(zaduzenjeMjesecPricuva);
-                                            saldoListMj1.Add(zaduzenjeMjesecPricuva);
+                                            saldoListMj1.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj1.Add(0 - zaduzenjeMjesecPricuva);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu1.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije; // u saldu pocetno stanje ne treba jer je uracunato u zaduzenje prilikom obracuna
                                             saldoListMj1.Add(saldo);
                                         }
@@ -102,7 +102,9 @@ namespace ZgradaApp
                                             saldoListMj2.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu2.ZaduzenjePricuva != null ? (decimal)masterUmjesecu2.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu2.ZaduzenjeRezije != null ? (decimal)masterUmjesecu2.ZaduzenjeRezije : 0;
-                                            saldoListMj2.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            //saldoListMj2.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj2.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj2.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu2.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj2.Add(saldo);
                                         }
@@ -125,7 +127,8 @@ namespace ZgradaApp
                                             saldoListMj3.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu3.ZaduzenjePricuva != null ? (decimal)masterUmjesecu3.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu3.ZaduzenjeRezije != null ? (decimal)masterUmjesecu3.ZaduzenjeRezije : 0;
-                                            saldoListMj3.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj3.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj3.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu3.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj3.Add(saldo);
                                         }
@@ -148,7 +151,8 @@ namespace ZgradaApp
                                             saldoListMj4.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu4.ZaduzenjePricuva != null ? (decimal)masterUmjesecu4.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu4.ZaduzenjeRezije != null ? (decimal)masterUmjesecu4.ZaduzenjeRezije : 0;
-                                            saldoListMj4.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj4.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj4.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu4.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj4.Add(saldo);
                                         }
@@ -171,7 +175,8 @@ namespace ZgradaApp
                                             saldoListMj5.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu5.ZaduzenjePricuva != null ? (decimal)masterUmjesecu5.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu5.ZaduzenjeRezije != null ? (decimal)masterUmjesecu5.ZaduzenjeRezije : 0;
-                                            saldoListMj5.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj5.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj5.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu5.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj5.Add(saldo);
                                         }
@@ -194,7 +199,8 @@ namespace ZgradaApp
                                             saldoListMj6.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu6.ZaduzenjePricuva != null ? (decimal)masterUmjesecu6.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu6.ZaduzenjeRezije != null ? (decimal)masterUmjesecu6.ZaduzenjeRezije : 0;
-                                            saldoListMj6.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj6.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj6.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu6.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj6.Add(saldo);
                                         }
@@ -217,7 +223,8 @@ namespace ZgradaApp
                                             saldoListMj6.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu7.ZaduzenjePricuva != null ? (decimal)masterUmjesecu7.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu7.ZaduzenjeRezije != null ? (decimal)masterUmjesecu7.ZaduzenjeRezije : 0;
-                                            saldoListMj7.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj7.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj7.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu7.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj7.Add(saldo);
                                         }
@@ -240,7 +247,8 @@ namespace ZgradaApp
                                             saldoListMj8.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu8.ZaduzenjePricuva != null ? (decimal)masterUmjesecu8.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu8.ZaduzenjeRezije != null ? (decimal)masterUmjesecu8.ZaduzenjeRezije : 0;
-                                            saldoListMj8.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj8.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj8.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu8.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj8.Add(saldo);
                                         }
@@ -263,7 +271,8 @@ namespace ZgradaApp
                                             saldoListMj9.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu9.ZaduzenjePricuva != null ? (decimal)masterUmjesecu9.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu9.ZaduzenjeRezije != null ? (decimal)masterUmjesecu9.ZaduzenjeRezije : 0;
-                                            saldoListMj9.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj9.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj9.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu9.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj9.Add(saldo);
                                         }
@@ -286,7 +295,8 @@ namespace ZgradaApp
                                             saldoListMj10.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu10.ZaduzenjePricuva != null ? (decimal)masterUmjesecu10.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu10.ZaduzenjeRezije != null ? (decimal)masterUmjesecu10.ZaduzenjeRezije : 0;
-                                            saldoListMj10.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj10.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj10.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu10.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj10.Add(saldo);
                                         }
@@ -309,7 +319,8 @@ namespace ZgradaApp
                                             saldoListMj11.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu11.ZaduzenjePricuva != null ? (decimal)masterUmjesecu11.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu11.ZaduzenjeRezije != null ? (decimal)masterUmjesecu11.ZaduzenjeRezije : 0;
-                                            saldoListMj11.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj11.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj11.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu11.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj11.Add(saldo);
                                         }
@@ -332,7 +343,8 @@ namespace ZgradaApp
                                             saldoListMj12.Add(pocetno);
                                             zaduzenjeMjesecPricuva = masterUmjesecu12.ZaduzenjePricuva != null ? (decimal)masterUmjesecu12.ZaduzenjePricuva : 0;
                                             zaduzenjeMjesecRezije = masterUmjesecu12.ZaduzenjeRezije != null ? (decimal)masterUmjesecu12.ZaduzenjeRezije : 0;
-                                            saldoListMj12.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
+                                            saldoListMj12.Add(0 - zaduzenjeMjesecPricuva);
+                                            saldoListMj12.Add(0 - zaduzenjeMjesecRezije);
                                             decimal saldo = pocetno + (decimal)masterUmjesecu12.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj12.Add(saldo);
                                         }
@@ -406,7 +418,7 @@ namespace ZgradaApp
                 }
             }
 
-            return tbl;
+            return tbl.OrderBy(p => p.PosebniDioMasterId).ToList();
         }
     }
 

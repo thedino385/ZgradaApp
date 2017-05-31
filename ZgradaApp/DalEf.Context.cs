@@ -63,5 +63,7 @@ namespace ZgradaApp
         public virtual DbSet<vDnevnikRada> vDnevnikRada { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici> Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
+        public virtual DbSet<vPopisStanara> vPopisStanara { get; set; }
+        public virtual DbSet<PricuvaRezijeMjesec_Uplatnice> PricuvaRezijeMjesec_Uplatnice { get; set; }
     }
 }

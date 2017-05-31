@@ -12,16 +12,21 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici
+    public partial class vPopisStanara
     {
         public int Id { get; set; }
-        public int VlasniciPeriodId { get; set; }
+        public int CompanyId { get; set; }
+        public string Naziv { get; set; }
+        public string Adresa { get; set; }
+        public string Mjesto { get; set; }
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
+        public string Email { get; set; }
+        public string Telefon { get; set; }
+        public string Mobiltel { get; set; }
+        public string PosebniDio { get; set; }
+        public Nullable<bool> Zatvoren { get; set; }
         public int StanarId { get; set; }
-        public string Udio { get; set; }
-        public Nullable<bool> UplatnicaGlasiNaVlasnika { get; set; }
-        public Nullable<bool> Vlasnik { get; set; }
-        public Nullable<bool> Korisnik { get; set; }
-    
-        public virtual Zgrade_PosebniDijeloviMaster_VlasniciPeriod Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
+        public int ZgradaId { get; set; }
     }
 }

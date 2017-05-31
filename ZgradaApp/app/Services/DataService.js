@@ -150,6 +150,11 @@
         return $http.get('../api/data/getuseriStanari?zgradaId=' + zgradaId);
     }
 
+    var getPopisStanari = function (zgradaId) {
+        console.log(zgradaId);
+        return $http.get('../api/data/getPopisStanari?zgradaId=' + zgradaId);
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -189,7 +194,8 @@
         oglasnaEditOrCreate: oglasnaEditOrCreate,
         getuseriStanari: getuseriStanari,
 
-        pricuvaRezijeStanjeOdCreateOrUpdate: pricuvaRezijeStanjeOdCreateOrUpdate
+        pricuvaRezijeStanjeOdCreateOrUpdate: pricuvaRezijeStanjeOdCreateOrUpdate,
+        getPopisStanari: getPopisStanari
     }
 
 

@@ -54,13 +54,19 @@
                                 </md-input-container>
 
                                 <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                    <label>Uplatnica glasi na vlasnika</label>
-                                    <md-checkbox aria-label="Disabled checkbox" ng-model="vlasnik.UplatnicaGlasiNaVlasnika">
+                                    <label>Vlasnik</label>
+                                    <md-checkbox aria-label="Disabled checkbox" ng-model="vlasnik.Vlasnik">
+                                    </md-checkbox>
+                                </md-input-container>
+
+                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                    <label>Korisnik</label>
+                                    <md-checkbox aria-label="Disabled checkbox" ng-model="vlasnik.Korisnik">
                                     </md-checkbox>
                                 </md-input-container>
 
                                 <div class="col-sm-2">
-                                    <md-button class="md-icon-button" ng-click="obrisiVlasnika(vlasnik.Id)" title="Obriši vlasnika">
+                                    <md-button ng-show="vlasnik.Status == 'a'" class="md-icon-button" ng-click="obrisiVlasnika(vlasnik.Id)" title="Obriši vlasnika">
                                         <md-icon md-svg-icon="/Content/icons/minus-circle.svg" style="fill: red"></md-icon>
                                     </md-button>
                                 </div>

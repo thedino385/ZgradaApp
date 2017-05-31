@@ -126,6 +126,20 @@ namespace ZgradaApp
         public string pdMaster { get; set; }
     }
     
+    public partial class PricuvaRezijeMjesec_Uplatnice
+    {
+        bool val = false;
+        public bool Expanded
+        {
+            get { return val; }
+            set { val = value; }
+        }
+
+        public bool displayLine { get; set; }
+        public bool displayBtnAdd { get; set; }
+        public string Status { get; set; }
+    }
+
 
     // OLD
 

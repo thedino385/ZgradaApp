@@ -720,5 +720,21 @@ namespace ZgradaApp.Controllers
             }
             catch (Exception ex) { return InternalServerError(); }
         }
+
+        [HttpGet]
+        [Route("api/data/getPopisStanari")]
+        public async Task<IHttpActionResult> getPopisStanari(int zgradaId)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                return Ok(await _db.vPopisStanara.Where(p => p.CompanyId == companyId && p.ZgradaId == zgradaId && p.Zatvoren != true).ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }

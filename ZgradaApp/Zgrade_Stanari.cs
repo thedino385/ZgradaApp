@@ -25,6 +25,8 @@ namespace ZgradaApp
         public Nullable<bool> DnevnikRada { get; set; }
         public Nullable<bool> Active { get; set; }
         public string Pass { get; set; }
+        public string Telefon { get; set; }
+        public string Mobiltel { get; set; }
     
         public virtual Zgrade Zgrade { get; set; }
     }

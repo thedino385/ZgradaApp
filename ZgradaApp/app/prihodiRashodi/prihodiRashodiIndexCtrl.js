@@ -6,7 +6,7 @@
             $location.path('/zgrade');
             return;
         }
-
+        $scope.hasChanges = false;
 
         //if ($routeParams) {
         $rootScope.loaderActive = true;
@@ -157,6 +157,7 @@
                 // save (hide)
                 $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
                 console.log($scope.prihodRashodZaGodinu);
+                $scope.hasChanges = true;
             }, function (prihodRashodZaGodinu) {
                 // cancel
                 console.log(prihodRashodZaGodinu);
@@ -169,10 +170,11 @@
         //              Modal rashodi
         // _________________________________________________________
         $scope.openModalRashodi = function (mjesec) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'rashodiModalCtrl',
                 templateUrl: 'app/prihodiRashodi/rashodiModal.html',
-                //parent: angular.element(document.body),
+                parent: angular.element(document.body),
                 //targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -187,6 +189,7 @@
                 // save (hide)
                 $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
                 console.log($scope.prihodRashodZaGodinu);
+                $scope.hasChanges = true;
             }, function (prihodRashodZaGodinu) {
                 // cancel
                 console.log(prihodRashodZaGodinu);
@@ -195,38 +198,7 @@
         };
 
 
-        // _________________________________________________________
-        //              Modal rashodi uplatnice
-        // _________________________________________________________
-        $scope.openModalRashodiUplatnice = function (mjesec, ev) {
-            var rashodi = [];
-            $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (r) {
-                if (r.Mjesec == mjesec)
-                    rashodi.push(r);
-            });
-            $mdDialog.show({
-                controller: 'rashodiUplatniceCtrl',
-                templateUrl: 'app/prihodiRashodi/rashodiUplatnice.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: false,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-                , locals: {
-                    rashodi: rashodi,
-                    mjesec: mjesec,
-                    godina: $scope.selectedGodina,
-                    sifarnikRashoda: $scope.sifarnikRashoda,
-                    posedbiDijelovi: $scope.posedbiDijelovi,
-                }
-            }).then(function () {
-                // save (hide)
-
-            }, function () {
-                // cancel
-
-            });
-        };
-
+      
 
         $scope.saveAll = function () {
             $rootScope.loaderActive = true;
@@ -253,6 +225,7 @@
                     iznosZaMjesecCalc(10, 'p');
                     iznosZaMjesecCalc(11, 'p');
                     iznosZaMjesecCalc(12, 'p');
+                    $scope.hasChanges = false;
                 },
                 function (result) {
                     // on error
@@ -269,13 +242,14 @@
         //              Modal sifarnik prihoda
         // _________________________________________________________
         $scope.openModalSifarnik = function (ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'sifarnikRashodaModalCtrl',
                 templateUrl: 'app/prihodiRashodi/sifarnikRashodaModal.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
+                //parent: angular.element(document.body),
+                //targetEvent: ev,
                 clickOutsideToClose: false,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                fullscreen: true // Only for -xs, -sm breakpoints.
                 , locals: {
                     sifarnikRashoda: $scope.sifarnikRashoda,
                 }

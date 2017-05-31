@@ -2,6 +2,18 @@
 
 
 angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+    //disable cacheing
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};
+    }
+    //disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+    // extra
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+
+
+
     $routeProvider
         .when('/index', {
             templateUrl: '../app/zgrade/zgrade.html',
@@ -59,6 +71,11 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/oglasna/indexPloca.html',
             controller: 'indexPlocaCtrl'
         })
+        .when('/popisStanara/:id', {
+            templateUrl: '../app/zgrade/popisStanara.html',
+            controller: 'popisStanaraCtrl'
+        })
+
     
 
         .when('/pripadak/:id', {

@@ -349,6 +349,8 @@
     <EntitySetMapping Name="Zgrade_Stanari">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_Stanari">
         <MappingFragment StoreEntitySet="Zgrade_Stanari">
+          <ScalarProperty Name="Mobiltel" ColumnName="Mobiltel" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
           <ScalarProperty Name="Pass" ColumnName="Pass" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="DnevnikRada" ColumnName="DnevnikRada" />
@@ -542,6 +544,8 @@
     <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
       <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
         <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+          <ScalarProperty Name="Korisnik" ColumnName="Korisnik" />
+          <ScalarProperty Name="Vlasnik" ColumnName="Vlasnik" />
           <ScalarProperty Name="UplatnicaGlasiNaVlasnika" ColumnName="UplatnicaGlasiNaVlasnika" />
           <ScalarProperty Name="Udio" ColumnName="Udio" />
           <ScalarProperty Name="StanarId" ColumnName="StanarId" />
@@ -566,6 +570,44 @@
           <ScalarProperty Name="VlasnikId" ColumnName="VlasnikId" />
           <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
           <ScalarProperty Name="PricuvaRezijePosebniDioMasterId" ColumnName="PricuvaRezijePosebniDioMasterId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vPopisStanara">
+      <EntityTypeMapping TypeName="ZgradaDbModel.vPopisStanara">
+        <MappingFragment StoreEntitySet="vPopisStanara">
+          <ScalarProperty Name="ZgradaId" ColumnName="ZgradaId" />
+          <ScalarProperty Name="StanarId" ColumnName="StanarId" />
+          <ScalarProperty Name="Zatvoren" ColumnName="Zatvoren" />
+          <ScalarProperty Name="PosebniDio" ColumnName="PosebniDio" />
+          <ScalarProperty Name="Mobiltel" ColumnName="Mobiltel" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+          <ScalarProperty Name="Ime" ColumnName="Ime" />
+          <ScalarProperty Name="Mjesto" ColumnName="Mjesto" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PricuvaRezijeMjesec_Uplatnice">
+      <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice">
+        <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_Uplatnice">
+          <ScalarProperty Name="Uplatnica" ColumnName="Uplatnica" />
+          <ScalarProperty Name="IznosPricuva" ColumnName="IznosPricuva" />
+          <ScalarProperty Name="IznosRezije" ColumnName="IznosRezije" />
+          <ScalarProperty Name="UdioRezije" ColumnName="UdioRezije" />
+          <ScalarProperty Name="UdioPricuva" ColumnName="UdioPricuva" />
+          <ScalarProperty Name="TipPlacanja" ColumnName="TipPlacanja" />
+          <ScalarProperty Name="TipDuga" ColumnName="TipDuga" />
+          <ScalarProperty Name="PrimateljId" ColumnName="PrimateljId" />
+          <ScalarProperty Name="PlatiteljId" ColumnName="PlatiteljId" />
+          <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
+          <ScalarProperty Name="PricuvaRezijeMjesecId" ColumnName="PricuvaRezijeMjesecId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

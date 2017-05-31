@@ -18,6 +18,7 @@ namespace ZgradaApp
         public PricuvaRezijeMjesec()
         {
             this.PricuvaRezijePosebniDioMasteri = new HashSet<PricuvaRezijePosebniDioMasteri>();
+            this.PricuvaRezijeMjesec_Uplatnice = new HashSet<PricuvaRezijeMjesec_Uplatnice>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,7 @@ namespace ZgradaApp
         public virtual PricuvaRezijeGodina PricuvaRezijeGodina { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PricuvaRezijeMjesec_Uplatnice> PricuvaRezijeMjesec_Uplatnice { get; set; }
     }
 }

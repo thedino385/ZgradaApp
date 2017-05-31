@@ -63,15 +63,40 @@
 
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Email</label>
-                                <input required type="text" name="email" ng-model="stanarObj.Email">
-                                <div ng-messages="stanarFrm.email.$error" role="alert">
+                                <input type="text" name="email" ng-model="stanarObj.Email">
+                                <!--<div ng-messages="stanarFrm.email.$error" role="alert">
                                     <div ng-message-exp="['required']">
                                         Obavezno polje
                                     </div>
-                                </div>
+                                </div>-->
                             </md-input-container>
                             <div class="col-sm-2"></div>
                         </div>
+
+                        <div layout-gt-sm="row">
+                            <div class="col-sm-2"></div>
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Telefon</label>
+                                <input type="text" name="tel" ng-model="stanarObj.Telefon">
+                                <!--<div ng-messages="stanarFrm.tel.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>-->
+                            </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>Mobitel</label>
+                                <input type="text" name="mob" ng-model="stanarObj.Mobiltel">
+                                <!--<div ng-messages="stanarFrm.email.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>-->
+                            </md-input-container>
+                            <div class="col-sm-2"></div>
+                        </div>
+
                         <!--row 3-->
                         <div layout-gt-sm="row">
                             <div class="col-sm-2"></div>

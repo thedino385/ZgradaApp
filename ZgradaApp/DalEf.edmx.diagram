@@ -67,6 +67,9 @@
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
         <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici" Width="1.5" PointX="9.75" PointY="40.5" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vPopisStanara" Width="1.5" PointX="11.375" PointY="12.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice" Width="1.5" PointX="7.5" PointY="42.75" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

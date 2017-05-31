@@ -38,8 +38,8 @@
         }
 
         function getDataForGodina(godina) {
+            $rootScope.loaderActive = true;
             $scope.selectedGodina = godina;
-            $scope.tableVisible = true;
             //console.log($scope.zgradaObj);
             DataService.getPricuvaRezijeGodinaTable($scope.zgradaObj.Id, godina).then(
                 function (result) {
@@ -50,11 +50,14 @@
                             $scope.selectedGodina = godina;
                             //console.log(pr.Godina);
                             farbajMjesece();
+                            $scope.tableVisible = true;
+                            $rootScope.loaderActive = false;
                         }
                     });
                 },
                 function (result) {
                     // error
+                    $rootScope.loaderActive = false;
                     toastr.error('Dohvat godišnjih posataka sa servera nije uspio');
                 }
             )
@@ -261,18 +264,18 @@
         };
 
         function farbajMjesece(prGodina) {
-            $scope.clsMjesec1 = 'transCellBack';
-            $scope.clsMjesec2 = 'transCellBack';
-            $scope.clsMjesec3 = 'transCellBack';
-            $scope.clsMjesec4 = 'transCellBack';
-            $scope.clsMjesec5 = 'transCellBack';
-            $scope.clsMjesec6 = 'transCellBack';
-            $scope.clsMjesec7 = 'transCellBack';
-            $scope.clsMjesec8 = 'transCellBack';
-            $scope.clsMjesec9 = 'transCellBack';
-            $scope.clsMjesec10 = 'transCellBack';
-            $scope.clsMjesec11 = 'transCellBack';
-            $scope.clsMjesec12 = 'transCellBack';
+            $scope.clsMjesec1 = 'btn btn-default';
+            $scope.clsMjesec2 = 'btn btn-default';
+            $scope.clsMjesec3 = 'btn btn-default';
+            $scope.clsMjesec4 = 'btn btn-default';
+            $scope.clsMjesec5 = 'btn btn-default';
+            $scope.clsMjesec6 = 'btn btn-default';
+            $scope.clsMjesec7 = 'btn btn-default';
+            $scope.clsMjesec8 = 'btn btn-default';
+            $scope.clsMjesec9 = 'btn btn-default';
+            $scope.clsMjesec10 = 'btn btn-default';
+            $scope.clsMjesec11 = 'btn btn-default';
+            $scope.clsMjesec12 = 'btn btn-default';
 
             $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                 if (pr.Godina == $scope.selectedGodina) {
@@ -281,51 +284,51 @@
                             case 1:
                                 if (mj.DugPretplata != 0)
                                     // ok, nema promjena, pricuva postoji
-                                    $scope.clsMjesec1 = 'greenCellBack';
+                                    $scope.clsMjesec1 = 'btn btn-success';
                                 break;
                             case 2:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec2 = 'greenCellBack';
+                                    $scope.clsMjesec2 = 'btn btn-success';
                                 break;
                             case 3:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec3 = 'greenCellBack';
+                                    $scope.clsMjesec3 = 'btn btn-success';
                                 break;
                             case 4:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec4 = 'greenCellBack';
+                                    $scope.clsMjesec4 = 'btn btn-success';
                                 break;
                             case 5:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec5 = 'greenCellBack';
+                                    $scope.clsMjesec5 = 'btn btn-success';
                                 break;
                             case 6:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec6 = 'greenCellBack';
+                                    $scope.clsMjesec6 = 'btn btn-success';
                                 break;
                             case 7:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec7 = 'greenCellBack';
+                                    $scope.clsMjesec7 = 'btn btn-success';
                                 break;
                             case 8:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec8 = 'greenCellBack';
+                                    $scope.clsMjesec8 = 'btn btn-success';
                                 break;
                             case 9:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec9 = 'greenCellBack';
+                                    $scope.clsMjesec9 = 'btn btn-success';
                                 break;
                             case 10:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec10 = 'greenCellBack';
+                                    $scope.clsMjesec10 = 'btn btn-success';
                                 break;
                             case 11:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec11 = 'greenCellBack';
+                                    $scope.clsMjesec11 = 'btn btn-success';
                                 break;
                             case 12:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec12 = 'greenCellBack';
+                                    $scope.clsMjesec12 = 'btn btn-success';
                                 break;
                         }
                     });

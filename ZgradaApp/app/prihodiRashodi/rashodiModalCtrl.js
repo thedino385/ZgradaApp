@@ -37,10 +37,9 @@
                 Id: maxId + 1, PrihodiRashodiGodId: $scope.prihodRashodZaGodinu.Id, Mjesec: mjesec,
                 Datum: new Date(), Iznos: 0, Status: 'a', PosebniDioMasterId: null, RashodId: null
             };
-            $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.push(noviRecord);
             $scope.dateList.push(new Date());
             $scope.dateplacanjeList.push(new Date());
-            //console.log($scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.length);
+            $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.push(noviRecord);
         }
 
         $scope.delete = function (Id) {
@@ -86,6 +85,7 @@
         //}
 
         $scope.save = function () {
+            $('nav').fadeIn();
             // za sve ostale recorde, stavi status 'u'
             //var Placeno_u_currMjesecu = 0;
             var index = 0;
@@ -107,6 +107,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

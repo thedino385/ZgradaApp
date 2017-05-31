@@ -1,5 +1,5 @@
 ﻿<md-dialog flex="90">
-    <form ng-cloak name="frm">
+    <form ng-cloak name="frm" ng-submit="save()">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
@@ -28,9 +28,9 @@
                             <th style="vertical-align: middle">
                                 Vrsta rashoda
                             </th>
-                            <th style="vertical-align: middle">
+                            <!--<th style="vertical-align: middle">
                                 Posebni dio
-                            </th>
+                            </th>-->
                             <th style="vertical-align: middle">
                                 Iznos
                             </th>
@@ -50,7 +50,7 @@
                         <tr ng-repeat="ra in prihodRashodZaGodinu.PrihodiRashodi_Rashodi | filter:{ Mjesec: mjesec} | filter: { Status: '!d' }" style="vertical-align: middle">
 
                             <td style="vertical-align: middle">
-                                <md-datepicker ng-model="dateList[$index]" md-placeholder="Enter date"></md-datepicker>
+                                <md-datepicker ng-required ng-model="dateList[$index]" md-placeholder="Enter date"></md-datepicker>
                             </td>
                             <td style="vertical-align: middle; text-align: end">
                                 <md-input-container flex-gt-sm>
@@ -62,19 +62,18 @@
                                 </md-input-container>
                             </td>
 
-                            <td style="vertical-align: middle">
+                            <!--<td style="vertical-align: middle">
                                 <md-input-container flex-gt-gt>
-                                    <!--<label>Posebni dio</label>-->
                                     <md-select ng-model="ra.PosebniDioMasterId">
                                         <md-option name="PosebniDioMasterId" ng-repeat="pd in posedbiDijelovi" ng-value="pd.Id">
                                             {{pd.Naziv}}
                                         </md-option>
                                     </md-select>
                                 </md-input-container>
-                            </td>
+                            </td>-->
 
                             <td style="vertical-align: middle; text-align: end">
-                                <input size="9" type="text" ng-model="ra.Iznos" />
+                                <input size="9" type="text" class="form-control" ng-model="ra.Iznos" />
                             </td>
                             <td style="vertical-align: middle; text-align: center">
                                 <md-checkbox ng-model="ra.Placen" aria-label="Checkbox 1">
@@ -103,7 +102,7 @@
                     <md-button class="md-raised" ng-click="cancel()">
                         Odustani
                     </md-button>
-                    <md-button class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
+                    <md-button class="md-raised md-primary" ng-disabled="frm.$invalid" type="submit">Spremi</md-button>
                 </md-dialog-actions>
                 <br /><br /><br />
             </div>

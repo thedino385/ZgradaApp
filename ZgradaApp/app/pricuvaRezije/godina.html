@@ -14,10 +14,6 @@
                     Dodaj godinu
                 </md-button>
 
-                <!--<md-button class="md-raised" aria-label="Dodaj godinu" ng-click="openModalSifarnik($event)">
-                    Šifarnik rashoda
-                </md-button>-->
-
                 <md-button class="md-icon-button" aria-label="More">
                     <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
                 </md-button>
@@ -45,9 +41,6 @@
                         </table>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 1. mjesecu">
-                        <!--<md-button ng-click="openStanjeZgrade(1, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>-->
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="caret"></span>
@@ -59,59 +52,125 @@
                         </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 2. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(2, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(2, $event)" href="">Stanje zgrade u 2. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(2, $event)" href="">Uplatnica za 2. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 3. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(3, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(3, $event)" href="">Stanje zgrade u 3. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(3, $event)" href="">Uplatnica za 3. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 4. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(4, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(4, $event)" href="">Stanje zgrade u 4. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(4, $event)" href="">Uplatnica za 4. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 5. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(5, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(5, $event)" href="">Stanje zgrade u 5. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(5, $event)" href="">Uplatnica za 5. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 6. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(6, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(6, $event)" href="">Stanje zgrade u 6. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(6, $event)" href="">Uplatnica za 6. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 7. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(7, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(7, $event)" href="">Stanje zgrade u 6. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(7, $event)" href="">Uplatnica za 7. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 8. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(8, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(8, $event)" href="">Stanje zgrade u 8. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(8, $event)" href="">Uplatnica za 8. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 9. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(9, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(9, $event)" href="">Stanje zgrade u 9. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(9, $event)" href="">Uplatnica za 9. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 10. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(10, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(10, $event)" href="">Stanje zgrade u 10. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(10, $event)" href="">Uplatnica za 10. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 11. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(11, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(11, $event)" href="">Stanje zgrade u 11. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(11, $event)" href="">Uplatnica za 11. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="vertical-align: bottom; text-align: center; color: indigo" title="stanje zgrade u 12. mjesecu">
-                        <md-button ng-click="openStanjeZgrade(12, $event)" class="md-icon-button" aria-label="More" style="height: 10px">
-                            <md-icon md-svg-icon="/Content/icons/dots-horizontal.svg" style="fill: indigo"></md-icon>
-                        </md-button>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="openStanjeZgrade(12, $event)" href="">Stanje zgrade u 12. mjesecu</a></li>
+                                <li><a ng-click="openModalUplatnica(12, $event)" href="">Uplatnica za 12. mjesec</a></li>
+                            </ul>
+                        </div>
                     </th>
                     <th style="text-align: center"></th>
                 </tr>
@@ -138,19 +197,45 @@
                     </th>
                     <th style="font-size: 12px; vertical-align: middle">
                         Uplaćeno
+
                     </th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec1}}" ng-click="openMjesecno(1, $event)">1</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec2}}" ng-click="openMjesecno(2, $event)">2</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec3}}" ng-click="openMjesecno(3, $event)">3</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec4}}" ng-click="openMjesecno(4, $event)">4</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec5}}" ng-click="openMjesecno(5, $event)">5</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec6}}" ng-click="openMjesecno(6, $event)">6</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec7}}" ng-click="openMjesecno(7, $event)">7</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec8}}" ng-click="openMjesecno(8, $event)">8</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec9}}" ng-click="openMjesecno(9, $event)">9</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec10}}" ng-click="openMjesecno(10, $event)">10</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec11}}" ng-click="openMjesecno(11, $event)">11</th>
-                    <th style="vertical-align: middle; text-align: center" class="{{clsMjesec12}}" ng-click="openMjesecno(12, $event)">12</th>
+                    <!--<th style="vertical-align: middle; text-align: center" class="{{clsMjesec1}}" ng-click="openMjesecno(1, $event)">1</th>-->
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(1, $event)" type="button" class="{{clsMjesec1}}">&nbsp;1.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(2, $event)" type="button" class="{{clsMjesec2}}">&nbsp;2.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(3, $event)" type="button" class="{{clsMjesec3}}">&nbsp;3.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(4, $event)" type="button" class="{{clsMjesec4}}">&nbsp;4.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(5, $event)" type="button" class="{{clsMjesec5}}">&nbsp;5.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(6, $event)" type="button" class="{{clsMjesec6}}">&nbsp;6.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(7, $event)" type="button" class="{{clsMjesec7}}">&nbsp;7.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(8, $event)" type="button" class="{{clsMjesec8}}">&nbsp;8.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(9, $event)" type="button" class="{{clsMjesec9}}">&nbsp;9.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(10, $event)" type="button" class="{{clsMjesec10}}">&nbsp;10.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(11, $event)" n type="button" class="{{clsMjesec11}}">&nbsp;11.&nbsp;</button>
+                    </th>
+                    <th style="vertical-align: middle; text-align: center">
+                        <button ng-click="openMjesecno(12 $event)" type="button" class="{{clsMjesec12}}">&nbsp;12.&nbsp;</button>
+                    </th>
 
                     <th style="font-size: 11px; vertical-align: middle; text-align: end">
                         <a href="" ng-click="modalStanje($event)">Stanje<br />31.12.{{selectedGodina-1}}.</a>

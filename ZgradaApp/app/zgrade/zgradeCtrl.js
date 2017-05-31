@@ -61,9 +61,10 @@
             //        $rootScope.loaderActive = false;
             //    }
             //);
+        }
 
-
-            
+        $scope.popisStanara = function (zgrada) {
+            $location.path('/popisStanara/' + zgrada.Id);
         }
 
 
