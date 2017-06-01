@@ -30,7 +30,7 @@
         </md-toolbar>
         <br />
 
-        <table>
+        <!--<table>
             <tr>
                 <td>Uplatnici slati:</td>
                 <td>
@@ -41,7 +41,7 @@
                     </md-select>
                 </td>
             </tr>
-        </table>
+        </table>-->
 
         <div ng-show="pdMaster.Zatvoren == true">
             <md-whiteframe class="md-whiteframe-9dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
@@ -51,14 +51,13 @@
 
 
         <!--Vlasnici card-->
-        <button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 20px; padding-top: 20px"  ng-click="isVlasniciCollapsed = !isVlasniciCollapsed"><b>Vlasnici</b></button>
+        <button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 20px; padding-top: 20px" ng-click="isVlasniciCollapsed = !isVlasniciCollapsed"><b>Vlasnici</b></button>
         <div uib-collapse="isVlasniciCollapsed">
             <md-card md-theme-watch>
                 <!--table posebniDijeloviChild sa kolecijema: povrsine, pripadci-->
                 <md-card-title>
                     <md-card-title-text>
                         <!--<span class="md-headline indigoColor">Vlasnici</span>-->
-
                         <!--table Vlasnici-->
                         <div ng-repeat="period in pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
                             <table class="table table-hover table-responsive table-condensed" ng-hide="period.Zatvoren == nePrikazujZatvorene">
@@ -68,7 +67,7 @@
                                             Vrijedi Od: {{period.VrijediOdMjesec}}/{{period.VrijediOdGodina}}
                                         </th>
                                         <th style="vertical-align: middle; width: 200px">
-                                            <md-button ng-show="period.Zatvoren != true" class="md-icon-button" ng-click="openModalVlasnici(period.Id)" title="Uredi vlasnike">
+                                            <md-button ng-show="period.Zatvoren != true" class="md-icon-button" ng-click="openModalVlasnici(period.Id, $event)" title="Uredi vlasnike">
                                                 <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
                                             </md-button>
                                             <md-button ng-show="period.Zatvoren != true" class="md-icon-button" ng-click="killVlasniciPeriod(period.Id, $event)" title="Zatvori vlasnike">
@@ -140,7 +139,7 @@
                                         <th style="vertical-align: middle; text-align: right; padding-right: 30px">Površina</th>
                                         <th style="vertical-align: middle; text-align: right; padding-right: 30px">Koeficijent</th>
                                         <th style="vertical-align: middle; width: 200px">
-                                            <md-button ng-hide="poChild.Zatvoren" class="md-icon-button" ng-click="openModalPosebniDioChildPovrsina(poChild.Id, 0)" title="Dodaj površinu">
+                                            <md-button ng-hide="poChild.Zatvoren" class="md-icon-button" ng-click="openModalPosebniDioChildPovrsina(poChild.Id, 0, $event)" title="Dodaj površinu">
                                                 <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
                                             </md-button>
                                         </th>
@@ -152,7 +151,7 @@
                                         <td style="vertical-align: middle; text-align: right; padding-right: 30px">{{povrsina.Povrsina}}</td>
                                         <td style="vertical-align: middle; text-align: right; padding-right: 30px">{{povrsina.Koef}}</td>
                                         <td style="vertical-align: middle; text-align: end">
-                                            <md-button ng-hide="povrsina.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="openModalPosebniDioChildPovrsina(poChild.Id, povrsina.Id)" title="Uredi površinu">
+                                            <md-button ng-hide="povrsina.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="openModalPosebniDioChildPovrsina(poChild.Id, povrsina.Id, $event)" title="Uredi površinu">
                                                 <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
                                             </md-button>
                                             <md-button ng-hide="povrsina.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="killPovrsina(poChild.Id, povrsina.Id, $event)" title="Zatvori površinu">
@@ -173,7 +172,7 @@
                                         <th style="vertical-align: middle; text-align: right; padding-right: 30px">Koeficijent</th>
                                         <th style="vertical-align: middle; width: 200px">
                                             <!--<md-button class="md-primary md-raised pull-right" ng-click="openModalPosebniDioChildPripadak(poChild.Id, 0)">&nbsp;+&nbsp;</md-button>-->
-                                            <md-button ng-hide="prip.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="openModalPosebniDioChildPripadak(poChild.Id, 0)" title="Dodaj pripadak">
+                                            <md-button ng-hide="prip.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="openModalPosebniDioChildPripadak(poChild.Id, 0, $event)" title="Dodaj pripadak">
                                                 <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
                                             </md-button>
                                         </th>
@@ -186,9 +185,9 @@
                                         <td style="vertical-align: middle; text-align: right; padding-right: 30px">{{prip.Koef}}</td>
                                         <td style="vertical-align: middle; text-align: end">
                                             <!--<md-button class="md-primary md-raised pull-right" ng-click="openModalPosebniDioChildPripadak(poChild.Id, prip.Id)">&nbsp;...&nbsp;</md-button>
-                        <md-button class="md-primary md-raised pull-right" ng-click="killPripadak(poChild.Id, prip.Id)">&nbsp;Ugasi&nbsp;</md-button>-->
+                                            <md-button class="md-primary md-raised pull-right" ng-click="killPripadak(poChild.Id, prip.Id)">&nbsp;Ugasi&nbsp;</md-button>-->
 
-                                            <md-button ng-hide="prip.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="openModalPosebniDioChildPripadak(poChild.Id, prip.Id)" title="Uredi pripadak">
+                                            <md-button ng-hide="prip.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="openModalPosebniDioChildPripadak(poChild.Id, prip.Id, $event)" title="Uredi pripadak">
                                                 <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
                                             </md-button>
                                             <md-button ng-hide="prip.Zatvoren == true || poChild.Zatvoren == true" class="md-icon-button" ng-click="killPripadak(poChild.Id, prip.Id, $event)" title="Zatvori pripadak">
@@ -200,8 +199,8 @@
                                 </tbody>
                             </table>
                             <!-- end of Zgrade_PosebniDijeloviChild_Pripadci -->
-                            </div>
-</md-card-title-text>
+                        </div>
+                    </md-card-title-text>
                     <md-card-title-media style="width: 172px">
                         <div class="md-media-lg card-media">
                             <md-button ng-show="poChild.Zatvoren != true" class="md-icon-button" ng-click="openModalPosebniDioChild(poChild.Id)" title="Uredi &nbsp;{{poChild.Naziv}}">

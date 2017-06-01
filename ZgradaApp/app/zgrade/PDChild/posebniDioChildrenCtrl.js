@@ -60,12 +60,13 @@
         // _________________________________________________________
         //              Modal posebni dio
         // _________________________________________________________
-        $scope.openModalPosebniDioChild = function (id) {
+        $scope.openModalPosebniDioChild = function (id, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioChildModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -88,12 +89,13 @@
         // _________________________________________________________
         //              Modal vlasnici
         // _________________________________________________________
-        $scope.openModalVlasnici = function (periodId) {
+        $scope.openModalVlasnici = function (periodId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioMasterVlasniciModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioMasterVlasniciModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -116,12 +118,13 @@
         // _________________________________________________________
         //              Modal povrsine
         // _________________________________________________________
-        $scope.openModalPosebniDioChildPovrsina = function (posebniDioChildId, povrsinaId) {
+        $scope.openModalPosebniDioChildPovrsina = function (posebniDioChildId, povrsinaId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildPovrsinaModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioChildPovrsinaModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -144,12 +147,13 @@
         // _________________________________________________________
         //              Modal pripadci
         // _________________________________________________________
-        $scope.openModalPosebniDioChildPripadak = function (posebniDioChildId, pripadakId) {
+        $scope.openModalPosebniDioChildPripadak = function (posebniDioChildId, pripadakId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildPripadciModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioChildPripadciModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -171,6 +175,7 @@
         //      Kill Master
         // __________________________________________________________
         $scope.killMaster = function (ev) {
+            $('nav').fadeOut();
             var brisanjeOk = false;
             if ($scope.pdMaster.Status == 'a')
                 brisanjeOk = true;
@@ -195,6 +200,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     if (brisanjeOk) {
                         var index = DataService.currZgrada.Zgrade_PosebniDijeloviMaster.indexOf($scope.pdMaster)
                         DataService.currZgrada.Zgrade_PosebniDijeloviMaster.splice(index, 1);
@@ -229,7 +235,7 @@
                     }
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
@@ -238,6 +244,7 @@
         //          Kill / Zatvori posebni dio child
         // __________________________________________________________
         $scope.killpoChild = function (pdChild, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -264,6 +271,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     if (brisanjeOk) {
                         var index = $scope.pdMaster.Zgrade_PosebniDijeloviChild.indexOf(pdChild)
                         $scope.pdMaster.Zgrade_PosebniDijeloviChild.splice(index, 1);
@@ -285,7 +293,7 @@
                     }
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
@@ -293,6 +301,7 @@
         //          Kill / Zatvori povrsinu
         // __________________________________________________________
         $scope.killPovrsina = function (pdChildId, povrsinaId, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -330,6 +339,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
                         if (pdChild.Id == pdChildId) {
                             pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
@@ -349,7 +359,7 @@
                     });
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
@@ -357,6 +367,7 @@
         //          Kill / Zatvori pripadak
         // __________________________________________________________
         $scope.killPripadak = function (pdChildId, pripadakId, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -394,6 +405,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
                         if (pdChild.Id == pdChildId) {
                             pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
@@ -413,12 +425,13 @@
                     });
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
 
         $scope.killVlasniciPeriod = function (periodId, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -459,6 +472,7 @@
             })
                 // od davde
                 .then(function (o) {
+                    $('nav').fadeIn();
                     $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
                         if (period.Id == periodId) {
                             if (brisanjeOk) {
@@ -474,7 +488,7 @@
                     })
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
 
             // do tu

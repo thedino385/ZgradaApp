@@ -231,14 +231,14 @@
                         <button ng-click="openMjesecno(10, $event)" type="button" class="{{clsMjesec10}}">&nbsp;10.&nbsp;</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(11, $event)" n type="button" class="{{clsMjesec11}}">&nbsp;11.&nbsp;</button>
+                        <button ng-click="openMjesecno(11, $event)" type="button" class="{{clsMjesec11}}">&nbsp;11.&nbsp;</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
                         <button ng-click="openMjesecno(12 $event)" type="button" class="{{clsMjesec12}}">&nbsp;12.&nbsp;</button>
                     </th>
 
                     <th style="font-size: 11px; vertical-align: middle; text-align: end">
-                        <a href="" ng-click="modalStanje($event)">Stanje<br />31.12.{{selectedGodina-1}}.</a>
+                        <button style="font-size: 10px;" ng-click="modalStanje($event)" type="button" class="btn btn-default">Stanje<br />31.12.{{selectedGodina-1}}.</button>
                     </th>
                 </tr>
             </thead>

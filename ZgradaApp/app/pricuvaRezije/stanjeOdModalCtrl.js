@@ -12,10 +12,9 @@
 
         if (zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd.length == 0) {
             _action = 'a';
-            console.log('nema stanja');
+            //console.log('nema stanja');
             godinaTable.forEach(function (rec) {
                 if (dodani.indexOf(rec.PosebniDioMasterId) == -1) {
-                    alert('add ' + rec.PosebniDioMasterId);
                     var o = { Id: 0, PrivuvaRezijeGodId: zgradaObj.PricuvaRezijeGodina[0].Id, PosebniDioMasterId: null, StanjeOd: 0, pdMaster: '' };
                     o.PosebniDioMasterId = rec.PosebniDioMasterId;
                     o.pdMaster = rec.PosebniDioMasterNaziv;
@@ -41,6 +40,7 @@
         }
 
         $scope.save = function () {
+            $('nav').fadeIn();
             if (_action == 'a')
                 zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd.push($scope.list);
             else
@@ -56,6 +56,7 @@
         }
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel();
         };
 

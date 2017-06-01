@@ -15,6 +15,8 @@
         $scope.cijenaRezijeZaSvakiVisible = false;
         $scope.obracunKreiran = false;
         $scope.PricuvaRezijeZaMjesec = {};
+        $scope.areSettingsCollapsed = true;
+
 
         // ako nema pricuveRezije za odabrani mjesec, kreiraj praznu kolekciju za mjesecom i statusom
         $scope.found = false;
@@ -26,6 +28,7 @@
                     if (prMj.Mjesec == mjesec) {
                         $scope.PricuvaRezijeZaMjesec = prMj;
                         $scope.found = true;
+                        tBoxesVissible($scope.PricuvaRezijeZaMjesec);
                     }
                 });
             }
@@ -42,6 +45,7 @@
                 function (result) {
                     $scope.PricuvaRezijeZaMjesec = result.data;
                     $rootScope.loaderActive = false;
+                    tBoxesVissible($scope.PricuvaRezijeZaMjesec);
                 },
                 function (result) {
                     toastr.error('Kreiranje pričuve i režija nije uspjelo');
@@ -49,6 +53,34 @@
             )
         }
 
+
+        function tBoxesVissible(mj) {
+            if (mj.NacinObracunaPricuva == 2) {
+                $scope.cijenaPricuvaPostoVisible = false;
+                $scope.cijenaPricuvaVisible = true;
+            }
+            else if (mj.NacinObracunaPricuva == 3) {
+                $scope.cijenaPricuvaPostoVisible = true;
+                $scope.cijenaPricuvaVisible = false;
+            }
+            else {
+                $scope.cijenaPricuvaPostoVisible = false;
+                $scope.cijenaPricuvaVisible = false;
+            }
+
+            if (mj.NacinObracunaRezije == 0) {
+                $scope.cijenaRezijePoBrojuVisible = false;
+                $scope.cijenaRezijeZaSvakiVisible = false;
+            }
+            else if (mj.NacinObracunaRezije == 1) {
+                $scope.cijenaRezijePoBrojuVisible = true;
+                $scope.cijenaRezijeZaSvakiVisible = false;
+            }
+            else {
+                $scope.cijenaRezijePoBrojuVisible = false;
+                $scope.cijenaRezijeZaSvakiVisible = true;
+            }
+        }
 
         // begin saldo stutt
         // nadji mastera iz proslog mjeseca i prenesi Saldo u PocetnoStanje
@@ -214,7 +246,7 @@
                 if (rezijeZaMaster != null && rezijeZaMaster != undefined)
                     pdMaster.ZaduzenjeRezije = parseFloat(rezijeZaMaster).toFixed(2);
 
-                
+
 
                 // Uplaceno  se vuse iz Prihoda - suma prihoda za pdMasterId za ovaj mjesec
                 var uplaceno = 0;

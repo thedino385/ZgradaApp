@@ -8,8 +8,12 @@
 
                 <h3 flex md-truncate>Rashodi: {{period}}</h3>
                 
-                <md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
+                <!--<md-button class="md-icon-button" ng-click="dodajRecord()" title="Dodaj prihod">
                     <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: lightyellow"></md-icon>
+                </md-button>-->
+
+                <md-button class="md-raised" style="fill: green" aria-label="Obračunaj pričuvu i režije" ng-click="dodajRecord()">
+                    Dodaj rashod
                 </md-button>
 
                 <md-button class="md-icon-button" ng-click="cancel()">
