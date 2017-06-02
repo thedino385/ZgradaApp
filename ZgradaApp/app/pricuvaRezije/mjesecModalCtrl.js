@@ -160,6 +160,22 @@
             var pricuvaZaMaster = 0;
             var rezijeZaMaster = 0;
 
+            /*
+                                DECIMALS, ENG/HR, DOT/COMMA
+                    _________________________________________________________________________________
+
+                    1. dohvat podataka sa servera:
+                        DataService.decimalToHr(result.data.Zgrada, 'prihodiRashodi');
+                    2. proracuni (samo za racunanje):
+                            DataService.myParseFloat(hrDecimal)
+                    3. ako se rezultat proracuna ispisuje u UI, DataService.toHrDecimal(jsDecimal)
+                        DataService.myParseFloat(decimal_with_commas)
+                    4. slanje/snimanje na server:
+                        (DataService.decimalToEng($scope.zgradaObj, 'prihodiRashodi')
+
+            */
+
+
             // pricuva
             // po m2
             $scope.PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (pdMaster) {

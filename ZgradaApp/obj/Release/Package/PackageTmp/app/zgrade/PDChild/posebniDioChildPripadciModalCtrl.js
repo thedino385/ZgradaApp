@@ -25,6 +25,7 @@
         }
 
         $scope.save = function () {
+            $('nav').fadeIn();
             if (pripadakId == 0) {
                 maxId = 0;
                 pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
@@ -60,6 +61,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

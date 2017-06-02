@@ -1,0 +1,66 @@
+﻿<style>
+    .table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
+        padding: 1px;
+    }
+
+    .borderless td, .borderless th {
+        border: none !important;
+    }
+</style>
+
+<md-dialog flex="80">
+    <form ng-cloak name="frm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>Stanje od</h3>
+
+                <!--<h3 flex md-truncate>{{pdMaster.Naziv}}</h3>
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>-->
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <table class="table table-condensed borderless" style="width: 400px">
+                    <thead>
+                        <tr>
+                            <th style="vertical-align middle; text-align: left">
+                                Posebni dio
+                            </th>
+                            <th style="vertical-align: middle; text-align: center">
+                                Iznos
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="rec in list">
+                            <td style="vertical-align: top; text-align: center; color: indigo">{{rec.pdMaster}}</td>
+                              
+                            <td style="vertical-align: top; text-align: right"><input type="text" ng-model="rec.StanjeOd" /></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised primary" ng-click="save()">
+                Spremi
+            </md-button>
+            <md-button class="md-raised primary" ng-click="cancel()">
+                Zatvori
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

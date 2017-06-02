@@ -33,6 +33,7 @@
         //              Modal stanar
         // _________________________________________________________
         $scope.openModalStanar = function (id) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'zgradaStanariModalCtrl',
                 templateUrl: 'app/zgrade/zgradaStanariModal.html',
@@ -59,6 +60,7 @@
         //              Modal posebni dio
         // _________________________________________________________
         $scope.openModalPosebniDio = function (id) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'zgradaPosebniDijeloviMasterModalCtrl',
                 templateUrl: 'app/zgrade/zgradaPosebniDijeloviMasterModal.html',
@@ -88,7 +90,7 @@
                     // on success
                     $rootScope.loaderActive = false;
                     toastr.success('Promjene su snimljene!', '');
-                    $location.path('/zgrade');
+                    //$location.path('/zgrade');
                 },
                 function (result) {
                     // on error
@@ -103,11 +105,14 @@
 
         $scope.createAcc = function () {
             // kreiranje accounta za sve onne koji ga nemaju
+            $rootScope.loaderActive = true;
             AccountService.createAccForZgrada($scope.zgradaObj.Id).then(
                 function (result) {
+                    $rootScope.loaderActive = false;
                     $route.reload();
                 },
                 function (result) {
+                    $rootScope.loaderActive = false;
                     toastr.error('Kreiranje korisničkih računa nije uspjelo ');
                 }
             )

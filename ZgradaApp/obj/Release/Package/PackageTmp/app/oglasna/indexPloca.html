@@ -1,0 +1,56 @@
+﻿<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+                <h3 flex md-truncate>Oglasna ploča</h3>
+
+
+
+                <md-button class="md-icon-button" aria-label="Novi događaj" title="Novi događaj" ng-click="openModal(0)">
+                    <md-icon md-svg-icon="/Content/icons/plus.svg"></md-icon>
+                </md-button>
+
+
+
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <br />
+
+
+
+
+
+        <div ng-repeat="oglas in oglasna">
+          
+            <div class="panel-group">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong>{{oglas.Naslov}}</strong>
+                    </div>
+                    <div class="panel-body">
+                        <p>Datum: <b>{{parseDate(oglas.Datum)}}</b></p>
+                        <p>Autor: <b>{{oglas.Ime}}&nbsp;{{oglas.Prezime}}</b></p>
+                        <br />
+                        <span>{{oglas.Oglas}}</span>
+                    </div>
+                    <md-button class="md-icon-button pull-right" ng-click="openModal(oglas.Id, $event)" title="Uredi oglas">
+                        <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+

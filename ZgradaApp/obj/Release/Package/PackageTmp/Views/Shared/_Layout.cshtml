@@ -3,6 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <style>
+        .uppercase {
+            text-transform: uppercase;
+        }
+    </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -14,107 +21,152 @@
     <link href="~/Content/angular-toastr.css" rel="stylesheet" />
     <link href="~/Content/angular-material.layouts.css" rel="stylesheet" />
     <link href="~/Content/angular-material.layouts.ie_fixes.css" rel="stylesheet" />
-
-
 </head>
 <body>
 
     @if (Request.IsAuthenticated)
     {
-
-        <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a id="topNavSelectedZgrada" class="navbar-brand navigation" style="color: indigo; display: none" href="#"></a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navigation" style="display: none">
-                        <li id="pdMasteri"><a href="#!/posebniDijeloviMasterList" onclick="Mark('pdMasteri')">Posebni dijelovi</a></li>
-                        <li class="dropdown" id="obracun">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Obračun <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#!/prihodiRashodi" onclick="Mark('obracun')">Prihodi i rashodi</a></li>
-                                <li><a href="#!/pricuvaRezije" onclick="Mark('obracun')">Pričuva i režije</a></li>
-                            </ul>
-                        </li>
-                        <li id="dnevnik"><a href="#!/dnevnik/0" onclick="Mark('dnevnik')">Dnevnik</a></li>
-                        <li class="dropdown" id="popisi">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Popisi <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#!/popisDijelova" onclick="Mark('popisi')">Popis zajedničkih dijelova</a></li>
-                                <li><a href="#!/popisUredjaja" onclick="Mark('popisi')">Popis zajedničkih uređaja</a></li>
-                            </ul>
-                        </li>
-                        @if (ViewBag.MasterAcc != null && ViewBag.MasterAcc == true)
-                        {
-                            <li id="useri"><a href="#!/useri" onclick="Mark('useri')">Korisnici</a></li>
-                        }
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        @*<li><a href="#">@DateTime.Today.ToShortDateString()</a></li>*@
-                        <li><a href="#">@ViewBag.ImePrezime</a></li>
-                        <li>@Html.Partial("_LoginPartial")</li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
-
-        if (ViewBag.ExpMsg != null)
+        if (ViewData["userType"] == null || ViewData["userType"].ToString() == "stanar")
         {
-            if (ViewBag.ExpDays >= 15)
-            {
-                <div class="alert alert-warning" style="padding-top: 0px">
-                    <h5 style="color: red; text-align:end; margin-right: 50px">@ViewBag.ExpMsg!</h5>
-                </div>
-            }
-            else if (ViewBag.ExpDays < 15 && ViewBag.ExpDays >= 0)
-            {
-                <div class="alert alert-danger">
-                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-danger">
-                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
-                    <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsgGrace</b></h5>
-                </div>
-            }
+            <link href="~/Content/toastr.css" rel="stylesheet" />
 
+            <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand navigation" style="color: indigo;" href="#">@ViewBag.ZgradaInfo</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navigation">
+
+                            <li id="oglasnaS"><a href="#">Oglasna</a></li>
+                            <li id="dnevnikS"><a href="#">Dnevnik</a></li>
+                            <li id="uplatniceS"><a href="#">Uplatnice</a></li>
+                            <li><img src="~/Content/images/ajax-loader.gif" style="display: none; padding-top: 5px;" id="loader" /> </li>
+
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="@Url.Action("Index", "Manage")">@ViewBag.ImePrezime</a></li>
+                            <li>@Html.Partial("_LoginPartial")</li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         }
-        if (ViewData["notifikacije"] != null)
+        else
+
         {
-            <div class="alert alert-warning" id="notMaster">
-                <table style="width: 100%" id="notTable">
-                    @*<tr>
-                        <td colspan="2" style="text-align: center"><h5>Notifikacije</h5></td>
-                    </tr>*@
-                    @foreach (var item in (List<NotificationList>)ViewData["notifikacije"])
-                    {
-                        <tr id="@item.id">
-                            <td style="text-align: left; padding-left: 150px; width: 10%; font-size: 10px"><img src="~/Content/icons/alert.png" /></td>
-                            <td style="text-align: right; padding-right: 50px; width: 70%">@item.Text</td>
-                            <td style="text-align: right; padding-right: 50px; width: 10%"><button onclick="hideNotification('@item.id')"><img src="~/Content/icons/close.svg" /></button></td>
-                        </tr>
+
+            <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px;">
+                <div class="container">
+                    
+                    <div class="navbar-header">
+                        @*<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                            <ul class="nav navbar-nav navigation uppercase">
+                                <li style="padding-top: 11px; padding-right:10px" id="home"><a href="#!/zgrade" onclick="Mark('home')">Home</a></li>
+                            </ul>
+                        <a id="topNavSelectedZgrada" onclick="Mark('topNavSelectedZgrada')" class="navbar-brand navigation" style="padding-top: 25px; color: indigo; display: none; font-weight: bold; text-transform: capitalize" href="#"></a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse" style="padding-bottom: 10px; padding-top: 10px">
+                        <ul class="nav navbar-nav navigation uppercase" style="display: none">
+                            <li id="pdMasteri"><a href="#!/posebniDijeloviMasterList" onclick="Mark('pdMasteri')">Posebni dijelovi</a></li>
+                            <li class="dropdown" id="obracun">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Obračun <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/prihodiRashodi" onclick="Mark('obracun')">Prihodi i rashodi</a></li>
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/pricuvaRezije" onclick="Mark('obracun')">Pričuva i režije</a></li>
+                                </ul>
+                            </li>
+                            <li id="dnevnik"><a href="#!/dnevnik/0" onclick="Mark('dnevnik')">Dnevnik</a></li>
+                            <li class="dropdown" id="popisi">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Popisi <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/popisDijelova" onclick="Mark('popisi')">Popis zajedničkih dijelova</a></li>
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/popisUredjaja" onclick="Mark('popisi')">Popis zajedničkih uređaja</a></li>
+                                </ul>
+                            </li>
+                            @if (ViewBag.MasterAcc != null && ViewBag.MasterAcc == true)
+                            {
+                                <li class="dropdown" id="tvrtka">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tvrtka <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li id="useri"><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/useri" onclick="Mark('tvrtka')">Korisnici</a></li>
+                                        <li id="tvrtka"><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/tvrtka" onclick="Mark('tvrtka')">Tvrtka</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            <li id="oglasna"><a href="#!/oglasna" onclick="Mark('oglasna')">Oglasna</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            @*<li><a href="#">@DateTime.Today.ToShortDateString()</a></li>*@
+                            <li><a href="@Url.Action("Index", "Manage")">@ViewBag.ImePrezime</a></li>
+                            <li>@Html.Partial("_LoginPartial")</li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+            if (ViewBag.ExpMsg != null)
+            {
+                if (ViewBag.ExpDays >= 15)
+                {
+                    <div class="alert alert-warning" style="padding-top: 0px">
+                        <h5 style="color: red; text-align:end; margin-right: 50px">@ViewBag.ExpMsg!</h5>
+                    </div>
+                }
+                else if (ViewBag.ExpDays < 15 && ViewBag.ExpDays >= 0)
+                {
+                    <div class="alert alert-danger">
+                        <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger">
+                        <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsg!</b></h5>
+                        <h5 style="color: #303030; text-align:end; margin-right: 50px;"><b>@ViewBag.ExpMsgGrace</b></h5>
+                    </div>
+                }
+
+            }
+            if (ViewData["notifikacije"] != null)
+            {
+                <div class="alert alert-warning" id="notMaster">
+                    <table style="width: 100%" id="notTable">
+                        @*<tr>
+                                <td colspan="2" style="text-align: center"><h5>Notifikacije</h5></td>
+                            </tr>*@
+                        @foreach (var item in (List<NotificationList>)ViewData["notifikacije"])
+                        {
+                            <tr id="@item.id">
+                                <td style="text-align: left; padding-left: 150px; width: 10%; font-size: 10px"><img src="~/Content/icons/alert.png" /></td>
+                                <td style="text-align: right; padding-right: 50px; width: 70%">@item.Text</td>
+                                <td style="text-align: right; padding-right: 50px; width: 10%"><button onclick="hideNotification('@item.id')"><img src="~/Content/icons/close.svg" /></button></td>
+                            </tr>
 
 
-                        @*<h5 style="text-align:end; margin-right: 50px">@item.Text</h5>
-                        <h5 style="text-align:end; margin-right: 50px">x</h5>*@
+                            @*<h5 style="text-align:end; margin-right: 50px">@item.Text</h5>
+                                <h5 style="text-align:end; margin-right: 50px">x</h5>*@
 
-                    }
-                </table>
-            </div>
+                        }
+                    </table>
+                </div>
+            }
+
         }
 
     }
-
-
 
     <div class="mainContainer">
         @RenderBody()
@@ -141,6 +193,8 @@
     <script src="~/Scripts/angular-aria/angular-aria.min.js"></script>
     <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
 
+    <link href="~/Scripts/summernote/summernote.css" rel="stylesheet" />
+    <script src="~/Scripts/summernote/summernote.js"></script>
     @*material pokusaj*@
     @*<link href="~/Content/bootstrap-material-design.css" rel="stylesheet" />
         <link href="~/Content/ripples.css" rel="stylesheet" />
@@ -169,15 +223,19 @@
     <script src="~/app/zgrade/popisi/uredjajiListCtrl.js"></script>
     <script src="~/app/zgrade/popisi/dijeloviModalCtrl.js"></script>
     <script src="~/app/zgrade/popisi/uredjajiModalCtrl.js"></script>
+    <script src="~/app/zgrade/popisStanaraCtrl.js"></script>
 
     <script src="~/app/prihodiRashodi/prihodiRashodiIndexCtrl.js"></script>
     <script src="~/app/prihodiRashodi/prihodiModalCtrl.js"></script>
     <script src="~/app/prihodiRashodi/rashodiModalCtrl.js"></script>
     <script src="~/app/prihodiRashodi/sifarnikRashodaModalCtrl.js"></script>
+    <script src="~/app/prihodiRashodi/rashodiUplatniceCtrl.js"></script>
 
     <script src="~/app/pricuvaRezije/godinaCtrl.js"></script>
     <script src="~/app/pricuvaRezije/mjesecModalCtrl.js"></script>
     <script src="~/app/pricuvaRezije/stanjeZgradeModalCtrl.js"></script>
+    <script src="~/app/pricuvaRezije/stanjeOdModalCtrl.js"></script>
+    <script src="~/app/pricuvaRezije/uplatnicaModalCtrl.js"></script>
 
     <script src="~/app/ks/indexKsCtrl.js"></script>
     <script src="~/app/zgrade/dnevnik/dnevnikIndexCtrl.js"></script>
@@ -185,6 +243,9 @@
 
     <script src="~/app/useri/indexUseriCtrl.js"></script>
     <script src="~/app/useri/useriModalCtrl.js"></script>
+    <script src="~/app/tvrtkaCtrl.js"></script>
+    <script src="~/app/oglasna/indexPlocaCtrl.js"></script>
+    <script src="~/app/oglasna/dodajOglasModalCtrl.js"></script>
     @*
 
 

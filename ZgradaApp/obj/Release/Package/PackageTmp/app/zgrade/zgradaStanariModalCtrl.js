@@ -17,6 +17,7 @@
         }
 
         $scope.save = function () {
+            $('nav').fadeIn();
             if (id == 0) {
                 maxId = 0;
                 zgradaObj.Zgrade_Stanari.forEach(function (stanar) {
@@ -39,6 +40,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

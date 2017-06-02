@@ -155,6 +155,150 @@
         return $http.get('../api/data/getPopisStanari?zgradaId=' + zgradaId);
     }
 
+
+    var myParseFloat = function (decimalComma) {
+        if (decimalComma == null || decimalComma == undefined)
+            return 0;
+        return parseFloat(decimalComma.toString().replace(',', '.')).toFixed(2);
+    }
+
+    var toHrDecimal = function (decimal) { 
+        // decimal je vec fixedto 2
+        if (decimal == null || decimal == undefined)
+            return 0;
+        return decimalComma.toString().replace(',', '.');
+    }
+
+
+    var decimalToEng = function (zgrada, modul) {
+        switch (modul) {
+            case "prihodiRashodi":
+                zgrada.PrihodiRashodi.forEach(function (prGod) {
+                    prGod.PrihodiRashodi_Rashodi.forEach(function (rashod) {
+                        rashod.Iznos != null ? rashod.Iznos = rashod.Iznos.toString().replace(',', '.') : 0;
+                    })
+                    prGod.PrihodiRashodi_Prihodi.forEach(function (prihod) {
+                        prihod.Iznos != null ? prihod.Iznos = prihod.Iznos.toString().replace(',', '.') : 0;
+                    })
+                })
+                break;
+            case "pricuva":
+                zgrada.PricuvaRezijeGodina(function (prGod) {
+                    prGod.PricuvaRezijeGodina_StanjeOd.forEach(function (stanje) {
+                        stanje.StanjeOd != null ? stanje.StanjeOd = stanje.StanjeOd.toString().replace(',', '.') : 0;
+                    });
+                    prGod.PricuvaRezijeMjesec.forEach(function (prMj) {
+                        prMj.ObracunPricuvaCijenaM2 != null ? prMj.ObracunPricuvaCijenaM2 = prMj.ObracunPricuvaCijenaM2.toString().replace(',', '.') : 0;
+                        prMj.ObracunPricuvaCijenaUkupno != null ? prMj.ObracunPricuvaCijenaUkupno = prMj.ObracunPricuvaCijenaUkupno.toString().replace(',', '.') : 0;
+                        prMj.ObracunRezijeCijenaUkupno != null ? prMj.ObracunRezijeCijenaUkupno = prMj.ObracunRezijeCijenaUkupno.toString().replace(',', '.') : 0;
+                        prMj.ObracunRezijaCijenaUkupnoPoBrojuClanova != null ? prMj.ObracunRezijaCijenaUkupnoPoBrojuClanova = prMj.ObracunRezijaCijenaUkupnoPoBrojuClanova.toString().replace(',', '.') : 0;
+                        prMj.OrocenaSredstva != null ? prMj.OrocenaSredstva = prMj.OrocenaSredstva.toString().replace(',', '.') : 0;
+
+                        prMj.PricuvaRezijeMjesec_Uplatnice.forEach(function (upl) {
+                            upl.UdioPricuva != null ? upl.UdioPricuva = upl.UdioPricuva.toString().replace(',', '.') : 0;
+                            upl.UdioRezije != null ? upl.UdioRezije = upl.UdioRezije.toString().replace(',', '.') : 0;
+                            upl.IznosRezije != null ? upl.IznosRezije = upl.IznosRezije.toString().replace(',', '.') : 0;
+                            upl.IznosPricuva != null ? upl.IznosPricuva = upl.IznosPricuva.toString().replace(',', '.') : 0;
+                        });
+
+                        prMj.PricuvaRezijePosebniDioMasteri.forEach(function (master) {
+                            master.ObracunPricuvaCijenaSlobodanUnos != null ? master.ObracunPricuvaCijenaSlobodanUnos = master.ObracunPricuvaCijenaSlobodanUnos.toString().replace(',', '.') : 0;
+                            master.ObracunRezijeCijenaSlobodanUnos != null ? master.ObracunRezijeCijenaSlobodanUnos = master.ObracunRezijeCijenaSlobodanUnos.toString().replace(',', '.') : 0;
+                            master.ObracunPricuvaPostoSlobodanUnos != null ? master.ObracunPricuvaPostoSlobodanUnos = master.ObracunPricuvaPostoSlobodanUnos.toString().replace(',', '.') : 0;
+                            master.DugPretplata != null ? master.DugPretplata = master.DugPretplata.toString().replace(',', '.') : 0;
+                            master.ZaduzenjePricuva != null ? master.ZaduzenjePricuva = master.ZaduzenjePricuva.toString().replace(',', '.') : 0;
+                            master.ZaduzenjeRezije != null ? master.ZaduzenjeRezije = master.ZaduzenjeRezije.toString().replace(',', '.') : 0;
+                            master.Uplaceno != null ? master.Uplaceno = master.Uplaceno.toString().replace(',', '.') : 0;
+                            master.PocetnoStanje != null ? master.PocetnoStanje = master.PocetnoStanje.toString().replace(',', '.') : 0;
+                            master.StanjeOd != null ? master.StanjeOd = master.StanjeOd.toString().replace(',', '.') : 0;
+                        });
+                    });
+                });
+                break;
+            case "ZgradaStanovi":
+                zgrada.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
+                });
+                zgrada.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
+                });
+                break;
+        }
+        // prihodi rashodi
+        
+
+        return zgrada;
+    }
+
+    var decimalToHr = function (zgrada, modul) {
+        // prihodi rashodi
+        //zgrada.PrihodiRashodi.forEach(function (prGod) {
+        //    prGod.PrihodiRashodi_Rashodi.forEach(function (rashod) {
+        //        rashod.Iznos != null ? rashod.Iznos = rashod.Iznos.toString().replace('.', ',') : 0;
+        //        console.log(rashod.Iznos);
+        //    })
+        //})
+        switch (modul) {
+            case "prihodiRashodi":
+                zgrada.PrihodiRashodi.forEach(function (prGod) {
+                    prGod.PrihodiRashodi_Rashodi.forEach(function (rashod) {
+                        rashod.Iznos != null ? rashod.Iznos = rashod.Iznos.toString().replace('.', ',') : 0;
+                    })
+                    prGod.PrihodiRashodi_Prihodi.forEach(function (prihod) {
+                        prihod.Iznos != null ? prihod.Iznos = prihod.Iznos.toString().replace('.', ',') : 0;
+                    })
+                })
+                break;
+            case "pricuva":
+                zgrada.PricuvaRezijeGodina(function (prGod) {
+                    prGod.PricuvaRezijeGodina_StanjeOd.forEach(function (stanje) {
+                        stanje.StanjeOd != null ? stanje.StanjeOd = stanje.StanjeOd.toString().replace('.', ',') : 0;
+                    });
+                    prGod.PricuvaRezijeMjesec.forEach(function (prMj) {
+                        prMj.ObracunPricuvaCijenaM2 != null ? prMj.ObracunPricuvaCijenaM2 = prMj.ObracunPricuvaCijenaM2.toString().replace('.', ',') : 0;
+                        prMj.ObracunPricuvaCijenaUkupno != null ? prMj.ObracunPricuvaCijenaUkupno = prMj.ObracunPricuvaCijenaUkupno.toString().replace('.', ',') : 0;
+                        prMj.ObracunRezijeCijenaUkupno != null ? prMj.ObracunRezijeCijenaUkupno = prMj.ObracunRezijeCijenaUkupno.toString().replace('.', ',') : 0;
+                        prMj.ObracunRezijaCijenaUkupnoPoBrojuClanova != null ? prMj.ObracunRezijaCijenaUkupnoPoBrojuClanova = prMj.ObracunRezijaCijenaUkupnoPoBrojuClanova.toString().replace('.', ',') : 0;
+                        prMj.OrocenaSredstva != null ? prMj.OrocenaSredstva = prMj.OrocenaSredstva.toString().replace('.', ',') : 0;
+
+                        prMj.PricuvaRezijeMjesec_Uplatnice.forEach(function (upl) {
+                            upl.UdioPricuva != null ? upl.UdioPricuva = upl.UdioPricuva.toString().replace('.', ',') : 0;
+                            upl.UdioRezije != null ? upl.UdioRezije = upl.UdioRezije.toString().replace('.', ',') : 0;
+                            upl.IznosRezije != null ? upl.IznosRezije = upl.IznosRezije.toString().replace('.', ',') : 0;
+                            upl.IznosPricuva != null ? upl.IznosPricuva = upl.IznosPricuva.toString().replace('.', ',') : 0;
+                        });
+
+                        prMj.PricuvaRezijePosebniDioMasteri.forEach(function (master) {
+                            master.ObracunPricuvaCijenaSlobodanUnos != null ? master.ObracunPricuvaCijenaSlobodanUnos = master.ObracunPricuvaCijenaSlobodanUnos.toString().replace('.', ',') : 0;
+                            master.ObracunRezijeCijenaSlobodanUnos != null ? master.ObracunRezijeCijenaSlobodanUnos = master.ObracunRezijeCijenaSlobodanUnos.toString().replace('.', ',') : 0;
+                            master.ObracunPricuvaPostoSlobodanUnos != null ? master.ObracunPricuvaPostoSlobodanUnos = master.ObracunPricuvaPostoSlobodanUnos.toString().replace('.', ',') : 0;
+                            master.DugPretplata != null ? master.DugPretplata = master.DugPretplata.toString().replace('.', ',') : 0;
+                            master.ZaduzenjePricuva != null ? master.ZaduzenjePricuva = master.ZaduzenjePricuva.toString().replace('.', ',') : 0;
+                            master.ZaduzenjeRezije != null ? master.ZaduzenjeRezije = master.ZaduzenjeRezije.toString().replace('.', ',') : 0;
+                            master.Uplaceno != null ? master.Uplaceno = master.Uplaceno.toString().replace('.', ',') : 0;
+                            master.PocetnoStanje != null ? master.PocetnoStanje = master.PocetnoStanje.toString().replace('.', ',') : 0;
+                            master.StanjeOd != null ? master.StanjeOd = master.StanjeOd.toString().replace('.', ',') : 0;
+                        });
+                    });
+                });
+                break;
+            case "ZgradaStanovi":
+                zgrada.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace('.', ',') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace('.', ',') : 0;
+                });
+                zgrada.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace('.', ',') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace('.', ',') : 0;
+                });
+                break;
+        }
+
+        return zgrada;
+    }
+
     return {
         getZgrade: getZgrade,
         getZgrada: getZgrada,
@@ -195,7 +339,12 @@
         getuseriStanari: getuseriStanari,
 
         pricuvaRezijeStanjeOdCreateOrUpdate: pricuvaRezijeStanjeOdCreateOrUpdate,
-        getPopisStanari: getPopisStanari
+        getPopisStanari: getPopisStanari,
+
+        decimalToEng: decimalToEng,
+        decimalToHr: decimalToHr,
+        myParseFloat: myParseFloat,
+        toHrDecimal: toHrDecimal
     }
 
 

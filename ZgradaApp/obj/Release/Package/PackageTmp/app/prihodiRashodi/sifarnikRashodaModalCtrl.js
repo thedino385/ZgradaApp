@@ -19,33 +19,35 @@
             $scope.sifarnikRashoda.push(noviRecord);
         }
 
-      
-        $scope.delete = function (Id) {
-            // ako je obj.Id == 0, obrisi zadnji rec u kolekciji (nije u bazi)
-            if ($scope.sifarnikRashoda.Id == 0) {
-                $scope.sifarnikRashoda.forEach(function (rec) {
-                    if (rec.Id == Id) {
-                        var index = $scope.sifarnikRashoda.indexOf(rec)
-                        $scope.sifarnikRashoda.splice(index, 1);
-                    }
-                });
-            }
-            // ako nije, ako je status 'a', brisi, u suprotnom stavi status na 'd'
-            else {
-                $scope.sifarnikRashoda.forEach(function (rec) {
-                    if (rec.Id == Id) {
-                        if (rec.Status == 'a') {
-                            var index = $scope.sifarnikRashoda.indexOf(rec)
-                            $scope.sifarnikRashoda.splice(index, 1);
-                        }
-                        else
-                            rec.Status = 'd';
-                    }
-                })
-            }
-        }
+
+        // nema brisanja
+        //$scope.delete = function (Id) {
+        //    // ako je obj.Id == 0, obrisi zadnji rec u kolekciji (nije u bazi)
+        //    if ($scope.sifarnikRashoda.Id == 0) {
+        //        $scope.sifarnikRashoda.forEach(function (rec) {
+        //            if (rec.Id == Id) {
+        //                var index = $scope.sifarnikRashoda.indexOf(rec)
+        //                $scope.sifarnikRashoda.splice(index, 1);
+        //            }
+        //        });
+        //    }
+        //    // ako nije, ako je status 'a', brisi, u suprotnom stavi status na 'd'
+        //    else {
+        //        $scope.sifarnikRashoda.forEach(function (rec) {
+        //            if (rec.Id == Id) {
+        //                if (rec.Status == 'a') {
+        //                    var index = $scope.sifarnikRashoda.indexOf(rec)
+        //                    $scope.sifarnikRashoda.splice(index, 1);
+        //                }
+        //                else
+        //                    rec.Status = 'd';
+        //            }
+        //        })
+        //    }
+        //}
 
         $scope.save = function () {
+            $('nav').fadeIn();
             // za sve ostale recorde, stavi status 'u'
             $scope.sifarnikRashoda.forEach(function (rec) {
                 if (rec.Status == null)
@@ -55,6 +57,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

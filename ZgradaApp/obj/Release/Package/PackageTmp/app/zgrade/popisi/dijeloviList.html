@@ -1,4 +1,7 @@
 ﻿
+
+
+
 <div class="container-grid">
     <div class="col-lg-12 whiteShadow">
 
@@ -39,7 +42,7 @@
 
                                 </div>
                             </div>
-                            <button ng-hide="dio.ZatvorenGodina != null" type="button" class="btn btn-default btn-sm md-avatar" title="Uredi" ng-click="openModal(dio.Id)">
+                            <button ng-hide="dio.ZatvorenGodina != null" type="button" class="btn btn-default btn-sm md-avatar" title="Uredi" ng-click="openModal(dio.Id, $event)">
                                 <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: indigo"></md-icon>
                             </button>
                             <button ng-hide="dio.ZatvorenGodina != null" type="button" class="btn btn-default btn-sm md-avatar" title="Zatvori/Obriši" ng-click="kill(dio, $event)">

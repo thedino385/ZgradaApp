@@ -20,10 +20,10 @@
                         Označi sve
                     </md-checkbox>
 
-                    <md-button class="md-icon-button" aria-label="Novi događaj" title="Novi događaj" ng-click="gotoDetails(0)">
-                        <md-icon md-svg-icon="/Content/icons/plus.svg"></md-icon>
+                    <md-button class="md-raised" aria-label="Novi unos" title="Dodaj unos" ng-click="gotoDetails(0)">
+                        Dodaj unos
                     </md-button>
-                    <md-button class="md-raised" aria-label="Dodaj godinu" ng-click="genPdf()">
+                    <md-button class="md-raised" aria-label="Dodaj godinu" title="Prenesi u Pdf" ng-click="genPdf()">
                         Pdf
                     </md-button>
 
@@ -33,7 +33,7 @@
                     </md-button>
                 </div>
             </md-toolbar>
-            <br />
+            <br /><br /><p>
             <div class="btn-group">
                 <a ng-repeat="god in godine | orderBy: god" href="" class="btn btn-primary" ng-click="godinaChanged(god)">{{god}}</a>
             </div>
@@ -47,33 +47,34 @@
                         <md-checkbox ng-checked="isChecked(mjesec)" ng-click="toggle(mjesec)">
                         </md-checkbox>
                         <div class="md-list-item-text">
-                            <br />
-                            <h3 style="color: indigo">Mjesec: {{mjesec}}.</h3>
-                            <table class="table">
-                                <tbody>
-                                    <tr ng-repeat="dnevnik in zgradaObj.Zgrade_DnevnikRada | filter: { Mjesec: mjesec }">
-                                        <td>
-                                            {{dnevnik.Naslov}}
-                                            <br />
-                                            <span style="font-size: 10px; color: gray" ng-repeat="user in useri | filter: { Id: dnevnik.UserId }">
-                                                Kreirao: {{user.Ime}} {{user.Prezime}} dana {{parseDate(dnevnik.Datum)}}
-                                            </span>
-                                        </td>
-                                        <td style="text-align: start">
-                                            <span style="font-size: 10px; color: gray">Status: </span><span style="font-size: 11px;" ng-class="{ 'greenCell': dnevnik.Odradjeno == true, 'redCell': dnevnik.Odradjeno != true}">{{getStatusText(dnevnik.Odradjeno)}}</span>
-                                            <br />
-                                            <span style="font-size: 10px; color: gray">{{getZadnjiOdgovor(dnevnik.Id)}}</span>
-                                        </td>
-                                        <td style="text-align: end; width: 30px">
-                                            <a href="" class="md-icon-button" ng-click="gotoDetails(dnevnik.Id)" title="Uredi vlasnike">
-                                                <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="bs-callout bs-callout-primary">
+                                <h3 style="color: indigo">Mjesec: {{mjesec}}.</h3>
+                                <table class="table">
+                                    <tbody>
+                                        <tr ng-repeat="dnevnik in zgradaObj.Zgrade_DnevnikRada | filter: { Mjesec: mjesec }">
+                                            <td>
+                                                {{dnevnik.Naslov}}
+                                                <br />
+                                                <span style="font-size: 10px; color: gray" ng-repeat="user in useri | filter: { Id: dnevnik.UserId }">
+                                                    Kreirao: {{user.Ime}} {{user.Prezime}} dana {{parseDate(dnevnik.Datum)}}
+                                                </span>
+                                            </td>
+                                            <td style="text-align: start">
+                                                <span style="font-size: 10px; color: gray">Status: </span><span style="font-size: 11px;" ng-class="{ 'greenCell': dnevnik.Odradjeno == true, 'redCell': dnevnik.Odradjeno != true}">{{getStatusText(dnevnik.Odradjeno)}}</span>
+                                                <br />
+                                                <span style="font-size: 10px; color: gray">{{getZadnjiOdgovor(dnevnik.Id)}}</span>
+                                            </td>
+                                            <td style="text-align: end; width: 30px">
+                                                <a href="" class="md-icon-button" ng-click="gotoDetails(dnevnik.Id)" title="Uredi vlasnike">
+                                                    <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <md-divider inset></md-divider>
+                        <!--<md-divider inset></md-divider>-->
                     </md-list-item>
 
                 </md-list>

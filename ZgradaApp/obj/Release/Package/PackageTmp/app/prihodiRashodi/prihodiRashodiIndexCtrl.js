@@ -6,7 +6,7 @@
             $location.path('/zgrade');
             return;
         }
-
+        $scope.hasChanges = false;
 
         //if ($routeParams) {
         $rootScope.loaderActive = true;
@@ -67,22 +67,8 @@
 
 
         $scope.iznosZaMjesec = function (mjesec, vrsta) {
-            if ($scope.prihodRashodZaGodinu == undefined)
-                return;
-            var suma = 0;
-            if (vrsta == 'p' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi != undefined) {
-                $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (prihodMjesec) {
-                    if (prihodMjesec.Mjesec == mjesec)
-                        suma += parseFloat(prihodMjesec.Iznos);
-                });
-            }
-            else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
-                $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
-                    if (rashodMjesec.Mjesec == mjesec)
-                        suma += parseFloat(rashodMjesec.Iznos);
-                });
-            }
-            return suma;
+            console.log('iznosZaMjesec ' + mjesec);
+            return iznosZaMjesecCalc(mjesec, vrsta);
         }
 
         $scope.iznosZaMjesecRashod = function (mjesec, vrsta) {
@@ -102,6 +88,25 @@
             //            suma += parseFloat(rashodMjesec.Iznos);
             //    });
             //}
+            return suma;
+        }
+
+        function iznosZaMjesecCalc(mjesec, vrsta) {
+            if ($scope.prihodRashodZaGodinu == undefined)
+                return;
+            var suma = 0;
+            if (vrsta == 'p' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi != undefined) {
+                $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (prihodMjesec) {
+                    if (prihodMjesec.Mjesec == mjesec)
+                        suma += parseFloat(prihodMjesec.Iznos);
+                });
+            }
+            else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
+                $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
+                    if (rashodMjesec.Mjesec == mjesec)
+                        suma += parseFloat(rashodMjesec.Iznos);
+                });
+            }
             return suma;
         }
 
@@ -133,6 +138,7 @@
         //              Modal prihodi
         // _________________________________________________________
         $scope.openModalPrihodi = function (mjesec, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'prihodiModalCtrl',
                 templateUrl: 'app/prihodiRashodi/prihodiModal.html',
@@ -151,6 +157,7 @@
                 // save (hide)
                 $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
                 console.log($scope.prihodRashodZaGodinu);
+                $scope.hasChanges = true;
             }, function (prihodRashodZaGodinu) {
                 // cancel
                 console.log(prihodRashodZaGodinu);
@@ -163,10 +170,11 @@
         //              Modal rashodi
         // _________________________________________________________
         $scope.openModalRashodi = function (mjesec) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'rashodiModalCtrl',
                 templateUrl: 'app/prihodiRashodi/rashodiModal.html',
-                //parent: angular.element(document.body),
+                parent: angular.element(document.body),
                 //targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -181,12 +189,16 @@
                 // save (hide)
                 $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
                 console.log($scope.prihodRashodZaGodinu);
+                $scope.hasChanges = true;
             }, function (prihodRashodZaGodinu) {
                 // cancel
                 console.log(prihodRashodZaGodinu);
                 $scope.prihodRashodZaGodinu = prihodRashodZaGodinu;
             });
         };
+
+
+      
 
         $scope.saveAll = function () {
             $rootScope.loaderActive = true;
@@ -200,6 +212,20 @@
                     $scope.tableVisible = true;
                     //$location.path('/zgrade');
                     //$route.reload();
+
+                    iznosZaMjesecCalc(1, 'p');
+                    iznosZaMjesecCalc(2, 'p');
+                    iznosZaMjesecCalc(3, 'p');
+                    iznosZaMjesecCalc(4, 'p');
+                    iznosZaMjesecCalc(5, 'p');
+                    iznosZaMjesecCalc(6, 'p');
+                    iznosZaMjesecCalc(7, 'p');
+                    iznosZaMjesecCalc(8, 'p');
+                    iznosZaMjesecCalc(9, 'p');
+                    iznosZaMjesecCalc(10, 'p');
+                    iznosZaMjesecCalc(11, 'p');
+                    iznosZaMjesecCalc(12, 'p');
+                    $scope.hasChanges = false;
                 },
                 function (result) {
                     // on error
@@ -216,13 +242,14 @@
         //              Modal sifarnik prihoda
         // _________________________________________________________
         $scope.openModalSifarnik = function (ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'sifarnikRashodaModalCtrl',
                 templateUrl: 'app/prihodiRashodi/sifarnikRashodaModal.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
+                //parent: angular.element(document.body),
+                //targetEvent: ev,
                 clickOutsideToClose: false,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                fullscreen: true // Only for -xs, -sm breakpoints.
                 , locals: {
                     sifarnikRashoda: $scope.sifarnikRashoda,
                 }

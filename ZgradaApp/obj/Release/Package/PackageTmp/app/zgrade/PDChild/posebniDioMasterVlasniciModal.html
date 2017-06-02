@@ -2,10 +2,18 @@
     <form ng-cloak name="frm" ng-submit="save()">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{msg}}</h2>
-                <!--<span></span>-->
-                <md-button class="md-icon-button" ng-click="dodajVlasnika()" title="Dodaj vlasnika">
-                    <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: white"></md-icon>
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>{{msg}}</h3>
+
+                <md-button class="md-raised" style="fill: green" aria-label="Obračunaj pričuvu i režije" ng-click="dodajVlasnika()">
+                    Dodaj vlasnika
+                </md-button>
+
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
                 </md-button>
             </div>
             
@@ -36,7 +44,7 @@
                                 </md-input-container>
 
                                 <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                    <label>Udio</label>
+                                    <label>Udio (npr. 1/2)</label>
                                     <input required type="text" name="udio" ng-model="vlasnik.Udio">
                                     <div ng-messages="frm.udio.$error" role="alert">
                                         <div ng-message-exp="['required']">
@@ -44,8 +52,21 @@
                                         </div>
                                     </div>
                                 </md-input-container>
+
+                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                    <label>Vlasnik</label>
+                                    <md-checkbox aria-label="Disabled checkbox" ng-model="vlasnik.Vlasnik">
+                                    </md-checkbox>
+                                </md-input-container>
+
+                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                    <label>Korisnik</label>
+                                    <md-checkbox aria-label="Disabled checkbox" ng-model="vlasnik.Korisnik">
+                                    </md-checkbox>
+                                </md-input-container>
+
                                 <div class="col-sm-2">
-                                    <md-button class="md-icon-button" ng-click="obrisiVlasnika(vlasnik.Id)" title="Obriši vlasnika">
+                                    <md-button ng-show="vlasnik.Status == 'a'" class="md-icon-button" ng-click="obrisiVlasnika(vlasnik.Id)" title="Obriši vlasnika">
                                         <md-icon md-svg-icon="/Content/icons/minus-circle.svg" style="fill: red"></md-icon>
                                     </md-button>
                                 </div>

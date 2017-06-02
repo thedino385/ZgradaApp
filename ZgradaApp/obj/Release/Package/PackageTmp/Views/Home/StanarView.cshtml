@@ -1,0 +1,436 @@
+﻿
+@{
+    ViewBag.Title = "StanarView";
+}
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<h2 id="title"></h2>
+
+@section scripts
+{
+    <script type="text/javascript">
+        var _oglasi = [];
+        var _dnevnik = [];
+        var _dnevnikGodine = [];
+        var _dnevnikDetails = [];
+
+        $(document).ready(function () {
+            $('#oglasnaS').click(function () {
+                getOglasna();
+
+                $('#dnevnikContainer').fadeOut();
+                $('#oglasnaContainer').fadeOut();
+                $('#uplatniceContainer').fadeOut();
+                $('#masterContainer').fadeOut(function () {
+                    $('#oglasnaContainer').fadeIn(function () { $('#masterContainer').fadeIn('slow'); });
+                });
+
+            });
+
+            $('#dnevnikS').click(function () {
+                getDnevnik();
+
+                $('#dnevnikContainer').fadeOut();
+                $('#oglasnaContainer').fadeOut();
+                $('#uplatniceContainer').fadeOut();
+                $('#masterContainer').fadeOut(function () {
+                    $('#dnevnikContainer').fadeIn(function () { $('#masterContainer').fadeIn('slow'); });
+                });
+            });
+
+            $('#uplatniceS').click(function () {
+                getUplatnice();
+
+                $('#dnevnikContainer').fadeOut();
+                $('#oglasnaContainer').fadeOut();
+                $('#uplatniceContainer').fadeOut();
+                $('#masterContainer').fadeOut(function () {
+                    $('#uplatniceContainer').fadeIn(function () { $('#masterContainer').fadeIn('slow'); });
+                });
+            });
+
+                        //$('#dnevnikContainer').fadeOut(function () {
+            //    $('#oglasnaContainer').fadeIn('slow');
+            //});
+
+
+            $('#dodaj').click(function () {
+                $('#summernote').summernote('code', '');
+                $('#myModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+            $('#summernote').summernote();
+            $('#summernoteDnevnik').summernote();
+
+        });
+
+        function editOglas(id) {
+            _oglasi.forEach(function (o) {
+                if (o.Id == id) {
+                    $('#naslovOglasa').val(o.Naslov);
+                    $('#summernote').summernote('code', o.Oglas);
+                    $('#myModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                }
+            });
+        }
+
+    function getOglasna() {
+        $('#loader').fadeIn();
+        var url = '@Url.Action("GetStanarDashBoardDataOglasna", "Home")';
+        $.getJSON(url, function (result) {
+            var html = '';
+            _oglasi = result.oglasna;
+            result.oglasna.forEach(function (oglas) {
+                html += '<div class="bs-callout bs-callout-primary">';
+                html += '<h4>' + oglas.Naslov + '</h4>';
+                html += '<p>Datum: <b>' + parseDate(oglas.Datum) + '</b></p>';
+                html += '<p>Autor: <b>' + oglas.Ime + '&nbsp;' + oglas.Prezime + '</b></p><br />';
+                html += '<span>' + oglas.Oglas + '</span>';
+                if (parseInt(oglas.UserId) == parseInt('@ViewBag.UserId')) {
+                    html += '<input type="button" class="btn btn-success pull-right" onclick="editOglas(' + oglas.Id + ')" value="Uredi oglas" title="Uredi oglas" /><br /><br />';
+                }
+                html += '</div></div>';
+            });
+            $('#oglasnaDiv').html(html);
+            $('#title').html('Oglasna ploča');
+            $('#loader').fadeOut();
+            //$('#dnevnikContainer').fadeOut(function () {
+            //    $('#oglasnaContainer').fadeIn('slow');
+            //});
+        });
+    }
+
+    function getDnevnik() {
+        $('#loader').fadeIn();
+        var url = '@Url.Action("GetStanarDashBoardDataDnevnik", "Home")';
+        $.getJSON(url, function (result) {
+            var html = '';
+            _dnevnik = result.dnevnik;
+            _dnevnikGodine = result.godine;
+            _dnevnikDetails = result.dnevnikDetails;
+
+            var btns = '<div class="btn-group">';
+            _dnevnikGodine.forEach(function (g) {
+                btns += ' <button type="button" onclick=showGodinaDnevnik(' + g + ') class="btn btn-primary">' + g + '</button>'
+            });
+            btns += '</div>';
+            $('#btns').html(btns);
+        });
+        $('#title').html('Dnevnik rada');
+        $('#loader').fadeOut();
+        //$('#oglasnaContainer').fadeOut(function () {
+        //    $('#dnevnikContainer').fadeIn('slow');
+        //});
+    }
+
+    function getStatusText(odradjeno) {
+        return odradjeno == true ? 'Zatvoren' : 'Otvoren';
+    }
+
+    function getZadnjiOdgovor(dnevnikId) {
+        var max = {};
+        var maxId = 0;
+        var user = '';
+        _dnevnikDetails.forEach(function (detail) {
+            if (detail.DnevnikRadaId == dnevnikId && detail.Id > maxId) {
+                maxId = detail.Id;
+                max = detail;
+            }
+        });
+
+        if (max.Id == undefined || maxId == 0)
+            return 'Nema poruka';
+        return 'Zadnji odgovor: ' + max.Ime + ' ' + max.Prezime + ' dana ' + parseDate(max.Datum);
+    }
+
+
+    function showGodinaDnevnik(g) {
+        var data = [];
+        var mjeseci = [];
+        _dnevnik.forEach(function (d) {
+            if (d.Godina == g) {
+                data.push(d);
+                if (mjeseci.indexOf(d.Mjesec) == -1)
+                    mjeseci.push(d.Mjesec);
+            }
+        });
+
+
+        var html = '';
+        mjeseci.forEach(function (m) {
+
+            html += '<div class="bs-callout bs-callout-primary"><table class="table"><tbody>';
+
+            data.forEach(function (d) {
+                if (d.Mjesec == m) {
+                    html += '<tr>';
+                    html += '<td>';
+                    html += d.Naslov;
+                    html += '<br>';
+                    html += '<span style="font-size: 10px; color: gray">';
+                    html += 'Kreirao: ' + d.Ime + ' ' + d.Prezime + ' ' + 'dana ' + parseDate(d.Datum) + '</span >';
+                    html += '</td>';
+                    html += '<td style="text-align: start">';
+                    if (d.Odradjeno == true)
+                        html += '<span style="font-size: 10px; color: gray">Status: </span><span style="font-size: 11px;" class="greenCell">' + getStatusText(d.Odradjeno) + '</span>';
+                    else
+                        html += '<span style="font-size: 10px; color: gray">Status: </span><span style="font-size: 11px;" class="redCell">' + getStatusText(d.Odradjeno) + '</span>';
+                    html += '<br />';
+                    html += '<span style="font-size: 10px; color: gray">' + getZadnjiOdgovor(d.Id) + '</span>';
+                    html += '</td>';
+                    html += '<td style="text-align: end; width: 30px">';
+                    html += '<a href="#" class="md-icon-button" onclick="showMsgs(' + d.Id + ')" title="Uredi vlasnike">';
+                    html += '<md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>poruke';
+                    html += '</a>';
+                    html += '</td>';
+                    html += '</tr >';
+                }
+            });
+            html += '</tbody></table></div>';
+        });
+        $('#dnevnikDiv').html(html);
+    }
+
+    var _selectedDnevnikRadaId = null;
+    function showMsgs(dnevnikId) {
+        _selectedDnevnikRadaId = dnevnikId;
+        var htmlMsg = '<div id="vertical-timeline" class="vertical-container center-orientation light-timeline">';
+        console.log(dnevnikId);
+        _dnevnikDetails.forEach(function (detail) {
+            console.log(detail);
+            if (detail.DnevnikRadaId == dnevnikId && detail != null) {
+
+                htmlMsg += '<div class="vertical-timeline-block">';
+                htmlMsg += '<div class="vertical-timeline-icon red-bg"></div>';
+                htmlMsg += '<div class="vertical-timeline-content">';
+                htmlMsg += '<p>' + detail.Poruka + '</p>';
+                htmlMsg += '<span class="vertical-date">';
+                htmlMsg += '<span>' + detail.Ime + ' ' + detail.Prezime;
+                htmlMsg += '</span><br /><small>' + parseDate(detail.Datum) + '</small ></span>';
+                htmlMsg += '</div></div>';
+            }
+        })
+        htmlMsg += '</div >';
+        $('#targetShowMesssages').html(htmlMsg);
+        $('#myModalMessages').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
+    function saveMsg() {
+        if ($('#summernoteDnevnik').summernote('code').length == 0) {
+            toastr["warning"]('porula je obavezna');
+            return;
+        }
+        var o = { Id: 0, DnevnikRadaId: _selectedDnevnikRadaId, Datum: new Date(), Poruka: $('#summernoteDnevnik').summernote('code') };
+        var url = '@Url.Action("NovaPorukaDnevnik", "Home")';
+        $.post(url, { poruka: o }, function (result) {
+            if (result.success == true) {
+                toastr["success"]("Poruka je snimljena.");
+                $('#myModalMessages').modal('hide');
+                getDnevnik();
+            }
+            else
+                toastr["error"]("Pogreška kod snimanja poruke", result.msg);
+        });
+    }
+
+    function parseDate(date) {
+        var d = new Date(parseInt(date.substr(6)));
+        return dodajNulu(d.getDate()) + '.' + dodajNulu(parseInt(d.getMonth() + 1)) + '.' + d.getFullYear() + '.';
+    }
+
+    function dodajNulu(x) {
+        if (x < 10)
+            return '0' + x;
+        return x;
+    }
+
+    function saveOglas() {
+            var url = '@Url.Action("PredajOglas", "Home")';
+        var oglas = $('#summernote').summernote('code');
+
+        if ($('#naslovOglasa').val().length == 0 || oglas.length == 0) {
+            toastr["warning"]("Naslov i tekst oglasa su obavezni!")
+            return;
+        }
+        var oglasObj = { Id: 0, Datum: new Date(), Naslov: $('#naslovOglasa').val(), Oglas: oglas, UserId: 0 };
+        $.post(url, { oglasObj: oglasObj }, function (result) {
+            if (result.success == true) {
+                toastr["success"]("promjene su snimljene");
+                $('#myModal').modal('hide');
+                getOglasna();
+            }
+            else
+                toastr["error"]("Pogreška kod snimanja oglasa");
+        });
+        }
+
+
+        //____________________________________________________________________________________
+        //              U p l a t n i c e
+        //____________________________________________________________________________________
+
+
+        function getUplatnice() {
+            var url = '@Url.Action("GetUplatnice", "Home")';
+            $.post(url, function (result) {
+                if (result.success == true) {
+                    drawGodine(result.list);
+                }
+                else
+                    toastr["error"]("Pogreška kod snimanja poruke", result.msg);
+
+            });
+        }
+
+        var _list = [];
+        function drawGodine(list) {
+            _list = list;
+            console.log(list);
+            var godine = [];
+            list.forEach(function (g) {
+                if (godine.indexOf(g.Godina))
+                    godine.push(g.Godina);
+            });
+
+            var btns = '<div class="btn-group">';
+            godine.forEach(function (g) {
+                btns += ' <button type="button" onclick=showGodinaUplatnice(' + g + ') class="btn btn-primary">' + g + '</button>'
+            });
+            $('#btnGodine').html(btns);
+        }
+
+
+
+        function showGodinaUplatnice(g) {
+            var html = '<table class="table table-condensed" style="width: 500px"><thead><tr><th>Godina</th>';
+            //html += '<th></th>';
+            html += '<th>' + g + '</th></tr>';
+
+            html += '<tr><th>Mjesec</th><th>Rashodi</th></tr></thead>';
+            html += '<tbody>';
+            _list.forEach(function (mj) {
+                html += '<tr>';
+                if (mj.UplatnicePosebniDijeloviMaster != null && mj.UplatnicePosebniDijeloviMaster.length > 0) {
+                    var pdCount = mj.UplatnicePosebniDijeloviMaster.length;
+                    if (pdCount == 0)
+                        pdCount = 1;
+                    html += '<td rowspan=' + pdCount + '>' + mj.Mjesec + '.</td>';
+                    mj.UplatnicePosebniDijeloviMaster.forEach(function (pd) {
+                        if (pdCount > 1)
+                            html += '<tr>';
+                        if (pd.Url != "")
+                            html += '<td><a href="' + pd.Url + '" target="_blank">' + pd.PosebniDio + '</a></td>';
+                        else
+                            html += '<td></td>';
+                        //html += '<td>' + pd.Url + '</td>';
+                        if (pdCount > 1)
+                            html += '</tr>';
+                    });
+                }
+                else {
+                    html += '<td>' + mj.Mjesec + '.</td>';
+                    //html += '<td></td>';
+                    html += '<td></td>';
+                }
+
+                html += '</tr>';
+            });
+
+            html += '</tbody>';
+            $('#tbl').html(html);
+        }
+
+    </script>
+}
+
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <div id="masterContainer">
+            <div id="oglasnaContainer" style="display: none">
+                @if (ViewBag.ShowBtn)
+            {
+                    <input type="button" id="dodaj" class="pull-right btn btn-default" value="Dodaj oglas" /><br />
+                }
+                <div id="oglasnaDiv"></div>
+            </div>
+
+            <div id="dnevnikContainer" style="display: none">
+                <div id="btns"></div>
+                @if (ViewBag.ShowBtn)
+            {
+                    <input type="button" id="dodaj" class="pull-right btn btn-default" value="Dodaj oglas" /><br />
+                }
+                <div id="dnevnikDiv"></div>
+            </div>
+
+            <div id="uplatniceContainer" style="display: none">
+                <div id="btnGodine"></div>
+
+                <div id="tbl"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.ShowBtn)
+{
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="naslovOglasa" placeholder="Naslov oglasa" class="form-control" />
+                    <br />
+                    <div id="summernote"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="modalSaveBtn" onclick="saveOglas()">Spremi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<!--modal show poruke-->
+<div id="myModalMessages" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+
+                <div id="targetShowMesssages"></div>
+                @if (ViewBag.DnevnikRada == true)
+                {
+                <div id="summernoteDnevnik"></div>
+                }
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                @if (ViewBag.DnevnikRada == true)
+{
+                <button type="button" class="btn btn-success" id="modalSaveDnevnikBtn" onclick="saveMsg()">Pošalji</button>
+}
+            </div>
+        </div>
+    </div>
+</div>

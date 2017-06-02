@@ -1,0 +1,63 @@
+﻿<md-dialog flex="90">
+    <form ng-cloak name="frm" ng-submit="save()">
+        <md-toolbar md-scroll-shrink ng-if="true">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+                <h3 flex md-truncate>{{msg}}</h3>
+
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <div layout-gt-sm="row">
+                    <div class="col-sm-2"></div>
+
+                    <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                        <label>Kratar opis</label>
+                        <input required type="text" name="oglas" ng-model="oglas.Naslov">
+                        <div ng-messages="frm.oglas.$error" role="alert">
+                            <div ng-message-exp="['required']">
+                                Obavezno polje
+                            </div>
+                        </div>
+                    </md-input-container>
+
+
+                    <div class="col-sm-2"></div>
+                </div>
+                <div layout-gt-sm="row">
+                    <div class="col-sm-2"></div>
+
+                    <div id="summernote">{{oglas.Oglas}}</div>
+
+
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button  type="submit" class="md-raised">
+                Snimi
+            </md-button>
+            <md-button class="md-raised" ng-click="cancel()">
+                Zatvori
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#summernote').summernote();
+    });
+</script>

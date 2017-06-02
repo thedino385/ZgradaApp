@@ -1,0 +1,114 @@
+﻿<md-dialog flex="90">
+    <form ng-cloak name="frm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+                <h3 flex md-truncate>Uplatnice za rashode: {{period}}</h3>
+
+                <md-button class="md-raised" ng-click="send()">
+                    Pošalji
+                </md-button>
+                <md-button class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <div class="alert alert-info" ng-show="showStatus == true" ng-click="showStatus = false">
+                    <strong>Status poruke {{masterMsg}}:<br /></strong> {{msgEmailStatus}}
+                </div>
+
+                <md-content flex>
+                    <md-list>
+                        <md-list-item class="md-3-line">
+                            <!--<img src="/Content/images/60.jpeg" class="md-avatar" />-->
+                            <div class="md-list-item-text">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="vertical-align: middle; text-align: left">Posebni dio</th>
+                                            <th style="vertical-align: middle; text-align: left">Rashod</th>
+                                            <th style="vertical-align: middle; text-align: right">Iznos</th>
+                                            <th style="vertical-align: middle; text-align: center">Datum slanja</th>
+                                            <th style="vertical-align: middle; text-align: center">Plaćeno</th>
+                                            <th style="vertical-align: middle; text-align: center">Poslano</th>
+                                            <th style="vertical-align: middle; text-align: center">Pdf</th>
+                                            <th style="vertical-align: middle; text-align: center">Kreiraj</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="row in tbl">
+                                            <td style="font-weight: {{row.bold}}; vertical-align: middle; text-align: left">
+                                                {{row.masterNaziv}}
+
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: left">
+                                                {{row.rashod}}
+                                            </td>
+                                            <td style="font-weight: {{row.bold}}; vertical-align: middle; text-align: right">
+                                                {{row.iznos | number: 2}}
+
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: center">
+                                                <div ng-show="row.isUkupnoRow == false">
+                                                    {{row.datumSlanja}}
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: center">
+                                                <div ng-show="row.isUkupnoRow == false">
+                                                    <span style="color: green" ng-show="row.placeno == true">da</span>
+                                                    <span style="color: darkred" ng-show="row.placeno != true">ne</span>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: center">
+                                                <!--<md-checkbox ng-disabled="true" ng-show="row.bold != 'bold'" ng-model="row.poslano">
+                                                </md-checkbox>-->
+                                                <div ng-show="row.isUkupnoRow == false">
+                                                    <a href="" ng-click="showMailStatus(row.masterId, $event)">
+                                                        <span style="color: green" ng-show="row.poslano == true"><u><b>da/status</b></u></span>
+                                                        <span style="color: darkred" ng-show="row.poslano == false"><u><b>status</b></u></span>
+                                                    </a>
+
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: center">
+                                                <a ng-show="row.isUkupnoRow == true" href="" ng-click="download(row.masterId)"><u>Pdf</u></a>
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: center">
+                                                <a ng-show="row.isUkupnoRow == true" href="" ng-click="generatemanually(row.masterId)"><u>Kreiraj</u></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <md-divider inset></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+
+
+
+
+
+
+
+
+
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button class="md-raised" ng-click="cancel()">
+                        Zatvori
+                    </md-button>
+                </md-dialog-actions>
+                <br /><br /><br />
+            </div>
+
+        </md-dialog-content>
+
+
+    </form>
+</md-dialog>

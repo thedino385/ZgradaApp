@@ -21,6 +21,7 @@
         }
 
         $scope.save = function () {
+            $('nav').fadeIn();
             if (id == 0) {
                 maxId = 1;
                 zgradaObj.Zgrade_PopisZajednickihDijelova.forEach(function (dio) {
@@ -44,6 +45,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

@@ -17,7 +17,6 @@
                 //DataService.zgradaUseri = result.data.Useri;
                 //DataService.userId = result.data.userId;
                 $rootScope.loaderActive = false;
-
                 //$scope.zgrada = zgradaObj
                 $scope.zgradaMsg = $scope.zgrada.Naziv + ' ' + $scope.zgrada.Adresa + ' ' + $scope.zgrada.Mjesto;
             },
@@ -68,6 +67,7 @@
         //              Modal kartica
         // _________________________________________________________
         $scope.kartica = function (pdMaster, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'indexKsCtrl',
                 templateUrl: 'app/ks/indexKs.html',

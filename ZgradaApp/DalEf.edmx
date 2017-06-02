@@ -198,17 +198,6 @@
           <Property Name="DatumSlanja" Type="datetime" />
           <Property Name="PdfFileName" Type="varchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="PrihodiRashodi_Rashodi_Uplatnice">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RashodiId" Type="int" Nullable="false" />
-          <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
-          <Property Name="Ukupno" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="DatumKreiranja" Type="datetime" Nullable="false" />
-          <Property Name="DatumSlanja" Type="datetime" />
-        </EntityType>
         <EntityType Name="SifarnikRashoda">
           <Key>
             <PropertyRef Name="Id" />
@@ -764,18 +753,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi">
-          <End Role="PrihodiRashodi_Rashodi" Type="Self.PrihodiRashodi_Rashodi" Multiplicity="1" />
-          <End Role="PrihodiRashodi_Rashodi_Uplatnice" Type="Self.PrihodiRashodi_Rashodi_Uplatnice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PrihodiRashodi_Rashodi">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrihodiRashodi_Rashodi_Uplatnice">
-              <PropertyRef Name="RashodiId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PrihodiRashodi_Zgrade">
           <End Role="Zgrade" Type="Self.Zgrade" Multiplicity="1" />
           <End Role="PrihodiRashodi" Type="Self.PrihodiRashodi" Multiplicity="*" />
@@ -947,7 +924,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySet Name="PrihodiRashodi" EntityType="Self.PrihodiRashodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="Self.PrihodiRashodi_Prihodi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="Self.PrihodiRashodi_Rashodi" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PrihodiRashodi_Rashodi_Uplatnice" EntityType="Self.PrihodiRashodi_Rashodi_Uplatnice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SifarnikRashoda" EntityType="Self.SifarnikRashoda" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade" EntityType="Self.Zgrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zgrade_DnevnikRada" EntityType="Self.Zgrade_DnevnikRada" Schema="dbo" store:Type="Tables" />
@@ -1168,10 +1144,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
             <End Role="PrihodiRashodi_Rashodi" EntitySet="PrihodiRashodi_Rashodi" />
           </AssociationSet>
-          <AssociationSet Name="FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" Association="Self.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi">
-            <End Role="PrihodiRashodi_Rashodi" EntitySet="PrihodiRashodi_Rashodi" />
-            <End Role="PrihodiRashodi_Rashodi_Uplatnice" EntitySet="PrihodiRashodi_Rashodi_Uplatnice" />
-          </AssociationSet>
           <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="Self.FK_PrihodiRashodi_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
@@ -1242,7 +1214,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySet Name="PrihodiRashodi" EntityType="ZgradaDbModel.PrihodiRashodi" />
           <EntitySet Name="PrihodiRashodi_Prihodi" EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" />
           <EntitySet Name="PrihodiRashodi_Rashodi" EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi" />
-          <EntitySet Name="PrihodiRashodi_Rashodi_Uplatnice" EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi_Uplatnice" />
           <EntitySet Name="SifarnikRashoda" EntityType="ZgradaDbModel.SifarnikRashoda" />
           <EntitySet Name="Zgrade" EntityType="ZgradaDbModel.Zgrade" />
           <EntitySet Name="Zgrade_DnevnikRada" EntityType="ZgradaDbModel.Zgrade_DnevnikRada" />
@@ -1296,10 +1267,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <AssociationSet Name="FK_PrihodiRashodi_Zgrade" Association="ZgradaDbModel.FK_PrihodiRashodi_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
             <End Role="PrihodiRashodi" EntitySet="PrihodiRashodi" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" Association="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi">
-            <End Role="PrihodiRashodi_Rashodi" EntitySet="PrihodiRashodi_Rashodi" />
-            <End Role="PrihodiRashodi_Rashodi_Uplatnice" EntitySet="PrihodiRashodi_Rashodi_Uplatnice" />
           </AssociationSet>
           <AssociationSet Name="FK_Zgrade_DnevnikRada_Zgrade" Association="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade">
             <End Role="Zgrade" EntitySet="Zgrade" />
@@ -1544,22 +1511,9 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="PoslanoZaMjesec" Type="Boolean" />
           <Property Name="PrenesenIzMjeseca" Type="Int32" />
           <NavigationProperty Name="PrihodiRashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi" />
-          <NavigationProperty Name="PrihodiRashodi_Rashodi_Uplatnice" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" FromRole="PrihodiRashodi_Rashodi" ToRole="PrihodiRashodi_Rashodi_Uplatnice" />
           <Property Name="StatusSlanja" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="DatumSlanja" Type="DateTime" Precision="3" />
           <Property Name="PdfFileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="PrihodiRashodi_Rashodi_Uplatnice">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RashodiId" Type="Int32" Nullable="false" />
-          <Property Name="PosebniDioMasterId" Type="Int32" Nullable="false" />
-          <Property Name="Ukupno" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="DatumKreiranja" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DatumSlanja" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PrihodiRashodi_Rashodi" Relationship="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" FromRole="PrihodiRashodi_Rashodi_Uplatnice" ToRole="PrihodiRashodi_Rashodi" />
         </EntityType>
         <EntityType Name="SifarnikRashoda">
           <Key>
@@ -1908,18 +1862,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
             </Principal>
             <Dependent Role="PrihodiRashodi">
               <PropertyRef Name="ZgradaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi">
-          <End Type="ZgradaDbModel.PrihodiRashodi_Rashodi" Role="PrihodiRashodi_Rashodi" Multiplicity="1" />
-          <End Type="ZgradaDbModel.PrihodiRashodi_Rashodi_Uplatnice" Role="PrihodiRashodi_Rashodi_Uplatnice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PrihodiRashodi_Rashodi">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrihodiRashodi_Rashodi_Uplatnice">
-              <PropertyRef Name="RashodiId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2497,18 +2439,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
                 <ScalarProperty Name="Mjesec" ColumnName="Mjesec" />
                 <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
                 <ScalarProperty Name="PrihodiRashodiGodId" ColumnName="PrihodiRashodiGodId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PrihodiRashodi_Rashodi_Uplatnice">
-            <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi_Uplatnice">
-              <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi_Uplatnice">
-                <ScalarProperty Name="DatumSlanja" ColumnName="DatumSlanja" />
-                <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
-                <ScalarProperty Name="Ukupno" ColumnName="Ukupno" />
-                <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
-                <ScalarProperty Name="RashodiId" ColumnName="RashodiId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

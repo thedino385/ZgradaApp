@@ -6,55 +6,70 @@
     <edmx:Diagrams>
       <Diagram DiagramId="aa149b2c4f8442e2b7da48336a0e39b1" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="ZgradaDbModel.Kompanije" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeGodina" Width="1.5" PointX="3" PointY="9.125" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeMjesec" Width="1.5" PointX="5.25" PointY="8.625" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPovrsine" Width="1.5" PointX="12" PointY="9.125" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPripadci" Width="1.5" PointX="12" PointY="5.875" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildren" Width="1.5" PointX="10" PointY="7.75" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici" Width="1.5" PointX="10.5" PointY="12.5" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi" Width="1.5" PointX="3" PointY="29" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" Width="1.5" PointX="5.25" PointY="27.25" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi" Width="1.5" PointX="5.25" PointY="30.375" />
-        <EntityTypeShape EntityType="ZgradaDbModel.SifarnikRashoda" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade" Width="1.5" PointX="0.75" PointY="16.125" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild" Width="1.5" PointX="5.25" PointY="20.875" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Povrsine" Width="2.25" PointX="7.5" PointY="23.125" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Pripadci" Width="1.5" PointX="7.5" PointY="18.875" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" Width="1.5" PointX="3" PointY="19.125" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Width="1.5" PointX="5.25" PointY="15.25" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Width="1.5" PointX="7.5" PointY="15.625" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_Stanari" Width="1.5" PointX="3" PointY="2.375" />
-        <EntityTypeShape EntityType="ZgradaDbModel.vZgrade" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.KompanijeUseri" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeGodina" Width="1.5" PointX="3" PointY="39.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeGodina_StanjeOd" Width="1.5" PointX="5.25" PointY="44.625" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeMjesec" Width="1.5" PointX="5.25" PointY="37.625" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPovrsine" Width="1.5" PointX="12" PointY="35" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildPripadci" Width="1.5" PointX="12" PointY="38.375" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioChildren" Width="1.5" PointX="9.75" PointY="36.875" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Width="1.5" PointX="7.5" PointY="37.25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi" Width="1.5" PointX="3" PointY="17.625" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" Width="1.5" PointX="5.25" PointY="15.25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi" Width="1.5" PointX="5.25" PointY="18.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi_Uplatnice" Width="1.5" PointX="7.5" PointY="19.25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.SifarnikRashoda" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade" Width="1.5" PointX="0.75" PointY="25.125" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRada" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRadaDetails" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisUredjaja" Width="1.5" PointX="3" PointY="3.25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisZajednickihDijelova" Width="1.5" PointX="3" PointY="11.375" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild" Width="1.5" PointX="5.25" PointY="25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Povrsine" Width="1.5" PointX="7.5" PointY="27.25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviChild_Pripadci" Width="1.5" PointX="7.5" PointY="23" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster" Width="1.5" PointX="3" PointY="26.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Width="1.5" PointX="5.25" PointY="31.375" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_Stanari" Width="1.5" PointX="3" PointY="47.25" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vKompanijeUseri" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vZgrade" Width="1.5" PointX="7.75" PointY="8.75" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijeGodina_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_PricuvaRezijeGodina" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildPovrsine_PricuvaRezijePosebniDioChildren" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildPripadci_PricuvaRezijePosebniDioChildren" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" />
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" />
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" />
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Zgrade" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_Stanari_Zgrade" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Povrsine_Zgrade_PosebniDijeloviChild" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Pripadci_Zgrade_PosebniDijeloviChild" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_OglasnaPloca" Width="1.5" PointX="3" PointY="22.75" />
+        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_OglasnaPloca_Zgrade" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vOglasnaPloca" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vOglasnaStanari" Width="1.5" PointX="10.375" PointY="8.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vOglasnaVoditelji" Width="1.5" PointX="7.375" PointY="11.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vUseriStanari" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vUseriSvi" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vUseriVoditelji" Width="1.5" PointX="12.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vDnevnikRadaDetails" Width="1.5" PointX="12.375" PointY="8.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vDnevnikRada" Width="1.5" PointX="9.375" PointY="12.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" Width="1.5" PointX="7.5" PointY="31.75" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici_Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeGodina_StanjeOd" Width="1.5" PointX="5.25" PointY="34.25" />
-        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijeGodina_StanjeOd_PricuvaRezijeGodina" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasteri" Width="1.5" PointX="7.5" PointY="8.375" />
-        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasteri_PricuvaRezijeMjesec" />
-        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioChildren_PricuvaRezijePosebniDioMasteri" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijePosebniDioMasterVlasnici" Width="1.5" PointX="9.75" PointY="40.5" />
         <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisUredjaja" Width="1.75" PointX="3" PointY="24.25" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_PopisZajednickihDijelova" Width="1.5" PointX="3" PointY="14.375" />
-        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" />
-        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRada" Width="3" PointX="3" PointY="37.375" />
-        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade" />
-        <EntityTypeShape EntityType="ZgradaDbModel.KompanijeUseri" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRadaDetails" Width="1.5" PointX="6.75" PointY="37.875" />
-        <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRadaDetails_Zgrade_DnevnikRada" />
-        <EntityTypeShape EntityType="ZgradaDbModel.vKompanijeUseri" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.vPopisStanara" Width="1.5" PointX="11.375" PointY="12.75" />
+        <EntityTypeShape EntityType="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice" Width="1.5" PointX="7.5" PointY="42.75" />
+        <AssociationConnector Association="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

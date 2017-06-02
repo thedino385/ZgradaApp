@@ -1,10 +1,23 @@
 ﻿<md-dialog flex="80">
-    <form ng-cloak name="frm">
+    <form ng-cloak name="frm" ng-submit="save()">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h3>Prihodi: {{period}}</h3>
-                <span></span>
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>Prihodi: {{period}}</h3>
+
+                <md-button class="md-raised" style="fill: green" aria-label="Obračunaj pričuvu i režije" ng-click="dodajRecord(false)">
+                    Dodaj prihod
+                </md-button>
+
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
+                </md-button>
             </div>
+
+          
         </md-toolbar>
 
         <md-dialog-content>
@@ -32,16 +45,16 @@
                         </tr>
                     </thead>-->
                     <tbody>
-                        <tr>
+                        <!--<tr>
                             <td style="vertical-align: middle; color: red"><b>Uplata pričuve / prijesos pricuve ???, rekapitulacija</b></td>
                             <td style="vertical-align: middle"></td>
                             <td style="vertical-align: middle; text-align: end">
                                 {{uplataPricuve}}
                             </td>
                             <th></th>
-                        </tr>
+                        </tr>-->
 
-                        <tr ng-repeat="pr in prihodRashodZaGodinu.PrihodiRashodi_Prihodi | filter:{ Mjesec: mjesec} | filter: { PrijenosIzProlse: 'true' }" style="vertical-align: middle">
+                        <!--<tr ng-repeat="pr in prihodRashodZaGodinu.PrihodiRashodi_Prihodi | filter:{ Mjesec: mjesec} | filter: { PrijenosIzProlse: 'true' }" style="vertical-align: middle">
                             <td style="vertical-align: middle">
                                 <label>Prijenos pričuve iz prethodne godine</label>
                             </td>
@@ -49,38 +62,68 @@
                                 <input ng-change="ukupno()" class="form-control" type="text" ng-model="pr.Iznos" />
                             </td>
                             <th></th>
-                        </tr>
+                        </tr>-->
                         <tr ng-repeat="pr in prihodRashodZaGodinu.PrihodiRashodi_Prihodi | filter:{ Mjesec: mjesec} | filter: { PrijenosIzProlse: '!true' } | filter: { Status: '!d' }" style="vertical-align: middle">
 
                             <td style="vertical-align: middle">
                                 <!--<input class="form-control" type="text" ng-model="pr.Opis" />-->
-                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
                                     <label>Opis</label>
-                                    <input type="text" name="naziv" ng-model="pr.Opis">
+                                    <input required type="text" size="250" name="opis" ng-model="pr.Opis">
                                 </md-input-container>
+                                <div ng-messages="frm.opis.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
                             </td>
                             <td style="vertical-align: middle; text-align: end">
                                 <!--<input  class="form-control" type="text" ng-model="pr.PosebniDioMasterId" />-->
                                 <md-input-container flex-gt-gt>
                                     <label>Posebni dio</label>
-                                    <md-select ng-model="pr.PosebniDioMasterId">
+                                    <md-select  ng-required ng-model="pr.PosebniDioMasterId">
                                         <md-option name="stanarId" ng-repeat="pd in posedbiDijelovi" ng-value="pd.Id">
                                             {{pd.Naziv}}
                                         </md-option>
                                     </md-select>
-                                    <!--<div ng-messages="frm.stanarId.$error" role="alert">
+                                    <div ng-messages="frm.stanarId.$error" role="alert">
                                         <div ng-message-exp="['required']">
                                             Obavezno polje
                                         </div>
-                                    </div>-->
+                                    </div>
                                 </md-input-container></td>
-                            <td style="vertical-align: middle; text-align: end">
-                                <!--<input ng-change="ukupno()" class="form-control" type="text" ng-model="pr.Iznos" />-->
-                                <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                            <td style="vertical-align: middle;">
+                                <md-input-container class="md-block" flex-gt-sm>
                                     <label>Iznos</label>
-                                    <input type="text" name="naziv" ng-model="pr.Iznos">
+                                    <input required type="text" name="iznos" ng-model="pr.Iznos">
                                 </md-input-container>
+                                <div ng-messages="frm.iznos.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
                             </td>
+                            
+
+
+                            <td style="vertical-align: middle; text-align: end">
+                                <md-datepicker ng-required ng-model="dateUnosList[$index]" name="d1" md-placeholder="Datum unosa"></md-datepicker>
+                                <div ng-messages="frm.d1.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td style="vertical-align: middle; text-align: end">
+                                <md-datepicker  ng-required ng-model="dateObracunList[$index]" name="d2" md-placeholder="Datum obracina"></md-datepicker>
+                                <div ng-messages="frm.d2.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>
+                            </td>
+
                             <td style="vertical-align: middle">
                                 <!--<button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="delete(pr.Id)">
                                     <span class="glyphicon glyphicon-trash"></span>
@@ -91,13 +134,13 @@
                                 </md-button>
                             </td>
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td colspan="2" style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
                             <td style="vertical-align: middle; text-align: end">{{total}}</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
-                <table class="table table-hover">
+                <!--<table class="table table-hover">
                     <tr>
                         <td style="vertical-align: middle; text-align: start">Pričuva od ???</td>
                         <td style="vertical-align: middle; text-align: end">{{pricuvaOd}}</td>
@@ -124,7 +167,7 @@
                         <td style="vertical-align: middle; text-align: start"><b>Raspoloživa sredstva pričuve</b></td>
                         <td style="vertical-align: middle; text-align: end">{{raspoloziva}}</td>
                     </tr>
-                </table>
+                </table>-->
             </div>
         </md-dialog-content>
 
@@ -133,7 +176,7 @@
             <md-button class="md-raised" ng-click="cancel()">
                 Odustani
             </md-button>
-            <md-button class="md-raised md-primary" type="submit" ng-click="save()">Spremi</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

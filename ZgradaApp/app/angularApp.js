@@ -1,7 +1,74 @@
 ﻿var angularApp = angular.module('angularApp', ['ngRoute', 'ui.bootstrap', 'ngMaterial', 'ngAnimate', 'ngMessages', 'toastr']);
 
 
-angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+// https://www.w3schools.com/angular/angular_validation.asp
+
+// Remember, when naming a directive, you must use a camel case name, myDirective, but when invoking it, 
+// you must use - separated name, my - directive.
+angularApp.directive('myDirectiveRazlomak', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr, mCtrl) {
+            function myValidation(value) {
+                //if (value.indexOf("e") > -1) {
+                //    mCtrl.$setValidity('charE', true);
+                //} else {
+                //    mCtrl.$setValidity('charE', false);
+                //}
+                //alert(value)
+                var valid = false;
+                if (value != null && value != undefined) {
+                    if (value.toString().length == 3) {
+                        if (value.indexOf('/') != -1) {
+                            var val1 = value.toString().split('/')[0];
+                            var val2 = value.toString().split('/')[1];
+                            if (!isNaN(parseInt(val1)) && isFinite(val1) && !isNaN(parseInt(val2)) && isFinite(val2))
+                                valid = true;
+                        }
+                    }
+                }
+                mCtrl.$setValidity('charE', valid);
+                return value;
+            }
+            mCtrl.$parsers.push(myValidation);
+        }
+    };
+});
+
+angularApp.directive('myDirectiveDecimal', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr, mCtrl) {
+            function myValidation(value) {
+                var valid = false;
+                if (value != null && value != undefined) {
+                    var v = value.toString();
+                    if (v.indexOf('.') == -1 && (v.split(",").length - 1 == 1 || v.split(",").length - 1 <= 0)) {
+                        if (v.indexOf(',') != -1) {
+                            var v1 = v.split(',')[0];
+                            var v2 = v.split(',')[1];
+                            if (!isNaN(parseInt(v1)) && isFinite(v1) && !isNaN(parseInt(v2)) && isFinite(v2)) {
+                                valid = true;
+                                value = v.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
+                            }
+                        }
+                        else if (!isNaN(parseInt(v)) && isFinite(v)) {
+                            valid = true;
+                            value = v.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
+                        }
+                    }
+                }
+                //alert(valid);
+                mCtrl.$setValidity('decimalhr', valid);
+                return value;
+            }
+            mCtrl.$parsers.push(myValidation);
+        }
+    };
+});
+
+
+angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', '$mdDateLocaleProvider', function ($routeProvider, $locationProvider, $httpProvider, $mdDateLocaleProvider) {
     //disable cacheing
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};
@@ -12,7 +79,9 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 
-
+    $mdDateLocaleProvider.formatDate = function (date) {
+        return moment(date).format('DD.MM.YYYY');
+    };
 
     $routeProvider
         .when('/index', {
@@ -59,7 +128,7 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             templateUrl: '../app/zgrade/dnevnik/dnevnikDetails.html',
             controller: 'dnevnikDetailsCtrl'
         })
-        .when('/useri', { 
+        .when('/useri', {
             templateUrl: '../app/useri/indexUseri.html',
             controller: 'indexUseriCtrl'
         })
@@ -76,7 +145,7 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', funct
             controller: 'popisStanaraCtrl'
         })
 
-    
+
 
         .when('/pripadak/:id', {
             templateUrl: '../app/Sifarnici/pripadak.html',

@@ -35,6 +35,7 @@
         }
 
         $scope.openModal = function (dioId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'dijeloviModalCtrl',
                 templateUrl: 'app/zgrade/popisi/dijeloviModal.html',

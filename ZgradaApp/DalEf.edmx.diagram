@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi" Width="1.5" PointX="3" PointY="17.625" />
         <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Prihodi" Width="1.5" PointX="5.25" PointY="15.25" />
         <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi" Width="1.5" PointX="5.25" PointY="18.75" />
-        <EntityTypeShape EntityType="ZgradaDbModel.PrihodiRashodi_Rashodi_Uplatnice" Width="1.5" PointX="7.5" PointY="19.25" />
         <EntityTypeShape EntityType="ZgradaDbModel.SifarnikRashoda" Width="1.5" PointX="5.75" PointY="4.75" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade" Width="1.5" PointX="0.75" PointY="25.125" />
         <EntityTypeShape EntityType="ZgradaDbModel.Zgrade_DnevnikRada" Width="1.5" PointX="3" PointY="7.5" />
@@ -42,7 +41,6 @@
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Prihodi_PrihodiRashodi" />
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_PrihodiRashodi" />
         <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Zgrade" />
-        <AssociationConnector Association="ZgradaDbModel.FK_PrihodiRashodi_Rashodi_Uplatnice_PrihodiRashodi_Rashodi" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_DnevnikRada_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisUredjaja_Zgrade" />
         <AssociationConnector Association="ZgradaDbModel.FK_Zgrade_PopisZajednickihDijelova_Zgrade" />

@@ -1,0 +1,72 @@
+﻿@model List<Kompanije>
+
+<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>OIB</th>
+                    <th>Adresa</th>
+                    <th>Mjesto</th>
+                    <th>Email</th>
+                    <th>Tel</th>
+                    <th>ActivationDate</th>
+                    <th>ExpirationDate</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var komp in Model)
+                    {
+                        <tr>
+                            <td>@komp.Naziv</td>
+                            <td>@komp.OIB</td>
+                            <td>@komp.Adresa</td>
+                            <td>@komp.Mjesto</td>
+                            <td>@komp.Email</td>
+                            <td>@komp.Telefon</td>
+                            <td>@komp.ActivationDate</td>
+                            <td>@komp.ExpirationDate</td>
+                            <td><input type="checkbox" checked="@komp.Active" /></td>
+                            <td>@Html.ActionLink("Enable", "Enable", new { Id = komp.Id }) @Html.ActionLink("Disable", "Disable", new { Id = komp.Id })</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="myModalMessages" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+
+                <div id="targetShowMesssages"></div>
+                @if (ViewBag.DnevnikRada == true)
+                {
+                    <div id="summernoteDnevnik"></div>
+                }
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                @if (ViewBag.DnevnikRada == true)
+                {
+                    <button type="button" class="btn btn-success" id="modalSaveDnevnikBtn" onclick="saveMsg()">Pošalji</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

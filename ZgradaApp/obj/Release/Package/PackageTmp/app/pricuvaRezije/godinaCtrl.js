@@ -23,6 +23,9 @@
                 $scope.godine = godineList;
                 $scope.msg = $scope.zgradaObj.Naziv + ' ' + $scope.zgradaObj.Adresa;
                 $rootScope.loaderActive = false;
+
+                if (DataService.selGodina != null && DataService.selGodina > 0)
+                    getDataForGodina(DataService.selGodina);
             },
             function (result) {
                 toastr.error('Greška pri dohvačanju podataka sa servera');
@@ -30,9 +33,14 @@
         );
 
         $scope.godinaChanged = function (godina) {
+            DataService.selGodina = godina;
+            getDataForGodina(godina);
+        }
+
+        function getDataForGodina(godina) {
+            $rootScope.loaderActive = true;
             $scope.selectedGodina = godina;
-            $scope.tableVisible = true;
-            console.log($scope.zgradaObj);
+            //console.log($scope.zgradaObj);
             DataService.getPricuvaRezijeGodinaTable($scope.zgradaObj.Id, godina).then(
                 function (result) {
                     // success
@@ -40,33 +48,33 @@
                     $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                         if (pr.Godina == godina) {
                             $scope.selectedGodina = godina;
-                            console.log(pr.Godina);
+                            //console.log(pr.Godina);
                             farbajMjesece();
+                            $scope.tableVisible = true;
+                            $rootScope.loaderActive = false;
                         }
                     });
                 },
                 function (result) {
                     // error
+                    $rootScope.loaderActive = false;
                     toastr.error('Dohvat godišnjih posataka sa servera nije uspio');
                 }
             )
         }
 
-
-
-
         $scope.dodajGodinu = function () {
             if ($scope.novaGodina == undefined || $scope.novaGodina == '')
                 return;
-            console.log($scope.novaGodina);
-            console.log($scope.godine.indexOf($scope.novaGodina));
-            console.log($scope.godine);
+            //console.log($scope.novaGodina);
+            //console.log($scope.godine.indexOf($scope.novaGodina));
+            //console.log($scope.godine);
             if ($scope.godine.indexOf($scope.novaGodina) == -1) {
                 DataService.praznaPricuvaRezijeCreate($scope.zgradaObj.Id, $scope.novaGodina).then(
                     function (result) {
                         $scope.zgradaObj.PricuvaRezijeGodina.push(result.data);
                         $scope.godine.push($scope.novaGodina);
-                        console.log('$scope.novaGodina: ' + $scope.novaGodina);
+                        //console.log('$scope.novaGodina: ' + $scope.novaGodina);
                         $scope.novaGodina = '';
                     },
                     function (result) {
@@ -91,6 +99,7 @@
         //              Modal openMjesecno
         // _________________________________________________________
         $scope.openMjesecno = function (mjesec, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'mjesecModalCtrl',
                 templateUrl: 'app/pricuvaRezije/mjesecModal.html',
@@ -120,6 +129,7 @@
         //              Modal stanjeZgrade
         // _________________________________________________________
         $scope.openStanjeZgrade = function (mjesec, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'stanjeZgradeModalCtrl',
                 templateUrl: 'app/pricuvaRezije/stanjeZgradeModal.html',
@@ -139,12 +149,72 @@
             });
         };
 
+
+        // _________________________________________________________
+        //              Modal uplatnice
+        // _________________________________________________________
+        $scope.openModalUplatnica = function (mjesec, ev) {
+            $('nav').fadeOut();
+            $mdDialog.show({
+                controller: 'uplatnicaModalCtrl',
+                templateUrl: 'app/pricuvaRezije/uplatnicaModal.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    zgradaObj: $scope.zgradaObj,
+                    mjesec: mjesec,
+                    godina: $scope.selectedGodina
+                }
+            }).then(function () {
+
+            }, function () {
+
+            });
+        };
+
+
+        // _________________________________________________________
+        //              Modal stanjeOd
+        // _________________________________________________________
+        $scope.modalStanje = function (ev) {
+            $('nav').fadeOut();
+            $mdDialog.show({
+                controller: 'stanjeOdModalCtrl',
+                templateUrl: 'app/pricuvaRezije/stanjeOdModal.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                , locals: {
+                    zgradaObj: $scope.zgradaObj,
+                    godinaTable: $scope.godinaTable,
+                }
+            }).then(function (zgradaObj) {
+                $scope.zgradaObj = zgradaObj;
+                console.log($scope.zgradaObj);
+                //save();
+                DataService.pricuvaRezijeStanjeOdCreateOrUpdate(zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd[0]).then(
+                    function (result) {
+                        toastr.success('Promjene su snimljene!', '');
+                    },
+                    function (result) {
+                        toastr.error('Promjene nisu snimljene!', '');
+                    }
+                )
+            }, function () {
+
+            });
+        };
+
         $scope.saveAll = function () {
             save();
         }
 
         function save() {
             $rootScope.loaderActive = true;
+            console.log($scope.zgradaObj);
             DataService.pricuvaRezijeCreateOrUpdate($scope.zgradaObj).then(
                 function (result) {
                     // on success
@@ -169,14 +239,14 @@
         //              Modal kartica
         // _________________________________________________________
         $scope.kartica = function (pdMasterId, ev) {
-            console.log(pdMasterId);
+            //console.log(pdMasterId);
             var pdmaster = null;
             $scope.zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (master) {
-                console.log(master.Id == pdMasterId);
+                //console.log(master.Id == pdMasterId);
                 if (parseInt(master.Id) == parseInt(pdMasterId))
                     pdmaster = master;
             });
-            console.log(pdmaster);
+            //console.log(pdmaster);
             $mdDialog.show({
                 controller: 'indexKsCtrl',
                 templateUrl: 'app/ks/indexKs.html',
@@ -194,18 +264,18 @@
         };
 
         function farbajMjesece(prGodina) {
-            $scope.clsMjesec1 = 'transCellBack';
-            $scope.clsMjesec2 = 'transCellBack';
-            $scope.clsMjesec3 = 'transCellBack';
-            $scope.clsMjesec4 = 'transCellBack';
-            $scope.clsMjesec5 = 'transCellBack';
-            $scope.clsMjesec6 = 'transCellBack';
-            $scope.clsMjesec7 = 'transCellBack';
-            $scope.clsMjesec8 = 'transCellBack';
-            $scope.clsMjesec9 = 'transCellBack';
-            $scope.clsMjesec10 = 'transCellBack';
-            $scope.clsMjesec11 = 'transCellBack';
-            $scope.clsMjesec12 = 'transCellBack';
+            $scope.clsMjesec1 = 'btn btn-default';
+            $scope.clsMjesec2 = 'btn btn-default';
+            $scope.clsMjesec3 = 'btn btn-default';
+            $scope.clsMjesec4 = 'btn btn-default';
+            $scope.clsMjesec5 = 'btn btn-default';
+            $scope.clsMjesec6 = 'btn btn-default';
+            $scope.clsMjesec7 = 'btn btn-default';
+            $scope.clsMjesec8 = 'btn btn-default';
+            $scope.clsMjesec9 = 'btn btn-default';
+            $scope.clsMjesec10 = 'btn btn-default';
+            $scope.clsMjesec11 = 'btn btn-default';
+            $scope.clsMjesec12 = 'btn btn-default';
 
             $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                 if (pr.Godina == $scope.selectedGodina) {
@@ -214,51 +284,51 @@
                             case 1:
                                 if (mj.DugPretplata != 0)
                                     // ok, nema promjena, pricuva postoji
-                                    $scope.clsMjesec1 = 'greenCellBack';
+                                    $scope.clsMjesec1 = 'btn btn-success';
                                 break;
                             case 2:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec2 = 'greenCellBack';
+                                    $scope.clsMjesec2 = 'btn btn-success';
                                 break;
                             case 3:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec3 = 'greenCellBack';
+                                    $scope.clsMjesec3 = 'btn btn-success';
                                 break;
                             case 4:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec4 = 'greenCellBack';
+                                    $scope.clsMjesec4 = 'btn btn-success';
                                 break;
                             case 5:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec5 = 'greenCellBack';
+                                    $scope.clsMjesec5 = 'btn btn-success';
                                 break;
                             case 6:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec6 = 'greenCellBack';
+                                    $scope.clsMjesec6 = 'btn btn-success';
                                 break;
                             case 7:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec7 = 'greenCellBack';
+                                    $scope.clsMjesec7 = 'btn btn-success';
                                 break;
                             case 8:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec8 = 'greenCellBack';
+                                    $scope.clsMjesec8 = 'btn btn-success';
                                 break;
                             case 9:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec9 = 'greenCellBack';
+                                    $scope.clsMjesec9 = 'btn btn-success';
                                 break;
                             case 10:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec10 = 'greenCellBack';
+                                    $scope.clsMjesec10 = 'btn btn-success';
                                 break;
                             case 11:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec11 = 'greenCellBack';
+                                    $scope.clsMjesec11 = 'btn btn-success';
                                 break;
                             case 12:
                                 if (mj.DugPretplata != 0)
-                                    $scope.clsMjesec12 = 'greenCellBack';
+                                    $scope.clsMjesec12 = 'btn btn-success';
                                 break;
                         }
                     });
@@ -268,14 +338,16 @@
 
         $scope.setColor = function (index) {
             switch (index) {
+                //case 0:
+                //    return { color: "darkgreen" };
                 case 0:
-                    return { color: "orange" };
+                    return { color: "chocolate" };
                 case 1:
                     return { color: "blue" };
                 case 2:
                     return { color: "magenta" };
                 case 3:
-                    return { color: "black" };
+                    return { color: "darkred" };
             }
         }
 

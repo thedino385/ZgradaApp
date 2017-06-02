@@ -186,55 +186,55 @@
                     <th style="font-size: 12px; vertical-align: middle">
                         Posebni<br />dio
                     </th>
-                    <th style="font-size: 12px; vertical-align: middle">
+                    <th style="font-size: 12px; vertical-align: middle; text-align: right">
                         Dug/<br>pretplata
                     </th>
-                    <th style="font-size: 12px; vertical-align: middle">
+                    <th style="font-size: 12px; vertical-align: middle; text-align: right">
                         Ukupno<br />pričuva
                     </th>
-                    <th style="font-size: 12px; vertical-align: middle">
+                    <th style="font-size: 12px; vertical-align: middle; text-align: right">
                         Ukupno<br />režije
                     </th>
-                    <th style="font-size: 12px; vertical-align: middle">
+                    <th style="font-size: 12px; vertical-align: middle; text-align: right">
                         Uplaćeno
 
                     </th>
                     <!--<th style="vertical-align: middle; text-align: center" class="{{clsMjesec1}}" ng-click="openMjesecno(1, $event)">1</th>-->
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(1, $event)" type="button" class="{{clsMjesec1}}">&nbsp;1.&nbsp;</button>
+                        <button ng-click="openMjesecno(1, $event)" type="button" class="{{clsMjesec1}}">1.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(2, $event)" type="button" class="{{clsMjesec2}}">&nbsp;2.&nbsp;</button>
+                        <button ng-click="openMjesecno(2, $event)" type="button" class="{{clsMjesec2}}">2.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(3, $event)" type="button" class="{{clsMjesec3}}">&nbsp;3.&nbsp;</button>
+                        <button ng-click="openMjesecno(3, $event)" type="button" class="{{clsMjesec3}}">3.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(4, $event)" type="button" class="{{clsMjesec4}}">&nbsp;4.&nbsp;</button>
+                        <button ng-click="openMjesecno(4, $event)" type="button" class="{{clsMjesec4}}">4.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(5, $event)" type="button" class="{{clsMjesec5}}">&nbsp;5.&nbsp;</button>
+                        <button ng-click="openMjesecno(5, $event)" type="button" class="{{clsMjesec5}}">5.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(6, $event)" type="button" class="{{clsMjesec6}}">&nbsp;6.&nbsp;</button>
+                        <button ng-click="openMjesecno(6, $event)" type="button" class="{{clsMjesec6}}">6.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(7, $event)" type="button" class="{{clsMjesec7}}">&nbsp;7.&nbsp;</button>
+                        <button ng-click="openMjesecno(7, $event)" type="button" class="{{clsMjesec7}}">7.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(8, $event)" type="button" class="{{clsMjesec8}}">&nbsp;8.&nbsp;</button>
+                        <button ng-click="openMjesecno(8, $event)" type="button" class="{{clsMjesec8}}">8.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(9, $event)" type="button" class="{{clsMjesec9}}">&nbsp;9.&nbsp;</button>
+                        <button ng-click="openMjesecno(9, $event)" type="button" class="{{clsMjesec9}}">9.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(10, $event)" type="button" class="{{clsMjesec10}}">&nbsp;10.&nbsp;</button>
+                        <button ng-click="openMjesecno(10, $event)" type="button" class="{{clsMjesec10}}">10.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(11, $event)" type="button" class="{{clsMjesec11}}">&nbsp;11.&nbsp;</button>
+                        <button ng-click="openMjesecno(11, $event)" type="button" class="{{clsMjesec11}}">11.</button>
                     </th>
                     <th style="vertical-align: middle; text-align: center">
-                        <button ng-click="openMjesecno(12 $event)" type="button" class="{{clsMjesec12}}">&nbsp;12.&nbsp;</button>
+                        <button ng-click="openMjesecno(12, $event)" type="button" class="{{clsMjesec12}}">12.</button>
                     </th>
 
                     <th style="font-size: 11px; vertical-align: middle; text-align: end">
@@ -250,16 +250,16 @@
                         </div>
                     </td>
                     <td style="font-size: 12px"><a href="" ng-click="kartica(rec.PosebniDioMasterId, $event)">{{rec.PosebniDioMasterNaziv}}</a></td>
-                    <td style="font-size: 12px" ng-class="{ greenCell: rec.Dug > 0, redCell: rec.Dug < 0 }">
+                    <td style="font-size: 12px; text-align: right" ng-class="{ greenCell: rec.Dug > 0, redCell: rec.Dug < 0 }">
                         {{rec.Dug | number: 2}}
                     </td>
-                    <td style="font-size: 12px" class="redCell">
+                    <td style="font-size: 12px; text-align: right" class="redCell">
                         {{rec.ZaduzenjePricuva | number: 2}}
                     </td>
-                    <td style="font-size: 12px" class="redCell">
+                    <td style="font-size: 12px; text-align: right" class="redCell">
                         {{rec.ZaduzenjeRezije | number: 2}}
                     </td>
-                    <td style="font-size: 12px">
+                    <td style="font-size: 12px; text-align: right">
                         {{rec.Uplaceno | number: 2}}
                     </td>
                     <td style="font-size: 12px; text-align: right; padding-right: 7px">

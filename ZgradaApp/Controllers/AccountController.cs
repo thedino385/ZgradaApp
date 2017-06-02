@@ -86,82 +86,73 @@ namespace ZgradaApp.Controllers
             }
 
 
-            var user = await UserManager.FindAsync(model.Email, model.Password);
-            var roles = await UserManager.GetRolesAsync(user.Id);
 
-           if(roles[0] == "Admin")
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
             {
-                await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-                return RedirectToAction("Index", "Admin");
-            }
-                
-            //var user = (await UserManager.FindByNameAsync(model.Email));
-            string userId = user.Id;
-            string userType = col["userType"];
-            if(userType == "voditelj")
-            {
-                var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
-                if (u.Active == true)
-                {
-                    var comp = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == u.CompanyId);
-                    if(comp.Active != true)
+                case SignInStatus.Success:
+                    #region prosla autentikacija
+                    var user = await UserManager.FindAsync(model.Email, model.Password);
+                    var roles = await UserManager.GetRolesAsync(user.Id);
+                    if (roles[0] == "Admin")
+                        //await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                        return RedirectToAction("Index", "Admin");
+                    string userId = user.Id;
+                    string userType = col["userType"];
+                    if (userType == "voditelj")
                     {
-                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-                        ModelState.AddModelError("", "Invalid login attempt.");
-                        return View(model);
-                    }
-
-                    // This doesn't count login failures towards account lockout
-                    // To enable password failures to trigger account lockout, change to shouldLockout: true
-                    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-                    switch (result)
-                    {
-                        case SignInStatus.Success:
-                            return RedirectToAction("Index", "Home");  //RedirectToLocal(returnUrl);
-                        case SignInStatus.LockedOut:
-                            return View("Lockout");
-                        case SignInStatus.RequiresVerification:
-                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                        case SignInStatus.Failure:
-                        default:
+                        var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
+                        if (u.Active == true || u == null)
+                        {
+                            var comp = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == u.CompanyId);
+                            if (comp.Active != true)
+                            {
+                                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                                ModelState.AddModelError("", "Invalid login attempt.");
+                                return View(model);
+                            }
+                        }
+                        else
+                        {
                             ModelState.AddModelError("", "Invalid login attempt.");
                             return View(model);
+                        }
+                        return RedirectToAction("Index", "Home");
                     }
-                }
-                else
-                {
+                    else
+                    {
+                        var u = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userId);
+                        if (u.Active == true)
+                        {
+                            // This doesn't count login failures towards account lockout
+                            // To enable password failures to trigger account lockout, change to shouldLockout: true
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View("LoginStanar", model);
+                        }
+                        return RedirectToAction("StanarView", "Home");
+                    }
+                    #endregion
+
+                    ///return RedirectToAction("Index", "Home");  //RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
-                }
             }
-            else
-            {
-                var u = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userId);
-                if (u.Active == true)
-                {
-                    // This doesn't count login failures towards account lockout
-                    // To enable password failures to trigger account lockout, change to shouldLockout: true
-                    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-                    switch (result)
-                    {
-                        case SignInStatus.Success:
-                            return RedirectToAction("StanarView", "Home");
-                        case SignInStatus.LockedOut:
-                            return View("Lockout");
-                        case SignInStatus.RequiresVerification:
-                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                        case SignInStatus.Failure:
-                        default:
-                            ModelState.AddModelError("", "Invalid login attempt.");
-                            return View(model);
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View("LoginStanar", model);
-                }
-            }
+
+
+
+            
+                
+           
+            
             
         }
 

@@ -14,12 +14,6 @@ namespace ZgradaApp
     
     public partial class PrihodiRashodi_Rashodi
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PrihodiRashodi_Rashodi()
-        {
-            this.PrihodiRashodi_Rashodi_Uplatnice = new HashSet<PrihodiRashodi_Rashodi_Uplatnice>();
-        }
-    
         public int Id { get; set; }
         public int PrihodiRashodiGodId { get; set; }
         public Nullable<int> PosebniDioMasterId { get; set; }
@@ -36,7 +30,5 @@ namespace ZgradaApp
         public string PdfFileName { get; set; }
     
         public virtual PrihodiRashodi PrihodiRashodi { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrihodiRashodi_Rashodi_Uplatnice> PrihodiRashodi_Rashodi_Uplatnice { get; set; }
     }
 }

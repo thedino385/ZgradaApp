@@ -89,3 +89,5 @@ C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\Microsoft.Owin.Security.MicrosoftAcc
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Release\ZgradaApp.csprojResolveAssemblyReference.cache
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Release\ZgradaApp.dll
 C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\obj\Release\ZgradaApp.pdb
+C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\QRCoder.dll
+C:\Razvoj\ZgradaApp\ZgradaApp\ZgradaApp\bin\UnityEngine.dll

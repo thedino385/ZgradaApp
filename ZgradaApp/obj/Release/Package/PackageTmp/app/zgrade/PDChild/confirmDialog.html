@@ -2,7 +2,18 @@
     <form ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools" style="color: white; background-color: firebrick">
-                <h2>{{title}}</h2>
+                <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                    <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                </md-button>
+
+                <h3 flex md-truncate>{{title}}</h3>
+
+               
+
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
+                </md-button>
+
             </div>
         </md-toolbar>
 

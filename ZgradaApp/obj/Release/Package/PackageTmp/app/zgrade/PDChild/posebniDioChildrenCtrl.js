@@ -3,45 +3,70 @@
 
         $scope.msg = '';
         $scope.dodajVlasnikeBtnDisabled = false;
-        if (DataService.currZgrada == null) {
+        if (DataService.selZgradaId == null) {
             $location.path('/zgrade');
             return;
         }
 
-        if ($routeParams) {
-            if ($routeParams.id > 0) { // pa uvijek ce i biti, master postoji
-                // nadji posebniDioMaster
-                DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
-                    if (pdMaster.Id == $routeParams.id) {
-                        $scope.pdMaster = pdMaster;
-                        $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
+        $scope.isVlasniciCollapsed = true;
+        $scope.nePrikazujZatvorene = true;
+        $scope.cb = true;
 
-                        // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
-                        pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
-                            if (period.Ugasen != true)
-                                $scope.dodajVlasnikeBtnDisabled = true;
-                        });
-                    }
+        //$rootScope.loaderActive = true;
+        //DataService.getZgrada(DataService.selZgradaId, false, false).then(
+        //    function (result) {
+        //        console.log(result);
+        //        result.data.Zgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
+        //            if (pdMaster.Id == $routeParams.id) {
+        //                $scope.pdMaster = pdMaster;
+        //                $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
+
+        //                // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
+        //                pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+        //                    if (period.Ugasen != true)
+        //                        $scope.dodajVlasnikeBtnDisabled = true;
+        //                });
+        //            }
+        //        });
+        //        //$scope.stanari = DataService.zgradaUseri;
+        //        console.clear();
+        //        console.log(result.data);
+        //        $scope.stanari = result.data.Useri;
+        //        $rootScope.loaderActive = false;
+        //    },
+        //    function (result) {
+        //        $rootScope.loaderActive = false;
+        //        toastr.error('Dohvat podataka sa servera nije uspiio.');
+        //    }
+        //);
+
+
+        DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
+            if (pdMaster.Id == $routeParams.id) {
+                $scope.pdMaster = pdMaster;
+                $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
+
+                // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
+                pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+                    if (period.Ugasen != true)
+                        $scope.dodajVlasnikeBtnDisabled = true;
                 });
-                $scope.stanari = DataService.currZgrada.Zgrade_Stanari;
             }
-            //else {
-            //    $scope.msg = "Nova zgrada";
-            //    $scope.zgradaObj = {
-            //        Id: 0, Naziv: "", Adresa: "", Mjesto: "", Povrsinam2: 0, Zgrade_PosebniDijelovi: [], Zgrade_Stanari: [], Status: ''
-            //    };
-            //}
-        }
+        });
+        //$scope.stanari = DataService.zgradaUseri;
+        $scope.stanari = DataService.currZgrada.Zgrade_Stanari;
+        $rootScope.loaderActive = false;
 
         // _________________________________________________________
         //              Modal posebni dio
         // _________________________________________________________
-        $scope.openModalPosebniDioChild = function (id) {
+        $scope.openModalPosebniDioChild = function (id, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioChildModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -64,12 +89,13 @@
         // _________________________________________________________
         //              Modal vlasnici
         // _________________________________________________________
-        $scope.openModalVlasnici = function (periodId) {
+        $scope.openModalVlasnici = function (periodId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioMasterVlasniciModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioMasterVlasniciModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -92,12 +118,13 @@
         // _________________________________________________________
         //              Modal povrsine
         // _________________________________________________________
-        $scope.openModalPosebniDioChildPovrsina = function (posebniDioChildId, povrsinaId) {
+        $scope.openModalPosebniDioChildPovrsina = function (posebniDioChildId, povrsinaId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildPovrsinaModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioChildPovrsinaModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -120,12 +147,13 @@
         // _________________________________________________________
         //              Modal pripadci
         // _________________________________________________________
-        $scope.openModalPosebniDioChildPripadak = function (posebniDioChildId, pripadakId) {
+        $scope.openModalPosebniDioChildPripadak = function (posebniDioChildId, pripadakId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildPripadciModalCtrl',
                 templateUrl: 'app/zgrade/PDChild/posebniDioChildPripadciModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -147,6 +175,7 @@
         //      Kill Master
         // __________________________________________________________
         $scope.killMaster = function (ev) {
+            $('nav').fadeOut();
             var brisanjeOk = false;
             if ($scope.pdMaster.Status == 'a')
                 brisanjeOk = true;
@@ -171,6 +200,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     if (brisanjeOk) {
                         var index = DataService.currZgrada.Zgrade_PosebniDijeloviMaster.indexOf($scope.pdMaster)
                         DataService.currZgrada.Zgrade_PosebniDijeloviMaster.splice(index, 1);
@@ -205,7 +235,7 @@
                     }
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
@@ -214,6 +244,7 @@
         //          Kill / Zatvori posebni dio child
         // __________________________________________________________
         $scope.killpoChild = function (pdChild, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -240,6 +271,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     if (brisanjeOk) {
                         var index = $scope.pdMaster.Zgrade_PosebniDijeloviChild.indexOf(pdChild)
                         $scope.pdMaster.Zgrade_PosebniDijeloviChild.splice(index, 1);
@@ -261,7 +293,7 @@
                     }
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
@@ -269,6 +301,7 @@
         //          Kill / Zatvori povrsinu
         // __________________________________________________________
         $scope.killPovrsina = function (pdChildId, povrsinaId, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -306,6 +339,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
                         if (pdChild.Id == pdChildId) {
                             pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
@@ -325,7 +359,7 @@
                     });
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
@@ -333,6 +367,7 @@
         //          Kill / Zatvori pripadak
         // __________________________________________________________
         $scope.killPripadak = function (pdChildId, pripadakId, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -370,6 +405,7 @@
                 }
             })
                 .then(function (o) {
+                    $('nav').fadeIn();
                     $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
                         if (pdChild.Id == pdChildId) {
                             pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
@@ -389,12 +425,13 @@
                     });
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
         }
 
 
         $scope.killVlasniciPeriod = function (periodId, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -414,7 +451,7 @@
                     });
                 }
             });
-            
+
             var desc = "Odabrani pripadak ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
             var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
 
@@ -433,24 +470,25 @@
                     okBtnCaption: okBtnCaption
                 }
             })
-            // od davde
-            .then(function (o) {
-                $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
-                    if (period.Id == periodId) {
-                        if (brisanjeOk) {
-                            var index = $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.indexOf(period)
-                            $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.splice(index, 1);
+                // od davde
+                .then(function (o) {
+                    $('nav').fadeIn();
+                    $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+                        if (period.Id == periodId) {
+                            if (brisanjeOk) {
+                                var index = $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.indexOf(period)
+                                $scope.pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.splice(index, 1);
+                            }
+                            else {
+                                period.Zatvoren = true;
+                                period.ZatvorenGodina = o.godina;
+                                period.ZatvorenMjesec = o.mjesec;
+                            }
                         }
-                        else {
-                            period.Zatvoren = true;
-                            period.ZatvorenGodina = o.godina;
-                            period.ZatvorenMjesec = o.mjesec;
-                        }
-                    }
-                })
+                    })
                 }
                 , function () {
-                    //alert('cancel je kliknut');
+                    $('nav').fadeIn();
                 });
 
             // do tu
@@ -465,7 +503,7 @@
                     // on success
                     $rootScope.loaderActive = false;
                     toastr.success('Promjene su snimljene!', '');
-                    $location.path('/zgrade');
+                    $location.path('/posebniDijeloviMasterList');
                 },
                 function (result) {
                     // on error
@@ -475,13 +513,13 @@
         };
 
         $scope.goBack = function () {
-            $location.path('/zgrade');
+            $location.path('/posebniDijeloviMasterList');
         }
 
 
 
         function confirmController($scope, $mdDialog, title, textContent, desc, brisanjeOk, okBtnCaption) {
-           
+
             $scope.vrijediDoGodina = new Date().getFullYear();
             $scope.vrijediDoMjesec = parseInt(new Date().getMonth());
             $scope.title = title;

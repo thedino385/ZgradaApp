@@ -170,18 +170,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PrihodiRashodi_Rashodi_Uplatnice">
-      <EntityTypeMapping TypeName="ZgradaDbModel.PrihodiRashodi_Rashodi_Uplatnice">
-        <MappingFragment StoreEntitySet="PrihodiRashodi_Rashodi_Uplatnice">
-          <ScalarProperty Name="DatumSlanja" ColumnName="DatumSlanja" />
-          <ScalarProperty Name="DatumKreiranja" ColumnName="DatumKreiranja" />
-          <ScalarProperty Name="Ukupno" ColumnName="Ukupno" />
-          <ScalarProperty Name="PosebniDioMasterId" ColumnName="PosebniDioMasterId" />
-          <ScalarProperty Name="RashodiId" ColumnName="RashodiId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="SifarnikRashoda">
       <EntityTypeMapping TypeName="ZgradaDbModel.SifarnikRashoda">
         <MappingFragment StoreEntitySet="SifarnikRashoda">

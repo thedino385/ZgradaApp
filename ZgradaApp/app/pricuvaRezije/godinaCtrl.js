@@ -195,7 +195,7 @@
                 $scope.zgradaObj = zgradaObj;
                 console.log($scope.zgradaObj);
                 //save();
-                DataService.pricuvaRezijeStanjeOdCreateOrUpdate(zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd[0]).then(
+                DataService.pricuvaRezijeStanjeOdCreateOrUpdate(zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd).then(
                     function (result) {
                         toastr.success('Promjene su snimljene!', '');
                     },

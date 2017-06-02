@@ -67,6 +67,11 @@
         return $http.post('../api/data/pricuvaRezijeCreateOrUpdate', zgradaObj);
     }
 
+    var pricuvaRezijeStanjeOdCreateOrUpdate = function (stanjeOdList) {
+        console.log(stanjeOdList);
+        return $http.post('../api/data/pricuvaRezijeStanjeOdCreateOrUpdate', stanjeOdList);
+    }
+
     var getPricuvaRezijeGodinaTable = function (zgradaId, godina) {
         return $http({
             url: '../api/data/getPricuvaRezijeGodinaTable',
@@ -113,13 +118,42 @@
         return $http.post('../Account/editUser', user);
     }
 
-    //var prebaciNeplaceniRashod = function (mjesecZaKojiSeRadiObracun, godina) {
-    //    return $http({
-    //        url: '../api/data/prebaciNeplaceniRashod',
-    //        method: "GET",
-    //        params: { mjesecZaKojiSeRadiObracun: mjesecZaKojiSeRadiObracun, godina: godina }
-    //    });
-    //}
+    var sendUplatniceRashodi = function (list) {
+        return $http.post('../Email/SendRashodi', list);
+    }
+
+    var createUplatnicaManually = function (masterId, godina, mjesec, zgradaId) {
+        return $http({
+            url: '../Email/createUplatnicaManually',
+            method: "POST",
+            params: { masterId: masterId, godina: godina, mjesec: mjesec, zgradaId: zgradaId }
+        });
+    }
+
+    var getTvrtka = function () {
+        return $http.get('../api/data/getTvrtka');
+    }
+
+    var tvrtkaUpdate = function (tvrtka) {
+        return $http.post('../api/data/tvrtkaUpdate', tvrtka);
+    }
+
+    var getOglasna = function (zgradaId) {
+        return $http.get('../api/data/getOglasna?zgradaId=' + zgradaId);
+    }
+
+    var oglasnaEditOrCreate = function (oglas) {
+        return $http.post('../api/data/oglasnaEditOrCreate', oglas);
+    }
+
+    var getuseriStanari = function (zgradaId) {
+        return $http.get('../api/data/getuseriStanari?zgradaId=' + zgradaId);
+    }
+
+    var getPopisStanari = function (zgradaId) {
+        console.log(zgradaId);
+        return $http.get('../api/data/getPopisStanari?zgradaId=' + zgradaId);
+    }
 
     return {
         getZgrade: getZgrade,
@@ -150,7 +184,18 @@
 
         getUseri: getUseri,
         editUser: editUser,
-        genPdfDnevnik: genPdfDnevnik
+        genPdfDnevnik: genPdfDnevnik,
+
+        sendUplatniceRashodi: sendUplatniceRashodi,
+        createUplatnicaManually: createUplatnicaManually,
+        getTvrtka: getTvrtka,
+        tvrtkaUpdate: tvrtkaUpdate,
+        getOglasna: getOglasna,
+        oglasnaEditOrCreate: oglasnaEditOrCreate,
+        getuseriStanari: getuseriStanari,
+
+        pricuvaRezijeStanjeOdCreateOrUpdate: pricuvaRezijeStanjeOdCreateOrUpdate,
+        getPopisStanari: getPopisStanari
     }
 
 
