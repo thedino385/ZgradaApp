@@ -21,13 +21,15 @@
         }
 
         $scope.save = function () {
-            
+            $('nav').fadeIn();
+            $scope.oglas.Oglas = $('#summernote').summernote('code');
             console.log($scope.oglas);
             $mdDialog.hide($scope.oglas);
         };
 
         $scope.cancel = function (tempList) {
-            $mdDialog.canceltempList(oglasna);
+            $('nav').fadeIn();
+            $mdDialog.cancel(oglasna);
         };
 
     }]);

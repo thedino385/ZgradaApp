@@ -35,7 +35,7 @@
                 <div layout-gt-sm="row">
                     <div class="col-sm-2"></div>
 
-                    <div id="summernote">{{oglas.Oglas}}</div>
+                    <div id="summernote" ng-bind-html="oglas.Oglas"></div>
 
 
                     <div class="col-sm-2"></div>
@@ -45,11 +45,11 @@
 
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button  type="submit" class="md-raised">
-                Snimi
-            </md-button>
             <md-button class="md-raised" ng-click="cancel()">
                 Zatvori
+            </md-button>
+            <md-button type="submit" class="md-raised md-primary">
+                Snimi
             </md-button>
         </md-dialog-actions>
     </form>

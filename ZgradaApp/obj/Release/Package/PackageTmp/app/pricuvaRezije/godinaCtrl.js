@@ -14,7 +14,7 @@
         DataService.getZgrada(DataService.selZgradaId, false, false).then(
             function (result) {
                 // on success
-                $scope.zgradaObj = result.data.Zgrada;
+                $scope.zgradaObj = DataService.decimalToHr(result.data.Zgrada, 'pricuva');
                 var godineList = [];
                 $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                     godineList.push(pr.Godina);
@@ -44,7 +44,7 @@
             DataService.getPricuvaRezijeGodinaTable($scope.zgradaObj.Id, godina).then(
                 function (result) {
                     // success
-                    $scope.godinaTable = result.data;
+                    $scope.godinaTable = DataService.decimalToHr(result.data, 'pricuvaGodTable');
                     $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                         if (pr.Godina == godina) {
                             $scope.selectedGodina = godina;
@@ -168,9 +168,8 @@
                     godina: $scope.selectedGodina
                 }
             }).then(function () {
-
-            }, function () {
-
+            }, function (tempObj) {
+                $scope.zgradaObj = tempObj;
             });
         };
 
@@ -195,7 +194,7 @@
                 $scope.zgradaObj = zgradaObj;
                 console.log($scope.zgradaObj);
                 //save();
-                DataService.pricuvaRezijeStanjeOdCreateOrUpdate(zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd[0]).then(
+                DataService.pricuvaRezijeStanjeOdCreateOrUpdate(zgradaObj.PricuvaRezijeGodina[0].PricuvaRezijeGodina_StanjeOd).then(
                     function (result) {
                         toastr.success('Promjene su snimljene!', '');
                     },
@@ -215,7 +214,7 @@
         function save() {
             $rootScope.loaderActive = true;
             console.log($scope.zgradaObj);
-            DataService.pricuvaRezijeCreateOrUpdate($scope.zgradaObj).then(
+            DataService.pricuvaRezijeCreateOrUpdate(DataService.decimalToEng($scope.zgradaObj, 'pricuva')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;
@@ -226,6 +225,7 @@
                 function (result) {
                     // on error
                     $rootScope.errMsg = result.Message;
+                    $rootScope.loaderActive = false;
                     toastr.error('Promjene nisu snimljene!', '');
                 }
             )

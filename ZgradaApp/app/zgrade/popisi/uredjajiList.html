@@ -39,12 +39,14 @@
 
                             </div>
                         </div>
-                        <button ng-hide="u.ZatvorenGodina != null" type="button" class="btn btn-default btn-sm md-avatar" title="Uredi" ng-click="openModal(u.Id, $event)">
+                        <!--<button ng-hide="u.ZatvorenGodina != null" type="button" class="btn btn-default btn-sm md-avatar" title="Uredi" ng-click="openModal(u.Id, $event)">
                             <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: indigo"></md-icon>
                         </button>
                         <button ng-hide="u.ZatvorenGodina != null" type="button" class="btn btn-default btn-sm md-avatar" title="Zatvori/Obriši" ng-click="kill(u, $event)">
                             <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: crimson"></md-icon>
-                        </button>
+                        </button>-->
+                        <md-button ng-hide="u.ZatvorenGodina != null" ng-click="openModal(u.Id, $event)" class="md-primary md-hue-1">Uredi</md-button>
+                        <md-button ng-hide="u.ZatvorenGodina != null" ng-click="kill(u, $event)" class="md-primary md-hue-1">Zatvori</md-button>
                         <md-divider inset></md-divider>
                     </md-list-item>
                 </md-list>

@@ -1,4 +1,10 @@
-﻿<md-dialog flex="100">
+﻿<style>
+    .md-errors-spacer {
+        display: none;
+    }
+</style>
+
+<md-dialog flex="100">
     <form ng-cloak name="frm">
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -8,12 +14,12 @@
 
                 <h3 flex md-truncate>{{period}}</h3>
 
-                <md-checkbox ng-model="PricuvaRezijeZaMjesec.SaKoef" aria-label="Checkbox 1">
+                <md-checkbox ng-model="PricuvaRezijeZaMjesec.SaKoef" aria-label="Checkbox 1" style="padding-right: 20px">
                     Sa koeficijentom
                 </md-checkbox>
 
-                <md-button class="md-raised" style="fill: green" aria-label="Obračunaj pričuvu i režije" ng-click="obracunaj()">
-                    Kreiraj
+                <md-button class="md-raised" ng-disabled="frm.$invalid" aria-label="Obračunaj pričuvu i režije" ng-click="obracunaj()">
+                    Kreiraj obračun
                 </md-button>
                 <!--<md-button class="md-icon-button" title="Expand" ng-click="settingsExpanded == false ? settingsExpanded = true : settingsExpanded = false">
                     <md-icon md-svg-icon="/Content/icons/arrow-expand-all.svg" ng-style="settingsExpanded == true ? {'fill': 'magenta'} : {'fill': 'yellowgreen'}" style="width: 32px; height: 32px"></md-icon>
@@ -29,9 +35,9 @@
         <md-dialog-content>
 
             <div class="md-dialog-content">
-                <button class="btn btn-primary dropdown-toggle" style="padding-bottom: 0px;" type="button" data-toggle="dropdown" ng-click="areSettingsCollapsed = !areSettingsCollapsed">
+                <a href="" class="btn btn-primary dropdown-toggle" style="padding-bottom: 0px;" ng-click="areSettingsCollapsed = !areSettingsCollapsed">
                     <span class="caret"></span>
-                </button>
+                </a>
                 <div class="bs-callout bs-callout-primary" uib-collapse="areSettingsCollapsed">
                     <table class="table table-hover">
                         <thead>
@@ -47,13 +53,25 @@
                                         <md-radio-button ng-click="nacinObracunaPricuvaChanged(0)" value="0" class="md-primary">Po m2</md-radio-button>
                                     </md-radio-group>
                                 </td>
-                                <td><input class="form-control" type="text" placeholder="Cijena po metru kvadratnom" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2" /></td>
+                                <!--<td><input class="form-control" type="text" placeholder="Cijena po metru kvadratnom" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2" /></td>-->
+                                <td>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Cijena po metru kvadratnom</label>
+                                        <input my-directive-decimal ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2">
+                                    </md-input-container>
+                                </td>
                                 <td>
                                     <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaRezije">
                                         <md-radio-button ng-click="nacinObracunaRezijeChanged(0)" value="0" class="md-primary">Raspodjela od ukupno po povrsini</md-radio-button>
                                     </md-radio-group>
                                 </td>
-                                <td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno" /></td>
+                                <!--<td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno" /></td>-->
+                                <td>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ukupna cifra za zgradu</label>
+                                        <input my-directive-decimal ng-model="PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno">
+                                    </md-input-container>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
@@ -61,13 +79,41 @@
                                         <md-radio-button ng-click="nacinObracunaPricuvaChanged(1)" value="1" class="md-primary">Raspodjela od ukupno po povrsini</md-radio-button>
                                     </md-radio-group>
                                 </td>
-                                <td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno" /></td>
+                                <!--<td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno" /></td>-->
+                                <td>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ukupna cifra za zgradu</label>
+                                        <input my-directive-decimal ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno">
+                                    </md-input-container>
+                                </td>
                                 <td>
                                     <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaRezije">
                                         <md-radio-button ng-click="nacinObracunaRezijeChanged(1)" value="1" class="md-primary">Po broju članova</md-radio-button>
                                     </md-radio-group>
                                 </td>
-                                <td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunRezijaCijenaUkupnoPoBrojuClanova" /></td>
+                                <!--<td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunRezijaCijenaUkupnoPoBrojuClanova" /></td>-->
+                                <td>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ukupna cifra za zgradu</label>
+                                        <input my-directive-decimal ng-model="PricuvaRezijeZaMjesec.ObracunRezijaCijenaUkupnoPoBrojuClanova">
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaPricuva">
+                                        <md-radio-button ng-click="nacinObracunaPricuvaChanged(3)" value="3" class="md-primary">Postotak za svaki posebni dio</md-radio-button>
+                                    </md-radio-group>
+                                </td>
+                                <!--<td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno" /></td>-->
+                                <td>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ukupna cifra za zgradu</label>
+                                        <input my-directive-decimal ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno">
+                                    </md-input-container>
+                                </td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>
@@ -83,20 +129,12 @@
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <md-radio-group ng-model="PricuvaRezijeZaMjesec.NacinObracunaPricuva">
-                                        <md-radio-button ng-click="nacinObracunaPricuvaChanged(3)" value="3" class="md-primary">Postotak za svaki posebni dio</md-radio-button>
-                                    </md-radio-group>
-                                </td>
-                                <td><input class="form-control" type="text" placeholder="Ukupna cifra za zgradu" ng-model="PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno" /></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            
 
                         </tbody>
                     </table>
                 </div>
+
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -161,7 +199,9 @@
                                     {{master.Naziv}}
                                 </div>
                             </td>
-                            <td><input class="form-control" type="text" size="5" ng-model="pdMaster.PocetnoStanje" /></td>
+                            <td>
+                                <input my-directive-decimal name="pocetno" class="form-control" type="text" size="5" ng-model="pdMaster.PocetnoStanje" />
+                            </td>
                             <td>
                                 <div ng-repeat="master in zgradaObj.Zgrade_PosebniDijeloviMaster| filter: { Id: pdMaster.PosebniDioMasterId }">
                                     <span ng-repeat="posDioChild in master.Zgrade_PosebniDijeloviChild | filter: { ZgradaPosDioMasterId: pdMaster.PosebniDioMasterId }:true">
@@ -169,49 +209,21 @@
                                     </span>
                                 </div>
                             </td>
-                            <td style="vertical-align: middle; text-align: right" ng-class="{ greenCell: pdMaster.DugPretplata > 0, redCell: pdMaster.DugPretplata < 0 }">
-                                {{pdMaster.DugPretplata | number: 2}}
+                            <!--<td style="vertical-align: middle; text-align: right" ng-class="{ greenCell: pdMaster.DugPretplata > 0, redCell: pdMaster.DugPretplata < 0 }">-->
+                            <td style="vertical-align: middle; text-align: right" class="{{pdMaster.DugPretplata | toDecimalEngFilter}}">
+                                {{pdMaster.DugPretplata}}
                             </td>
-                            <td style="vertical-align: middle; text-align: right" class="redCell">{{pdMaster.ZaduzenjePricuva | number: 2}}</td>
-                            <td style="vertical-align: middle; text-align: right" class="redCell">{{pdMaster.ZaduzenjeRezije | number: 2}}</td>
-                            <td style="vertical-align: middle; text-align: right">{{pdMaster.Uplaceno | number: 2}}</td>
-                            <td style="vertical-align: middle; text-align: right">{{pdMaster.StanjeOd | number: 2}}</td>
-                            <!--<td><input type="text" size="8" ng-model="pdMaster.StanjeOd" /></td>-->
-                            <td style="vertical-align: middle;" ng-show="cijenaPricuvaVisible"><input class="form-control" type="text" size="5" ng-model="pdMaster.ObracunPricuvaCijenaSlobodanUnos" /></td>
-                            <td style="vertical-align: middle;" ng-show="cijenaRezijeZaSvakiVisible"><input class="form-control" type="text" size="5" ng-model="pdMaster.ObracunRezijeCijenaSlobodanUnos" /></td>
-                            <td style="vertical-align: middle;" ng-show="cijenaRezijePoBrojuVisible"><input class="form-control" type="text" size="5" ng-model="pdMaster.ObracunRezijeBrojClanova" /></td>
-                            <td style="vertical-align: middle;" ng-show="cijenaPricuvaPostoVisible"><input class="form-control" type="text" size="5" ng-model="pdMaster.ObracunPricuvaPostoSlobodanUnos" /></td>
+                            <td style="vertical-align: middle; text-align: right" class="redCell">{{pdMaster.ZaduzenjePricuva}}</td>
+                            <td style="vertical-align: middle; text-align: right" class="redCell">{{pdMaster.ZaduzenjeRezije}}</td>
+                            <td style="vertical-align: middle; text-align: right">{{pdMaster.Uplaceno}}</td>
+                            <td style="vertical-align: middle; text-align: right" class="{{pdMaster.StanjeOd | toDecimalEngFilter}}">{{pdMaster.StanjeOd}}</td>
+                            <td style="vertical-align: middle;" ng-show="cijenaPricuvaVisible"><input my-directive-decimal class="form-control" type="text" size="5" ng-model="pdMaster.ObracunPricuvaCijenaSlobodanUnos" /></td>
+                            <td style="vertical-align: middle;" ng-show="cijenaRezijeZaSvakiVisible"><input my-directive-decimal class="form-control" type="text" size="5" ng-model="pdMaster.ObracunRezijeCijenaSlobodanUnos" /></td>
+                            <td style="vertical-align: middle;" ng-show="cijenaRezijePoBrojuVisible"><input my-directive-decimal class="form-control" type="text" size="5" ng-model="pdMaster.ObracunRezijeBrojClanova" /></td>
+                            <td style="vertical-align: middle;" ng-show="cijenaPricuvaPostoVisible"><input my-directive-decimal class="form-control" type="text" size="5" ng-model="pdMaster.ObracunPricuvaPostoSlobodanUnos" /></td>
 
 
                         </tr>
-
-                        <!--<tr ng-repeat="ra in prihodRashodZaGodinu.PrihodiRashodi_Rashodi | filter:{ Mjesec: mjesec} | filter: { Status: '!d' }" style="vertical-align: middle">
-
-                            <td style="vertical-align: middle">
-                                <input class="form-control" type="text" ng-model="ra.Datum" />
-                            </td>
-                            <td style="vertical-align: middle; text-align: end">
-                                <md-input-container flex-gt-sm>
-                                    <md-select ng-model="ra.RashodId">
-                                        <md-option name="stanarId" ng-repeat="vrsta in sifarnikRashoda" ng-value="vrsta.Id">
-                                            {{vrsta.Naziv}}
-                                        </md-option>
-                                    </md-select>
-                                </md-input-container>
-                            </td>
-                            <td style="vertical-align: middle; text-align: end">
-                                <input ng-change="ukupno()" class="form-control" type="text" ng-model="ra.Iznos" />
-                            </td>
-                            <td style="vertical-align: middle">
-                                <md-button class="md-icon-button" ng-click="delete(ra.Id)" title="Obriši">
-                                    <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
-                                </md-button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
-                            <td style="vertical-align: middle; text-align: end">{{total}}</td>
-                        </tr>-->
                     </tbody>
                 </table>
             </div>

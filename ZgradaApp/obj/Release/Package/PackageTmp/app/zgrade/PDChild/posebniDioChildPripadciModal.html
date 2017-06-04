@@ -34,7 +34,7 @@
 
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Oznaka</label>
-                                <input required type="text" name="oznaka" ng-model="pripadakObj.Oznaka">
+                                <input type="text" name="oznaka" ng-model="pripadakObj.Oznaka">
                                 <div ng-messages="frm.oznaka.$error" role="alert">
                                     <div ng-message-exp="['required']">
                                         Obavezno polje
@@ -51,7 +51,7 @@
                             <div class="col-sm-2"></div>
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Površina</label>
-                                <input required type="text" name="povrsina" ng-model="pripadakObj.Povrsina">
+                                <input my-directive-decimal required type="text" name="povrsina" ng-model="pripadakObj.Povrsina">
                                 <div ng-messages="frm.povrsina.$error" role="alert">
                                     <div ng-message-exp="['required']">
                                         Obavezno polje
@@ -61,7 +61,7 @@
 
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Koeficijent</label>
-                                <input required type="text" name="koef" ng-model="pripadakObj.Koef">
+                                <input my-directive-decimal required type="text" name="koef" ng-model="pripadakObj.Koef">
                                 <div ng-messages="frm.koef.$error" role="alert">
                                     <div ng-message-exp="['required']">
                                         Obavezno polje

@@ -11,7 +11,7 @@
             $scope.vlasniciPeriod = {
                 Id: 0, PosebniDioMasterId: pdMaster.Id, VrijediOdMjesec: parseInt(new Date().getMonth() + 1),
                 VrijediOdGodina: new Date().getFullYear(),
-                VrijediDoMjesec: null, VrijediDoGodina: null, Status: 'a', 
+                VrijediDoMjesec: null, VrijediDoGodina: null, Status: 'a',
                 Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici: []
             };
             $scope.msg = 'Dodaj vlasnike';
@@ -47,7 +47,22 @@
             $scope.vlasniciPeriod.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.splice(index, 1);
         }
 
+        function isNumeric(n) {
+            return !isNaN(parseInt(n)) && isFinite(n);
+        }
+
         $scope.save = function () {
+            // validacija za udio - 1/2
+            //pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+            //    if (period.Udio != null && period.Udio != undefined) {
+            //        if (period.Udio.toString().length == 3) {
+            //            if (period.Udio.indexOf('/') != -1) {
+            //                if (isNumeric(period.Udio.toString().split('/')[0]) && isNumeric(period.Udio.toString().split('/')[1]))
+            //            }
+            //        }
+            //    }
+            //});
+
             $('nav').fadeIn();
             if (periodId == 0) {
                 maxId = 0;
@@ -75,6 +90,7 @@
             $mdDialog.cancel(tempObj);
         };
 
-        
+
 
     }]);
+

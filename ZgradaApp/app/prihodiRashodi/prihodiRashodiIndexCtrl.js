@@ -41,7 +41,7 @@
             },
             function (result) {
                 // on errr
-                alert(result.Message);
+                toastr.error('Dohvat podataka nije uspio');
                 $rootScope.errMsg = result.Message;
             }
         );

@@ -114,7 +114,7 @@
                         </md-tab>
                         <md-tab label="Posebni dijelovi">
                             <md-content class="md-padding">
-                                <md-button class="md-primary md-raised" ng-click="openModalPosebniDio(0)">&nbsp;Dodaj posebni dio&nbsp;</md-button>
+                                <md-button class="md-primary md-raised" ng-click="openModalPosebniDio(0, $event)">&nbsp;Dodaj posebni dio&nbsp;</md-button>
                                 <table class="table table-hover table-striped table-bordered">
                                     <thead>
                                         <tr>
@@ -133,7 +133,7 @@
                                                 <input ng-show="pdMaster.Zatvoren == false" type="checkbox" />
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="openModalPosebniDio(pdMaster.Id)">
+                                                <button type="button" class="btn btn-default btn-sm" title="Uredi zgradu" ng-click="openModalPosebniDio(pdMaster.Id, $event)">
                                                     <span class="glyphicon glyphicon-edit"></span>
                                                 </button>
                                             </td>

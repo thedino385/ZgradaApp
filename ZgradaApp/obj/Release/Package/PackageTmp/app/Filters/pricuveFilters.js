@@ -1,4 +1,64 @@
-﻿angularApp.filter('dugColorFilter', function () {
+﻿angularApp.filter('toDecimalEngFilter', function () {
+    return function (x) {
+        if (parseFloat(x) < 0)
+            return 'redCell';
+        else
+            return 'greenCell';
+    }
+});
+
+
+angularApp.filter('toDecimalHrFilter', function () {
+    return function (x) {
+        var y = '';
+        //alert(x);
+        //alert(x.toString().toLocaleString('hr-HR', { minimumFractionDigits: 2 }));
+        if (x != null && x != undefined) {
+            //y = (parseFloat(x)).toLocaleString('hr-HR', { minimumFractionDigits: 2 });
+            //var decimals = x.toString().split(',')[1];
+            //if (decimals != undefined)
+            //    y += parseFloat(decimals / 1000).toFixed(2);
+            //else
+            //    y = parseFloat(y).toFixed(2);
+            //var y = x.toString();
+            //y = x.replace(',', '').replace('.', '');
+            //return x.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
+            //alert(x);
+            return x;
+
+            y = x.toString();
+            if (y.indexOf('.') == -1)
+            {
+                if (y.indexOf(',') != -1) {
+                    // prije kreiranja, provjeri da li treba dodati nule
+                    var val2 = y.split(',')[1];
+                    if (val2.length == 1)
+                        return y + '0';
+                    else
+                        return y + ',00';
+                }
+                else
+                    return y + ',00';
+            }
+            else if (y.indexOf(',') != -1)
+                return y.replace('.', ',');
+
+           
+            //else if (y.indexOf('.') != -1) {
+            //    return y.replace('.', ',');
+            //}
+            //y = y.replace(',', '');
+            //if (y.indexOf('.') == -1)
+            //    return y + ',00';
+            //return x.toString().replace('.', ',');
+        }
+            
+        //alert(y);
+        return y;       
+    }
+});
+
+angularApp.filter('dugColorFilter', function () {
     return function (dug) {
 
         if (parseFloat(dug) < 0)
@@ -96,7 +156,7 @@ angularApp.filter('pricuvaRezijeMjesec', function () {
         });
 
 
-        alert(mjesec + ' ' + godina);
+        //alert(mjesec + ' ' + godina);
         var ret = false;
 
         return ret;

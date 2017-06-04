@@ -10,10 +10,12 @@
 
 
 
-                <md-button class="md-icon-button" aria-label="Novi događaj" title="Novi događaj" ng-click="openModal(0)">
+                <!--<md-button class="md-icon-button" aria-label="Novi događaj" title="Novi događaj" ng-click="openModal(0)">
                     <md-icon md-svg-icon="/Content/icons/plus.svg"></md-icon>
+                </md-button>-->
+                <md-button class="md-raised" aria-label="Dodaj godinu" ng-click="openModal(0)">
+                    Dodaj
                 </md-button>
-
 
 
                 <md-button class="md-icon-button" aria-label="More">
@@ -28,7 +30,7 @@
 
 
         <div ng-repeat="oglas in oglasna">
-          
+
             <div class="panel-group">
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -38,11 +40,12 @@
                         <p>Datum: <b>{{parseDate(oglas.Datum)}}</b></p>
                         <p>Autor: <b>{{oglas.Ime}}&nbsp;{{oglas.Prezime}}</b></p>
                         <br />
-                        <span>{{oglas.Oglas}}</span>
+                        <span ng-bind-html="oglas.Oglas"></span>
+                        <md-button class="md-icon-button pull-right" ng-click="openModal(oglas.Id, $event)" title="Uredi oglas">
+                            <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                        </md-button>
                     </div>
-                    <md-button class="md-icon-button pull-right" ng-click="openModal(oglas.Id, $event)" title="Uredi oglas">
-                        <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
-                    </md-button>
+
                 </div>
             </div>
         </div>

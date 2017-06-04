@@ -59,6 +59,7 @@
         //          Kill / Zatvori zajednicki dio
         // __________________________________________________________
         $scope.kill = function (dio, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
@@ -113,6 +114,7 @@
         //          prikazi napomenu
         // __________________________________________________________
         $scope.showDesc = function (dio, ev) {
+            $('nav').fadeOut();
             var title = dio.Naziv;
             $mdDialog.show({
                 controller: napomenaController,
@@ -162,10 +164,12 @@
             $scope.okBtnCaption = okBtnCaption;
 
             $scope.cancel = function () {
+                $('nav').fadeIn();
                 $mdDialog.cancel();
             };
 
             $scope.save = function () {
+                $('nav').fadeIn();
                 var o = { godina: $scope.vrijediDoGodina, mjesec: $scope.vrijediDoMjesec };
                 $mdDialog.hide(o);
             };
@@ -177,10 +181,12 @@
             $scope.napomena = napomena;
 
             $scope.cancel = function () {
+                $('nav').fadeIn();
                 $mdDialog.cancel();
             };
 
             $scope.save = function () {
+                $('nav').fadeIn();
                 $mdDialog.hide();
             };
         }

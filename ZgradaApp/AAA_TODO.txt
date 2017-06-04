@@ -1,9 +1,9 @@
-﻿- modal za dodavanje oglasa u oglasnoj
-- gasenje notifikacija ne radi
-- modal za zajednicke uredjaje
-- modal za zajednicke uredjaje, datepicker se ne binda kad se povuce iz db-a
-- modal za gasenje zajednickih uredjaja
-- modal za gasenje zajednickih dijelova
+﻿+ modal za dodavanje oglasa u oglasnoj
++ gasenje notifikacija ne radi
++ modal za zajednicke uredjaje
++ modal za zajednicke uredjaje, datepicker se ne binda kad se povuce iz db-a
++ modal za gasenje zajednickih uredjaja
++ modal za gasenje zajednickih dijelova
 - modal na tvrtki - korisnici
 
 - pricuva mjesec, label Stanje od - dodati mjesec/godinu u caption

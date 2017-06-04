@@ -14,13 +14,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/17/2017 18:27:52</publishTime>
     </File>
     <File Include="AAA_TODO.txt">
-      <publishTime>03/17/2017 16:14:08</publishTime>
+      <publishTime>06/04/2017 15:08:13</publishTime>
     </File>
     <File Include="app/angularApp.js">
-      <publishTime>05/31/2017 19:33:34</publishTime>
+      <publishTime>06/04/2017 14:23:23</publishTime>
     </File>
     <File Include="app/Filters/pricuveFilters.js">
-      <publishTime>04/26/2017 17:29:20</publishTime>
+      <publishTime>06/04/2017 17:11:58</publishTime>
     </File>
     <File Include="app/index.html">
       <publishTime>04/10/2017 21:13:00</publishTime>
@@ -35,34 +35,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/30/2017 19:04:05</publishTime>
     </File>
     <File Include="app/oglasna/dodajOglasModal.html">
-      <publishTime>05/28/2017 02:00:58</publishTime>
+      <publishTime>06/04/2017 14:25:44</publishTime>
     </File>
     <File Include="app/oglasna/dodajOglasModalCtrl.js">
-      <publishTime>05/26/2017 17:19:52</publishTime>
+      <publishTime>06/04/2017 14:06:12</publishTime>
     </File>
     <File Include="app/oglasna/indexPloca.html">
-      <publishTime>06/01/2017 10:28:25</publishTime>
+      <publishTime>06/04/2017 14:14:44</publishTime>
     </File>
     <File Include="app/oglasna/indexPlocaCtrl.js">
-      <publishTime>05/23/2017 12:45:06</publishTime>
+      <publishTime>06/04/2017 14:24:10</publishTime>
     </File>
     <File Include="app/pricuvaRezije/godina.html">
-      <publishTime>06/01/2017 10:22:26</publishTime>
+      <publishTime>06/03/2017 18:52:32</publishTime>
     </File>
     <File Include="app/pricuvaRezije/godinaCtrl.js">
-      <publishTime>05/31/2017 21:10:20</publishTime>
+      <publishTime>06/04/2017 17:11:58</publishTime>
     </File>
     <File Include="app/pricuvaRezije/mjesecModal.html">
-      <publishTime>06/01/2017 10:13:44</publishTime>
+      <publishTime>06/04/2017 18:03:02</publishTime>
     </File>
     <File Include="app/pricuvaRezije/mjesecModalCtrl.js">
-      <publishTime>06/01/2017 10:07:59</publishTime>
+      <publishTime>06/04/2017 13:48:28</publishTime>
     </File>
     <File Include="app/pricuvaRezije/stanjeOdModal.html">
-      <publishTime>06/01/2017 13:02:21</publishTime>
+      <publishTime>01/06/2017 13:02:21</publishTime>
     </File>
     <File Include="app/pricuvaRezije/stanjeOdModalCtrl.js">
-      <publishTime>06/01/2017 13:02:21</publishTime>
+      <publishTime>06/02/2017 19:08:40</publishTime>
     </File>
     <File Include="app/pricuvaRezije/stanjeZgradeModal.html">
       <publishTime>05/28/2017 17:30:12</publishTime>
@@ -71,25 +71,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/28/2017 12:40:57</publishTime>
     </File>
     <File Include="app/pricuvaRezije/uplatnicaModal.html">
-      <publishTime>05/31/2017 20:10:26</publishTime>
+      <publishTime>06/04/2017 16:26:21</publishTime>
     </File>
     <File Include="app/pricuvaRezije/uplatnicaModalCtrl.js">
-      <publishTime>05/31/2017 19:57:56</publishTime>
+      <publishTime>06/04/2017 17:08:31</publishTime>
     </File>
     <File Include="app/prihodiRashodi/index.html">
-      <publishTime>05/31/2017 10:50:48</publishTime>
+      <publishTime>06/02/2017 16:31:41</publishTime>
     </File>
     <File Include="app/prihodiRashodi/prihodiModal.html">
-      <publishTime>06/01/2017 11:57:36</publishTime>
+      <publishTime>06/02/2017 18:01:56</publishTime>
     </File>
     <File Include="app/prihodiRashodi/prihodiModalCtrl.js">
-      <publishTime>05/29/2017 15:55:49</publishTime>
+      <publishTime>06/04/2017 17:11:58</publishTime>
     </File>
     <File Include="app/prihodiRashodi/prihodiRashodiIndexCtrl.js">
-      <publishTime>05/31/2017 10:56:06</publishTime>
+      <publishTime>06/04/2017 17:11:58</publishTime>
     </File>
     <File Include="app/prihodiRashodi/rashodiModal.html">
-      <publishTime>06/01/2017 11:58:05</publishTime>
+      <publishTime>06/03/2017 16:24:49</publishTime>
     </File>
     <File Include="app/prihodiRashodi/rashodiModalCtrl.js">
       <publishTime>05/31/2017 10:30:18</publishTime>
@@ -110,7 +110,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/13/2017 20:02:16</publishTime>
     </File>
     <File Include="app/Services/DataService.js">
-      <publishTime>05/31/2017 12:01:30</publishTime>
+      <publishTime>06/04/2017 17:11:58</publishTime>
     </File>
     <File Include="app/tvrtka.html">
       <publishTime>05/22/2017 11:03:02</publishTime>
@@ -119,16 +119,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/22/2017 11:13:08</publishTime>
     </File>
     <File Include="app/useri/indexUseri.html">
-      <publishTime>05/25/2017 17:04:30</publishTime>
+      <publishTime>06/04/2017 15:22:37</publishTime>
     </File>
     <File Include="app/useri/indexUseriCtrl.js">
-      <publishTime>05/12/2017 15:16:41</publishTime>
+      <publishTime>06/04/2017 15:19:39</publishTime>
     </File>
     <File Include="app/useri/useriModal.html">
-      <publishTime>05/12/2017 14:21:54</publishTime>
+      <publishTime>06/04/2017 15:22:32</publishTime>
     </File>
     <File Include="app/useri/useriModalCtrl.js">
-      <publishTime>05/12/2017 14:07:29</publishTime>
+      <publishTime>06/04/2017 15:19:39</publishTime>
     </File>
     <File Include="app/zgrade/dialog1.html">
       <publishTime>04/12/2017 19:16:11</publishTime>
@@ -149,7 +149,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/28/2017 02:03:09</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/confirmDialog.html">
-      <publishTime>05/28/2017 02:03:46</publishTime>
+      <publishTime>06/04/2017 14:52:18</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDijeloviMasterList.html">
       <publishTime>05/27/2017 13:22:45</publishTime>
@@ -158,40 +158,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/31/2017 18:46:32</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildModal.html">
-      <publishTime>05/28/2017 02:06:06</publishTime>
+      <publishTime>06/04/2017 17:55:04</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildModalCtrl.js">
-      <publishTime>06/01/2017 12:06:07</publishTime>
+      <publishTime>01/06/2017 12:06:07</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildPovrsinaModal.html">
-      <publishTime>05/28/2017 02:06:06</publishTime>
+      <publishTime>06/04/2017 13:01:05</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildPovrsinaModalCtrl.js">
-      <publishTime>06/01/2017 12:06:07</publishTime>
+      <publishTime>01/06/2017 12:06:07</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildPripadciModal.html">
-      <publishTime>05/28/2017 02:06:06</publishTime>
+      <publishTime>06/04/2017 13:01:05</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildPripadciModalCtrl.js">
-      <publishTime>06/01/2017 12:06:06</publishTime>
+      <publishTime>01/06/2017 12:06:06</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildren.html">
-      <publishTime>06/01/2017 12:11:57</publishTime>
+      <publishTime>01/06/2017 12:11:57</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioChildrenCtrl.js">
-      <publishTime>06/01/2017 12:15:40</publishTime>
+      <publishTime>06/04/2017 13:06:39</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioMasterVlasniciModal.html">
-      <publishTime>06/01/2017 12:05:26</publishTime>
+      <publishTime>06/01/2017 16:54:32</publishTime>
     </File>
     <File Include="app/zgrade/PDChild/posebniDioMasterVlasniciModalCtrl.js">
-      <publishTime>06/01/2017 12:04:53</publishTime>
+      <publishTime>06/01/2017 16:10:34</publishTime>
     </File>
     <File Include="app/zgrade/popisi/dijeloviList.html">
-      <publishTime>05/28/2017 01:26:57</publishTime>
+      <publishTime>06/04/2017 15:06:21</publishTime>
     </File>
     <File Include="app/zgrade/popisi/dijeloviListCtrl.js">
-      <publishTime>05/28/2017 01:24:12</publishTime>
+      <publishTime>06/04/2017 15:07:32</publishTime>
     </File>
     <File Include="app/zgrade/popisi/dijeloviModal.html">
       <publishTime>05/28/2017 01:46:40</publishTime>
@@ -203,16 +203,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/06/2017 13:28:59</publishTime>
     </File>
     <File Include="app/zgrade/popisi/uredjajiList.html">
-      <publishTime>05/12/2017 11:30:30</publishTime>
+      <publishTime>06/04/2017 14:57:08</publishTime>
     </File>
     <File Include="app/zgrade/popisi/uredjajiListCtrl.js">
-      <publishTime>05/14/2017 12:44:33</publishTime>
+      <publishTime>06/04/2017 14:50:12</publishTime>
     </File>
     <File Include="app/zgrade/popisi/uredjajiModal.html">
-      <publishTime>05/28/2017 02:06:06</publishTime>
+      <publishTime>06/04/2017 15:00:40</publishTime>
     </File>
     <File Include="app/zgrade/popisi/uredjajiModalCtrl.js">
-      <publishTime>05/10/2017 16:17:07</publishTime>
+      <publishTime>06/04/2017 15:03:55</publishTime>
     </File>
     <File Include="app/zgrade/popisStanara.html">
       <publishTime>05/31/2017 11:39:35</publishTime>
@@ -221,16 +221,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/31/2017 12:10:27</publishTime>
     </File>
     <File Include="app/zgrade/zgrada.html">
-      <publishTime>05/23/2017 13:48:43</publishTime>
+      <publishTime>06/04/2017 12:46:52</publishTime>
     </File>
     <File Include="app/zgrade/zgradaCtrl.js">
-      <publishTime>05/31/2017 11:39:35</publishTime>
+      <publishTime>06/04/2017 12:46:52</publishTime>
     </File>
     <File Include="app/zgrade/zgradaPosebniDijeloviMasterModal.html">
-      <publishTime>05/28/2017 02:06:06</publishTime>
+      <publishTime>06/04/2017 18:16:25</publishTime>
     </File>
     <File Include="app/zgrade/zgradaPosebniDijeloviMasterModalCtrl.js">
-      <publishTime>05/31/2017 11:06:38</publishTime>
+      <publishTime>06/04/2017 12:45:14</publishTime>
     </File>
     <File Include="app/zgrade/zgradaStanariModal.html">
       <publishTime>05/31/2017 11:07:02</publishTime>
@@ -239,7 +239,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/31/2017 11:06:38</publishTime>
     </File>
     <File Include="app/zgrade/zgrade.html">
-      <publishTime>05/31/2017 11:24:24</publishTime>
+      <publishTime>06/01/2017 17:02:48</publishTime>
     </File>
     <File Include="app/zgrade/zgradeCtrl.js">
       <publishTime>05/31/2017 12:06:44</publishTime>
@@ -254,7 +254,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:09</publishTime>
     </File>
     <File Include="appOld/ks/display.html">
-      <publishTime>01/04/2017 21:13:59</publishTime>
+      <publishTime>04/01/2017 21:13:59</publishTime>
     </File>
     <File Include="appOld/ks/ksDisplayCtrl.js">
       <publishTime>05/14/2017 12:44:33</publishTime>
@@ -281,37 +281,37 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2017 16:18:22</publishTime>
     </File>
     <File Include="appOld/PihRas/modalPrihodCtrl.js">
-      <publishTime>01/04/2017 18:57:34</publishTime>
+      <publishTime>04/01/2017 18:57:34</publishTime>
     </File>
     <File Include="appOld/PihRas/modalRashod.html">
       <publishTime>03/29/2017 14:02:02</publishTime>
     </File>
     <File Include="appOld/PihRas/modalRashodCtrl.js">
-      <publishTime>01/04/2017 18:57:34</publishTime>
+      <publishTime>04/01/2017 18:57:34</publishTime>
     </File>
     <File Include="appOld/pricuva/edit.html">
-      <publishTime>03/04/2017 19:23:27</publishTime>
+      <publishTime>04/03/2017 19:23:27</publishTime>
     </File>
     <File Include="appOld/pricuva/editCtrl.js">
-      <publishTime>03/04/2017 19:34:22</publishTime>
+      <publishTime>04/03/2017 19:34:22</publishTime>
     </File>
     <File Include="appOld/pricuva/index.html">
-      <publishTime>03/04/2017 17:56:40</publishTime>
+      <publishTime>04/03/2017 17:56:40</publishTime>
     </File>
     <File Include="appOld/pricuva/indexPricuvaCtrl.js">
-      <publishTime>03/04/2017 17:53:31</publishTime>
+      <publishTime>04/03/2017 17:53:31</publishTime>
     </File>
     <File Include="appOld/pricuva/ksModal.html">
-      <publishTime>03/04/2017 17:04:16</publishTime>
+      <publishTime>04/03/2017 17:04:16</publishTime>
     </File>
     <File Include="appOld/pricuva/ksModalCtrl.js">
-      <publishTime>03/04/2017 09:58:20</publishTime>
+      <publishTime>04/03/2017 09:58:20</publishTime>
     </File>
     <File Include="appOld/pricuva/pricuvaMjesecModal.html">
-      <publishTime>01/04/2017 18:21:50</publishTime>
+      <publishTime>04/01/2017 18:21:50</publishTime>
     </File>
     <File Include="appOld/pricuva/pricuvaMjesecModalCtrl.js">
-      <publishTime>01/04/2017 18:28:27</publishTime>
+      <publishTime>04/01/2017 18:28:27</publishTime>
     </File>
     <File Include="appOld/Services/DataService.js">
       <publishTime>03/31/2017 16:00:06</publishTime>
@@ -584,7 +584,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:15</publishTime>
     </File>
     <File Include="bin/ZgradaApp.dll">
-      <publishTime>06/01/2017 14:15:04</publishTime>
+      <publishTime>06/04/2017 18:20:12</publishTime>
     </File>
     <File Include="Content/angular-material.css">
       <publishTime>04/27/2017 09:47:45</publishTime>
@@ -614,10 +614,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/18/2017 18:46:46</publishTime>
     </File>
     <File Include="Content/bootstrap-material-design.css">
-      <publishTime>03/04/2017 16:51:46</publishTime>
+      <publishTime>04/03/2017 16:51:46</publishTime>
     </File>
     <File Include="Content/bootstrap-material-design.css.map">
-      <publishTime>03/04/2017 16:51:46</publishTime>
+      <publishTime>04/03/2017 16:51:46</publishTime>
     </File>
     <File Include="Content/bootstrap-theme.css">
       <publishTime>03/17/2017 16:14:08</publishTime>
@@ -644,7 +644,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:08</publishTime>
     </File>
     <File Include="Content/custom.css">
-      <publishTime>05/31/2017 20:15:11</publishTime>
+      <publishTime>06/03/2017 16:23:44</publishTime>
     </File>
     <File Include="Content/icons/account-card-details.svg">
       <publishTime>04/19/2017 18:36:16</publishTime>
@@ -734,10 +734,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2017 14:14:07</publishTime>
     </File>
     <File Include="Content/ripples.css">
-      <publishTime>03/04/2017 16:51:46</publishTime>
+      <publishTime>04/03/2017 16:51:46</publishTime>
     </File>
     <File Include="Content/ripples.css.map">
-      <publishTime>03/04/2017 16:51:46</publishTime>
+      <publishTime>04/03/2017 16:51:46</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>03/17/2017 16:14:08</publishTime>
@@ -758,7 +758,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:08</publishTime>
     </File>
     <File Include="DalEf.edmx.diagram">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>06/02/2017 11:20:59</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>03/17/2017 16:14:11</publishTime>
@@ -821,13 +821,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:08</publishTime>
     </File>
     <File Include="Scripts/angular-messages.js">
-      <publishTime>02/04/2017 17:14:31</publishTime>
+      <publishTime>04/02/2017 17:14:31</publishTime>
     </File>
     <File Include="Scripts/angular-messages.min.js">
-      <publishTime>02/04/2017 17:14:31</publishTime>
+      <publishTime>04/02/2017 17:14:31</publishTime>
     </File>
     <File Include="Scripts/angular-messages.min.js.map">
-      <publishTime>02/04/2017 17:14:31</publishTime>
+      <publishTime>04/02/2017 17:14:31</publishTime>
     </File>
     <File Include="Scripts/angular-mocks.js">
       <publishTime>03/17/2017 16:14:08</publishTime>
@@ -840,6 +840,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/angular-route.min.js.map">
       <publishTime>03/17/2017 16:14:08</publishTime>
+    </File>
+    <File Include="Scripts/angular-sanitize.js">
+      <publishTime>06/04/2017 14:18:54</publishTime>
+    </File>
+    <File Include="Scripts/angular-sanitize.min.js">
+      <publishTime>06/04/2017 14:18:58</publishTime>
+    </File>
+    <File Include="Scripts/angular-sanitize.min.js.map">
+      <publishTime>06/04/2017 14:19:02</publishTime>
     </File>
     <File Include="Scripts/angular-toastr.js">
       <publishTime>03/18/2017 18:46:46</publishTime>
@@ -920,10 +929,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:09</publishTime>
     </File>
     <File Include="Scripts/material.js">
-      <publishTime>03/04/2017 17:29:53</publishTime>
+      <publishTime>04/03/2017 17:29:53</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.8.3.js">
       <publishTime>03/17/2017 16:14:09</publishTime>
+    </File>
+    <File Include="Scripts/moment-with-locales.js">
+      <publishTime>06/02/2017 16:36:04</publishTime>
     </File>
     <File Include="Scripts/respond.js">
       <publishTime>03/17/2017 16:14:09</publishTime>
@@ -938,10 +950,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:09</publishTime>
     </File>
     <File Include="Scripts/ripples.js">
-      <publishTime>03/04/2017 16:52:47</publishTime>
+      <publishTime>04/03/2017 16:52:47</publishTime>
     </File>
     <File Include="Scripts/ripples.min.js.map">
-      <publishTime>03/04/2017 16:52:47</publishTime>
+      <publishTime>04/03/2017 16:52:47</publishTime>
     </File>
     <File Include="Scripts/summernote/font/summernote.eot">
       <publishTime>05/23/2017 11:01:21</publishTime>
@@ -1175,7 +1187,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:09</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/31/2017 20:07:31</publishTime>
+      <publishTime>06/04/2017 14:43:03</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>05/27/2017 17:46:49</publishTime>
@@ -1187,7 +1199,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2017 16:14:09</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/06/2017 13:34:25</publishTime>
+      <publishTime>06/04/2017 18:20:15</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -27,7 +27,7 @@
                 $scope.posebniDioMasterObj.Id = maxId;
                 $scope.posebniDioMasterObj.Status = 'a';
                 $scope.posebniDioMasterObj.Zatvoren = false;
-                zgradaObj.Zgrade_PosebniDijelovi.push($scope.posebniDioMasterObj);
+                zgradaObj.Zgrade_PosebniDijeloviMaster.push($scope.posebniDioMasterObj);
             }
             else {
                 zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (posebniDioMaster) {

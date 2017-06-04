@@ -42,14 +42,15 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-
+                                <!--<input name="myInput" ng-model="myInput" required my-directive>-->
                                 <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                     <label>Udio (npr. 1/2)</label>
-                                    <input required type="text" name="udio" ng-model="vlasnik.Udio">
+                                    <input required my-directive-razlomak type="text" name="udio" ng-model="vlasnik.Udio">
                                     <div ng-messages="frm.udio.$error" role="alert">
                                         <div ng-message-exp="['required']">
                                             Obavezno polje
                                         </div>
+                                        <div ng-message="isRazlomakValid">Neispravan udio</div>
                                     </div>
                                 </md-input-container>
 

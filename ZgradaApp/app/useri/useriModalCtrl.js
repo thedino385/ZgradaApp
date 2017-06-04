@@ -22,6 +22,7 @@
         }
 
         $scope.save = function () {
+            $('nav').fadeIn();
             if ($scope.user.Password != $scope.passwordAgain) {
                 toastr.error('Lozinke nisu iste');
             }
@@ -29,6 +30,7 @@
         };
 
         $scope.cancel = function () {
+            $('nav').fadeIn();
             $mdDialog.cancel(tempObj);
         };
 

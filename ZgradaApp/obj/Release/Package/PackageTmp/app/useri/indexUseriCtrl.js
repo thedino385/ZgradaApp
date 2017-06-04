@@ -13,6 +13,7 @@
     )
 
     $scope.openModal = function (id, ev) {
+        $('nav').fadeOut();
         $mdDialog.show({
             controller: 'useriModalCtrl',
             templateUrl: 'app/useri/useriModal.html',
@@ -42,6 +43,7 @@
 
 
     $scope.openModalPass = function (id, ev) {
+        $('nav').fadeOut();
         $mdDialog.show({
             controller: 'useriModalPassCtrl',
             templateUrl: 'app/useri/useriModalPass.html',

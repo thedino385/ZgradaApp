@@ -59,13 +59,13 @@
         // _________________________________________________________
         //              Modal posebni dio
         // _________________________________________________________
-        $scope.openModalPosebniDio = function (id) {
+        $scope.openModalPosebniDio = function (id, ev) {
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'zgradaPosebniDijeloviMasterModalCtrl',
                 templateUrl: 'app/zgrade/zgradaPosebniDijeloviMasterModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {

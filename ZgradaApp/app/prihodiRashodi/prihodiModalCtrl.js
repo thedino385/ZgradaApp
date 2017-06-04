@@ -144,7 +144,7 @@
                     for (var i = 0; i < $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.length; i++) {
                         if (index == i) {
                             rec.DatumUnosa = $scope.dateUnosList[i] != null ? new Date($scope.dateUnosList[i]) : null;
-                            alert(new Date($scope.dateUnosList[i]));
+                            //alert(new Date($scope.dateUnosList[i]));
                             rec.DatumObracuna = $scope.dateObracunList[i] != null ? new Date($scope.dateObracunList[i]) : null;
                             break;
                         }

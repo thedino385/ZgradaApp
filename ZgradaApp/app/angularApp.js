@@ -1,4 +1,4 @@
-﻿var angularApp = angular.module('angularApp', ['ngRoute', 'ui.bootstrap', 'ngMaterial', 'ngAnimate', 'ngMessages', 'toastr']);
+﻿var angularApp = angular.module('angularApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngMaterial', 'ngAnimate', 'ngMessages', 'toastr']);
 
 
 // https://www.w3schools.com/angular/angular_validation.asp

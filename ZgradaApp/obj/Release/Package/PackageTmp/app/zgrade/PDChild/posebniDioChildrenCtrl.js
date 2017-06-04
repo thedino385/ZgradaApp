@@ -43,7 +43,7 @@
 
         DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
             if (pdMaster.Id == $routeParams.id) {
-                $scope.pdMaster = pdMaster;
+                $scope.pdMaster = DataService.decimalToHr(pdMaster, 'ZgradaStanovi');
                 $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
 
                 // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
@@ -498,7 +498,7 @@
 
         $scope.save = function () {
             $rootScope.loaderActive = true;
-            DataService.posebniDioChildrenCreateOrUpdate($scope.pdMaster).then(
+            DataService.posebniDioChildrenCreateOrUpdate(DataService.decimalToEng($scope.pdMaster, 'ZgradaStanovi')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;

@@ -35,6 +35,7 @@
         }
 
         $scope.openModal = function (uId, ev) {
+            $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'uredjajiModalCtrl',
                 templateUrl: 'app/zgrade/popisi/uredjajiModal.html',
@@ -58,16 +59,17 @@
         //          Kill / Zatvori zajednicki dio
         // __________________________________________________________
         $scope.kill = function (uredjaj, ev) {
+            $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
             var nazivZajednickogDijela = {};
             $scope.zgradaObj.Zgrade_PopisUredjaja.forEach(function (u) {
-                if (u.Id == u.Id && u.Status == 'a')
+                if (u.Id == uredjaj.Id && u.Status == 'a')
                     brisanjeOk = true;
             });
             var title = brisanjeOk ? 'Želite li obrisati zajednički uređaj?' : 'Želite li zatvoriti zajednički uređaj?';
-            var textContent = 'Odabran zajednički uređaj: ' + u.Naziv;
+            var textContent = 'Odabran zajednički uređaj: ' + uredjaj.Naziv;
             //var desc = "Odabrana površina ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
             var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
 
@@ -112,6 +114,7 @@
         //          prikazi napomenu
         // __________________________________________________________
         $scope.showDesc = function (u, ev) {
+            $('nav').fadeOut();
             var title = u.Naziv;
             $mdDialog.show({
                 controller: napomenaController,
@@ -161,10 +164,12 @@
             $scope.okBtnCaption = okBtnCaption;
 
             $scope.cancel = function () {
+                $('nav').fadeIn();
                 $mdDialog.cancel();
             };
 
             $scope.save = function () {
+                $('nav').fadeIn();
                 var o = { godina: $scope.vrijediDoGodina, mjesec: $scope.vrijediDoMjesec };
                 $mdDialog.hide(o);
             };
@@ -176,10 +181,12 @@
             $scope.napomena = napomena;
 
             $scope.cancel = function () {
+                $('nav').fadeIn();
                 $mdDialog.cancel();
             };
 
             $scope.save = function () {
+                $('nav').fadeIn();
                 $mdDialog.hide();
             };
         }

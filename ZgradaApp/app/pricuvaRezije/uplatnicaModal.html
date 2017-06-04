@@ -7,7 +7,7 @@
                     <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
                 </md-button>
 
-                <h3 flex md-truncate>Uplatnice</h3>
+                <h3 flex md-truncate>Uplatnice, {{msg}}</h3>
 
                 <md-button class="md-raised md-primary" type="submit" ng-disabled="frm.$invalid">Kreiraj</md-button>
 
@@ -40,10 +40,10 @@
                                 Vrsta plaćanja
                             </th>
                             <th style="vertical-align: middle">
-                                Udio režije
+                                Udio režije (%)
                             </th>
                             <th style="vertical-align: middle">
-                                Udio pričuva
+                                Udio pričuva (%)
                             </th>
                             <th style="vertical-align: middle">
                                 Iznos pričuva
@@ -100,10 +100,10 @@
                                 <input type="text" class="form-control" size="5" ng-model="rec.UdioPricuva" placeholder="Udio za pričuvu" />
                             </td>
                             <td>
-                                <input type="text" class="form-control" size="10" ng-model="rec.IznosRezije" placeholder="Iznos režija" />
+                                <input type="text" class="form-control" size="10" ng-model="rec.IznosPricuva" placeholder="Iznos režija" />
                             </td>
                             <td>
-                                <input type="text" class="form-control" size="10" ng-model="rec.IznosPricuva" placeholder="Iznos pričuve" />
+                                <input type="text" class="form-control" size="10" ng-model="rec.IznosRezije" placeholder="Iznos pričuve" />
                             </td>
                         </tr>
                         <tr ng-show="rec.displayLine == true">

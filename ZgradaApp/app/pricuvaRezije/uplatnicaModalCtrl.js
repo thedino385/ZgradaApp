@@ -5,6 +5,9 @@
         $scope.godina = godina;
         $scope.mjesec = mjesec;
 
+        var tempObj = {};
+        angular.copy($scope.zgradaObj, tempObj);
+
         zgradaObj.PricuvaRezijeGodina.forEach(function (prGod) {
             if (prGod.Godina == godina) {
                 prGod.PricuvaRezijeMjesec.forEach(function (prMj) {
@@ -14,6 +17,7 @@
             }
         });
 
+        $scope.msg = 'mjesec: ' + mjesec + ', godina: ' + godina;
 
         $scope.tipoviDuga = [{ Id: 'r', Naziv: 'Režije' }, { Id: 'p', Naziv: 'Pričuva' }, { Id: 'a', Naziv: 'Režije i pričuva' }, { Id: '-', Naziv: 'Ništa' }];
         $scope.tipoviPlacanja = [{ Id: 'r', Naziv: 'Račun' }, { Id: 'u', Naziv: 'Uplatnica' }, { Id: '-', Naziv: 'Ništa' } ];
@@ -45,6 +49,29 @@
                         PrimateljId: 0, TipDuga: 'r', TipPlacanja: 'r', UdioPricuva: 0, UdioRezije: 0, IznosRezije: 0, IznosPricuva: 0, Uplatnica: '',
                         displayLine: false, displayBtnAdd: false, platitelji: [], primatelji: []
                     }
+
+                    // udio pricuva/rezije - povlaci se udio iz vlasnistva
+                    m.PricuvaRezijePosebniDioMasterVlasnici.forEach(function (prVlasnik) {
+                        if (m.PeriodId == prVlasnik.PeriodId) {
+                            if (prVlasnik.Udio != null && prVlasnik.Udio != undefined) {
+                                if (prVlasnik.Udio.toString().indexOf('/') != -1) {
+                                    var val1 = parseInt(prVlasnik.Udio.toString().split('/')[0].replace(',', '.'));
+                                    var val2 = parseInt(prVlasnik.Udio.toString().split('/')[1].replace(',', '.'));
+                                    var udio = parseFloat(val1 / val2).toFixed(2);
+                                    o.UdioPricuva = parseFloat(udio * 100).toFixed(2).toString().replace('.', ',');
+                                    o.UdioRezije = parseFloat(udio * 100).toFixed(2).toString().replace('.', ',');
+                                    // iznos pricuve i rezija = iznos * udio
+                                    o.IznosPricuva = parseFloat(DataService.myParseFloat(m.ZaduzenjePricuva) * udio).toFixed(2).toString().replace('.', ',');
+                                    o.IznosRezije = parseFloat(DataService.myParseFloat(m.ZaduzenjeRezije) * udio).toFixed(2).toString().replace('.', ',');
+
+                                }
+                            }
+                        }
+                    });
+
+                    
+
+
                     m.PricuvaRezijePosebniDioMasterVlasnici.forEach(function (v) {
                         zgradaObj.Zgrade_Stanari.forEach(function (s) {
                             if (s.Id == v.VlasnikId) {
@@ -128,6 +155,6 @@
 
         $scope.cancel = function () {
             $('nav').fadeIn();
-            $mdDialog.cancel();
+            $mdDialog.cancel(tempObj);
         };
     }]);

@@ -1,4 +1,5 @@
-﻿angularApp.controller('indexPlocaCtrl', ['$scope', '$rootScope', '$location', '$mdDialog', 'toastr', 'DataService', function ($scope, $rootScope, $location, $mdDialog, toastr, DataService) {
+﻿angularApp.controller('indexPlocaCtrl', ['$scope', '$rootScope', '$location', '$mdDialog', 'toastr', 'DataService',
+    function ($scope, $rootScope, $location, $mdDialog, toastr, DataService) {
 
 
     if (DataService.selZgradaId == null) {
@@ -21,6 +22,7 @@
 
 
     $scope.openModal = function (id, ev) {
+        $('nav').fadeOut();
         $mdDialog.show({
             controller: 'dodajOglasModalCtrl',
             templateUrl: 'app/oglasna/dodajOglasModal.html',

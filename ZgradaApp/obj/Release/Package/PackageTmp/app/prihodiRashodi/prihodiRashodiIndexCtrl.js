@@ -13,7 +13,7 @@
         DataService.getZgrada(DataService.selZgradaId, true, false).then(
             function (result) {
                 // on success
-                $scope.zgradaObj = result.data.Zgrada;
+                $scope.zgradaObj = DataService.decimalToHr(result.data.Zgrada, 'prihodiRashodi');
                 //DataService.currZgrada = result.data.Zgrada;
                 //DataService.zgradaUseri = result.data.Useri;
                 //DataService.userId = result.data.userId;
@@ -41,7 +41,7 @@
             },
             function (result) {
                 // on errr
-                alert(result.Message);
+                toastr.error('Dohvat podataka nije uspio');
                 $rootScope.errMsg = result.Message;
             }
         );
@@ -67,7 +67,7 @@
 
 
         $scope.iznosZaMjesec = function (mjesec, vrsta) {
-            console.log('iznosZaMjesec ' + mjesec);
+            //console.log('iznosZaMjesec ' + mjesec);
             return iznosZaMjesecCalc(mjesec, vrsta);
         }
 
@@ -98,16 +98,21 @@
             if (vrsta == 'p' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi != undefined) {
                 $scope.prihodRashodZaGodinu.PrihodiRashodi_Prihodi.forEach(function (prihodMjesec) {
                     if (prihodMjesec.Mjesec == mjesec)
-                        suma += parseFloat(prihodMjesec.Iznos);
+                        //suma += parseFloat(prihodMjesec.Iznos);
+                        suma += prihodMjesec.Iznos != null ? parseFloat(prihodMjesec.Iznos.toString().replace(',', '.')) : 0;
                 });
             }
             else if (vrsta == 'r' && $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi != undefined) {
                 $scope.prihodRashodZaGodinu.PrihodiRashodi_Rashodi.forEach(function (rashodMjesec) {
                     if (rashodMjesec.Mjesec == mjesec)
-                        suma += parseFloat(rashodMjesec.Iznos);
+                        //suma += parseFloat(rashodMjesec.Iznos);
+                        suma += rashodMjesec.Iznos != null ? parseFloat(rashodMjesec.Iznos.toString().replace(',', '.')) : 0;
                 });
             }
-            return suma;
+            //var ret = parseFloat(suma.toString().replace('.', ',')).toFixed(2);
+            //if (mjesec == 1)
+            //console.log('suma: ' + parseFloat(suma).toFixed(2).toString().replace('.', ','));
+            return parseFloat(suma).toFixed(2).toString().replace('.', ',');
         }
 
         $scope.dodajGodinu = function () {
@@ -202,7 +207,7 @@
 
         $scope.saveAll = function () {
             $rootScope.loaderActive = true;
-            DataService.prihodiRashodiCreateOrUpdate($scope.zgradaObj).then(
+            DataService.prihodiRashodiCreateOrUpdate(DataService.decimalToEng($scope.zgradaObj, 'prihodiRashodi')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;
@@ -246,8 +251,8 @@
             $mdDialog.show({
                 controller: 'sifarnikRashodaModalCtrl',
                 templateUrl: 'app/prihodiRashodi/sifarnikRashodaModal.html',
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
+                parent: angular.element(document.body),
+                targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: true // Only for -xs, -sm breakpoints.
                 , locals: {

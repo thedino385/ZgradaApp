@@ -33,15 +33,10 @@
                             </md-input-container>
 
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                <label>Početno stanje</label>
-                                <input required type="text" name="oznaka" ng-model="posebniDioMasterObj.PocetnoStanje">
+                                <label>Oznaka</label>
+                                <input type="text" name="oznaka" ng-model="posebniDioMasterObj.Oznaka">
                                 <div ng-messages="frm.oznaka.$error" role="alert">
-                                    <div ng-message-exp="['required']">
-                                        Obavezno polje
-                                    </div>
-                                    <div ng-message="['required']">
-                                        Obavezno polje
-                                    </div>
+                                    
                                 </div>
                             </md-input-container>
                             <div class="col-sm-2"></div>

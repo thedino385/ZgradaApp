@@ -1,4 +1,7 @@
-﻿
+﻿.error-msgs {
+    padding: 5px;
+    color: red;
+}
 
 md-dialog {
     max-width: 100%;
