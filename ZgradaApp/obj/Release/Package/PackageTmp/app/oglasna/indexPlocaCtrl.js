@@ -25,7 +25,7 @@
         $('nav').fadeOut();
         $mdDialog.show({
             controller: 'dodajOglasModalCtrl',
-            templateUrl: 'app/oglasna/dodajOglasModal.html',
+            templateUrl: 'app/oglasna/dodajOglasModal.html?p=' + new Date().getTime() / 1000,
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: false,

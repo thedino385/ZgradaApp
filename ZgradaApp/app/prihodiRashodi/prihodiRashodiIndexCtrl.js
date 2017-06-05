@@ -146,7 +146,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'prihodiModalCtrl',
-                templateUrl: 'app/prihodiRashodi/prihodiModal.html',
+                templateUrl: 'app/prihodiRashodi/prihodiModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -178,7 +178,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'rashodiModalCtrl',
-                templateUrl: 'app/prihodiRashodi/rashodiModal.html',
+                templateUrl: 'app/prihodiRashodi/rashodiModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 //targetEvent: ev,
                 clickOutsideToClose: false,
@@ -250,7 +250,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'sifarnikRashodaModalCtrl',
-                templateUrl: 'app/prihodiRashodi/sifarnikRashodaModal.html',
+                templateUrl: 'app/prihodiRashodi/sifarnikRashodaModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,

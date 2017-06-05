@@ -16,7 +16,7 @@
         $('nav').fadeOut();
         $mdDialog.show({
             controller: 'useriModalCtrl',
-            templateUrl: 'app/useri/useriModal.html',
+            templateUrl: 'app/useri/useriModal.html?p=' + new Date().getTime() / 1000,
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: false,
@@ -46,7 +46,7 @@
         $('nav').fadeOut();
         $mdDialog.show({
             controller: 'useriModalPassCtrl',
-            templateUrl: 'app/useri/useriModalPass.html',
+            templateUrl: 'app/useri/useriModalPass.html?p=' + new Date().getTime() / 1000,
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: false,

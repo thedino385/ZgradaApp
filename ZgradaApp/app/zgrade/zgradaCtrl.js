@@ -36,7 +36,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'zgradaStanariModalCtrl',
-                templateUrl: 'app/zgrade/zgradaStanariModal.html',
+                templateUrl: 'app/zgrade/zgradaStanariModal.html?p=' + new Date().getTime() / 1000,
                 //parent: angular.element(document.body),
                 //targetEvent: ev,
                 clickOutsideToClose: false,
@@ -63,7 +63,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'zgradaPosebniDijeloviMasterModalCtrl',
-                templateUrl: 'app/zgrade/zgradaPosebniDijeloviMasterModal.html',
+                templateUrl: 'app/zgrade/zgradaPosebniDijeloviMasterModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,

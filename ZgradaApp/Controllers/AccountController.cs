@@ -190,7 +190,7 @@ namespace ZgradaApp.Controllers
                 }
                 else
                 {
-                    var newuser = new ApplicationUser { UserName = user.Email, Email = user.Email };
+                    var newuser = new ApplicationUser { UserName = user.Email, Email = user.Email, LockoutEnabled = false };
                     ApplicationDbContext db = new ApplicationDbContext();
                     // 1. create instance of UserStore and pss in db context
                     var userStore = new UserStore<ApplicationUser>(db);
@@ -278,7 +278,7 @@ namespace ZgradaApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserEmail, Email = model.UserEmail };
+                var user = new ApplicationUser { UserName = model.UserEmail, Email = model.UserEmail, LockoutEnabled = false };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

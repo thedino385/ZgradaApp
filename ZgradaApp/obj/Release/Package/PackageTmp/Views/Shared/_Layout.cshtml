@@ -203,50 +203,55 @@
         <script src="~/Scripts/ripples.js"></script>*@
 
     <!-- Angular custom stuff -->
+   @{ 
+       DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+       TimeSpan diff = DateTime.Now.ToUniversalTime() - origin;
+       double p = Math.Floor(diff.TotalSeconds);
+   }
     <script src="~/app/angularApp.js"></script>
-    <script src="~/app/Services/DataService.js"></script>
-    <script src="~/app/Services/AccountService.js"></script>
+    <script src="~/app/Services/DataService.js?p=@p"></script>
+    <script src="~/app/Services/AccountService.js?p=@p"></script>
 
-    <script src="~/app/Filters/pricuveFilters.js"></script>
-    <script src="~/app/indexCtrl.js"></script>
+    <script src="~/app/Filters/pricuveFilters.js?p=@p"></script>
+    <script src="~/app/indexCtrl.js?p=@p"></script>
 
-    <script src="~/app/zgrade/zgradeCtrl.js"></script>
-    <script src="~/app/zgrade/zgradaCtrl.js"></script>
-    <script src="~/app/zgrade/zgradaStanariModalCtrl.js"></script>
-    <script src="~/app/zgrade/zgradaPosebniDijeloviMasterModalCtrl.js"></script>
-    <script src="~/app/zgrade/PDChild/posebniDijeloviMasterListCtrl.js"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildrenCtrl.js"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildModalCtrl.js"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildPovrsinaModalCtrl.js"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildPripadciModalCtrl.js"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioMasterVlasniciModalCtrl.js"></script>
-    <script src="~/app/zgrade/popisi/dijeloviListCtrl.js"></script>
-    <script src="~/app/zgrade/popisi/uredjajiListCtrl.js"></script>
-    <script src="~/app/zgrade/popisi/dijeloviModalCtrl.js"></script>
-    <script src="~/app/zgrade/popisi/uredjajiModalCtrl.js"></script>
-    <script src="~/app/zgrade/popisStanaraCtrl.js"></script>
+    <script src="~/app/zgrade/zgradeCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/zgradaCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/zgradaStanariModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/zgradaPosebniDijeloviMasterModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/PDChild/posebniDijeloviMasterListCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildrenCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildPovrsinaModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioChildPripadciModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/PDChild/posebniDioMasterVlasniciModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/popisi/dijeloviListCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/popisi/uredjajiListCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/popisi/dijeloviModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/popisi/uredjajiModalCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/popisStanaraCtrl.js?p=@p"></script>
 
-    <script src="~/app/prihodiRashodi/prihodiRashodiIndexCtrl.js"></script>
-    <script src="~/app/prihodiRashodi/prihodiModalCtrl.js"></script>
-    <script src="~/app/prihodiRashodi/rashodiModalCtrl.js"></script>
-    <script src="~/app/prihodiRashodi/sifarnikRashodaModalCtrl.js"></script>
-    <script src="~/app/prihodiRashodi/rashodiUplatniceCtrl.js"></script>
+    <script src="~/app/prihodiRashodi/prihodiRashodiIndexCtrl.js?p=@p"></script>
+    <script src="~/app/prihodiRashodi/prihodiModalCtrl.js?p=@p"></script>
+    <script src="~/app/prihodiRashodi/rashodiModalCtrl.js?p=@p"></script>
+    <script src="~/app/prihodiRashodi/sifarnikRashodaModalCtrl.js?p=@p"></script>
+    <script src="~/app/prihodiRashodi/rashodiUplatniceCtrl.js?p=@p"></script>
 
-    <script src="~/app/pricuvaRezije/godinaCtrl.js"></script>
-    <script src="~/app/pricuvaRezije/mjesecModalCtrl.js"></script>
-    <script src="~/app/pricuvaRezije/stanjeZgradeModalCtrl.js"></script>
-    <script src="~/app/pricuvaRezije/stanjeOdModalCtrl.js"></script>
-    <script src="~/app/pricuvaRezije/uplatnicaModalCtrl.js"></script>
+    <script src="~/app/pricuvaRezije/godinaCtrl.js?p=@p"></script>
+    <script src="~/app/pricuvaRezije/mjesecModalCtrl.js?p=@p"></script>
+    <script src="~/app/pricuvaRezije/stanjeZgradeModalCtrl.js?p=@p"></script>
+    <script src="~/app/pricuvaRezije/stanjeOdModalCtrl.js?p=@p"></script>
+    <script src="~/app/pricuvaRezije/uplatnicaModalCtrl.js?p=@p"></script>
 
-    <script src="~/app/ks/indexKsCtrl.js"></script>
-    <script src="~/app/zgrade/dnevnik/dnevnikIndexCtrl.js"></script>
-    <script src="~/app/zgrade/dnevnik/dnevnikDetailsCtrl.js"></script>
+    <script src="~/app/ks/indexKsCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/dnevnik/dnevnikIndexCtrl.js?p=@p"></script>
+    <script src="~/app/zgrade/dnevnik/dnevnikDetailsCtrl.js?p=@p"></script>
 
-    <script src="~/app/useri/indexUseriCtrl.js"></script>
-    <script src="~/app/useri/useriModalCtrl.js"></script>
-    <script src="~/app/tvrtkaCtrl.js"></script>
-    <script src="~/app/oglasna/indexPlocaCtrl.js"></script>
-    <script src="~/app/oglasna/dodajOglasModalCtrl.js"></script>
+    <script src="~/app/useri/indexUseriCtrl.js?p=@p"></script>
+    <script src="~/app/useri/useriModalCtrl.js?p=@p"></script>
+    <script src="~/app/tvrtkaCtrl.js?p=@p"></script>
+    <script src="~/app/oglasna/indexPlocaCtrl.js?p=@p"></script>
+    <script src="~/app/oglasna/dodajOglasModalCtrl.js?p=@p"></script>
     @*
 
 

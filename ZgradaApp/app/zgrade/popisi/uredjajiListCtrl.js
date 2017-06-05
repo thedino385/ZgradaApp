@@ -38,7 +38,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'uredjajiModalCtrl',
-                templateUrl: 'app/zgrade/popisi/uredjajiModal.html',
+                templateUrl: 'app/zgrade/popisi/uredjajiModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -75,7 +75,7 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -118,7 +118,7 @@
             var title = u.Naziv;
             $mdDialog.show({
                 controller: napomenaController,
-                templateUrl: 'app/zgrade/popisi/napomenaModal.html',
+                templateUrl: 'app/zgrade/popisi/napomenaModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,

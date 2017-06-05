@@ -102,7 +102,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'mjesecModalCtrl',
-                templateUrl: 'app/pricuvaRezije/mjesecModal.html',
+                templateUrl: 'app/pricuvaRezije/mjesecModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -132,7 +132,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'stanjeZgradeModalCtrl',
-                templateUrl: 'app/pricuvaRezije/stanjeZgradeModal.html',
+                templateUrl: 'app/pricuvaRezije/stanjeZgradeModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -157,7 +157,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'uplatnicaModalCtrl',
-                templateUrl: 'app/pricuvaRezije/uplatnicaModal.html',
+                templateUrl: 'app/pricuvaRezije/uplatnicaModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -181,7 +181,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'stanjeOdModalCtrl',
-                templateUrl: 'app/pricuvaRezije/stanjeOdModal.html',
+                templateUrl: 'app/pricuvaRezije/stanjeOdModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -249,7 +249,7 @@
             //console.log(pdmaster);
             $mdDialog.show({
                 controller: 'indexKsCtrl',
-                templateUrl: 'app/ks/indexKs.html',
+                templateUrl: 'app/ks/indexKs.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,

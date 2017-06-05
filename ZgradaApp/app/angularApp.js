@@ -85,63 +85,63 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', '$mdD
 
     $routeProvider
         .when('/index', {
-            templateUrl: '../app/zgrade/zgrade.html',
+            templateUrl: '../app/zgrade/zgrade.html?p=' + new Date().getTime() / 1000,
             controller: 'zgradeCtrl'
         })
         .when('/zgrade', {
-            templateUrl: '../app/zgrade/zgrade.html',
+            templateUrl: '../app/zgrade/zgrade.html?p=' + new Date().getTime() / 1000,
             controller: 'zgradeCtrl'
         })
         .when('/zgrada/:id', {
-            templateUrl: '../app/zgrade/zgrada.html',
+            templateUrl: '../app/zgrade/zgrada.html?p=' + new Date().getTime() / 1000,
             controller: 'zgradaCtrl'
         })
         .when('/posebniDijeloviMasterList', {
-            templateUrl: '../app/zgrade/PDChild/posebniDijeloviMasterList.html',
+            templateUrl: '../app/zgrade/PDChild/posebniDijeloviMasterList.html?p=' + new Date().getTime() / 1000,
             controller: 'posebniDijeloviMasterListCtrl'
         })
         .when('/posebniDioChildren/:id', { // posebniDioMasterId
-            templateUrl: '../app/zgrade/PDChild/posebniDioChildren.html',
+            templateUrl: '../app/zgrade/PDChild/posebniDioChildren.html?p=' + new Date().getTime() / 1000,
             controller: 'posebniDioChildrenCtrl'
         })
         .when('/prihodiRashodi', { // posebniDioMasterId
-            templateUrl: '../app/prihodiRashodi/index.html',
+            templateUrl: '../app/prihodiRashodi/index.html?p=' + new Date().getTime() / 1000,
             controller: 'prihodiRashodiIndexCtrl'
         })
         .when('/pricuvaRezije', { // posebniDioMasterId
-            templateUrl: '../app/pricuvaRezije/godina.html',
+            templateUrl: '../app/pricuvaRezije/godina.html?p=' + new Date().getTime() / 1000,
             controller: 'godinaCtrl'
         })
         .when('/popisDijelova', { // posebniDioMasterId
-            templateUrl: '../app/zgrade/popisi/dijeloviList.html',
+            templateUrl: '../app/zgrade/popisi/dijeloviList.html?p=' + new Date().getTime() / 1000,
             controller: 'dijeloviListCtrl'
         })
         .when('/popisUredjaja', { // posebniDioMasterId
-            templateUrl: '../app/zgrade/popisi/uredjajiList.html',
+            templateUrl: '../app/zgrade/popisi/uredjajiList.html?p=' + new Date().getTime() / 1000,
             controller: 'uredjajiListCtrl'
         })
         .when('/dnevnik/:id', { // 0 - povlaci sa servera, 2017 - cupaj is DS0-a i prokazi godinu
-            templateUrl: '../app/zgrade/dnevnik/dnevnikIndex.html',
+            templateUrl: '../app/zgrade/dnevnik/dnevnikIndex.html?p=' + new Date().getTime() / 1000,
             controller: 'dnevnikIndexCtrl'
         })
         .when('/dnevnikDetails/:id', { // dnevnikId
-            templateUrl: '../app/zgrade/dnevnik/dnevnikDetails.html',
+            templateUrl: '../app/zgrade/dnevnik/dnevnikDetails.html?p=' + new Date().getTime() / 1000,
             controller: 'dnevnikDetailsCtrl'
         })
         .when('/useri', {
-            templateUrl: '../app/useri/indexUseri.html',
+            templateUrl: '../app/useri/indexUseri.html?p=' + new Date().getTime() / 1000,
             controller: 'indexUseriCtrl'
         })
         .when('/tvrtka', {
-            templateUrl: '../app/tvrtka.html',
+            templateUrl: '../app/tvrtka.html?p=' + new Date().getTime() / 1000,
             controller: 'tvrtkaCtrl'
         })
         .when('/oglasna', {
-            templateUrl: '../app/oglasna/indexPloca.html',
+            templateUrl: '../app/oglasna/indexPloca.html?p=' + new Date().getTime() / 1000,
             controller: 'indexPlocaCtrl'
         })
         .when('/popisStanara/:id', {
-            templateUrl: '../app/zgrade/popisStanara.html',
+            templateUrl: '../app/zgrade/popisStanara.html?p=' + new Date().getTime() / 1000,
             controller: 'popisStanaraCtrl'
         })
 

@@ -677,7 +677,7 @@ namespace ZgradaApp.Controllers
         {
             try
             {
-                return Ok(await _db.vOglasnaPloca.Where(p => p.ZgradaId == p.ZgradaId).OrderByDescending(p => p.Id).ToListAsync());
+                return Ok(await _db.vOglasnaPloca.Where(p => p.ZgradaId == zgradaId).OrderByDescending(p => p.Id).ToListAsync());
             }
             catch (Exception ex) { return InternalServerError(); }
         }

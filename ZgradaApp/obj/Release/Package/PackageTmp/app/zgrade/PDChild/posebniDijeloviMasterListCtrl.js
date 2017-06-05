@@ -70,7 +70,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'indexKsCtrl',
-                templateUrl: 'app/ks/indexKs.html',
+                templateUrl: 'app/ks/indexKs.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,

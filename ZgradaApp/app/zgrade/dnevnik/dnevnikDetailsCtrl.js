@@ -51,7 +51,7 @@
 
             $mdDialog.show({
                 controller: msgController,
-                templateUrl: 'app/zgrade/dnevnik/msgModal.html',
+                templateUrl: 'app/zgrade/dnevnik/msgModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,

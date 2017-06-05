@@ -64,7 +64,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioChildModal.html',
+                templateUrl: 'app/zgrade/PDChild/posebniDioChildModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -93,7 +93,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioMasterVlasniciModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioMasterVlasniciModal.html',
+                templateUrl: 'app/zgrade/PDChild/posebniDioMasterVlasniciModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -122,7 +122,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildPovrsinaModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioChildPovrsinaModal.html',
+                templateUrl: 'app/zgrade/PDChild/posebniDioChildPovrsinaModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -151,7 +151,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioChildPripadciModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioChildPripadciModal.html',
+                templateUrl: 'app/zgrade/PDChild/posebniDioChildPripadciModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -186,7 +186,7 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -257,7 +257,7 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -325,7 +325,7 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -391,7 +391,7 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -457,7 +457,7 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html',
+                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
