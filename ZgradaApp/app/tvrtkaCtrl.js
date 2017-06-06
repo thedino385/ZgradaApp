@@ -1,6 +1,7 @@
 ﻿angularApp.controller('tvrtkaCtrl', ['$scope', '$rootScope', 'toastr', 'DataService', function ($scope, $rootScope, toastr, DataService) {
 
     var active = null;
+   
 
     $rootScope.loaderActive = true;
     DataService.getTvrtka().then(

@@ -161,6 +161,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                skipHide: true,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     zgradaObj: $scope.zgradaObj,

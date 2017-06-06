@@ -138,6 +138,7 @@ namespace ZgradaApp
         public bool displayLine { get; set; }
         public bool displayBtnAdd { get; set; }
         public string Status { get; set; }
+        public bool DetailsVisible { get; set; }
     }
 
 

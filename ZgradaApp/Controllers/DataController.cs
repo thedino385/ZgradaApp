@@ -131,6 +131,7 @@ namespace ZgradaApp.Controllers
             {
                 var dbMater = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == master.Id);
                 dbMater.UplatnicaStanarId = master.UplatnicaStanarId;
+                dbMater.OpisRacun = master.OpisRacun;
 
                 // posebniDijeloviChild - child mastera
                 foreach (var posebniDioChild in master.Zgrade_PosebniDijeloviChild)

@@ -26,6 +26,16 @@ namespace ZgradaApp
         public Nullable<decimal> IznosRezije { get; set; }
         public Nullable<decimal> IznosPricuva { get; set; }
         public string Uplatnica { get; set; }
+        public Nullable<System.DateTime> DatumRacuna { get; set; }
+        public Nullable<System.DateTime> DatumIsporuke { get; set; }
+        public Nullable<System.DateTime> DatumDospijeca { get; set; }
+        public string JedMjera { get; set; }
+        public string Opis { get; set; }
+        public Nullable<decimal> JedCijena { get; set; }
+        public Nullable<decimal> Kolicina { get; set; }
+        public Nullable<decimal> Ukupno { get; set; }
+        public string Napomena { get; set; }
+        public string BrojRacuna { get; set; }
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
     }

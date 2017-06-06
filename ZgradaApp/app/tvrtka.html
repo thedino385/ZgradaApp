@@ -1,4 +1,24 @@
-﻿<div class="container-grid">
+﻿
+
+<script type="text/javascript">
+
+    //$(function () {
+    //    Dropzone.options.myAwesomeDropzone = {
+    //        paramName: "file", // The name that will be used to transfer the file
+    //        maxFilesize: 2, // MB
+    //        accept: function (file, done) {
+    //            if (file.name == "justinbieber.jpg") {
+    //                done("Naha, you don't.");
+    //            }
+    //            else { done(); }
+    //        }
+    //    };
+    //    $("div#my-awesome-dropzone").dropzone({ url: "/Home/LogoUpload" });
+    //})
+
+</script>
+
+<div class="container-grid">
     <div class="col-lg-12 whiteShadow">
         <md-toolbar class="md-hue-2">
             <div class="md-toolbar-tools">
@@ -15,7 +35,7 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <form role="form" class='form-horizontal' name="frm" ng-submit="save()">
+        <!--<form role="form" class='form-horizontal' name="frm" ng-submit="save()">-->
             <div class="form-group row">
                 <div layout="column" ng-cloak class="md-inline-form">
                     <md-content layout-padding>
@@ -109,6 +129,8 @@
                                 </div>
                             </md-input-container>
 
+                            <form action="/upload-target" class="dropzone"></form>
+
                             <div class="col-sm-1"></div>
                         </div>
                     </md-content>
@@ -126,11 +148,10 @@
          
 
             <hr />
-            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid" ng-click="save()">Spremi</md-button>
             <!--<md-button class="md-raised pull-right" ng-click="goBack()">
                 Odustani
             </md-button>-->
-        </form>
     </div>
 </div>
 

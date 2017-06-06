@@ -30,6 +30,14 @@
         </md-toolbar>
         <br />
 
+        <a href="" class="btn btn-primary dropdown-toggle" style="padding-bottom: 0px;" ng-click="napomena.Visible = !napomena.Visible">
+            <span class="caret"></span>
+        </a>
+        <div uib-collapse="!napomena.Visible">
+            <div><label>Opis za račun</label></div>
+            <textarea rows="4" cols="800" ng-model="pdMaster.OpisRacun"></textarea>
+        </div>
+        <br /><br />
         <!--<table>
             <tr>
                 <td>Uplatnici slati:</td>
@@ -123,7 +131,7 @@
                 <!--table posebniDijeloviChild sa kolecijema: povrsine, pripadci-->
                 <md-card-title>
                     <md-card-title-text>
-                        <button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 15px; padding-top: 15px" ng-click="poChild.Expanded = !poChild.Expanded"><b>Posebni dio: &nbsp;&nbsp;&nbsp; {{poChild.Naziv}}</b></button>
+                        <button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 10px; padding-top: 10px" ng-click="poChild.Expanded = !poChild.Expanded"><b>Posebni dio: &nbsp;&nbsp;&nbsp; {{poChild.Naziv}}</b></button>
 
                         <!--<span ng-show="poChild.Zatvoren != true" class="md-headline indigoColor">
                             Posebni dio: {{poChild.Naziv}}

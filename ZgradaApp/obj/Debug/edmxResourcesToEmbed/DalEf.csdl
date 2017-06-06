@@ -474,6 +474,8 @@
     <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade" />
     <NavigationProperty Name="Zgrade_PosebniDijeloviChild" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade_PosebniDijeloviChild" />
     <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+    <Property Name="OpisRacun" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="NapomenaRacun" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
     <Key>
@@ -1054,6 +1056,16 @@
     <Property Name="IznosPricuva" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Uplatnica" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_Uplatnice" ToRole="PricuvaRezijeMjesec" />
+    <Property Name="DatumRacuna" Type="DateTime" Precision="3" />
+    <Property Name="DatumIsporuke" Type="DateTime" Precision="3" />
+    <Property Name="DatumDospijeca" Type="DateTime" Precision="3" />
+    <Property Name="JedMjera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="JedCijena" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Kolicina" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Ukupno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Napomena" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="BrojRacuna" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
     <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="0..1" />

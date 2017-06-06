@@ -85,6 +85,16 @@
           <Property Name="IznosRezije" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IznosPricuva" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Uplatnica" Type="varchar" MaxLength="128" />
+          <Property Name="BrojRacuna" Type="varchar" MaxLength="30" />
+          <Property Name="DatumRacuna" Type="datetime" />
+          <Property Name="DatumIsporuke" Type="datetime" />
+          <Property Name="DatumDospijeca" Type="datetime" />
+          <Property Name="JedMjera" Type="varchar" MaxLength="10" />
+          <Property Name="Opis" Type="varchar" MaxLength="500" />
+          <Property Name="JedCijena" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Kolicina" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Ukupno" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="PricuvaRezijePosebniDioChildPovrsine">
           <Key>
@@ -348,6 +358,8 @@
           <Property Name="VrijediOdGodina" Type="int" />
           <Property Name="VrijediOdMjesec" Type="int" />
           <Property Name="UplatnicaStanarId" Type="int" />
+          <Property Name="OpisRacun" Type="varchar" MaxLength="2000" />
+          <Property Name="NapomenaRacun" Type="varchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
           <Key>
@@ -1675,6 +1687,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <NavigationProperty Name="Zgrade" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_Zgrade" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade" />
           <NavigationProperty Name="Zgrade_PosebniDijeloviChild" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviChild_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade_PosebniDijeloviChild" />
           <NavigationProperty Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" Relationship="ZgradaDbModel.FK_Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Zgrade_PosebniDijeloviMaster" FromRole="Zgrade_PosebniDijeloviMaster" ToRole="Zgrade_PosebniDijeloviMaster_VlasniciPeriod" />
+          <Property Name="OpisRacun" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="NapomenaRacun" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
           <Key>
@@ -2255,6 +2269,16 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="IznosPricuva" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Uplatnica" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_Uplatnice" ToRole="PricuvaRezijeMjesec" />
+          <Property Name="DatumRacuna" Type="DateTime" Precision="3" />
+          <Property Name="DatumIsporuke" Type="DateTime" Precision="3" />
+          <Property Name="DatumDospijeca" Type="DateTime" Precision="3" />
+          <Property Name="JedMjera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="JedCijena" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Kolicina" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Ukupno" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Napomena" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BrojRacuna" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
           <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="0..1" />
@@ -2579,6 +2603,8 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="Zgrade_PosebniDijeloviMaster">
             <EntityTypeMapping TypeName="ZgradaDbModel.Zgrade_PosebniDijeloviMaster">
               <MappingFragment StoreEntitySet="Zgrade_PosebniDijeloviMaster">
+                <ScalarProperty Name="NapomenaRacun" ColumnName="NapomenaRacun" />
+                <ScalarProperty Name="OpisRacun" ColumnName="OpisRacun" />
                 <ScalarProperty Name="UplatnicaStanarId" ColumnName="UplatnicaStanarId" />
                 <ScalarProperty Name="VrijediOdMjesec" ColumnName="VrijediOdMjesec" />
                 <ScalarProperty Name="VrijediOdGodina" ColumnName="VrijediOdGodina" />
@@ -2858,6 +2884,16 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PricuvaRezijeMjesec_Uplatnice">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice">
               <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_Uplatnice">
+                <ScalarProperty Name="BrojRacuna" ColumnName="BrojRacuna" />
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+                <ScalarProperty Name="Ukupno" ColumnName="Ukupno" />
+                <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+                <ScalarProperty Name="JedCijena" ColumnName="JedCijena" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="JedMjera" ColumnName="JedMjera" />
+                <ScalarProperty Name="DatumDospijeca" ColumnName="DatumDospijeca" />
+                <ScalarProperty Name="DatumIsporuke" ColumnName="DatumIsporuke" />
+                <ScalarProperty Name="DatumRacuna" ColumnName="DatumRacuna" />
                 <ScalarProperty Name="Uplatnica" ColumnName="Uplatnica" />
                 <ScalarProperty Name="IznosPricuva" ColumnName="IznosPricuva" />
                 <ScalarProperty Name="IznosRezije" ColumnName="IznosRezije" />

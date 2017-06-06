@@ -32,6 +32,8 @@ namespace ZgradaApp
         public Nullable<int> VrijediOdGodina { get; set; }
         public Nullable<int> VrijediOdMjesec { get; set; }
         public Nullable<int> UplatnicaStanarId { get; set; }
+        public string OpisRacun { get; set; }
+        public string NapomenaRacun { get; set; }
     
         public virtual Zgrade Zgrade { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
