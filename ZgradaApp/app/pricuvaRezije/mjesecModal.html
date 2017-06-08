@@ -147,9 +147,9 @@
                             <th style="vertical-align: middle">
                                 Početno stanje
                             </th>
-                            <th style="vertical-align: middle">
+                            <!--<th style="vertical-align: middle">
                                 Posebni dijelovi
-                            </th>
+                            </th>-->
                             <th style="vertical-align: middle; text-align: right">
                                 Dug/pretplata
                             </th>
@@ -202,13 +202,13 @@
                             <td>
                                 <input my-directive-decimal name="pocetno" class="form-control" type="text" size="5" ng-model="pdMaster.PocetnoStanje" />
                             </td>
-                            <td>
+                            <!--<td>
                                 <div ng-repeat="master in zgradaObj.Zgrade_PosebniDijeloviMaster| filter: { Id: pdMaster.PosebniDioMasterId }">
                                     <span ng-repeat="posDioChild in master.Zgrade_PosebniDijeloviChild | filter: { ZgradaPosDioMasterId: pdMaster.PosebniDioMasterId }:true">
                                         {{posDioChild.Naziv}}<br />
                                     </span>
                                 </div>
-                            </td>
+                            </td>-->
                             <!--<td style="vertical-align: middle; text-align: right" ng-class="{ greenCell: pdMaster.DugPretplata > 0, redCell: pdMaster.DugPretplata < 0 }">-->
                             <td style="vertical-align: middle; text-align: right" class="{{pdMaster.DugPretplata | toDecimalEngFilter}}">
                                 {{pdMaster.DugPretplata}}

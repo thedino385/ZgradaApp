@@ -12,19 +12,14 @@ namespace ZgradaApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Zgrade_PosebniDijeloviChild
+    public partial class Zgrade_PosebniDijeloviMaster_Pripadci
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Zgrade_PosebniDijeloviChild()
-        {
-            this.Zgrade_PosebniDijeloviChild_Povrsine = new HashSet<Zgrade_PosebniDijeloviChild_Povrsine>();
-            this.Zgrade_PosebniDijeloviChild_Pripadci = new HashSet<Zgrade_PosebniDijeloviChild_Pripadci>();
-        }
-    
         public int Id { get; set; }
         public int ZgradaPosDioMasterId { get; set; }
         public string Naziv { get; set; }
         public string Oznaka { get; set; }
+        public Nullable<decimal> Povrsina { get; set; }
+        public Nullable<decimal> Koef { get; set; }
         public string Napomena { get; set; }
         public Nullable<bool> Zatvoren { get; set; }
         public Nullable<int> ZatvorenGodina { get; set; }
@@ -32,10 +27,6 @@ namespace ZgradaApp
         public Nullable<int> VrijediOdGodina { get; set; }
         public Nullable<int> VrijediOdMjesec { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zgrade_PosebniDijeloviChild_Povrsine> Zgrade_PosebniDijeloviChild_Povrsine { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zgrade_PosebniDijeloviChild_Pripadci> Zgrade_PosebniDijeloviChild_Pripadci { get; set; }
         public virtual Zgrade_PosebniDijeloviMaster Zgrade_PosebniDijeloviMaster { get; set; }
     }
 }

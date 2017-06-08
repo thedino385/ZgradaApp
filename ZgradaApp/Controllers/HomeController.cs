@@ -66,6 +66,11 @@ namespace ZgradaApp.Controllers
                 ViewData["notifikacije"] = list;
             }
             ViewData["userType"] = "voditelj";
+
+            string path = Server.MapPath("~/Content/download/racuni");
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
             return View();
         }
 

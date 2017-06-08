@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -85,6 +89,7 @@ namespace ZgradaApp.Controllers
                     target.CompanyId = companyId;
                     target.Napomena = zgrada.Napomena;
                     target.Naziv = zgrada.Naziv;
+                    target.IBAN = zgrada.IBAN;
                     foreach (var item in zgrada.Zgrade_Stanari)
                     {
                         switch (item.Status)
@@ -99,19 +104,21 @@ namespace ZgradaApp.Controllers
                         }
 
                     }
-                    foreach (var item in zgrada.Zgrade_PosebniDijeloviMaster)
-                    {
-                        switch (item.Status)
-                        {
-                            case "a":
-                                _db.Zgrade_PosebniDijeloviMaster.Add(item);
-                                break;
-                            case "u":
-                                _db.Zgrade_PosebniDijeloviMaster.Attach(item);
-                                _db.Entry(item).State = EntityState.Modified;
-                                break;
-                        }
-                    }
+
+                    // ovo se snima iz posebnih dijelova
+                    //foreach (var item in zgrada.Zgrade_PosebniDijeloviMaster)
+                    //{
+                    //    switch (item.Status)
+                    //    {
+                    //        case "a":
+                    //            _db.Zgrade_PosebniDijeloviMaster.Add(item);
+                    //            break;
+                    //        case "u":
+                    //            _db.Zgrade_PosebniDijeloviMaster.Attach(item);
+                    //            _db.Entry(item).State = EntityState.Modified;
+                    //            break;
+                    //    }
+                    //}
                 }
                 await _db.SaveChangesAsync();
                 return Ok();
@@ -124,93 +131,75 @@ namespace ZgradaApp.Controllers
 
         [HttpPost]
         [Route("api/data/posebniDioChildrenCreateOrUpdate")]
-        public async Task<IHttpActionResult> PosebniDioChildrenCreateOrUpdate(Zgrade_PosebniDijeloviMaster master)
+        public async Task<IHttpActionResult> PosebniDioMasterCreateOrUpdate(Zgrade_PosebniDijeloviMaster master)
         {
-            // masterPosebniDio se u biti ne snima, on sadrzi posebneDIjeloveChild (sa njihovim kolekcijama) koje cemo snimati ovdje
+            // masterPosebniDio se u biti ne snima, on sadrzi povrsine i pripadke
             try
             {
-                var dbMater = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == master.Id);
-                dbMater.UplatnicaStanarId = master.UplatnicaStanarId;
-                dbMater.OpisRacun = master.OpisRacun;
-
-                // posebniDijeloviChild - child mastera
-                foreach (var posebniDioChild in master.Zgrade_PosebniDijeloviChild)
+                if (master.Id == 0)
+                    _db.Zgrade_PosebniDijeloviMaster.Add(master);
+                else
                 {
-                    switch (posebniDioChild.Status)
+                    var dbMater = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == master.Id);
+                    dbMater.OpisRacun = master.OpisRacun;
+                    dbMater.Naziv = master.Naziv;
+                    dbMater.Broj = master.Broj;
+                    dbMater.Napomena = master.Napomena;
+                    dbMater.VrijediOdGodina = master.VrijediOdGodina;
+                    dbMater.VrijediOdMjesec = master.VrijediOdMjesec;
+                    foreach (var povrsina in master.Zgrade_PosebniDijeloviMaster_Povrsine)
                     {
-                        case "a":
-                            _db.Zgrade_PosebniDijeloviChild.Add(posebniDioChild);
-                            break;
-                        case "u":
-                            //_db.Zgrade_PosebniDijeloviChild.Attach(posebniDioChild);
-                            //_db.Entry(posebniDioChild).State = EntityState.Modified;
-                            var target = await _db.Zgrade_PosebniDijeloviChild.FirstOrDefaultAsync(p => p.Id == posebniDioChild.Id);
-                            target.Napomena = posebniDioChild.Napomena;
-                            target.Naziv = posebniDioChild.Naziv;
-                            target.Oznaka = posebniDioChild.Oznaka;
-                            target.VrijediOdGodina = posebniDioChild.VrijediOdGodina;
-                            target.VrijediOdMjesec = posebniDioChild.VrijediOdMjesec;
-                            target.Zatvoren = posebniDioChild.Zatvoren;
-                            target.ZatvorenGodina = posebniDioChild.ZatvorenGodina;
-                            target.ZatvorenMjesec = posebniDioChild.ZatvorenMjesec;
-                            // povrine - child posebnogDijelaChilda
-                            foreach (var povrsina in posebniDioChild.Zgrade_PosebniDijeloviChild_Povrsine)
-                            {
-                                povrsina.PosebniDioChildId = posebniDioChild.Id;
-                                switch (povrsina.Status)
+                        povrsina.PosebniDioMasterId = master.Id;
+                        switch (povrsina.Status)
+                        {
+                            case "a":
+                                _db.Zgrade_PosebniDijeloviMaster_Povrsine.Add(povrsina);
+                                break;
+                            case "u":
+                                _db.Zgrade_PosebniDijeloviMaster_Povrsine.Attach(povrsina);
+                                _db.Entry(povrsina).State = EntityState.Modified;
+                                break;
+                        }
+                    }
+                    // pripadci - child posebnogDijelaChilda
+                    foreach (var prip in master.Zgrade_PosebniDijeloviMaster_Pripadci)
+                    {
+                        prip.ZgradaPosDioMasterId = master.Id;
+                        switch (prip.Status)
+                        {
+                            case "a":
+                                _db.Zgrade_PosebniDijeloviMaster_Pripadci.Add(prip);
+                                break;
+                            case "u":
+                                _db.Zgrade_PosebniDijeloviMaster_Pripadci.Attach(prip);
+                                _db.Entry(prip).State = EntityState.Modified;
+                                break;
+                        }
+                    }
+                    foreach (var period in master.Zgrade_PosebniDijeloviMaster_VlasniciPeriod)
+                    {
+                        switch (period.Status)
+                        {
+                            case "a":
+                                _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.Add(period);
+                                break;
+                            case "u":
+                                var target = await _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.FirstOrDefaultAsync(p => p.Id == period.Id);
+                                target.Zatvoren = period.Zatvoren;
+                                target.Napomena = period.Napomena;
+                                target.VrijediDoGodina = period.VrijediDoGodina;
+                                target.VrijediDoMjesec = period.VrijediDoMjesec;
+                                target.VrijediOdGodina = period.VrijediOdGodina;
+                                target.VrijediOdMjesec = period.VrijediOdMjesec;
+                                foreach (var vlasnik in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici)
                                 {
-                                    case "a":
-                                        _db.Zgrade_PosebniDijeloviChild_Povrsine.Add(povrsina);
-                                        break;
-                                    case "u":
-                                        _db.Zgrade_PosebniDijeloviChild_Povrsine.Attach(povrsina);
-                                        _db.Entry(povrsina).State = EntityState.Modified;
-                                        break;
+                                    _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Attach(vlasnik);
+                                    _db.Entry(vlasnik).State = EntityState.Modified;
                                 }
-                            }
-                            // pripadci - child posebnogDijelaChilda
-                            foreach (var prip in posebniDioChild.Zgrade_PosebniDijeloviChild_Pripadci)
-                            {
-                                prip.ZgradaPosDioChildId = posebniDioChild.Id;
-                                switch (prip.Status)
-                                {
-                                    case "a":
-                                        _db.Zgrade_PosebniDijeloviChild_Pripadci.Add(prip);
-                                        break;
-                                    case "u":
-                                        _db.Zgrade_PosebniDijeloviChild_Pripadci.Attach(prip);
-                                        _db.Entry(prip).State = EntityState.Modified;
-                                        break;
-                                }
-                            }
-                            break;
+                                break;
+                        }
                     }
                 }
-
-                foreach (var period in master.Zgrade_PosebniDijeloviMaster_VlasniciPeriod)
-                {
-                    switch (period.Status)
-                    {
-                        case "a":
-                            _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.Add(period);
-                            break;
-                        case "u":
-                            var target = await _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.FirstOrDefaultAsync(p => p.Id == period.Id);
-                            target.Zatvoren = period.Zatvoren;
-                            target.Napomena = period.Napomena;
-                            target.VrijediDoGodina = period.VrijediDoGodina;
-                            target.VrijediDoMjesec = period.VrijediDoMjesec;
-                            target.VrijediOdGodina = period.VrijediOdGodina;
-                            target.VrijediOdMjesec = period.VrijediOdMjesec;
-                            foreach (var vlasnik in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici)
-                            {
-                                _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Attach(vlasnik);
-                                _db.Entry(vlasnik).State = EntityState.Modified;
-                            }
-                            break;
-                    }
-                }
-
                 await _db.SaveChangesAsync();
                 return Ok();
             }
@@ -374,28 +363,17 @@ namespace ZgradaApp.Controllers
                 foreach (var m in targetMjesec.PricuvaRezijePosebniDioMasteri.ToList())
                 {
                     mLIst.Add((int)m.PosebniDioMasterId);
-                    //chilovi
-                    foreach (var child in m.PricuvaRezijePosebniDioChildren)
+
+                    // povrsine
+                    foreach (var povr in m.PricuvaRezijePosebniDioMasterPovrsine.ToList())
                     {
-                        // povrsine
-                        foreach (var povr in child.PricuvaRezijePosebniDioChildPovrsine.ToList())
-                        {
-                            //var dbPovrsina = await _db.PricuvaRezijePosebniDioChildPovrsine.FirstOrDefaultAsync(p => p.Id == povr.Id);
-                            //_db.PricuvaRezijePosebniDioChildPovrsine.Remove(dbPovrsina);
-                            _db.PricuvaRezijePosebniDioChildPovrsine.Attach(povr);
-                            _db.Entry(povr).State = EntityState.Deleted;
-                        }
-                        foreach (var prip in child.PricuvaRezijePosebniDioChildPripadci.ToList())
-                        {
-                            //var dbPrip = await _db.PricuvaRezijePosebniDioChildPripadci.FirstOrDefaultAsync(p => p.Id == prip.Id);
-                            //_db.PricuvaRezijePosebniDioChildPripadci.Remove(dbPrip);
-                            _db.PricuvaRezijePosebniDioChildPripadci.Attach(prip);
-                            _db.Entry(prip).State = EntityState.Deleted;
-                        }
-                        //_db.PricuvaRezijePosebniDioChildren.Remove(child);
-                        //var targetChild = await _db.PricuvaRezijePosebniDioChildren.FirstOrDefaultAsync(p => p.Id == child.Id);
-                        //_db.PricuvaRezijePosebniDioChildren.Remove(targetChild);
-                        childLIst.Add(child.PosebniDioChildId);
+                        _db.PricuvaRezijePosebniDioMasterPovrsine.Attach(povr);
+                        _db.Entry(povr).State = EntityState.Deleted;
+                    }
+                    foreach (var prip in m.PricuvaRezijePosebniDioMasterPripadci.ToList())
+                    {
+                        _db.PricuvaRezijePosebniDioMasterPripadci.Attach(prip);
+                        _db.Entry(prip).State = EntityState.Deleted;
                     }
                     foreach (var vlasnik in m.PricuvaRezijePosebniDioMasterVlasnici.ToList())
                     {
@@ -404,12 +382,6 @@ namespace ZgradaApp.Controllers
                         _db.PricuvaRezijePosebniDioMasterVlasnici.Attach(vlasnik);
                         _db.Entry(vlasnik).State = EntityState.Deleted;
                     }
-                }
-
-                foreach (var childId in childLIst)
-                {
-                    var targetChild = await _db.PricuvaRezijePosebniDioChildren.FirstOrDefaultAsync(p => p.PosebniDioChildId == childId);
-                    _db.PricuvaRezijePosebniDioChildren.Remove(targetChild);
                 }
                 foreach (var m in mLIst)
                 {
@@ -472,25 +444,17 @@ namespace ZgradaApp.Controllers
                                         _db.PricuvaRezijePosebniDioMasterVlasnici.Attach(vlasnik);
                                         _db.Entry(vlasnik).State = EntityState.Modified;
                                     }
-
-                                    foreach (var child in master.PricuvaRezijePosebniDioChildren)
+                                    foreach (var povrsina in master.PricuvaRezijePosebniDioMasterPovrsine)
                                     {
-                                        _db.PricuvaRezijePosebniDioChildren.Attach(child);
-                                        _db.Entry(child).State = EntityState.Modified;
-
-                                        foreach (var povrsina in child.PricuvaRezijePosebniDioChildPovrsine)
-                                        {
-                                            _db.PricuvaRezijePosebniDioChildPovrsine.Attach(povrsina);
-                                            _db.Entry(povrsina).State = EntityState.Modified;
-                                        }
-                                        foreach (var prip in child.PricuvaRezijePosebniDioChildPripadci)
-                                        {
-                                            _db.PricuvaRezijePosebniDioChildPripadci.Attach(prip);
-                                            _db.Entry(prip).State = EntityState.Modified;
-                                        }
+                                        _db.PricuvaRezijePosebniDioMasterPovrsine.Attach(povrsina);
+                                        _db.Entry(povrsina).State = EntityState.Modified;
+                                    }
+                                    foreach (var prip in master.PricuvaRezijePosebniDioMasterPripadci)
+                                    {
+                                        _db.PricuvaRezijePosebniDioMasterPripadci.Attach(prip);
+                                        _db.Entry(prip).State = EntityState.Modified;
                                     }
                                 }
-
                                 _db.PricuvaRezijeMjesec.Attach(prMj);
                                 _db.Entry(prMj).State = EntityState.Modified;
                             }
@@ -539,10 +503,10 @@ namespace ZgradaApp.Controllers
                 var masteri = await _db.Zgrade_PosebniDijeloviMaster.Where(p => p.ZgradaId == zgradaId).ToListAsync();
                 var stanari = await _db.Zgrade_Stanari.Where(p => p.ZgradaId == zgradaId).ToListAsync();
                 var masteriIds = masteri.Select(p => p.Id);
-                var pdChildovi = await _db.Zgrade_PosebniDijeloviChild.Where(p => masteriIds.Contains(p.ZgradaPosDioMasterId)).ToListAsync();
+                // var pdChildovi = await _db.Zgrade_PosebniDijeloviChild.Where(p => masteriIds.Contains(p.ZgradaPosDioMasterId)).ToListAsync();
 
                 //return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari, pdChildovi, prProslaGodina));
-                return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari, pdChildovi));
+                return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari));
             }
             catch (Exception ex) { return InternalServerError(); }
         }
@@ -733,6 +697,300 @@ namespace ZgradaApp.Controllers
                 return Ok(await _db.vPopisStanara.Where(p => p.CompanyId == companyId && p.ZgradaId == zgradaId && p.Zatvoren != true).ToListAsync());
             }
             catch (Exception ex)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpPost]
+        [Route("api/data/genRacun")]
+        public async Task<IHttpActionResult> getRacun(RacunPdf racun)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                var company = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
+                string path = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download/racuni");
+
+                var doc = new Document(PageSize.A4, 30, 30, 25, 25);
+                string pdf = Guid.NewGuid().ToString() + ".pdf";
+                var output = new FileStream(Path.Combine(path, pdf), FileMode.Create);
+                var writer = PdfWriter.GetInstance(doc, output);
+
+                doc.Open();
+
+                var titleFont = FontFactory.GetFont("Arial", 13, Font.BOLD);
+                var subTitleFont = FontFactory.GetFont("Arial", 12, Font.BOLD);
+                var boldTableHeaderFont = FontFactory.GetFont("Arial", 8, Font.BOLD);
+                var boldTableFont = FontFactory.GetFont("Arial", 10, Font.BOLD);
+                var cellTableFont = FontFactory.GetFont("Arial", 10, Font.NORMAL);
+                //var endingMessageFont = FontFactory.GetFont("Arial", 10, Font.ITALIC);
+                //var bodyFont = FontFactory.GetFont("Arial", 12, Font.NORMAL);
+
+                #region tablica1
+                PdfPTable tbl = new PdfPTable(2);
+                tbl.HorizontalAlignment = 0;
+                tbl.WidthPercentage = 60;
+                //tbl.SpacingBefore = 10;
+                //tbl.SpacingAfter = 10;
+                tbl.DefaultCell.Border = 0;
+                //tbl.SetWidths(new int[] { 2, 1, 2 });
+
+                var logo = iTextSharp.text.Image.GetInstance(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/logo/logo.png"));
+
+                PdfPCell cell = new PdfPCell(logo, true);
+                cell.Rowspan = 5;
+                cell.BorderColor = BaseColor.WHITE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                tbl.AddCell(cell);
+
+                cell = new PdfPCell(new Phrase(company.Naziv, boldTableFont));
+                cell.PaddingLeft = 30;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.BorderColor = BaseColor.WHITE;
+                tbl.AddCell(cell);
+
+                cell = new PdfPCell(new Phrase(company.Adresa + ", " + company.Mjesto, cellTableFont));
+                cell.PaddingLeft = 30;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.BorderColor = BaseColor.WHITE;
+                tbl.AddCell(cell);
+
+                cell = new PdfPCell(new Phrase("OIB: " + company.OIB, cellTableFont));
+                cell.PaddingLeft = 30;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.BorderColor = BaseColor.WHITE;
+                tbl.AddCell(cell);
+
+                cell = new PdfPCell(new Phrase("tel: " + company.Telefon, cellTableFont));
+                cell.PaddingLeft = 30;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.BorderColor = BaseColor.WHITE;
+                tbl.AddCell(cell);
+
+                cell = new PdfPCell(new Phrase("www.novoprojekt.net" + company.Telefon, cellTableFont));
+                cell.PaddingLeft = 30;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.BorderColor = BaseColor.WHITE;
+                tbl.AddCell(cell);
+                #endregion
+
+                #region tablica2
+                PdfPTable tbl1 = new PdfPTable(3);
+                tbl1.HorizontalAlignment = 0;
+                tbl1.WidthPercentage = 100;
+                //tbl.SpacingBefore = 10;
+                //tbl.SpacingAfter = 10;
+                tbl1.DefaultCell.Border = 0;
+                tbl1.SetWidths(new int[] { 1, 1, 3 });
+
+                // prvi red
+                PdfPCell cell1 = new PdfPCell(new Phrase("Broj računa", boldTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                cell1 = new PdfPCell(new Phrase(racun.BrojRacuna));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                cell1 = new PdfPCell(new Phrase("Središnji drž.ured za obnovu i\nstambeno zbrinjavanje", boldTableFont));
+                cell1.Rowspan = 2;
+                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                // drugi red
+                cell1 = new PdfPCell(new Phrase("Datum računa", boldTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                cell1 = new PdfPCell(new Phrase(racun.DatumRacuna.ToShortDateString(), cellTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                // treci red
+                cell1 = new PdfPCell(new Phrase("Datum isporuke", boldTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                cell1 = new PdfPCell(new Phrase(racun.DatumIsporuke.ToShortDateString(), cellTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                cell1 = new PdfPCell(new Phrase("Radnička cesta 22, Zagreb (Europske avenije 10, Osijek)", boldTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                // 4 red
+                cell1 = new PdfPCell(new Phrase("Datum Dospijeća", boldTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                cell1 = new PdfPCell(new Phrase(racun.DatumDospijeca.ToShortDateString(), cellTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+
+                cell1 = new PdfPCell(new Phrase("OIB: 43664740219", boldTableFont));
+                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell1.BorderColor = BaseColor.WHITE;
+                tbl1.AddCell(cell1);
+                #endregion
+
+                #region tablicaStavke
+                PdfPTable tbl2 = new PdfPTable(6);
+                tbl2.HorizontalAlignment = 0;
+                tbl2.WidthPercentage = 100;
+                //tbl.SpacingBefore = 10;
+                //tbl.SpacingAfter = 10;
+                //tbl2.DefaultCell.Border = 0;
+                tbl2.SetWidths(new int[] { 1, 2, 4, 1, 1 , 1});
+
+                // 1 red
+                var cell2 = new PdfPCell(new Phrase("r.b.", boldTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase("jed.mj.", boldTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase("Opis", boldTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase("jed.cijena\n[kn]", boldTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase("količina", boldTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase("ukupno[kn]", boldTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                // 2. red
+                cell2 = new PdfPCell(new Phrase("1.", cellTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase(racun.JedMjera, cellTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase(racun.Opis, cellTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase(racun.JedCijena.ToString(), cellTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase(racun.Kolicina.ToString(), cellTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                cell2 = new PdfPCell(new Phrase(racun.Ukupno.ToString(), cellTableFont));
+                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cell2.BorderColor = BaseColor.WHITE;
+                tbl2.AddCell(cell2);
+
+                #endregion
+
+                doc.Add(tbl);
+                doc.Add(new Paragraph("\n\n"));
+                doc.Add(tbl1);
+                doc.Add(new Paragraph("\n\n"));
+                doc.Add(tbl2);
+                doc.Add(new Paragraph("\n\n"));
+                //doc.Add(new Paragraph(racun.Napomena));
+                //string[] redovi = Regex.Split(racun.Napomena, "<br>");
+                //foreach (var row in redovi)
+                //{
+                //    if(row.StartsWith('<b>'))
+                //}
+
+                Paragraph napomenaParag = new Paragraph();
+                foreach (var row in Regex.Split(racun.Napomena, "<br>"))
+                {
+                    string chunk = "";
+                    if (!row.Contains("<b>") && !row.Contains("</b>"))
+                        napomenaParag.Add(new Chunk(row, cellTableFont));
+                    else
+                    {
+                        foreach (var c in Regex.Split(row, "<b>"))
+                        {
+                            napomenaParag.Add(new Chunk(row.Replace("<b>", "").Replace("</b>", ""), boldTableFont));
+                        }
+                    }
+                    napomenaParag.Add(new Chunk("\n", cellTableFont));
+                }
+                doc.Add(napomenaParag);
+                //Font regular = new Font(FontFamily.HELVETICA, 12);
+                //Font bold = Font font = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
+                //Phrase p = new Phrase("NAME: ", bold);
+                //p.add(new Chunk(cc_cust_dob, regular));
+                //PdfPCell cell = new PdfPCell(p);
+
+                doc.Close();
+                writer.Close();
+                output.Close();
+
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(); }
+          }  
+
+        [HttpPost]
+        [Route("api/data/saveTeplates")]
+        [System.Web.Mvc.ValidateInput(false)]
+        public async Task<IHttpActionResult> saveTeplates(Zgrade zgrada)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
+                var target = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == zgrada.Id);
+                if(target.CompanyId != companyId)
+                {
+                    return InternalServerError();
+                }
+                // napomena za racun - zgrada level
+                target.NapomenaRacun = zgrada.NapomenaRacun;
+
+                // opis za racun - master level
+                foreach (var master in zgrada.Zgrade_PosebniDijeloviMaster)
+                {
+                    var dbMaster = await _db.Zgrade_PosebniDijeloviMaster.FirstOrDefaultAsync(p => p.Id == master.Id);
+                    dbMaster.OpisRacun = master.OpisRacun;
+                }
+
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch(Exception ex)
             {
                 return InternalServerError();
             }

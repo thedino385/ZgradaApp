@@ -160,8 +160,8 @@
                                     <input ng-model="rec.Ukupno">
                                 </md-input-container>
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td><button class="btn, btn-primary" ng-click="createRacun(rec)">Kreiraj</button></td>
+                            <td><a href="{{rec.url}}" ng-show="rec.url != null">Pdf</a></td>
                         </tr>
                         <tr uib-collapse="!rec.DetailsVisible" ng-show="rec.TipPlacanja == 'r'">
                             <td colspan="3">
@@ -200,5 +200,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.summernote').summernote();
+        $('.note-btn').hide();
+        $('.note-btn-bold').show();
     });
 </script>

@@ -260,9 +260,15 @@
         </table>
        
         <hr />-->
-        <md-button class="md-raised md-primary pull-right" type="button" ng-disabled="!hasChanges" ng-click="saveAll()">Spremi</md-button>
+        <!--<md-button class="md-raised md-primary pull-right" type="button" ng-disabled="!hasChanges" ng-click="saveAll()">Spremi</md-button>
         <md-button class="md-raised pull-right" ng-click="cancelReload()">
             Odustani
+        </md-button>-->
+
+        <md-button class="md-raised md-warn pull-right" ng-click="cancelReload()">
+            Odustani
         </md-button>
+        <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="!hasChanges" ng-click="saveAll()">Spremi</md-button>
+
     </div>
 </div>

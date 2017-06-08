@@ -193,6 +193,7 @@
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\PricuvaRezijeUplatniceController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Kompanije.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
@@ -211,16 +212,13 @@
     <Compile Include="PricuvaRezijeMjesec_Uplatnice.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="PricuvaRezijePosebniDioChildPovrsine.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PricuvaRezijePosebniDioChildPripadci.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PricuvaRezijePosebniDioChildren.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
     <Compile Include="PricuvaRezijePosebniDioMasteri.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PricuvaRezijePosebniDioMasterPovrsine.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PricuvaRezijePosebniDioMasterPripadci.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="PricuvaRezijePosebniDioMasterVlasnici.cs">
@@ -324,16 +322,13 @@
     <Compile Include="Zgrade_PopisZajednickihDijelova.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
-    <Compile Include="Zgrade_PosebniDijeloviChild.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Zgrade_PosebniDijeloviChild_Povrsine.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Zgrade_PosebniDijeloviChild_Pripadci.cs">
-      <DependentUpon>DalEf.tt</DependentUpon>
-    </Compile>
     <Compile Include="Zgrade_PosebniDijeloviMaster.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_PosebniDijeloviMaster_Povrsine.cs">
+      <DependentUpon>DalEf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zgrade_PosebniDijeloviMaster_Pripadci.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
     </Compile>
     <Compile Include="Zgrade_PosebniDijeloviMaster_VlasniciPeriod.cs">
@@ -420,6 +415,8 @@
     <Content Include="app\pricuvaRezije\stanjeOdModal.html" />
     <Content Include="app\pricuvaRezije\stanjeZgradeModal.html" />
     <Content Include="app\pricuvaRezije\stanjeZgradeModalCtrl.js" />
+    <Content Include="app\pricuvaRezije\templates.html" />
+    <Content Include="app\pricuvaRezije\templatesCtrl.js" />
     <Content Include="app\pricuvaRezije\uplatnicaModal.html" />
     <Content Include="app\pricuvaRezije\uplatnicaModalCtrl.js" />
     <Content Include="app\prihodiRashodi\index.html" />
@@ -446,19 +443,17 @@
     <Content Include="app\zgrade\dnevnik\dnevnikIndex.html" />
     <Content Include="app\zgrade\dnevnik\dnevnikIndexCtrl.js" />
     <Content Include="app\zgrade\dnevnik\msgModal.html" />
-    <Content Include="app\zgrade\PDChild\confirmDialog.html" />
-    <Content Include="app\zgrade\PDChild\posebniDijeloviMasterList.html" />
-    <Content Include="app\zgrade\PDChild\posebniDijeloviMasterListCtrl.js" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildModal.html" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildModalCtrl.js" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildPripadciModal.html" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildPovrsinaModal.html" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildPripadciModalCtrl.js" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildPovrsinaModalCtrl.js" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildren.html" />
-    <Content Include="app\zgrade\PDChild\posebniDioChildrenCtrl.js" />
-    <Content Include="app\zgrade\PDChild\posebniDioMasterVlasniciModal.html" />
-    <Content Include="app\zgrade\PDChild\posebniDioMasterVlasniciModalCtrl.js" />
+    <Content Include="app\zgrade\PDMasteri\confirmDialog.html" />
+    <Content Include="app\zgrade\PDMasteri\posebniDijeloviMasterList.html" />
+    <Content Include="app\zgrade\PDMasteri\posebniDijeloviMasterListCtrl.js" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMasterPripadciModal.html" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMasterPovrsinaModal.html" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMasterPripadciModalCtrl.js" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMasterPovrsinaModalCtrl.js" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMaster.html" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMasterCtrl.js" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMasterVlasniciModal.html" />
+    <Content Include="app\zgrade\PDMasteri\posebniDioMasterVlasniciModalCtrl.js" />
     <Content Include="app\zgrade\popisi\dijeloviList.html" />
     <Content Include="app\zgrade\popisi\dijeloviListCtrl.js" />
     <Content Include="app\zgrade\popisi\dijeloviModal.html" />
@@ -556,6 +551,8 @@
     <Content Include="Scripts\angular-animate\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria\angular-aria.js" />
     <Content Include="Scripts\angular-aria\angular-aria.min.js" />
+    <Content Include="Scripts\angular-file-upload.js" />
+    <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\angular-material\angular-material-mocks.js" />
     <Content Include="Scripts\angular-material\angular-material.js" />
     <Content Include="Scripts\angular-material\angular-material.min.js" />
@@ -596,6 +593,8 @@
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\angular-file-upload.js.map" />
+    <Content Include="Scripts\angular-file-upload.min.js.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="appOld\angularApp.js" />
     <Content Include="Scripts\angular\angular.js" />
@@ -718,6 +717,7 @@
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\PricuvaRezijeUplatnice\" />
+    <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,5 +1,5 @@
-﻿angularApp.controller('uplatnicaModalCtrl', ['$scope', '$mdDialog', 'orderByFilter', 'DataService', 'zgradaObj', 'mjesec', 'godina',
-    function ($scope, $mdDialog, orderBy, DataService, zgradaObj, mjesec, godina) {
+﻿angularApp.controller('uplatnicaModalCtrl', ['$scope', '$rootScope', '$mdDialog', 'orderByFilter', 'DataService', 'zgradaObj', 'mjesec', 'godina',
+    function ($scope, $rootScope, $mdDialog, orderBy, DataService, zgradaObj, mjesec, godina) {
 
         $scope.zgradaObj = zgradaObj;
         $scope.godina = godina;
@@ -20,9 +20,9 @@
         var napomenaTmpl = 'Napomena: Novčani doprinos (sredstva pričuve) nisu predmet oporezivanja!<br>';
         napomenaTmpl += '<b>Upozorenje kupcu: U slučaju neispunjenja dospjele novčane obveze, prodavatelj može zatražiti određivanje ovrhe na temelju ovog računa.</b><br>';
         napomenaTmpl += 'Račun je ispisan na računalu te je pravovaljan bez pečata i potpisa.<br><br>'
-        napomenaTmpl += '<b><u>Kod uplate napisati</u></b><br>'
+        napomenaTmpl += '<b>Kod uplate napisati</b><br>'
         napomenaTmpl += '<b>Primatelj: Sredstva zajedničke pričuve SZ Sjenjak 28</b><br>';
-        napomenaTmpl += '<b>IBAN: HR 05 2402 0061 5000 4605 0</b></br>';
+        napomenaTmpl += '<b>IBAN: HR 05 2402 0061 5000 4605 0</b><br>';
         napomenaTmpl += 'MODEL: HR 00<br>';
         napomenaTmpl += 'ŠIFRA NAMJENE: OTHR<br>';
         napomenaTmpl += 'POZIV NA BROJ ODOBRENJA: 1606-091022017<br>';
@@ -63,7 +63,7 @@
                         PrimateljId: 0, TipDuga: '-', TipPlacanja: '-', UdioPricuva: 0, UdioRezije: 0, IznosRezije: 0, IznosPricuva: 0, Uplatnica: '',
                         displayLine: false, displayBtnAdd: false, platitelji: [], primatelji: [],
                         BrojRacuna: '', DatumRacuna: zadnjiDanUMjesecu(), DatumIsporuke: zadnjiDanUMjesecu(), DatumDospijeca: zadnjiDanUMjesecu(),
-                        JedMjera: '', Opis: '', JedCijena: '', Kolicina: '', Ukupno: '', Napomena: napomenaTmpl
+                        JedMjera: '', Opis: '', JedCijena: '', Kolicina: '', Ukupno: '', Napomena: napomenaTmpl, url: null
                     }
 
                     // udio pricuva/rezije - povlaci se udio iz vlasnistva
@@ -133,7 +133,6 @@
         function fnRacunStuff(o) {
             // TipDuga: 'p', TipPlacanja: 'r'
             if (o.TipPlacanja == 'r') {
-                alert('racunam racun');
 
                 $scope.PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (masterPricuva) {
                     if (masterPricuva.PosebniDioMasterId == o.PosebniDioMasterId) {
@@ -190,7 +189,7 @@
                 PrimateljId: 0, TipDuga: '-', TipPlacanja: '-', UdioPricuva: 0, UdioRezije: 0, IznosRezije: 0, IznosPricuva: 0, Uplatnica: '', displayLine: false,
                 displayBtnAdd: false, platitelji: obj.platitelji, primatelji: obj.primatelji,
                 BrojRacuna: '', DatumRacuna: zadnjiDanUMjesecu(), DatumIsporuke: zadnjiDanUMjesecu(), DatumDospijeca: zadnjiDanUMjesecu(), JedMjera: '', Opis: '', JedCijena: '', Kolicina: '',
-                Ukupno: '', Napomena: napomenaTmpl
+                Ukupno: '', Napomena: napomenaTmpl, url: null
             }
             // opis za racun
             zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (zgradamaster) {
@@ -227,14 +226,33 @@
             $scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice = prepraviHrove($scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice);
         }
 
-        //$scope.stanari = DataService.zgradaUseri;
-        //var primatelji = [];
-        //zgradaObj.Zgrade_Stanari.forEach(function (s) {
-        //    var k = { Naziv: s.Ime + ' ' + s.Prezime, Id: s.Id };
-        //    korisnici.push(k);
-        //});
-        //$scope.korisnici = korisnici;
+        $scope.createRacun = function (obj) {
+            $rootScope.loaderActive = true;
 
+            var o = {
+                Id: obj.Id, index: obj.index,
+                BrojRacuna: obj.BrojRacuna, DatumRacuna: obj.DatumRacuna, DatumIsporuke: obj.DatumIsporuke, DatumDospijeca: obj.DatumDospijeca,
+                JedMjera: null, Opis: obj.Opis, JedCijena: obj.JedCijena, Kolicina: obj.Kolicina, Ukupno: obj.Ukupno, Napomena: obj.Napomena
+            }
+
+            if (obj.JedMjera == 1)
+                o.JedMjera = 'm2'
+            else if (obj.JedMjera == 2)
+                o.JedMjera = '%'
+
+            DataService.createRacun(o).then(
+                function (result) {
+                    $rootScope.loaderActive = false;
+                    $scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice.forEach(function (u) {
+                        if (obj.index == i.index)
+                            u.url = result.data;
+                    });
+                },
+                function (result) {
+                    $rootScope.loaderActive = false;
+                }
+            )
+        }
         
 
 
@@ -280,68 +298,10 @@
 
 
 
-        //function findMasterNaziv(mId) {
-        //    var ret = '';
-        //    zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (m) {
-        //        if (mId == m.Id)
-        //            ret = m.Naziv;
-        //    });
-        //    return ret;
-        //}
-
-        //$scope.openModalDetailsUplatnica = function (mjesec, ev) {
-        //    $('nav').fadeOut();
-        //    $mdDialog.show({
-        //        controller: 'uplatnicaDetailsModalCtrl',
-        //        templateUrl: 'app/pricuvaRezije/uplatnicaDetailsModal.html?p=' + new Date().getTime() / 1000,
-        //        parent: angular.element(document.body),
-        //        targetEvent: ev,
-        //        clickOutsideToClose: false,
-        //        fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        //        , locals: {
-        //            zgradaObj: $scope.zgradaObj,
-        //            mjesec: mjesec,
-        //            godina: $scope.selectedGodina,
-        //            ev: ev
-        //        }
-        //    }).then(function () {
-        //    }, function (tempObj) {
-        //        $scope.zgradaObj = tempObj;
-        //    });
-        //};
-
         function zadnjiDanUMjesecu() {
             return new Date((new Date(godina, mjesec)) - 1);
 
 
-            //switch (mjesec) {
-            //    case 1:
-            //        return new Date((new Date(godina, mjesec)) - 1)
-            //        //return new Date(parseInt(godina), parseInt(mjesec + 1), 31);
-            //    case 2:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), getFebDay()); 
-            //    case 3:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 31);
-            //    case 4:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 30);
-            //    case 5:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 31);
-            //    case 6:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 30);
-            //    case 7:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 31);
-            //    case 8:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 31);
-            //    case 9:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 30);
-            //    case 10:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 31);
-            //    case 11:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 30);
-            //    case 12:
-            //        return new Date(parseInt(godina), parseInt(mjesec + 1), 31);
-
-            //}
         }
 
         // provjeri lleap year

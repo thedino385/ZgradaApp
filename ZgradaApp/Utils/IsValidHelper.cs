@@ -36,7 +36,7 @@ namespace ZgradaApp
                         PocetnoStanje = null,
                         //Saldo = 0,
                         //DugPretplataProsliMjesec = 0,
-                        PricuvaRezijePosebniDioChildren = new List<PricuvaRezijePosebniDioChildren>(),
+                        //PricuvaRezijePosebniDioChildren = new List<PricuvaRezijePosebniDioChildren>(),
                         PricuvaRezijePosebniDioMasterVlasnici = new List<PricuvaRezijePosebniDioMasterVlasnici>()
                     };
 
@@ -71,58 +71,96 @@ namespace ZgradaApp
                     posDioMaster.StanjeOd = saldoIzProslog;
 
                     prMj.PricuvaRezijePosebniDioMasteri.Add(posDioMaster);
-                    foreach (var pdChild in pdMaster.Zgrade_PosebniDijeloviChild)
+                    // povrsine
+                    foreach (var povrsina in pdMaster.Zgrade_PosebniDijeloviMaster_Povrsine)
                     {
-                        if (IsValid(pdChild.VrijediOdMjesec, pdChild.VrijediOdGodina, pdChild.ZatvorenGodina, pdChild.ZatvorenMjesec, pdChild.Zatvoren, godina, prMj.Mjesec))
+                        if (IsValid(povrsina.VrijediOdMjesec, povrsina.VrijediOdGodina, povrsina.ZatvorenMjesec, povrsina.ZatvorenGodina, povrsina.Zatvoren, godina, prMj.Mjesec))
                         {
-                            var posDioChild = new PricuvaRezijePosebniDioChildren
+                            var povr = new PricuvaRezijePosebniDioMasterPovrsine
                             {
                                 Id = 0,
-                                PricuvaRezijeMasterId = pdMaster.Id,
-                                PosebniDioChildId = pdChild.Id,
-                                PricuvaRezijePosebniDioChildPovrsine = new List<PricuvaRezijePosebniDioChildPovrsine>(),
-                                PricuvaRezijePosebniDioChildPripadci = new List<PricuvaRezijePosebniDioChildPripadci>()
+                                PricuvaRezijePosebniDioMasterId = pdMaster.Id,
+                                PovrsinaId = povrsina.Id,
+                                Koef = povrsina.Koef,
+                                Naziv = povrsina.Naziv,
+                                Oznaka = povrsina.Oznaka,
+                                Povrsina = povrsina.Povrsina
                             };
-                            posDioMaster.PricuvaRezijePosebniDioChildren.Add(posDioChild);
-                            // povrsine
-                            foreach (var povrsina in pdChild.Zgrade_PosebniDijeloviChild_Povrsine)
-                            {
-                                if(IsValid(povrsina.VrijediOdMjesec, povrsina.VrijediOdGodina, povrsina.ZatvorenMjesec, povrsina.ZatvorenGodina, povrsina.Zatvoren, godina, prMj.Mjesec))
-                                {
-                                    var povr = new PricuvaRezijePosebniDioChildPovrsine
-                                    {
-                                        Id = 0,
-                                        PricuvaRezijePosebniDioChildId = pdChild.Id,
-                                        PovrsinaId = povrsina.Id,
-                                        Koef = povrsina.Koef,
-                                        Naziv = povrsina.Naziv,
-                                        Oznaka = povrsina.Oznaka,
-                                        Povrsina = povrsina.Povrsina
-                                    };
-                                    posDioChild.PricuvaRezijePosebniDioChildPovrsine.Add(povr);
-                                }
-                            }
-
-                            // pripadci
-                            foreach (var prip in pdChild.Zgrade_PosebniDijeloviChild_Pripadci)
-                            {
-                                if (IsValid(prip.VrijediOdMjesec, prip.VrijediOdGodina, prip.ZatvorenMjesec, prip.ZatvorenGodina, prip.Zatvoren, godina, prMj.Mjesec))
-                                {
-                                    var prPrip = new PricuvaRezijePosebniDioChildPripadci
-                                    {
-                                        Id = 0,
-                                        PricuvaRezijePosebniDioChildId = pdChild.Id,
-                                        PripadakId = prip.Id,
-                                        Koef = prip.Koef,
-                                        Naziv = prip.Naziv,
-                                        Oznaka = prip.Oznaka,
-                                        Povrsina = prip.Povrsina
-                                    };
-                                    posDioChild.PricuvaRezijePosebniDioChildPripadci.Add(prPrip);
-                                }
-                            }
+                            posDioMaster.PricuvaRezijePosebniDioMasterPovrsine.Add(povr);
                         }
                     }
+                    // pripadci
+                    foreach (var prip in pdMaster.Zgrade_PosebniDijeloviMaster_Pripadci)
+                    {
+                        if (IsValid(prip.VrijediOdMjesec, prip.VrijediOdGodina, prip.ZatvorenMjesec, prip.ZatvorenGodina, prip.Zatvoren, godina, prMj.Mjesec))
+                        {
+                            var p = new PricuvaRezijePosebniDioMasterPripadci
+                            {
+                                Id = 0,
+                                PricuvaRezijePosebniDioMasterId = pdMaster.Id,
+                                PripadakId = prip.Id,
+                                Koef = prip.Koef,
+                                Naziv = prip.Naziv,
+                                Oznaka = prip.Oznaka,
+                                Povrsina = prip.Povrsina
+                            };
+                            posDioMaster.PricuvaRezijePosebniDioMasterPripadci.Add(p);
+                        }
+                    }
+
+
+                    //foreach (var pdChild in pdMaster.Zgrade_PosebniDijeloviChild)
+                    //{
+                    //    if (IsValid(pdChild.VrijediOdMjesec, pdChild.VrijediOdGodina, pdChild.ZatvorenGodina, pdChild.ZatvorenMjesec, pdChild.Zatvoren, godina, prMj.Mjesec))
+                    //    {
+                    //        var posDioChild = new PricuvaRezijePosebniDioChildren
+                    //        {
+                    //            Id = 0,
+                    //            PricuvaRezijeMasterId = pdMaster.Id,
+                    //            PosebniDioChildId = pdChild.Id,
+                    //            PricuvaRezijePosebniDioChildPovrsine = new List<PricuvaRezijePosebniDioChildPovrsine>(),
+                    //            PricuvaRezijePosebniDioChildPripadci = new List<PricuvaRezijePosebniDioChildPripadci>()
+                    //        };
+                    //        posDioMaster.PricuvaRezijePosebniDioChildren.Add(posDioChild);
+                    //        // povrsine
+                    //        foreach (var povrsina in pdChild.Zgrade_PosebniDijeloviChild_Povrsine)
+                    //        {
+                    //            if(IsValid(povrsina.VrijediOdMjesec, povrsina.VrijediOdGodina, povrsina.ZatvorenMjesec, povrsina.ZatvorenGodina, povrsina.Zatvoren, godina, prMj.Mjesec))
+                    //            {
+                    //                var povr = new PricuvaRezijePosebniDioChildPovrsine
+                    //                {
+                    //                    Id = 0,
+                    //                    PricuvaRezijePosebniDioChildId = pdChild.Id,
+                    //                    PovrsinaId = povrsina.Id,
+                    //                    Koef = povrsina.Koef,
+                    //                    Naziv = povrsina.Naziv,
+                    //                    Oznaka = povrsina.Oznaka,
+                    //                    Povrsina = povrsina.Povrsina
+                    //                };
+                    //                posDioChild.PricuvaRezijePosebniDioChildPovrsine.Add(povr);
+                    //            }
+                    //        }
+
+                    //        // pripadci
+                    //        foreach (var prip in pdChild.Zgrade_PosebniDijeloviChild_Pripadci)
+                    //        {
+                    //            if (IsValid(prip.VrijediOdMjesec, prip.VrijediOdGodina, prip.ZatvorenMjesec, prip.ZatvorenGodina, prip.Zatvoren, godina, prMj.Mjesec))
+                    //            {
+                    //                var prPrip = new PricuvaRezijePosebniDioChildPripadci
+                    //                {
+                    //                    Id = 0,
+                    //                    PricuvaRezijePosebniDioChildId = pdChild.Id,
+                    //                    PripadakId = prip.Id,
+                    //                    Koef = prip.Koef,
+                    //                    Naziv = prip.Naziv,
+                    //                    Oznaka = prip.Oznaka,
+                    //                    Povrsina = prip.Povrsina
+                    //                };
+                    //                posDioChild.PricuvaRezijePosebniDioChildPripadci.Add(prPrip);
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     // vlasnici period
                     foreach (var period in pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod)
                     {

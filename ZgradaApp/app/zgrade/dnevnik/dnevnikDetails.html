@@ -74,37 +74,12 @@
             </div>
 
             <hr />
-            <md-button ng-show="showNewbtn" class="md-icon-button pull-right" ng-click="newMsg(0, $event)" aria-label="More">
+            <!--<md-button class="md-icon-button pull-right" ng-click="newMsg(0, $event)" aria-label="More">
                 <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: green"></md-icon>
-            </md-button>
+            </md-button>-->
+            <md-button class="md-raised" ng-click="newMsg(0, $event)">Dodaj poruku</md-button>
 
-            <!--<div id="vertical-timeline" class="vertical-container center-orientation light-timeline">
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon red-bg">
-                        <md-icon md-svg-icon="/Content/icons/message-text-outline.svg" style="fill: white; padding-top: 5px"></md-icon>
-                    </div>
-                    <div class="vertical-timeline-content">
-                        <p>Ka zapoceo konverzaciju</p>
-                        <span class="vertical-date">
-                            Jozo Borg<br />
-                            <small>11.11.2015. 09:47</small>
-                        </span>
-                    </div>
-                </div>
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon blue-bg">
-                        <md-icon md-svg-icon="/Content/icons/message-text-outline.svg" style="fill: white; padding-top: 5px"></md-icon>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <p>Ja odgovorion</p>
-                        <span class="vertical-date">
-                            Petar Veliki<br />
-                            <small>12.11.2015. 08:11</small>
-                        </span>
-                    </div>
-                </div>
-            </div>-->
+           
 
             <div id="vertical-timeline" class="vertical-container center-orientation light-timeline">
                 <div ng-repeat="d in obj.Zgrade_DnevnikRadaDetails" class="vertical-timeline-block">
@@ -116,7 +91,7 @@
                         <span class="vertical-date">
                             <span ng-repeat="user in useri | filter: { Id: d.UserId }">
                                 {{user.Ime}} {{user.Prezime}}
-                                <a href="" class="md-icon-button" ng-click="newMsg(d.Id, $event)" title="Uredi vlasnike">
+                                <a href="" class="md-icon-button" ng-click="newMsg(d.Id, $event)" title="Uredi poruku">
                                     <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
                                 </a>
                             </span>
@@ -129,11 +104,12 @@
             </div>
 
             <hr />
-            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
-
-            <md-button class="md-raised pull-right" ng-click="cancel()">
+            <span flex></span>
+            <md-button class="md-raised md-warn  pull-right" ng-click="cancel()">
                 Odustani
             </md-button>
+            <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+            
             
         </form>
     </div>

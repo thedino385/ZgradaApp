@@ -1,4 +1,4 @@
-﻿var angularApp = angular.module('angularApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngMaterial', 'ngAnimate', 'ngMessages', 'toastr']);
+﻿var angularApp = angular.module('angularApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngMaterial', 'ngAnimate', 'ngMessages', 'toastr', 'angularFileUpload']);
 
 
 // https://www.w3schools.com/angular/angular_validation.asp
@@ -97,12 +97,12 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', '$mdD
             controller: 'zgradaCtrl'
         })
         .when('/posebniDijeloviMasterList', {
-            templateUrl: '../app/zgrade/PDChild/posebniDijeloviMasterList.html?p=' + new Date().getTime() / 1000,
+            templateUrl: '../app/zgrade/PDMasteri/posebniDijeloviMasterList.html?p=' + new Date().getTime() / 1000,
             controller: 'posebniDijeloviMasterListCtrl'
         })
-        .when('/posebniDioChildren/:id', { // posebniDioMasterId
-            templateUrl: '../app/zgrade/PDChild/posebniDioChildren.html?p=' + new Date().getTime() / 1000,
-            controller: 'posebniDioChildrenCtrl'
+        .when('/posebniDioMaster/:id', { // posebniDioMasterId
+            templateUrl: '../app/zgrade/PDMasteri/posebniDioMaster.html?p=' + new Date().getTime() / 1000,
+            controller: 'posebniDioMasterCtrl'
         })
         .when('/prihodiRashodi', { // posebniDioMasterId
             templateUrl: '../app/prihodiRashodi/index.html?p=' + new Date().getTime() / 1000,
@@ -144,7 +144,10 @@ angularApp.config(['$routeProvider', '$locationProvider', '$httpProvider', '$mdD
             templateUrl: '../app/zgrade/popisStanara.html?p=' + new Date().getTime() / 1000,
             controller: 'popisStanaraCtrl'
         })
-
+        .when('/templates', { // posebniDioMasterId
+            templateUrl: '../app/pricuvaRezije/templates.html?p=' + new Date().getTime() / 1000,
+            controller: 'templatesCtrl'
+        })
 
 
         .when('/pripadak/:id', {

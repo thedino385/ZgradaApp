@@ -17,14 +17,14 @@ namespace ZgradaApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Zgrade_PosebniDijeloviMaster()
         {
-            this.Zgrade_PosebniDijeloviChild = new HashSet<Zgrade_PosebniDijeloviChild>();
             this.Zgrade_PosebniDijeloviMaster_VlasniciPeriod = new HashSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod>();
+            this.Zgrade_PosebniDijeloviMaster_Povrsine = new HashSet<Zgrade_PosebniDijeloviMaster_Povrsine>();
+            this.Zgrade_PosebniDijeloviMaster_Pripadci = new HashSet<Zgrade_PosebniDijeloviMaster_Pripadci>();
         }
     
         public int Id { get; set; }
         public int ZgradaId { get; set; }
         public string Naziv { get; set; }
-        public string Oznaka { get; set; }
         public string Napomena { get; set; }
         public Nullable<bool> Zatvoren { get; set; }
         public Nullable<int> ZatvorenGodina { get; set; }
@@ -34,11 +34,14 @@ namespace ZgradaApp
         public Nullable<int> UplatnicaStanarId { get; set; }
         public string OpisRacun { get; set; }
         public string NapomenaRacun { get; set; }
+        public string Broj { get; set; }
     
         public virtual Zgrade Zgrade { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zgrade_PosebniDijeloviChild> Zgrade_PosebniDijeloviChild { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zgrade_PosebniDijeloviMaster_VlasniciPeriod> Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Zgrade_PosebniDijeloviMaster_Povrsine> Zgrade_PosebniDijeloviMaster_Povrsine { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Zgrade_PosebniDijeloviMaster_Pripadci> Zgrade_PosebniDijeloviMaster_Pripadci { get; set; }
     }
 }

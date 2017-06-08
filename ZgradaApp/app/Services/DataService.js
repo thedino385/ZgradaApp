@@ -157,6 +157,18 @@
         return $http.get('../api/data/getPopisStanari?zgradaId=' + zgradaId);
     }
 
+    var createRacun = function (obj) {
+        console.log('DS cratwRacun');
+        //return $http.post('../PricuvaRezijeUplatnice/genRacun', obj);
+        return $http.post('../api/data/genRacun', obj);
+    }
+
+    var saveTeplates = function (zgrada) {
+        console.log("DS: saveTeplates");
+        console.log(zgrada);
+        return $http.post('../api/data/saveTeplates', zgrada);
+    }
+
 
     var myParseFloat = function (decimalComma) {
         if (decimalComma == null || decimalComma == undefined)
@@ -174,6 +186,7 @@
         //decimal = decimal.toString().replace(',', '.'); //za ovo treba tocka
         return parseFloat(decimal).toLocaleString('hr-HR', { minimumFractionDigits: 2 });
     }
+
 
 
     var decimalToEng = function (zgrada, modul) {
@@ -223,16 +236,14 @@
                 break;
             case "ZgradaStanovi":
                 // zgrada je pdMaster
-                zgrada.Zgrade_PosebniDijeloviChild.forEach(function (child) {
-                    child.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (p) {
-                        p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
-                        p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
-                    });
-                    child.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (p) {
-                        p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
-                        p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
-                    });
-                })
+                zgrada.Zgrade_PosebniDijeloviMaster_Povrsine.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
+                });
+                zgrada.Zgrade_PosebniDijeloviMaster_Pripadci.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
+                });
         }
         // prihodi rashodi
 
@@ -301,17 +312,14 @@
                 break;
             case "ZgradaStanovi":
                 // zgrada je pdMaster
-                zgrada.Zgrade_PosebniDijeloviChild.forEach(function (child) {
-                    child.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (p) {
-                        p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace('.', ',') : 0;
-                        p.Koef != null ? p.Koef = p.Koef.toString().replace('.', ',') : 0;
-                    });
-                    child.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (p) {
-                        p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace('.', ',') : 0;
-                        p.Koef != null ? p.Koef = p.Koef.toString().replace('.', ',') : 0;
-                    });
+                zgrada.Zgrade_PosebniDijeloviMaster_Povrsine.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
                 });
-
+                zgrada.Zgrade_PosebniDijeloviMaster_Pripadci.forEach(function (p) {
+                    p.Povrsina != null ? p.Povrsina = p.Povrsina.toString().replace(',', '.') : 0;
+                    p.Koef != null ? p.Koef = p.Koef.toString().replace(',', '.') : 0;
+                });
                 break;
             case "pricuvaGodTable":
                 // zgrada je ovdje array
@@ -634,7 +642,10 @@
         decimalToEng: decimalToEng,
         decimalToHr: decimalToHr,
         myParseFloat: myParseFloat,
-        toHrDecimal: toHrDecimal
+        toHrDecimal: toHrDecimal,
+
+        createRacun: createRacun,
+        saveTeplates: saveTeplates
     }
 
 

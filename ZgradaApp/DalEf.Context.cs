@@ -30,9 +30,6 @@ namespace ZgradaApp
         public virtual DbSet<PricuvaRezijeGodina> PricuvaRezijeGodina { get; set; }
         public virtual DbSet<PricuvaRezijeGodina_StanjeOd> PricuvaRezijeGodina_StanjeOd { get; set; }
         public virtual DbSet<PricuvaRezijeMjesec> PricuvaRezijeMjesec { get; set; }
-        public virtual DbSet<PricuvaRezijePosebniDioChildPovrsine> PricuvaRezijePosebniDioChildPovrsine { get; set; }
-        public virtual DbSet<PricuvaRezijePosebniDioChildPripadci> PricuvaRezijePosebniDioChildPripadci { get; set; }
-        public virtual DbSet<PricuvaRezijePosebniDioChildren> PricuvaRezijePosebniDioChildren { get; set; }
         public virtual DbSet<PricuvaRezijePosebniDioMasteri> PricuvaRezijePosebniDioMasteri { get; set; }
         public virtual DbSet<PrihodiRashodi> PrihodiRashodi { get; set; }
         public virtual DbSet<PrihodiRashodi_Prihodi> PrihodiRashodi_Prihodi { get; set; }
@@ -43,9 +40,6 @@ namespace ZgradaApp
         public virtual DbSet<Zgrade_DnevnikRadaDetails> Zgrade_DnevnikRadaDetails { get; set; }
         public virtual DbSet<Zgrade_PopisUredjaja> Zgrade_PopisUredjaja { get; set; }
         public virtual DbSet<Zgrade_PopisZajednickihDijelova> Zgrade_PopisZajednickihDijelova { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijeloviChild> Zgrade_PosebniDijeloviChild { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijeloviChild_Povrsine> Zgrade_PosebniDijeloviChild_Povrsine { get; set; }
-        public virtual DbSet<Zgrade_PosebniDijeloviChild_Pripadci> Zgrade_PosebniDijeloviChild_Pripadci { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviMaster> Zgrade_PosebniDijeloviMaster { get; set; }
         public virtual DbSet<Zgrade_PosebniDijeloviMaster_VlasniciPeriod> Zgrade_PosebniDijeloviMaster_VlasniciPeriod { get; set; }
         public virtual DbSet<Zgrade_Stanari> Zgrade_Stanari { get; set; }
@@ -64,5 +58,9 @@ namespace ZgradaApp
         public virtual DbSet<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
         public virtual DbSet<vPopisStanara> vPopisStanara { get; set; }
         public virtual DbSet<PricuvaRezijeMjesec_Uplatnice> PricuvaRezijeMjesec_Uplatnice { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviMaster_Povrsine> Zgrade_PosebniDijeloviMaster_Povrsine { get; set; }
+        public virtual DbSet<Zgrade_PosebniDijeloviMaster_Pripadci> Zgrade_PosebniDijeloviMaster_Pripadci { get; set; }
+        public virtual DbSet<PricuvaRezijePosebniDioMasterPovrsine> PricuvaRezijePosebniDioMasterPovrsine { get; set; }
+        public virtual DbSet<PricuvaRezijePosebniDioMasterPripadci> PricuvaRezijePosebniDioMasterPripadci { get; set; }
     }
 }

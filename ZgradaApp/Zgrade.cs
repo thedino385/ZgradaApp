@@ -33,6 +33,8 @@ namespace ZgradaApp
         public string Adresa { get; set; }
         public string Mjesto { get; set; }
         public string Napomena { get; set; }
+        public string IBAN { get; set; }
+        public string NapomenaRacun { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PricuvaRezijeGodina> PricuvaRezijeGodina { get; set; }

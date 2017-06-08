@@ -28,6 +28,11 @@ namespace ZgradaApp
             get { return val; }
             set { val = value; }
         }
+        public bool MasteriTemplateExpanded
+        {
+            get { return val; }
+            set { val = value; }
+        }
     }
 
     public partial class Zgrade_PosebniDijeloviChild
@@ -41,12 +46,12 @@ namespace ZgradaApp
         }
     }
 
-    public partial class Zgrade_PosebniDijeloviChild_Povrsine
+    public partial class Zgrade_PosebniDijeloviMaster_Povrsine
     {
         public string Status { get; set; }
     }
 
-    public partial class Zgrade_PosebniDijeloviChild_Pripadci
+    public partial class Zgrade_PosebniDijeloviMaster_Pripadci
     {
         public string Status { get; set; }
     }
@@ -141,6 +146,24 @@ namespace ZgradaApp
         public bool DetailsVisible { get; set; }
     }
 
+
+    public class RacunPdf
+    {
+        public int Id { get; set; }
+        public int index { get; set; }
+        public int PosebniDioMasterId { get; set; }
+        public string BrojRacuna { get; set; }
+        public DateTime DatumRacuna { get; set; }
+        public DateTime DatumIsporuke { get; set; }
+        public DateTime DatumDospijeca { get; set; }
+        public string JedMjera { get; set; }
+        public string Opis { get; set; }
+        public decimal JedCijena { get; set; }
+        public decimal Kolicina { get; set; }
+        public decimal Ukupno { get; set; }
+        public string Napomena { get; set; }
+
+    }
 
     // OLD
 

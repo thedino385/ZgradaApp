@@ -5,7 +5,10 @@
         var tempObj = {};
         angular.copy(zgradaObj, tempObj);
         if (id == 0) {
-            $scope.posebniDioMasterObj = { Id: 0, ZgradaId: zgradaObj.Id, Naziv: '', Oznaka: '', Zatvoren: false, Status: '' };
+            $scope.posebniDioMasterObj = {
+                Id: 0, ZgradaId: zgradaObj.Id, Naziv: '', Oznaka: '', Zatvoren: false, Status: '',
+                VrijediOdMjesec: parseInt(new Date().getMonth() + 1), VrijediOdGodina: new Date().getFullYear()
+            };
             $scope.msg = 'Novi posebni dio';
         }
         else {

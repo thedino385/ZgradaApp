@@ -17,8 +17,9 @@ namespace ZgradaApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PricuvaRezijePosebniDioMasteri()
         {
-            this.PricuvaRezijePosebniDioChildren = new HashSet<PricuvaRezijePosebniDioChildren>();
             this.PricuvaRezijePosebniDioMasterVlasnici = new HashSet<PricuvaRezijePosebniDioMasterVlasnici>();
+            this.PricuvaRezijePosebniDioMasterPovrsine = new HashSet<PricuvaRezijePosebniDioMasterPovrsine>();
+            this.PricuvaRezijePosebniDioMasterPripadci = new HashSet<PricuvaRezijePosebniDioMasterPripadci>();
         }
     
         public int Id { get; set; }
@@ -38,8 +39,10 @@ namespace ZgradaApp
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PricuvaRezijePosebniDioChildren> PricuvaRezijePosebniDioChildren { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PricuvaRezijePosebniDioMasterVlasnici> PricuvaRezijePosebniDioMasterVlasnici { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PricuvaRezijePosebniDioMasterPovrsine> PricuvaRezijePosebniDioMasterPovrsine { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PricuvaRezijePosebniDioMasterPripadci> PricuvaRezijePosebniDioMasterPripadci { get; set; }
     }
 }

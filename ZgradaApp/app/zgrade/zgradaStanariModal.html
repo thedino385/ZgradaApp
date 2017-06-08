@@ -8,10 +8,8 @@
 
                 <h3 flex md-truncate>{{msg}}</h3>
 
-
-
-                <md-button class="md-icon-button" aria-label="More" ng-disabled="true">
-                    <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label="Zatvori"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
@@ -52,24 +50,25 @@
                         <div layout-gt-sm="row">
                             <div class="col-sm-2"></div>
                             <md-input-container class="md-block col-sm-4" flex-gt-sm>
-                                <label>OIB</label>
-                                <input required type="text" name="oib" ng-model="stanarObj.OIB">
-                                <div ng-messages="stanarFrm.oib.$error" role="alert">
-                                    <div ng-message-exp="['required']">
-                                        Obavezno polje
-                                    </div>
-                                </div>
-                            </md-input-container>
-
-                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
                                 <label>Email</label>
-                                <input type="text" name="email" ng-model="stanarObj.Email">
+                                <input required type="text" name="email" ng-model="stanarObj.Email">
                                 <!--<div ng-messages="stanarFrm.email.$error" role="alert">
                                     <div ng-message-exp="['required']">
                                         Obavezno polje
                                     </div>
                                 </div>-->
                             </md-input-container>
+
+                            <md-input-container class="md-block col-sm-4" flex-gt-sm>
+                                <label>OIB</label>
+                                <input type="text" name="oib" ng-model="stanarObj.OIB">
+                                <!--<div ng-messages="stanarFrm.oib.$error" role="alert">
+                                    <div ng-message-exp="['required']">
+                                        Obavezno polje
+                                    </div>
+                                </div>-->
+                            </md-input-container>
+
                             <div class="col-sm-2"></div>
                         </div>
 
@@ -121,10 +120,10 @@
 
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button class="md-raised" ng-click="cancel()">
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="stanarFrm.$invalid || stanarFrm.$pristine">Spremi</md-button>
+            <md-button class="md-raised md-warn" ng-click="cancel()">
                 Odustani
             </md-button>
-            <md-button class="md-raised md-primary" type="submit" ng-disabled="stanarFrm.$invalid">Spremi</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

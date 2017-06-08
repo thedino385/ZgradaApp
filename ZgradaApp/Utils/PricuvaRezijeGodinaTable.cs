@@ -9,7 +9,7 @@ namespace ZgradaApp
     {
         List<PricuvaRezijeGodinaStructure> tbl = new List<PricuvaRezijeGodinaStructure>();
 
-        public List<PricuvaRezijeGodinaStructure> getPricuvaRezijeGodinaTable(PricuvaRezijeGodina prGodina, List<Zgrade_PosebniDijeloviMaster> masteri, List<Zgrade_Stanari> stanari, List<Zgrade_PosebniDijeloviChild> pdChildren)
+        public List<PricuvaRezijeGodinaStructure> getPricuvaRezijeGodinaTable(PricuvaRezijeGodina prGodina, List<Zgrade_PosebniDijeloviMaster> masteri, List<Zgrade_Stanari> stanari)
         {
             if (prGodina == null)
                 return tbl;
@@ -59,7 +59,7 @@ namespace ZgradaApp
                                 {
                                     case 1:
                                         var masterUmjesecu1 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu1.PeriodId != null && masterUmjesecu1.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu1 != null && masterUmjesecu1.PeriodId != null && masterUmjesecu1.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj1 = masterUmjesecu1.Uplaceno != null ? (decimal)masterUmjesecu1.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu1.ZaduzenjePricuva != null ? (decimal)masterUmjesecu1.ZaduzenjePricuva : 0;
@@ -86,7 +86,7 @@ namespace ZgradaApp
                                         break;
                                     case 2:
                                         var masterUmjesecu2 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu2.PeriodId != null && masterUmjesecu2.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu2 != null && masterUmjesecu2.PeriodId != null && masterUmjesecu2.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj2 = masterUmjesecu2.Uplaceno != null ? (decimal)masterUmjesecu2.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu2.ZaduzenjePricuva != null ? (decimal)masterUmjesecu2.ZaduzenjePricuva : 0;
@@ -111,7 +111,7 @@ namespace ZgradaApp
                                         break;
                                     case 3:
                                         var masterUmjesecu3 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu3.PeriodId != null && masterUmjesecu3.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu3 != null && masterUmjesecu3.PeriodId != null && masterUmjesecu3.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj3 = masterUmjesecu3.Uplaceno != null ? (decimal)masterUmjesecu3.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu3.ZaduzenjePricuva != null ? (decimal)masterUmjesecu3.ZaduzenjePricuva : 0;
@@ -135,7 +135,7 @@ namespace ZgradaApp
                                         break;
                                     case 4:
                                         var masterUmjesecu4 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu4.PeriodId != null && masterUmjesecu4.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu4 != null &&  masterUmjesecu4.PeriodId != null && masterUmjesecu4.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj4 = masterUmjesecu4.Uplaceno != null ? (decimal)masterUmjesecu4.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu4.ZaduzenjePricuva != null ? (decimal)masterUmjesecu4.ZaduzenjePricuva : 0;
@@ -159,7 +159,7 @@ namespace ZgradaApp
                                         break;
                                     case 5:
                                         var masterUmjesecu5 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu5.PeriodId != null && masterUmjesecu5.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu5 != null && masterUmjesecu5.PeriodId != null && masterUmjesecu5.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj5 = masterUmjesecu5.Uplaceno != null ? (decimal)masterUmjesecu5.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu5.ZaduzenjePricuva != null ? (decimal)masterUmjesecu5.ZaduzenjePricuva : 0;
@@ -183,7 +183,7 @@ namespace ZgradaApp
                                         break;
                                     case 6:
                                         var masterUmjesecu6 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu6.PeriodId != null && masterUmjesecu6.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu6 != null && masterUmjesecu6.PeriodId != null && masterUmjesecu6.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj6 = masterUmjesecu6.Uplaceno != null ? (decimal)masterUmjesecu6.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu6.ZaduzenjePricuva != null ? (decimal)masterUmjesecu6.ZaduzenjePricuva : 0;
@@ -207,7 +207,7 @@ namespace ZgradaApp
                                         break;
                                     case 7:
                                         var masterUmjesecu7 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu7.PeriodId != null && masterUmjesecu7.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu7 != null && masterUmjesecu7.PeriodId != null && masterUmjesecu7.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj7 = masterUmjesecu7.Uplaceno != null ? (decimal)masterUmjesecu7.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu7.ZaduzenjePricuva != null ? (decimal)masterUmjesecu7.ZaduzenjePricuva : 0;
@@ -231,7 +231,7 @@ namespace ZgradaApp
                                         break;
                                     case 8:
                                         var masterUmjesecu8 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu8.PeriodId != null && masterUmjesecu8.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu8 != null && masterUmjesecu8.PeriodId != null && masterUmjesecu8.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj8 = masterUmjesecu8.Uplaceno != null ? (decimal)masterUmjesecu8.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu8.ZaduzenjePricuva != null ? (decimal)masterUmjesecu8.ZaduzenjePricuva : 0;
@@ -255,7 +255,7 @@ namespace ZgradaApp
                                         break;
                                     case 9:
                                         var masterUmjesecu9 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu9.PeriodId != null && masterUmjesecu9.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu9 != null && masterUmjesecu9.PeriodId != null && masterUmjesecu9.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj1 = masterUmjesecu9.Uplaceno != null ? (decimal)masterUmjesecu9.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu9.ZaduzenjePricuva != null ? (decimal)masterUmjesecu9.ZaduzenjePricuva : 0;
@@ -279,7 +279,7 @@ namespace ZgradaApp
                                         break;
                                     case 10:
                                         var masterUmjesecu10 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu10.PeriodId != null && masterUmjesecu10.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu10 != null && masterUmjesecu10.PeriodId != null && masterUmjesecu10.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj10 = masterUmjesecu10.Uplaceno != null ? (decimal)masterUmjesecu10.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu10.ZaduzenjePricuva != null ? (decimal)masterUmjesecu10.ZaduzenjePricuva : 0;
@@ -303,7 +303,7 @@ namespace ZgradaApp
                                         break;
                                     case 11:
                                         var masterUmjesecu11 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu11.PeriodId != null && masterUmjesecu11.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu11 != null && masterUmjesecu11.PeriodId != null && masterUmjesecu11.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj11 = masterUmjesecu11.Uplaceno != null ? (decimal)masterUmjesecu11.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu11.ZaduzenjePricuva != null ? (decimal)masterUmjesecu11.ZaduzenjePricuva : 0;
@@ -327,7 +327,7 @@ namespace ZgradaApp
                                         break;
                                     case 12:
                                         var masterUmjesecu12 = recMjesec.PricuvaRezijePosebniDioMasteri.FirstOrDefault(p => p.PosebniDioMasterId == prMaster.PosebniDioMasterId);
-                                        if (masterUmjesecu12.PeriodId != null && masterUmjesecu12.PeriodId == prMaster.PeriodId)
+                                        if (masterUmjesecu12 != null && masterUmjesecu12.PeriodId != null && masterUmjesecu12.PeriodId == prMaster.PeriodId)
                                         {
                                             uplataMj12 = masterUmjesecu12.Uplaceno != null ? (decimal)masterUmjesecu12.Uplaceno : 0;
                                             ZaduzenjePricuva += masterUmjesecu12.ZaduzenjePricuva != null ? (decimal)masterUmjesecu12.ZaduzenjePricuva : 0;

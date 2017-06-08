@@ -45,9 +45,11 @@
                     <td style="text-align: center; vertical-align: middle">{{user.Email}}</td>
                     <td style="text-align: center; vertical-align: middle"><md-checkbox ng-model="user.Active"></md-checkbox></td>
                     <td>
-                        <md-button class="md-icon-button" ng-click="openModal(user.Id, $event)" title="Uredi korisnika">
+                        <!--<md-button class="md-icon-button" ng-click="openModal(user.Id, $event)" title="Uredi korisnika">
                             <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
-                        </md-button>
+                        </md-button>-->
+
+                        <md-button class="md-raised" ng-click="openModal(user.Id, $event)">Uredi</md-button>
                     </td>
                 </tr>
         </table>
