@@ -428,6 +428,7 @@
     <Content Include="app\prihodiRashodi\sifarnikRashodaModal.html" />
     <Content Include="app\prihodiRashodi\rashodiUplatnice.html" />
     <Content Include="app\prihodiRashodi\rashodiUplatniceCtrl.js" />
+    <Content Include="app\Services\CalcService.js" />
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\prihodiRashodi\sifarnikRashodaModalCtrl.js" />
     <Content Include="app\Services\AccountService.js" />
@@ -509,6 +510,7 @@
     <Content Include="Content\icons\menu.svg" />
     <Content Include="Content\icons\message-text-outline.svg" />
     <Content Include="Content\icons\minus-circle.svg" />
+    <Content Include="Content\icons\minus.svg" />
     <Content Include="Content\icons\more_vert.svg" />
     <Content Include="Content\icons\octicon-repo.svg" />
     <Content Include="Content\icons\plus.png" />
