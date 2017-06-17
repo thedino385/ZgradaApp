@@ -62,6 +62,7 @@
     <Property Name="SaKoef" Type="bit" />
     <Property Name="ObracunPricuvaCijenaM2" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunPricuvaCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ObracunPricuvaCijenaUkupnoZaPostotak" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunRezijeCijenaUkupno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="ObracunRezijaCijenaUkupnoPoBrojuClanova" Type="decimal" Precision="18" Scale="2" />
     <Property Name="OrocenaSredstva" Type="decimal" Precision="18" Scale="2" />
@@ -171,12 +172,13 @@
     <Property Name="PrihodiRashodiGodId" Type="int" Nullable="false" />
     <Property Name="Mjesec" Type="int" Nullable="false" />
     <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
-    <Property Name="Opis" Type="varchar" MaxLength="200" />
+    <Property Name="VlasnikId" Type="int" />
     <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="DatumUnosa" Type="datetime" />
-    <Property Name="DatumObracuna" Type="datetime" />
-    <Property Name="PrijenosPricuve" Type="bit" />
-    <Property Name="UplataPricuve" Type="bit" />
+    <Property Name="IznosUplacen" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UplataVrsta" Type="char" MaxLength="1" />
+    <Property Name="Udio" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DatumValute" Type="datetime" />
+    <Property Name="DatumUplate" Type="datetime" />
   </EntityType>
   <EntityType Name="PrihodiRashodi_Rashodi">
     <Key>

@@ -15,7 +15,7 @@ using System.Web.Http;
 
 namespace ZgradaApp.Controllers
 {
-    [Authorize(Roles ="Voditelj")]
+    [Authorize(Roles = "Voditelj")]
     public class DataController : ApiController
     {
         private readonly ZgradaDbEntities _db = new ZgradaDbEntities();
@@ -47,7 +47,7 @@ namespace ZgradaApp.Controllers
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
 
-                if(prenesiRashodeuTekuciMjesec)
+                if (prenesiRashodeuTekuciMjesec)
                     // prenesi iz proslog mjeseca u tekuci
                     await new RashodiPrebaciNeplacene(_db, DateTime.Today.Month).Prebaci();
 
@@ -275,7 +275,7 @@ namespace ZgradaApp.Controllers
                             pr.PrihodiRashodiGodId = prihodRashod.Id;
                             if (pr.Status == "a")
                                 _db.PrihodiRashodi_Prihodi.Add(pr);
-                            else if(pr.Status == "d")
+                            else if (pr.Status == "d")
                             {
                                 var target = await _db.PrihodiRashodi_Prihodi.FirstOrDefaultAsync(p => p.Id == pr.Id);
                                 if (target != null)
@@ -412,6 +412,7 @@ namespace ZgradaApp.Controllers
                     if (prGod.Id == 0)
                     {
                         _db.PricuvaRezijeGodina.Add(prGod);
+                        _db.PrihodiRashodi.Add(new PrihodiRashodi { Godina = prGod.Godina, ZgradaId = zgrada.Id });
                     }
                     else
                     {
@@ -486,7 +487,7 @@ namespace ZgradaApp.Controllers
                 await _db.SaveChangesAsync();
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return InternalServerError();
             }
@@ -503,10 +504,14 @@ namespace ZgradaApp.Controllers
                 var masteri = await _db.Zgrade_PosebniDijeloviMaster.Where(p => p.ZgradaId == zgradaId).ToListAsync();
                 var stanari = await _db.Zgrade_Stanari.Where(p => p.ZgradaId == zgradaId).ToListAsync();
                 var masteriIds = masteri.Select(p => p.Id);
+                var prihodiRashodi = await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.ZgradaId == zgradaId && p.Godina == godina);
                 // var pdChildovi = await _db.Zgrade_PosebniDijeloviChild.Where(p => masteriIds.Contains(p.ZgradaPosDioMasterId)).ToListAsync();
+                var prihodi = new List<PrihodiRashodi_Prihodi>();
+                if (prihodiRashodi != null)
+                    prihodi = prihodiRashodi.PrihodiRashodi_Prihodi.ToList();
 
                 //return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari, pdChildovi, prProslaGodina));
-                return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari));
+                return Ok(new PricuvaRezijeGodinaTable().getPricuvaRezijeGodinaTable(prGodina, masteri, stanari, prihodi));
             }
             catch (Exception ex) { return InternalServerError(); }
         }
@@ -665,7 +670,7 @@ namespace ZgradaApp.Controllers
                 {
                     _db.Zgrade_OglasnaPloca.Attach(oglas);
                     _db.Entry(oglas).State = EntityState.Modified;
-                    
+
                 }
                 await _db.SaveChangesAsync();
                 return Ok();
@@ -703,265 +708,54 @@ namespace ZgradaApp.Controllers
         }
 
         [HttpPost]
-        [Route("api/data/genRacun")]
-        public async Task<IHttpActionResult> getRacun(RacunPdf racun)
+        [Route("api/data/snimiKreirajUplatniceRacune")]
+        public async Task<IHttpActionResult> SnimiKreirajUplatniceRacune(PricuvaRezijeMjesec prMj)
         {
             try
             {
+                // ovdje snimiti i pozvati PRUplatniceRacuniGeneretor** -vratit ce guid uplatnice ili racuna
+                string path = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download/racuniUplatnice");
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
                 var company = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
-                string path = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download/racuni");
+                var prGod = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.Id == prMj.PrivuvaRezijeGodId);
+                var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == prGod.ZgradaId);
+                var prihodiRashodiGod = await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.ZgradaId == zgrada.Id && p.Godina == prGod.Godina);
 
-                var doc = new Document(PageSize.A4, 30, 30, 25, 25);
-                string pdf = Guid.NewGuid().ToString() + ".pdf";
-                var output = new FileStream(Path.Combine(path, pdf), FileMode.Create);
-                var writer = PdfWriter.GetInstance(doc, output);
-
-                doc.Open();
-
-                var titleFont = FontFactory.GetFont("Arial", 13, Font.BOLD);
-                var subTitleFont = FontFactory.GetFont("Arial", 12, Font.BOLD);
-                var boldTableHeaderFont = FontFactory.GetFont("Arial", 8, Font.BOLD);
-                var boldTableFont = FontFactory.GetFont("Arial", 10, Font.BOLD);
-                var cellTableFont = FontFactory.GetFont("Arial", 10, Font.NORMAL);
-                //var endingMessageFont = FontFactory.GetFont("Arial", 10, Font.ITALIC);
-                //var bodyFont = FontFactory.GetFont("Arial", 12, Font.NORMAL);
-
-                #region tablica1
-                PdfPTable tbl = new PdfPTable(2);
-                tbl.HorizontalAlignment = 0;
-                tbl.WidthPercentage = 60;
-                //tbl.SpacingBefore = 10;
-                //tbl.SpacingAfter = 10;
-                tbl.DefaultCell.Border = 0;
-                //tbl.SetWidths(new int[] { 2, 1, 2 });
-
-                var logo = iTextSharp.text.Image.GetInstance(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/logo/logo.png"));
-
-                PdfPCell cell = new PdfPCell(logo, true);
-                cell.Rowspan = 5;
-                cell.BorderColor = BaseColor.WHITE;
-                cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                tbl.AddCell(cell);
-
-                cell = new PdfPCell(new Phrase(company.Naziv, boldTableFont));
-                cell.PaddingLeft = 30;
-                cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell.BorderColor = BaseColor.WHITE;
-                tbl.AddCell(cell);
-
-                cell = new PdfPCell(new Phrase(company.Adresa + ", " + company.Mjesto, cellTableFont));
-                cell.PaddingLeft = 30;
-                cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell.BorderColor = BaseColor.WHITE;
-                tbl.AddCell(cell);
-
-                cell = new PdfPCell(new Phrase("OIB: " + company.OIB, cellTableFont));
-                cell.PaddingLeft = 30;
-                cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell.BorderColor = BaseColor.WHITE;
-                tbl.AddCell(cell);
-
-                cell = new PdfPCell(new Phrase("tel: " + company.Telefon, cellTableFont));
-                cell.PaddingLeft = 30;
-                cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell.BorderColor = BaseColor.WHITE;
-                tbl.AddCell(cell);
-
-                cell = new PdfPCell(new Phrase("www.novoprojekt.net" + company.Telefon, cellTableFont));
-                cell.PaddingLeft = 30;
-                cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell.BorderColor = BaseColor.WHITE;
-                tbl.AddCell(cell);
-                #endregion
-
-                #region tablica2
-                PdfPTable tbl1 = new PdfPTable(3);
-                tbl1.HorizontalAlignment = 0;
-                tbl1.WidthPercentage = 100;
-                //tbl.SpacingBefore = 10;
-                //tbl.SpacingAfter = 10;
-                tbl1.DefaultCell.Border = 0;
-                tbl1.SetWidths(new int[] { 1, 1, 3 });
-
-                // prvi red
-                PdfPCell cell1 = new PdfPCell(new Phrase("Broj računa", boldTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                cell1 = new PdfPCell(new Phrase(racun.BrojRacuna));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                cell1 = new PdfPCell(new Phrase("Središnji drž.ured za obnovu i\nstambeno zbrinjavanje", boldTableFont));
-                cell1.Rowspan = 2;
-                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                // drugi red
-                cell1 = new PdfPCell(new Phrase("Datum računa", boldTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                cell1 = new PdfPCell(new Phrase(racun.DatumRacuna.ToShortDateString(), cellTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                // treci red
-                cell1 = new PdfPCell(new Phrase("Datum isporuke", boldTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                cell1 = new PdfPCell(new Phrase(racun.DatumIsporuke.ToShortDateString(), cellTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                cell1 = new PdfPCell(new Phrase("Radnička cesta 22, Zagreb (Europske avenije 10, Osijek)", boldTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                // 4 red
-                cell1 = new PdfPCell(new Phrase("Datum Dospijeća", boldTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                cell1 = new PdfPCell(new Phrase(racun.DatumDospijeca.ToShortDateString(), cellTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_LEFT;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-
-                cell1 = new PdfPCell(new Phrase("OIB: 43664740219", boldTableFont));
-                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell1.BorderColor = BaseColor.WHITE;
-                tbl1.AddCell(cell1);
-                #endregion
-
-                #region tablicaStavke
-                PdfPTable tbl2 = new PdfPTable(6);
-                tbl2.HorizontalAlignment = 0;
-                tbl2.WidthPercentage = 100;
-                //tbl.SpacingBefore = 10;
-                //tbl.SpacingAfter = 10;
-                //tbl2.DefaultCell.Border = 0;
-                tbl2.SetWidths(new int[] { 1, 2, 4, 1, 1 , 1});
-
-                // 1 red
-                var cell2 = new PdfPCell(new Phrase("r.b.", boldTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase("jed.mj.", boldTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase("Opis", boldTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase("jed.cijena\n[kn]", boldTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase("količina", boldTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase("ukupno[kn]", boldTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                // 2. red
-                cell2 = new PdfPCell(new Phrase("1.", cellTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase(racun.JedMjera, cellTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase(racun.Opis, cellTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase(racun.JedCijena.ToString(), cellTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase(racun.Kolicina.ToString(), cellTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                cell2 = new PdfPCell(new Phrase(racun.Ukupno.ToString(), cellTableFont));
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell2.BorderColor = BaseColor.WHITE;
-                tbl2.AddCell(cell2);
-
-                #endregion
-
-                doc.Add(tbl);
-                doc.Add(new Paragraph("\n\n"));
-                doc.Add(tbl1);
-                doc.Add(new Paragraph("\n\n"));
-                doc.Add(tbl2);
-                doc.Add(new Paragraph("\n\n"));
-                //doc.Add(new Paragraph(racun.Napomena));
-                //string[] redovi = Regex.Split(racun.Napomena, "<br>");
-                //foreach (var row in redovi)
-                //{
-                //    if(row.StartsWith('<b>'))
-                //}
-
-                Paragraph napomenaParag = new Paragraph();
-                foreach (var row in Regex.Split(racun.Napomena, "<br>"))
+                prMj = new PRUplatniceRacuniGeneretor().PRUplatniceRacuniGeneretorGenerate(prMj, zgrada, company, path);
+                foreach (var item in prMj.PricuvaRezijeMjesec_Uplatnice)
                 {
-                    string chunk = "";
-                    if (!row.Contains("<b>") && !row.Contains("</b>"))
-                        napomenaParag.Add(new Chunk(row, cellTableFont));
+                    if (item.Id == 0)
+                        _db.PricuvaRezijeMjesec_Uplatnice.Add(item);
                     else
                     {
-                        foreach (var c in Regex.Split(row, "<b>"))
-                        {
-                            napomenaParag.Add(new Chunk(row.Replace("<b>", "").Replace("</b>", ""), boldTableFont));
-                        }
+                        _db.PricuvaRezijeMjesec_Uplatnice.Attach(item);
+                        _db.Entry(item).State = EntityState.Modified;
                     }
-                    napomenaParag.Add(new Chunk("\n", cellTableFont));
                 }
-                doc.Add(napomenaParag);
-                //Font regular = new Font(FontFamily.HELVETICA, 12);
-                //Font bold = Font font = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
-                //Phrase p = new Phrase("NAME: ", bold);
-                //p.add(new Chunk(cc_cust_dob, regular));
-                //PdfPCell cell = new PdfPCell(p);
+                // nakon snimanja, kreirati prihode za mjesec (ako postoje za mjesec, brisi)
+                var dbPrihodiZaMjesec = await _db.PrihodiRashodi_Prihodi.Where(p => p.PrihodiRashodiGodId == prGod.Id && p.Mjesec == prMj.Mjesec).ToListAsync();
+                foreach (var prihod in dbPrihodiZaMjesec)
+                {
+                    _db.PrihodiRashodi_Prihodi.Remove(prihod);
+                }
+                foreach (var item in prMj.PricuvaRezijeMjesec_Uplatnice.OrderBy(p => p.PosebniDioMasterId))
+                {
+                    _db.PrihodiRashodi_Prihodi.Add(new PrihodiRashodi_Prihodi {
+                        PrihodiRashodiGodId = prihodiRashodiGod.Id, PosebniDioMasterId = item.PosebniDioMasterId,
+                        Iznos = item.TipDuga == "p" ? item.IznosPricuva : item.IznosRezije, IznosUplacen = 0,
+                        DatumUplate = null, DatumValute = item.DatumDospijeca, Mjesec = (int)prMj.Mjesec,
+                        Udio = item.TipDuga == "p" ? item.UdioPricuva : item.UdioRezije, VlasnikId = item.PlatiteljId
+                    });
+                }
 
-                doc.Close();
-                writer.Close();
-                output.Close();
+                await _db.SaveChangesAsync();
+                
 
-                return Ok();
+                return Ok(prMj);
             }
             catch (Exception ex) { return InternalServerError(); }
-          }  
+        }
 
         [HttpPost]
         [Route("api/data/saveTeplates")]
@@ -973,7 +767,7 @@ namespace ZgradaApp.Controllers
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
                 var target = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == zgrada.Id);
-                if(target.CompanyId != companyId)
+                if (target.CompanyId != companyId)
                 {
                     return InternalServerError();
                 }
@@ -990,7 +784,7 @@ namespace ZgradaApp.Controllers
                 await _db.SaveChangesAsync();
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return InternalServerError();
             }

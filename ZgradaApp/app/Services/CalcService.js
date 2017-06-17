@@ -1,17 +1,25 @@
-﻿angularApp.factory('CalcService', ['$http', '$rootScope', 'DataService', function ($http, $rootScope, DataService) {
+﻿angularApp.factory('CalcService', ['$http', '$rootScope', 'DataService', 'LocalizationService',
+    function ($http, $rootScope, ds, ls) {
 
     var povrsinaZgrade = function (PricuvaRezijeZaMjesec) {
-            var total = 0;
+        var total = 0;
+        var k = 1;
             PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (pdMaster) {
                 pdMaster.PricuvaRezijePosebniDioMasterPovrsine.forEach(function (povrsina) {
-                    console.log('povrsina: ' + povrsina);
-                    //total += parseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(povrsina.Koef) : 1);
-                    total += DataService.myParseFloat(povrsina.Povrsina);
+                    if (PricuvaRezijeZaMjesec.SaKoef == true)
+                        k = ls.myParseFloat(povrsina.Koef);
+                    //console.log('povrsina: ' + povrsina);
+                    //total += DataService.myParseFloat(povrsina.Povrsina) * (saKoef == true ? DataService.myParseFloat(povrsina.Koef) : 1);
+                    total += ls.myParseFloat(povrsina.Povrsina) * ls.myParseFloat(k);
+
                 });
                 pdMaster.PricuvaRezijePosebniDioMasterPripadci.forEach(function (prip) {
-                    console.log('prip: ' + prip);
-                    //total += parseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(prip.Koef) : 1);
-                    total += DataService.myParseFloat(prip.Povrsina);
+                    if (PricuvaRezijeZaMjesec.SaKoef == true)
+                        k = ls.myParseFloat(prip.Koef);
+                    total += ls.myParseFloat(prip.Povrsina) * ls.myParseFloat(k);
+                    //console.log('prip: ' + prip);
+                    //total += DataService.myParseFloat(prip.Povrsina) * (saKoef == true ? DataService.myParseFloat(prip.Koef) : 1);
+                    //total += DataService.myParseFloat(prip.Povrsina);
                 });
             });
             //console.log('Povrisna zgrade: ' + total);
@@ -19,18 +27,20 @@
     }
 
 
-    var povrsinaPda = function (PricuvaRezijeZaMjesec, pdMasterId, saKoef) {
+    var povrsinaPda = function (PricuvaRezijeZaMjesec, pdMasterId) {
+        console.log(povrsinaPda);
+        console.log(PricuvaRezijeZaMjesec);
         var povrsina = 0;
         var k = 1;
-        if (saKoef == true)
-            k = ds.myParseFloat(p.Koef);
+        if (PricuvaRezijeZaMjesec.SaKoef == true)
+            k = ls.myParseFloat(p.Koef);
         PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (prMaster) {
             if (prMaster.PosebniDioMasterId == pdMasterId) {
                 prMaster.PricuvaRezijePosebniDioMasterPovrsine.forEach(function (p) {
-                    povrsina += ds.myParseFloat(p.Povrsina) * k;
+                    povrsina += ls.myParseFloat(p.Povrsina) * k;
                 });
                 prMaster.PricuvaRezijePosebniDioMasterPripadci.forEach(function (p) {
-                    povrsina += ds.myParseFloat(p.Povrsina) * k;
+                    povrsina += ls.myParseFloat(p.Povrsina) * k;
                 });
             }
         });

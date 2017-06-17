@@ -1,5 +1,5 @@
-﻿angularApp.controller('godinaCtrl', ['$scope', '$routeParams', '$location', '$route', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $routeParams, $location, $route, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('godinaCtrl', ['$scope', '$routeParams', '$location', '$route', '$rootScope', 'toastr', 'DataService', 'LocalizationService', '$mdDialog',
+    function ($scope, $routeParams, $location, $route, $rootScope, toastr, DataService, ls, $mdDialog) {
 
         $scope.msg = '';
         $scope.selectedGodina = null;
@@ -14,7 +14,7 @@
         DataService.getZgrada(DataService.selZgradaId, false, false).then(
             function (result) {
                 // on success
-                $scope.zgradaObj = DataService.decimalToHr(result.data.Zgrada, 'pricuva');
+                $scope.zgradaObj = ls.decimalToHr(result.data.Zgrada, 'pricuva');
                 var godineList = [];
                 $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                     godineList.push(pr.Godina);
@@ -44,7 +44,7 @@
             DataService.getPricuvaRezijeGodinaTable($scope.zgradaObj.Id, godina).then(
                 function (result) {
                     // success
-                    $scope.godinaTable = DataService.decimalToHr(result.data, 'pricuvaGodTable');
+                    $scope.godinaTable = ls.decimalToHr(result.data, 'pricuvaGodTable');
                     $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                         if (pr.Godina == godina) {
                             $scope.selectedGodina = godina;
@@ -105,6 +105,7 @@
                 templateUrl: 'app/pricuvaRezije/mjesecModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
+                escapeToClose: false,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -136,6 +137,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     zgradaObj: $scope.zgradaObj,
@@ -161,6 +163,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 skipHide: true,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -186,6 +189,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     zgradaObj: $scope.zgradaObj,
@@ -215,7 +219,7 @@
         function save() {
             $rootScope.loaderActive = true;
             console.log($scope.zgradaObj);
-            DataService.pricuvaRezijeCreateOrUpdate(DataService.decimalToEng($scope.zgradaObj, 'pricuva')).then(
+            DataService.pricuvaRezijeCreateOrUpdate(ls.decimalToEng($scope.zgradaObj, 'pricuva')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;

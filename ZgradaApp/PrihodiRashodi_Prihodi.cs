@@ -18,12 +18,13 @@ namespace ZgradaApp
         public int PrihodiRashodiGodId { get; set; }
         public int Mjesec { get; set; }
         public int PosebniDioMasterId { get; set; }
-        public string Opis { get; set; }
+        public Nullable<int> VlasnikId { get; set; }
         public Nullable<decimal> Iznos { get; set; }
-        public Nullable<bool> PrijenosPricuve { get; set; }
-        public Nullable<bool> UplataPricuve { get; set; }
-        public Nullable<System.DateTime> DatumUnosa { get; set; }
-        public Nullable<System.DateTime> DatumObracuna { get; set; }
+        public Nullable<decimal> IznosUplacen { get; set; }
+        public string UplataVrsta { get; set; }
+        public Nullable<decimal> Udio { get; set; }
+        public Nullable<System.DateTime> DatumValute { get; set; }
+        public Nullable<System.DateTime> DatumUplate { get; set; }
     
         public virtual PrihodiRashodi PrihodiRashodi { get; set; }
     }

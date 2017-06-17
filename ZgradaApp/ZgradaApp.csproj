@@ -270,6 +270,7 @@
     <Compile Include="Utils\PdfPosebiDio.cs" />
     <Compile Include="Utils\PrebaciOtvoreneStavkeDnevnika.cs" />
     <Compile Include="Utils\PricuvaRezijeGodinaTable.cs" />
+    <Compile Include="Utils\PRUplatniceRacuniGeneretor.cs" />
     <Compile Include="Utils\RashodiPrebaciNeplacene.cs" />
     <Compile Include="vDnevnikRada.cs">
       <DependentUpon>DalEf.tt</DependentUpon>
@@ -432,6 +433,7 @@
     <Content Include="app\Services\DataService.js" />
     <Content Include="app\prihodiRashodi\sifarnikRashodaModalCtrl.js" />
     <Content Include="app\Services\AccountService.js" />
+    <Content Include="app\Services\LocalizationService.js" />
     <Content Include="app\tvrtka.html" />
     <Content Include="app\tvrtkaCtrl.js" />
     <Content Include="app\useri\indexUseri.html" />

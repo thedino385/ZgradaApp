@@ -147,23 +147,23 @@ namespace ZgradaApp
     }
 
 
-    public class RacunPdf
-    {
-        public int Id { get; set; }
-        public int index { get; set; }
-        public int PosebniDioMasterId { get; set; }
-        public string BrojRacuna { get; set; }
-        public DateTime DatumRacuna { get; set; }
-        public DateTime DatumIsporuke { get; set; }
-        public DateTime DatumDospijeca { get; set; }
-        public string JedMjera { get; set; }
-        public string Opis { get; set; }
-        public decimal JedCijena { get; set; }
-        public decimal Kolicina { get; set; }
-        public decimal Ukupno { get; set; }
-        public string Napomena { get; set; }
+    //public class RacunPdf
+    //{
+    //    public int Id { get; set; }
+    //    public int index { get; set; }
+    //    public int PosebniDioMasterId { get; set; }
+    //    public string BrojRacuna { get; set; }
+    //    public DateTime DatumRacuna { get; set; }
+    //    public DateTime DatumIsporuke { get; set; }
+    //    public DateTime DatumDospijeca { get; set; }
+    //    public string JedMjera { get; set; }
+    //    public string Opis { get; set; }
+    //    public decimal JedCijena { get; set; }
+    //    public decimal Kolicina { get; set; }
+    //    public decimal Ukupno { get; set; }
+    //    public string Napomena { get; set; }
 
-    }
+    //}
 
     // OLD
 

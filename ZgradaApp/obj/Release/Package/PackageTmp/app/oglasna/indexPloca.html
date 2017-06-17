@@ -41,9 +41,10 @@
                         <p>Autor: <b>{{oglas.Ime}}&nbsp;{{oglas.Prezime}}</b></p>
                         <br />
                         <span ng-bind-html="oglas.Oglas"></span>
-                        <md-button class="md-icon-button pull-right" ng-click="openModal(oglas.Id, $event)" title="Uredi oglas">
+                        <!--<md-button class="md-icon-button pull-right" ng-click="openModal(oglas.Id, $event)" title="Uredi oglas">
                             <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
-                        </md-button>
+                        </md-button>-->
+                        <md-button class="md-raised pull-right" ng-click="openModal(oglas.Id, $event)">Uredi</md-button>
                     </div>
 
                 </div>

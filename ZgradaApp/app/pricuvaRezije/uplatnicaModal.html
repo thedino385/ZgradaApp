@@ -15,7 +15,7 @@
 
                 <h3 flex md-truncate>Uplatnice, {{msg}}</h3>
 
-                <md-button class="md-raised md-primary" type="submit" ng-disabled="frm.$invalid || isInvalid">Kreiraj uplatnice i račune</md-button>
+                <md-button class="md-raised md-primary" type="submit" ng-click="saveAndKreraj()" ng-disabled="frm.$invalid || isInvalid">Kreiraj uplatnice i račune</md-button>
 
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label=""></md-icon>
@@ -38,9 +38,9 @@
                             <th style="vertical-align: middle; text-align: right">
                                 Platitelj
                             </th>
-                            <th style="vertical-align: middle; text-align: right">
+                            <!--<th style="vertical-align: middle; text-align: right">
                                 Primatelj
-                            </th>
+                            </th>-->
                             <th style="vertical-align: middle">
                                 Vrsta duga
                             </th>
@@ -95,12 +95,12 @@
                                             id="sel" class="form-control" ng-required></select>
                                 </div>
                             </td>
-                            <td style="vertical-align: middle; text-align: right" class="redCell">
+                            <!--<td style="vertical-align: middle; text-align: right" class="redCell">
                                 <div ng-class="{ 'has-error' : itemFrm.sel.$invalid && !itemFrm.sel.$pristine }">
                                     <select name="sel" ng-model="rec.PrimateljId" ng-options="c.Id as c.Naziv for c in rec.primatelji"
                                             id="sel" class="form-control" ng-required></select>
                                 </div>
-                            </td>
+                            </td>-->
                             <td style="vertical-align: middle; text-align: right" class="redCell">
                                 <div ng-class="{ 'has-error' : itemFrm.sel.$invalid && !itemFrm.sel.$pristine }">
                                     <select name="sel" ng-model="rec.TipDuga" ng-options="c.Id as c.Naziv for c in tipoviDuga"
@@ -117,13 +117,13 @@
                                 <input type="text" my-directive-decimal-posto ng-change="udioChanged(rec.PosebniDioMasterId)" class="form-control" size="5" ng-model="rec.UdioRezije" placeholder="Udio za režije" />
                             </td>
                             <td style="background-color: {{rec.tdColorRezije}}">
-                                <input type="text" ng-readonly class="form-control" size="10" ng-model="rec.IznosRezije" placeholder="Iznos pričuve" />
+                                <input type="text" readonly class="form-control" size="10" ng-model="rec.IznosRezije" placeholder="Iznos pričuve" />
                             </td>
                             <td style="background-color: {{rec.tdColorPricuva}}">
                                 <input type="text" my-directive-decimal-posto ng-change="udioChanged(rec.PosebniDioMasterId)" class="form-control" size="5" ng-model="rec.UdioPricuva" placeholder="Udio za pričuvu" />
                             </td>
                             <td style="background-color: {{rec.tdColorPricuva}}">
-                                <input type="text" ng-readonly class="form-control" size="10" ng-model="rec.IznosPricuva" placeholder="Iznos režija" />
+                                <input type="text" readonly class="form-control" size="10" ng-model="rec.IznosPricuva" placeholder="Iznos režija" />
                             </td>
                             <td><a href="{{rec.url}}" ng-show="rec.url != null">Pdf</a></td>
                             <td>
@@ -136,7 +136,7 @@
                         <tr uib-collapse="!rec.DetailsVisible" ng-show="rec.TipPlacanja == 'r'">
                             <td colspan="3">
                                 <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
-                                    <label>broj računa</label>
+                                    <label>Broj računa</label>
                                     <input ng-model="rec.BrojRacuna">
                                 </md-input-container>
                             </td>
@@ -176,7 +176,7 @@
                                     <input ng-model="rec.Ukupno">
                                 </md-input-container>
                             </td>
-                            <td><button class="btn, btn-primary" ng-click="createRacun(rec)">Kreiraj</button></td>
+                            <!--<td><button class="btn, btn-primary" ng-click="createRacun(rec)">Kreiraj</button></td>-->
                             
                         </tr>
                         <tr uib-collapse="!rec.DetailsVisible" ng-show="rec.TipPlacanja == 'r'">

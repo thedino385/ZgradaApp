@@ -22,6 +22,7 @@
     <link href="~/Content/angular-toastr.css" rel="stylesheet" />
     <link href="~/Content/angular-material.layouts.css" rel="stylesheet" />
     <link href="~/Content/angular-material.layouts.ie_fixes.css" rel="stylesheet" />
+    
 </head>
 <body>
 
@@ -87,6 +88,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/prihodiRashodi" onclick="Mark('obracun')">Prihodi i rashodi</a></li>
                                     <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/pricuvaRezije" onclick="Mark('obracun')">Pričuva i režije</a></li>
+                                    <li><a style="padding-top: 20px; padding-bottom: 20px; padding-left: 15px; padding-right: 15px;" href="#!/templates" onclick="Mark('obracun')">Predlošci</a></li>
                                 </ul>
                             </li>
                             <li id="dnevnik"><a href="#!/dnevnik/0" onclick="Mark('dnevnik')">Dnevnik</a></li>
@@ -166,7 +168,7 @@
             }
 
         }
-
+       
     }
 
     <div class="mainContainer">
@@ -196,91 +198,12 @@
     <link href="~/Scripts/summernote/summernote.css" rel="stylesheet" />
     <script src="~/Scripts/summernote/summernote.js"></script>
     <script src="~/Scripts/moment-with-locales.js"></script>
-    @*material pokusaj*@
-    @*<link href="~/Content/bootstrap-material-design.css" rel="stylesheet" />
-        <link href="~/Content/ripples.css" rel="stylesheet" />
-        <script src="~/Scripts/material.js"></script>
-        <script src="~/Scripts/ripples.js"></script>*@
+  
+    <script src="~/Scripts/dropzone.js"></script>
+    <link href="~/Content/basic.css" rel="stylesheet" />
+    <link href="~/Content/dropzone.css" rel="stylesheet" />
+    <script src="~/Scripts/angular-file-upload.min.js"></script>
 
-    <!-- Angular custom stuff -->
-   @{ 
-       DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-       TimeSpan diff = DateTime.Now.ToUniversalTime() - origin;
-       double p = Math.Floor(diff.TotalSeconds);
-   }
-    <script src="~/app/angularApp.js"></script>
-    <script src="~/app/Services/DataService.js?p=@p"></script>
-    <script src="~/app/Services/AccountService.js?p=@p"></script>
-
-    <script src="~/app/Filters/pricuveFilters.js?p=@p"></script>
-    <script src="~/app/indexCtrl.js?p=@p"></script>
-
-    <script src="~/app/zgrade/zgradeCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/zgradaCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/zgradaStanariModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/zgradaPosebniDijeloviMasterModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/PDChild/posebniDijeloviMasterListCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildrenCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildPovrsinaModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioChildPripadciModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/PDChild/posebniDioMasterVlasniciModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/popisi/dijeloviListCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/popisi/uredjajiListCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/popisi/dijeloviModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/popisi/uredjajiModalCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/popisStanaraCtrl.js?p=@p"></script>
-
-    <script src="~/app/prihodiRashodi/prihodiRashodiIndexCtrl.js?p=@p"></script>
-    <script src="~/app/prihodiRashodi/prihodiModalCtrl.js?p=@p"></script>
-    <script src="~/app/prihodiRashodi/rashodiModalCtrl.js?p=@p"></script>
-    <script src="~/app/prihodiRashodi/sifarnikRashodaModalCtrl.js?p=@p"></script>
-    <script src="~/app/prihodiRashodi/rashodiUplatniceCtrl.js?p=@p"></script>
-
-    <script src="~/app/pricuvaRezije/godinaCtrl.js?p=@p"></script>
-    <script src="~/app/pricuvaRezije/mjesecModalCtrl.js?p=@p"></script>
-    <script src="~/app/pricuvaRezije/stanjeZgradeModalCtrl.js?p=@p"></script>
-    <script src="~/app/pricuvaRezije/stanjeOdModalCtrl.js?p=@p"></script>
-    <script src="~/app/pricuvaRezije/uplatnicaModalCtrl.js?p=@p"></script>
-
-    <script src="~/app/ks/indexKsCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/dnevnik/dnevnikIndexCtrl.js?p=@p"></script>
-    <script src="~/app/zgrade/dnevnik/dnevnikDetailsCtrl.js?p=@p"></script>
-
-    <script src="~/app/useri/indexUseriCtrl.js?p=@p"></script>
-    <script src="~/app/useri/useriModalCtrl.js?p=@p"></script>
-    <script src="~/app/tvrtkaCtrl.js?p=@p"></script>
-    <script src="~/app/oglasna/indexPlocaCtrl.js?p=@p"></script>
-    <script src="~/app/oglasna/dodajOglasModalCtrl.js?p=@p"></script>
-    @*
-
-
-        <script src="~/app/Sifarnici/pripadciCtrl.js"></script>
-        <script src="~/app/Sifarnici/pripadakCtrl.js"></script>
-        <script src="~/app/Sifarnici/stanoviCtrl.js"></script>
-        <script src="~/app/Sifarnici/stanCtrl.js"></script>
-        <script src="~/app/Sifarnici/modals/posebniDioModalCtrl.js"></script>
-        <script src="~/app/Sifarnici/modals/pripadakModalCtrl.js"></script>
-        <script src="~/app/Sifarnici/modals/stanarModalCtrl.js"></script>
-        <script src="~/app/Sifarnici/modals/pripadakStanCtrl.js"></script>
-        <script src="~/app/Sifarnici/zgradaPregledPripadakaPoStanovimaCtrl.js"></script>
-        <script src="~/app/Sifarnici/prosebniDIjeloviCtrl.js"></script>
-        <script src="~/app/Sifarnici/posebniDioCtrl.js"></script>
-        <script src="~/app/pricuva/editCtrl.js"></script>
-
-        <script src="~/app/zaduzivanja/zaduzivanjePoMjCrtl.js"></script>
-        <script src="~/app/zaduzivanja/zaduzivanjeModalCtrl.js"></script>
-        <script src="~/app/PihRas/indexprhRasCtrl.js"></script>
-        <script src="~/app/PihRas/editPrihRasCtrl.js"></script>
-        <script src="~/app/PihRas/modalPrihodCtrl.js"></script>
-        <script src="~/app/PihRas/modalRashodCtrl.js"></script>
-
-        <script src="~/app/ks/ksDisplayCtrl.js"></script>
-        <script src="~/app/ks/ksksModalCtrl.js"></script>
-
-        <script src="~/app/pricuva/indexPricuvaCtrl.js"></script>
-        <script src="~/app/pricuva/pricuvaMjesecModalCtrl.js"></script>
-        <script src="~/app/pricuva/ksModalCtrl.js"></script>*@
     <script type="text/javascript">
 
         function Mark(el) {

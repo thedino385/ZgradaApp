@@ -1,90 +1,81 @@
-﻿angularApp.controller('posebniDioChildrenCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
+﻿angularApp.controller('posebniDioMasterCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
     function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
 
+        _isDirty = false;
         $scope.msg = '';
-        $scope.dodajVlasnikeBtnDisabled = false;
+       
         if (DataService.selZgradaId == null) {
             $location.path('/zgrade');
             return;
         }
-
-        $scope.isVlasniciCollapsed = true;
+        $scope.dodajVlasnikeBtnDisabled = false;
+        $scope.isVlasniciCollapsed = false;
         $scope.nePrikazujZatvorene = true;
         $scope.cb = true;
 
-        //$rootScope.loaderActive = true;
-        //DataService.getZgrada(DataService.selZgradaId, false, false).then(
-        //    function (result) {
-        //        console.log(result);
-        //        result.data.Zgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
-        //            if (pdMaster.Id == $routeParams.id) {
-        //                $scope.pdMaster = pdMaster;
-        //                $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
+        if ($routeParams.id == 0) {
+            var m = {
+                Id: 0, ZgradaId: DataService.selZgradaId, Naziv: '', Broj: '',
+                Napomena: '', Zatvoren: false, VrijediOdGodina: new Date().getFullYear(),
+                VrijediOdMjesec: parseInt(new Date().getMonth() + 1),
+                Zgrade_PosebniDijeloviMaster_Povrsine: [],
+                Zgrade_PosebniDijeloviMaster_Pripadci: [],
+                Zgrade_PosebniDijeloviMaster_VlasniciPeriod: []
+            };
+            $scope.pdMaster = m;
+            $scope.msg = "Novi posebni dio";
+        }
+        else
+        {
+            DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
+                if (pdMaster.Id == $routeParams.id) {
+                    $scope.pdMaster = DataService.decimalToHr(pdMaster, 'ZgradaStanovi');
+                    $scope.msg = pdMaster.Naziv;
 
-        //                // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
-        //                pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
-        //                    if (period.Ugasen != true)
-        //                        $scope.dodajVlasnikeBtnDisabled = true;
-        //                });
-        //            }
-        //        });
-        //        //$scope.stanari = DataService.zgradaUseri;
-        //        console.clear();
-        //        console.log(result.data);
-        //        $scope.stanari = result.data.Useri;
-        //        $rootScope.loaderActive = false;
-        //    },
-        //    function (result) {
-        //        $rootScope.loaderActive = false;
-        //        toastr.error('Dohvat podataka sa servera nije uspiio.');
-        //    }
-        //);
-
-
-        DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
-            if (pdMaster.Id == $routeParams.id) {
-                $scope.pdMaster = DataService.decimalToHr(pdMaster, 'ZgradaStanovi');
-                $scope.msg = pdMaster.Naziv + ' ' + pdMaster.Oznaka;
-
-                // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
-                pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
-                    if (period.Ugasen != true)
-                        $scope.dodajVlasnikeBtnDisabled = true;
-                });
-            }
-        });
+                    // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
+                    pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod.forEach(function (period) {
+                        if (period.Ugasen != true)
+                            $scope.dodajVlasnikeBtnDisabled = true;
+                    });
+                }
+            });
+        }
+        
         //$scope.stanari = DataService.zgradaUseri;
         $scope.stanari = DataService.currZgrada.Zgrade_Stanari;
         $rootScope.loaderActive = false;
 
-        // _________________________________________________________
-        //              Modal posebni dio
-        // _________________________________________________________
-        $scope.openModalPosebniDioChild = function (id, ev) {
-            $('nav').fadeOut();
-            $mdDialog.show({
-                controller: 'posebniDioChildModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioChildModal.html?p=' + new Date().getTime() / 1000,
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: false,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-                , locals: {
-                    id: id,
-                    pdMaster: $scope.pdMaster
-                }
-            }).then(function (pdMaster) {
-                // save (hide)
-                $scope.pdMaster = pdMaster;
-                console.log('pdMaster');
-                console.log($scope.pdMaster);
-            }, function (pdMaster) {
-                // cancel
-                console.log(pdMaster);
-                $scope.pdMaster = pdMaster;
-            });
-        };
+       
+        $scope.$on('$routeChangeStart', function (event) {
+            //alert(_isDirty);
+            //alert($scope.frm.$dirty);
+            //event.preventDefault();
+            //$scope.cancel = function (isPristine, ev) {
+        //    console.log(isPristine);
+        //    if (!isPristine) {
+        //        // Appending dialog to document.body to cover sidenav in docs app
+        //        var confirm = $mdDialog.confirm()
+        //            .title('Promjene nisu snimljene!')
+        //            .textContent('Želite li odustati i NE SNIMITI PROMJENE?')
+        //            .ariaLabel('Lucky day')
+        //            .targetEvent(ev)
+        //            .ok('Ne želim snimiti')
+        //            .cancel('Ostajem na stranici');
 
+        //        $mdDialog.show(confirm).then(function () {
+        //            //$scope.status = 'You decided to get rid of your debt.';
+        //            toastr.info("Promjene nisu spremljene");
+        //            $route.reload();
+        //        }, function () {
+        //            // ok, ostavljamo ga tamo gdje je
+        //        });
+        //    }
+        //    else {
+        //        toastr.info("Promjene nisu spremljene");
+        //        $route.reload();
+        //    }
+        //}
+        });
 
         // _________________________________________________________
         //              Modal vlasnici
@@ -93,7 +84,7 @@
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'posebniDioMasterVlasniciModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioMasterVlasniciModal.html?p=' + new Date().getTime() / 1000,
+                templateUrl: 'app/zgrade/PDMasteri/posebniDioMasterVlasniciModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -118,24 +109,23 @@
         // _________________________________________________________
         //              Modal povrsine
         // _________________________________________________________
-        $scope.openModalPosebniDioChildPovrsina = function (posebniDioChildId, povrsinaId, ev) {
+        $scope.openModalPovrsina = function (povrsinaId, ev) {
             $('nav').fadeOut();
             $mdDialog.show({
-                controller: 'posebniDioChildPovrsinaModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioChildPovrsinaModal.html?p=' + new Date().getTime() / 1000,
+                controller: 'posebniDioMasterPovrsinaModalCtrl',
+                templateUrl: 'app/zgrade/PDMasteri/posebniDioMasterPovrsinaModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
-                    posebniDioChildId: posebniDioChildId,
                     povrsinaId: povrsinaId,
                     pdMaster: $scope.pdMaster
                 }
             }).then(function (pdMaster) {
                 // save (hide)
                 $scope.pdMaster = pdMaster;
-                console.log(pdMaster);
+                _isDirty = true;
             }, function (pdMaster) {
                 // cancel
                 console.log(pdMaster);
@@ -147,17 +137,16 @@
         // _________________________________________________________
         //              Modal pripadci
         // _________________________________________________________
-        $scope.openModalPosebniDioChildPripadak = function (posebniDioChildId, pripadakId, ev) {
+        $scope.openModalPrip = function (pripadakId, ev) {
             $('nav').fadeOut();
             $mdDialog.show({
-                controller: 'posebniDioChildPripadciModalCtrl',
-                templateUrl: 'app/zgrade/PDChild/posebniDioChildPripadciModal.html?p=' + new Date().getTime() / 1000,
+                controller: 'posebniDioMasterPripadciModalCtrl',
+                templateUrl: 'app/zgrade/PDMasteri/posebniDioMasterPripadciModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
-                    posebniDioChildId: posebniDioChildId,
                     pripadakId: pripadakId,
                     pdMaster: $scope.pdMaster
                 }
@@ -240,67 +229,11 @@
         }
 
 
-        // __________________________________________________________
-        //          Kill / Zatvori posebni dio child
-        // __________________________________________________________
-        $scope.killpoChild = function (pdChild, ev) {
-            $('nav').fadeOut();
-            // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
-            // u suprotnom, gasi je
-            var brisanjeOk = false;
-            if (pdChild.Status == 'a')
-                brisanjeOk = true;
-            var title = brisanjeOk ? 'Želite li obrisati posebni dio?' : 'Želite li zatvoriti posebni dio?';
-            var textContent = 'Odabrani posebni dio: ' + pdChild.Naziv;
-            var desc = "Odabrana površina ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
-            var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
-
-            $mdDialog.show({
-                controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-                , locals: {
-                    title: title,
-                    textContent: textContent,
-                    desc: desc,
-                    brisanjeOk: brisanjeOk,
-                    okBtnCaption: okBtnCaption
-                }
-            })
-                .then(function (o) {
-                    $('nav').fadeIn();
-                    if (brisanjeOk) {
-                        var index = $scope.pdMaster.Zgrade_PosebniDijeloviChild.indexOf(pdChild)
-                        $scope.pdMaster.Zgrade_PosebniDijeloviChild.splice(index, 1);
-                    }
-                    else {
-                        pdChild.Zatvoren = true;
-                        pdChild.ZatvorenGodina = o.godina;
-                        pdChild.ZatvorenMjesec = o.mjesec;
-                        pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
-                            povrsina.Zatvoren = true;
-                            povrsina.ZatvorenGodina = o.godina;
-                            povrsina.ZatvorenMjesec = o.mjesec;
-                        });
-                        pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
-                            prip.Zatvoren = true;
-                            prip.ZatvorenGodina = o.godina;
-                            prip.ZatvorenMjesec = o.mjesec;
-                        });
-                    }
-                }
-                , function () {
-                    $('nav').fadeIn();
-                });
-        }
-
+        
         // __________________________________________________________
         //          Kill / Zatvori povrsinu
         // __________________________________________________________
-        $scope.killPovrsina = function (pdChildId, povrsinaId, ev) {
+        $scope.killPovrsina = function (povrsinaId, ev) {
             $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
@@ -366,7 +299,7 @@
         // __________________________________________________________
         //          Kill / Zatvori pripadak
         // __________________________________________________________
-        $scope.killPripadak = function (pdChildId, pripadakId, ev) {
+        $scope.killPripadak = function (pripadakId, ev) {
             $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je

@@ -17,6 +17,9 @@
                         <span>{{zgradaMsg}}</span>
                     </h3>
 
+                    <md-button class="md-raised" aria-label="Dodaj godinu" ng-click="edit(0)">
+                        Dodaj posebni dio
+                    </md-button>
                     
                     <!--<md-button class="md-icon-button" aria-label="Prihodi rashodi" title="Pričuva i režije" ng-click="goToDnevnik()">
                         <md-icon md-svg-icon="/Content/icons/file-document-box.svg" style="fill: greenyellow"></md-icon>
@@ -68,8 +71,10 @@
                                 
                             </p>
                         </div>
-                        <md-button class="md-primary md-hue-1" ng-click="kartica(pd)">Kartica posebnog dijela</md-button>
-                        <md-button class="md-primary md-hue-1" ng-click="edit(pd.Id)">Uredi</md-button>
+                        <br /><br />
+                        <md-button class="md-raised" ng-click="edit(pd.Id)">Uredi</md-button>
+                        <md-button class="md-raised" ng-click="kartica(pd)">Kartica posebnog dijela</md-button>
+                        
 
                         <!--<button type="button" class="btn btn-default btn-sm md-avatar" title="Kartica posebnog dijela" ng-click="kartica(pd)">
                             <md-icon md-svg-icon="/Content/icons/account-card-details.svg" style="fill: indigo"></md-icon>

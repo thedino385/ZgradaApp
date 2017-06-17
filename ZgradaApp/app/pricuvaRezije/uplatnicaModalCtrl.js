@@ -1,5 +1,5 @@
-﻿angularApp.controller('uplatnicaModalCtrl', ['$scope', '$rootScope', '$mdDialog', 'orderByFilter', 'DataService', 'CalcService', 'zgradaObj', 'mjesec', 'godina',
-    function ($scope, $rootScope, $mdDialog, orderBy, ds, cs, zgradaObj, mjesec, godina) {
+﻿angularApp.controller('uplatnicaModalCtrl', ['$scope', '$rootScope', '$mdDialog', 'orderByFilter', 'DataService', 'CalcService', 'LocalizationService','zgradaObj', 'mjesec', 'godina',
+    function ($scope, $rootScope, $mdDialog, orderBy, ds, cs, ls, zgradaObj, mjesec, godina) {
 
         $scope.zgradaObj = zgradaObj;
         $scope.godina = godina;
@@ -50,8 +50,8 @@
 
                     var o = {
                         index: index, Id: 0, PricuvaRezijeMjesecId: $scope.PricuvaRezijeZaMjesec, PosebniDioMasterId: m.PosebniDioMasterId, PlatiteljId: v.VlasnikId,
-                        PrimateljId: 0, TipDuga: '-', TipPlacanja: '-', UdioPricuva: 0, UdioRezije: 0, IznosRezije: 0, IznosPricuva: 0, Uplatnica: '',
-                        displayLine: false, displayBtnAdd: false, displayBtnRemove: false, platitelji: [], primatelji: [], tdColorPricuva: '#ffffff', tdColorRezije: '#ffffff',
+                        TipDuga: '-', TipPlacanja: '-', UdioPricuva: 0, UdioRezije: 0, IznosRezije: 0, IznosPricuva: 0, Uplatnica: '',
+                        displayLine: false, displayBtnAdd: false, displayBtnRemove: false, platitelji: [], tdColorPricuva: '#ffffff', tdColorRezije: '#ffffff',
                         BrojRacuna: '', DatumRacuna: zadnjiDanUMjesecu(), DatumIsporuke: zadnjiDanUMjesecu(), DatumDospijeca: zadnjiDanUMjesecu(),
                         JedMjera: '', Opis: '', JedCijena: '', Kolicina: '', Ukupno: '', Napomena: '', url: null,
                         IznosRezijeOrig: 0, IznosPricuvaOrig: 0
@@ -68,8 +68,8 @@
                                     o.UdioPricuva = parseFloat(udio * 100).toString().replace('.', ',');
                                     o.UdioRezije = parseFloat(udio * 100).toString().replace('.', ',');
                                     // iznos pricuve i rezija = iznos * udio
-                                    o.IznosPricuva = parseFloat(ds.myParseFloat(m.ZaduzenjePricuva) * udio).toString().replace('.', ',');
-                                    o.IznosRezije = parseFloat(ds.myParseFloat(m.ZaduzenjeRezije) * udio).toString().replace('.', ',');
+                                    o.IznosPricuva = parseFloat(ls.myParseFloat(m.ZaduzenjePricuva) * udio).toString().replace('.', ',');
+                                    o.IznosRezije = parseFloat(ls.myParseFloat(m.ZaduzenjeRezije) * udio).toString().replace('.', ',');
                                     o.IznosRezijeOrig = o.IznosRezije;
                                     o.IznosPricuvaOrig = o.IznosPricuva;
                                 }
@@ -95,7 +95,7 @@
                                 var k = { Naziv: s.Ime + ' ' + s.Prezime, Id: s.Id };
                                 o.platitelji.push(k);
 
-                                o.primatelji.push(k);
+                                //o.primatelji.push(k);
                             }
                         });
                     });
@@ -123,68 +123,82 @@
 
                 $scope.PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (masterPricuva) {
                     if (masterPricuva.PosebniDioMasterId == o.PosebniDioMasterId) {
-                        // jedinicna mjera - 
+                        var nacinObracunaPricuva = $scope.PricuvaRezijeZaMjesec.NacinObracunaPricuva;
+                        var nacinObracunaRezije = $scope.PricuvaRezijeZaMjesec.NacinObracunaRezije;
                         if (o.TipDuga == 'p') {
-                            var nacinObracunaPricuva = $scope.PricuvaRezijeZaMjesec.NacinObracunaPricuva;
+                            // o.Ukupno = ds.toHrDecimalView(masterPricuva.ZaduzenjePricuva);
+                            // ukupno nije iz pricuve jer se mogao promijeniti postotak - trazi u uplatnicama
+                            o.Ukupno = ls.toHrDecimalView(o.IznosPricuva);
+
                             switch (nacinObracunaPricuva) {
                                 case 0:
                                     // cijena po m2
                                     o.JedMjera = 'm2';
-                                    o.JedCijena = $scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2;
-                                    o.Kolicina = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId, $scope.PricuvaRezijeZaMjesec.SaKoef);
+                                    o.JedCijena = ls.toHrDecimalView($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2);
+                                    o.Kolicina = ls.toHrDecimalView(cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId));
                                     break;
                                 case 1:
                                     // raspodjela iznosa po povrsini, zadaje se ukupna cijena za zgradu, 
-                                    // jedCijena = povrsinaPd(sa ili bez koef) / povrsinaZgrade 
-                                    // kolicina = povrsinaPd-a(sa ili bez koef)
-                                    // zaduzenje je postotak ukpnog po povrsini
-                                    o.JedMjera = '%';
-                                    var povrsinaStana = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId, $scope.PricuvaRezijeZaMjesec.SaKoef);
-                                    var jedCijena = parseFloat(ds.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno) / ds.myParseFloat(povrsinaStana));
-                                    o.JedCijena = ds.toHrDecimalView(jedCijena.toString().replace('.', ','));
-                                    o.Kolicina = ds.toHrDecimalView(povrsinaStana);
+                                    // jedMj = m2
+                                    // jedCijena = o.Ukupno / broj kvadrata
+                                    // kolicina = broj kvadrata
+                                    o.JedMjera = 'm2';
+                                    var povrsinaStana = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId);
+                                    o.jedCijena = ls.toHrDecimalView(ls.myParseFloat(o.Ukupno) / povrsinaStana);
+                                    o.Kolicina = ls.toHrDecimalView(povrsinaStana);
                                     break;
                                 case 2:
                                     // % za svaki PD - cijena za zgradu se unosi
-                                    o.JedMjera = '%';
-                                    o.Kolicina = masteriList.ObracunPricuvaPostoSlobodanUnos;
-                                    o.jedCijena = ds.toHrDecimalView(ds.parseFloat(ObracunPricuvaPostoSlobodanUnos) / ds.parseFloat(o.Kolicina));
+                                    o.JedMjera = 'm2';
+                                    var povrsinaStana = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId);
+                                    o.Kolicina = ls.toHrDecimalView(povrsinaStana);
+                                    o.jedCijena = ls.toHrDecimalView(ls.myParseFloat(o.Ukupno) / povrsinaStana);
                                     break;
                                 case 3:
-                                    o.JedMjera = '$';
-                                    o.Kolicina = 1;
-                                    o.jedCijena = s.toHrDecimalView(masterPricuva.ObracunPricuvaCijenaSlobodanUnos);
+                                    o.JedMjera = 'm2';
+                                    var povrsinaStana = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId);
+                                    o.Kolicina = ls.toHrDecimalView(povrsinaStana);
+                                    o.jedCijena = ls.toHrDecimalView(ls.myParseFloat(o.Ukupno) / povrsinaStana);
                                     break;
                             }
-                            o.Ukupno = masterPricuva.ZaduzenjePricuva;
+                            //o.Ukupno = ds.toHrDecimalView(masterPricuva.ZaduzenjePricuva); - ne valja
                         }
                         else {
                             // rezije
+                            o.Ukupno = ls.toHrDecimalView(o.IznosRezije);
                             switch (nacinObracunaRezije) {
                                 case 0:
+                                    // raspodjela iznosa po povrsini, zadaje se ukupna cijena za zgradu, 
+                                    // jedMj = m2
+                                    // jedCijena = o.Ukupno / broj kvadrata
+                                    // kolicina = broj kvadrata
+                                    o.JedMjera = 'm2';
+                                    var povrsinaStana = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId);
+                                    o.JedCijena = ls.toHrDecimalView(ls.myParseFloat(o.Ukupno) / povrsinaStana);
+                                    o.Kolicina = ls.toHrDecimalView(povrsinaStana);
                                     // raspodjela iznosa po povrsini, zadaje se ukupna cijena za zgradu, 
                                     // jedCijena = povrsinaPd(sa ili bez koef) / povrsinaZgrade 
                                     // kolicina = povrsinaPd-a(sa ili bez koef)
                                     // zaduzenje je postotak ukpnog po povrsini
-                                    o.JedMjera = '%';
-                                    var povrsinaStana = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId, $scope.PricuvaRezijeZaMjesec.SaKoef);
-                                    var jedCijena = parseFloat(ds.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno) / ds.myParseFloat(povrsinaStana));
-                                    o.JedCijena = ds.toHrDecimalView(jedCijena.toString().replace('.', ','));
-                                    o.Kolicina = ds.toHrDecimalView(povrsinaStana);
+                                    //o.JedMjera = '%';
+                                    //var povrsinaStana = cs.povrsinaPda($scope.PricuvaRezijeZaMjesec, masterPricuva.PosebniDioMasterId, $scope.PricuvaRezijeZaMjesec.SaKoef);
+                                    //var jedCijena = parseFloat(ds.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno) / ds.myParseFloat(povrsinaStana));
+                                    //o.JedCijena = ds.toHrDecimalView(jedCijena.toString().replace('.', ','));
+                                    //o.Kolicina = ds.toHrDecimalView(povrsinaStana);
                                     break;
                                 case 1:
                                     // po broju clanova
-                                    o.JedMjera = '%';
+                                    o.JedMjera = 'član';
                                     o.Kolicina = masteriList.ObracunRezijeBrojClanova;
-                                    o.jedCijena = ds.toHrDecimalView(ds.parseFloat(ObracunRezijaCijenaUkupnoPoBrojuClanova) / ds.parseFloat(o.Kolicina));
+                                    o.JedCijena = ls.toHrDecimalView(ls.parseFloat(o.Ukupno) / ls.parseFloat(o.Kolicina));
                                     break;
                                 case 2:
-                                    o.JedMjera = '$';
+                                    o.JedMjera = 'posebni dio';
                                     o.Kolicina = 1;
-                                    o.jedCijena = ds.toHrDecimalView(masterPricuva.ObracunRezijeCijenaSlobodanUnos);
+                                    o.JedCijena = ls.toHrDecimalView(ls.parseFloat(o.Ukupno));
                                     break;
                             }
-                            o.Ukupno = masterRezije.ZaduzenjeRezije;
+                            //o.Ukupno = masterRezije.ZaduzenjeRezije;
                         }
                     }
                 });
@@ -199,10 +213,10 @@
         }
 
         function dodajUpraviteljaiRH(o) {
-            var upravitelj = { Naziv: "Upravitelj", Id: -1 }; // TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-            var rh = { Naziv: "RH", Id: -2 }; // TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-            o.primatelji.push(rh);
-            o.primatelji.push(upravitelj);
+            //var upravitelj = { Naziv: "Upravitelj", Id: -1 }; // TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+            var rh = { Naziv: "RH", Id: -1 }; // TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+            //o.primatelji.push(rh);
+            //o.primatelji.push(upravitelj);
             o.platitelji.push(rh);
             o.platitelji.push(upravitelj);
         }
@@ -213,8 +227,8 @@
 
             var o = {
                 index: index, Id: 0, PricuvaRezijeMjesecId: $scope.PricuvaRezijeZaMjesec, PosebniDioMasterId: obj.PosebniDioMasterId, PlatiteljId: obj.PlatiteljId,
-                PrimateljId: 0, TipDuga: '-', TipPlacanja: '-', UdioPricuva: 0, UdioRezije: 0, IznosRezije: 0, IznosPricuva: 0, Uplatnica: '', displayLine: false,
-                displayBtnAdd: false, displayBtnRemove: true, platitelji: obj.platitelji, primatelji: obj.primatelji, tdColorPricuva: '#ffffff', tdColorRezije: '#ffffff',
+                TipDuga: '-', TipPlacanja: '-', UdioPricuva: 0, UdioRezije: 0, IznosRezije: 0, IznosPricuva: 0, Uplatnica: '', displayLine: false,
+                displayBtnAdd: false, displayBtnRemove: true, platitelji: obj.platitelji, tdColorPricuva: '#ffffff', tdColorRezije: '#ffffff',
                 BrojRacuna: '', DatumRacuna: zadnjiDanUMjesecu(), DatumIsporuke: zadnjiDanUMjesecu(), DatumDospijeca: zadnjiDanUMjesecu(), JedMjera: '', Opis: '', JedCijena: '', Kolicina: '',
                 Ukupno: '', Napomena: dodajDatumuNapomenu(), url: null,
                 IznosRezijeOrig: 0, IznosPricuvaOrig: 0
@@ -227,6 +241,7 @@
                 }
             });
             o.Napomena = zgradaObj.NapomenaRacun;
+            $scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice.push(o);
             $scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice = prepraviHrove($scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice);
             validacijaUdjela(obj.PosebniDioMasterId);
         }
@@ -257,7 +272,7 @@
                 function (result) {
                     $rootScope.loaderActive = false;
                     $scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice.forEach(function (u) {
-                        if (obj.index == i.index)
+                        if (obj.index == o.index)
                             u.url = result.data;
                     });
                 },
@@ -313,7 +328,7 @@
             return uList;
         }
 
-        
+
 
         function dodajDatumuNapomenu() {
             return zgradaObj.NapomenaRacun.replace("$DATUM", prettifyDate());
@@ -336,8 +351,8 @@
                         udioR = 0;
                     if (rec.UdioPricuva == undefined || rec.UdioPricuva == null || rec.UdioPricuva == '')
                         udioP = 0;
-                    rec.IznosPricuva = parseFloat(ds.myParseFloat(rec.IznosPricuvaOrig) * ds.myParseFloat(udioP) / 100).toString().replace('.', ',');
-                    rec.IznosRezije = parseFloat(ds.myParseFloat(rec.IznosRezijeOrig) * ds.myParseFloat(udioR) / 100).toString().replace('.', ',');
+                    rec.IznosPricuva = parseFloat(ls.myParseFloat(rec.IznosPricuvaOrig) * ls.myParseFloat(udioP) / 100).toString().replace('.', ',');
+                    rec.IznosRezije = parseFloat(ls.myParseFloat(rec.IznosRezijeOrig) * ls.myParseFloat(udioR) / 100).toString().replace('.', ',');
                     validacijaUdjela(masterId);
                 }
             });
@@ -354,8 +369,8 @@
                 //rec.tdColorRezije = '#ffffff';
 
                 if (rec.PosebniDioMasterId == masterId) {
-                    p += ds.myParseFloat(rec.UdioPricuva);
-                    r += ds.myParseFloat(rec.UdioRezije);
+                    p += ls.myParseFloat(rec.UdioPricuva);
+                    r += ls.myParseFloat(rec.UdioRezije);
                 }
 
                 // redColorPricuva = false, redColorRezije = false,
@@ -373,6 +388,7 @@
                     if (rec.PosebniDioMasterId == masterId) {
                         rec.tdColorPricuva = 'transparent';
                         invalidR = false;
+                        fnRacunStuff(rec);
                     }
 
                 });
@@ -392,8 +408,8 @@
                     if (rec.PosebniDioMasterId == masterId) {
                         rec.tdColorRezije = 'transparent';
                         invalidP = false;
+                        fnRacunStuff(rec);
                     }
-
                 });
             }
             if (invalidP || invalidR)
@@ -408,6 +424,20 @@
             if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
                 return 29;
             return 28;
+        }
+
+
+        $scope.saveAndKreraj = function () {
+            // $scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice
+            ds.snimiKreirajUplatniceRacune($scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice).then(
+                function (result) {
+                    toastr.success('Projene su snimljene');
+                    $scope.PricuvaRezijeZaMjesec.PricuvaRezijeMjesec_Uplatnice = result.data;
+                },
+                function (resule) {
+                    toastr.error('Greška kod snimanja');
+                }
+            )
         }
 
         $scope.cancel = function () {

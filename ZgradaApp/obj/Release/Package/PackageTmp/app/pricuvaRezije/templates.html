@@ -1,0 +1,96 @@
+﻿<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <form name="frm" ng-submit="save()">
+            <md-toolbar class="md-hue-2">
+                <div class="md-toolbar-tools">
+                    <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                        <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                    </md-button>
+
+                    <h3 flex md-truncate>{{msg}}</h3>
+
+                    <md-button class="md-icon-button" aria-label="More">
+                        <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <!-- napomena za racuna (za zgradu) -->
+            <br />
+            <button type="button" class="btn btn-primary" style="text-align: left; padding-left: 20px; width: 100%; padding-bottom: 10px; padding-top: 10px" ng-click="napomenaRacunZgrada()"><b>Napomena za račun (za zgradu)</b></button>
+            <md-card md-theme-watch uib-collapse="!napomenaExpanded">
+                <md-card-title>
+                    <md-card-title-text>
+                        <div>
+                            <h4>Uputstva</h4>
+                        </div>
+                        <div>
+                            <b>Enter na tipkovnici:</b> novi paragraf <br>
+                            <b>
+                                Shift+Enter na tipkovnici:
+                            </b> novi red <br>
+                            <b>
+                                $IBAN
+                            </b> - aplikacija ce kreirati $IBAN.<br />
+                            <b>$PR</b> - s obzirom na tip računa (pričuva ili režije), kod kreiranja računa, aplikacija će definirati što se plaća.<br />
+                            <b>$DATUM</b> - datum i godina u formatu "mj/god" će automatski biti promjenjeni u mjesec i godinu za koji se izdaje račun.
+                        </div>
+                        <div id="summernote" ng-bind-html="zgrada.NapomenaRacun"></div>
+                    </md-card-title-text>
+                    <!--<div class="md-subhead">
+                    <div class="col-sm-10">
+
+                    </div>
+                </div>-->
+                </md-card-title>
+            </md-card>
+            <hr /><br />
+
+            <!-- opis za racun (za svaki stan) -->
+            <div ng-repeat="master in zgrada.Zgrade_PosebniDijeloviMaster | filter: { Zatvoren: '!true'  }">
+
+                <md-card md-theme-watch>
+                    <button type="button" class="btn btn-primary" style="text-align: left; padding-left: 20px; width: 100%; padding-bottom: 10px; padding-top: 10px" ng-click="master.MasteriTemplateExpanded = !master.MasteriTemplateExpanded"><b>Opis za račun za posebni dio: &nbsp;&nbsp;&nbsp; {{master.Naziv}}</b></button>
+                    <md-card-title uib-collapse="!master.MasteriTemplateExpanded">
+                        <md-card-title-text>
+                            <div>
+                                <h4>Uputstva</h4>
+                            </div>
+                            <div>
+                                <b>$DATUM</b> - datum i godina u formatu "mj/god" će automatski biti promjenjeni u mjesec i godinu za koji se izdaje račun.
+                            </div>
+
+                            <table style="width: 50%">
+                                <tr>
+                                    <td><h4>Vlasnici / korisnici:</h4></td>
+                                    <td>
+
+                                        <span ng-repeat="period in master.Zgrade_PosebniDijeloviMaster_VlasniciPeriod | filter: { Zatvoren: '!true' }">
+                                            <span ng-repeat="vlasnikId in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici">
+                                                <span ng-repeat="vlasnik in zgrada.Zgrade_Stanari | filter: { Id: vlasnikId.StanarId }">
+                                                    {{vlasnik.Ime}}&nbsp;{{vlasnik.Prezime}}&nbsp;,
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </md-card-title-text>
+                        <div class="md-subhead">
+                            <div class="col-sm-10">
+                                <textarea rows="4" cols="180" style="min-width: 100%" placeholder="Napomena" ng-model="master.OpisRacun"></textarea>
+                            </div>
+                        </div>
+                    </md-card-title>
+                </md-card>
+                <br />
+
+            </div>
+            <!--<md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$pristine">Spremi</md-button>-->
+            <md-button class="md-raised md-primary pull-right" type="submit">Spremi</md-button>
+            <md-button class="md-raised md-warn pull-right" type="button" ng-click="cancel(frm.$pristine, $event)">Odustani</md-button>
+        </form>
+    </div>
+</div>
+
+

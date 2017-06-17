@@ -8,6 +8,13 @@
 });
 
 
+angularApp.filter('to2Decimals', function () {
+    return function (x) {
+        return parseFloat(x.toString().replace(',', '.')).toFixed(2).toString().replace('.', ',');
+    }
+});
+
+
 angularApp.filter('toDecimalHrFilter', function () {
     return function (x) {
         var y = '';

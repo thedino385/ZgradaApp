@@ -1,5 +1,5 @@
-﻿angularApp.controller('prihodiRashodiIndexCtrl', ['$scope', '$route', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $route, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('prihodiRashodiIndexCtrl', ['$scope', '$route', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', 'LocalizationService','$mdDialog',
+    function ($scope, $route, $routeParams, $location, $rootScope, toastr, DataService, LocalizationService, $mdDialog) {
 
         $scope.msg = '';
         if (DataService.selZgradaId == null) {
@@ -13,7 +13,7 @@
         DataService.getZgrada(DataService.selZgradaId, true, false).then(
             function (result) {
                 // on success
-                $scope.zgradaObj = DataService.decimalToHr(result.data.Zgrada, 'prihodiRashodi');
+                $scope.zgradaObj = LocalizationService.decimalToHr(result.data.Zgrada, 'prihodiRashodi');
                 //DataService.currZgrada = result.data.Zgrada;
                 //DataService.zgradaUseri = result.data.Useri;
                 //DataService.userId = result.data.userId;
@@ -115,21 +115,21 @@
             return parseFloat(suma).toFixed(2).toString().replace('.', ',');
         }
 
-        $scope.dodajGodinu = function () {
-            if ($scope.novaGodina == undefined || $scope.novaGodina == '')
-                return;
-            console.log($scope.novaGodina);
-            console.log($scope.godine.indexOf($scope.novaGodina));
-            if ($scope.godine.indexOf($scope.novaGodina) == -1) {
-                $scope.godine.push($scope.novaGodina);
-                var newMaster = { Id: 0, ZgradaId: $scope.zgradaObj.Id, Godina: $scope.novaGodina, Status: 'a', PrihodiRashodi_Prihodi: [], PrihodiRashodi_Rashodi: [] }
-                $scope.zgradaObj.PrihodiRashodi.push(newMaster);
-            }
+        //$scope.dodajGodinu = function () {
+        //    if ($scope.novaGodina == undefined || $scope.novaGodina == '')
+        //        return;
+        //    console.log($scope.novaGodina);
+        //    console.log($scope.godine.indexOf($scope.novaGodina));
+        //    if ($scope.godine.indexOf($scope.novaGodina) == -1) {
+        //        $scope.godine.push($scope.novaGodina);
+        //        var newMaster = { Id: 0, ZgradaId: $scope.zgradaObj.Id, Godina: $scope.novaGodina, Status: 'a', PrihodiRashodi_Prihodi: [], PrihodiRashodi_Rashodi: [] }
+        //        $scope.zgradaObj.PrihodiRashodi.push(newMaster);
+        //    }
 
-            else
-                toastr.error('Godina postoji');
-            $scope.novaGodina = '';
-        }
+        //    else
+        //        toastr.error('Godina postoji');
+        //    $scope.novaGodina = '';
+        //}
 
         // provjeri lleap year
         $scope.getFebDay = function () {
@@ -150,6 +150,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     prihodRashodZaGodinu: $scope.prihodRashodZaGodinu,
@@ -182,6 +183,7 @@
                 parent: angular.element(document.body),
                 //targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     prihodRashodZaGodinu: $scope.prihodRashodZaGodinu,
@@ -207,7 +209,7 @@
 
         $scope.saveAll = function () {
             $rootScope.loaderActive = true;
-            DataService.prihodiRashodiCreateOrUpdate(DataService.decimalToEng($scope.zgradaObj, 'prihodiRashodi')).then(
+            DataService.prihodiRashodiCreateOrUpdate(LocalizationService.decimalToEng($scope.zgradaObj, 'prihodiRashodi')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;
@@ -254,6 +256,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: true // Only for -xs, -sm breakpoints.
                 , locals: {
                     sifarnikRashoda: $scope.sifarnikRashoda,

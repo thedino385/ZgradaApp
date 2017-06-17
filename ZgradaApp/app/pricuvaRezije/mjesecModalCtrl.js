@@ -1,5 +1,5 @@
-﻿angularApp.controller('mjesecModalCtrl', ['$scope', '$rootScope', '$mdDialog', '$filter', 'toastr', 'DataService', 'CalcService', 'zgradaObj', 'mjesec', 'godina',
-    function ($scope, $rootScope, $mdDialog, $filter, toastr, DataService, CalcService, zgradaObj, mjesec, godina) {
+﻿angularApp.controller('mjesecModalCtrl', ['$scope', '$rootScope', '$mdDialog', '$filter', 'toastr', 'DataService', 'CalcService', 'LocalizationService', 'zgradaObj', 'mjesec', 'godina',
+    function ($scope, $rootScope, $mdDialog, $filter, toastr, DataService, CalcService, ls, zgradaObj, mjesec, godina) {
 
         $scope.zgradaObj = zgradaObj;
         console.log(zgradaObj);
@@ -27,6 +27,22 @@
                 prGod.PricuvaRezijeMjesec.forEach(function (prMj) {
                     if (prMj.Mjesec == mjesec) {
                         //$scope.PricuvaRezijeZaMjesec = pretify(prMj);
+
+                        // izracunaj uplate (prihodi) i dug/pretplatu on the fly
+                        prMj.PricuvaRezijePosebniDioMasteri.forEach(function (pdMaster) {
+                            pdMaster.Uplaceno = getUplaceno(pdMaster.PosebniDioMasterId);
+
+                            var ps = 0;
+                            if (pdMaster.PocetnoStanje != null)
+                                ps = ls.myParseFloat(pdMaster.PocetnoStanje);
+
+                            pdMaster.DugPretplata = parseFloat(
+                                ls.myParseFloat(pdMaster.Uplaceno) +
+                                ls.myParseFloat(pdMaster.StanjeOd) -
+                                ls.myParseFloat(pdMaster.ZaduzenjePricuva) -
+                                ls.myParseFloat(pdMaster.ZaduzenjeRezije) +
+                                ls.myParseFloat(ps));
+                        });
                         $scope.PricuvaRezijeZaMjesec = prMj;
                         $scope.found = true;
                         tBoxesVissible($scope.PricuvaRezijeZaMjesec);
@@ -58,9 +74,9 @@
         function pretify(PricuvaRezijeZaMjesec) {
             //return x.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
             PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (rec) {
-                rec.Uplaceno = DataService.toHrDecimal(rec.Uplaceno);
-                rec.ZaduzenjeRezije = DataService.toHrDecimal(rec.ZaduzenjeRezije);
-                rec.ZaduzenjePricuva = DataService.toHrDecimal(rec.ZaduzenjePricuva);
+                rec.Uplaceno = ls.toHrDecimal(rec.Uplaceno);
+                rec.ZaduzenjeRezije = ls.toHrDecimal(rec.ZaduzenjeRezije);
+                rec.ZaduzenjePricuva = ls.toHrDecimal(rec.ZaduzenjePricuva);
                 console.log('rec.ZaduzenjeRezije ' + rec.ZaduzenjeRezije);
                 console.log('rec.ZaduzenjePricuva ' + rec.ZaduzenjePricuva);
             });
@@ -198,35 +214,35 @@
                 if ($scope.PricuvaRezijeZaMjesec.NacinObracunaPricuva == 0) {
                     // povrsina pdMastera je zbroj svhi povrsina pdChildova i povrsina pripadaka
                     pdMaster.PricuvaRezijePosebniDioMasterPovrsine.forEach(function (povrsina) {
-                        pricuvaZaMaster += DataService.myParseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? DataService.myParseFloat(povrsina.Koef) : 1);
+                        pricuvaZaMaster += ls.myParseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(povrsina.Koef) : 1);
                         // console.log('PricuvaRezije, povrsine ' + pricuvaZaMaster);
                     });
                     pdMaster.PricuvaRezijePosebniDioMasterPripadci.forEach(function (prip) {
-                        pricuvaZaMaster += DataService.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? DataService.myParseFloat(prip.Koef) : 1);
+                        pricuvaZaMaster += DataSlservice.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(prip.Koef) : 1);
                     });
-                    pricuvaZaMaster = parseFloat(parseFloat(pricuvaZaMaster) * DataService.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2));
+                    pricuvaZaMaster = parseFloat(parseFloat(pricuvaZaMaster) * ls.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2));
                     //console.log('pricuvaZaMaster Pricuva po m2: ' + pricuvaZaMaster);
                 }
                 else if ($scope.PricuvaRezijeZaMjesec.NacinObracunaPricuva == 1) {
                     // ukupno za zgradu, raspodjela ovisno o povrisni
                     var povrsinaPD = 0;
                     pdMaster.PricuvaRezijePosebniDioMasterPovrsine.forEach(function (povrsina) {
-                        povrsinaPD += DataService.myParseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? DataService.myParseFloat(povrsina.Koef) : 1);
+                        povrsinaPD += ls.myParseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(povrsina.Koef) : 1);
                         // console.log('PricuvaRezije, povrsine ' + pricuvaZaMaster);
                     });
                     pdMaster.PricuvaRezijePosebniDioMasterPripadci.forEach(function (prip) {
-                        povrsinaPD += DataService.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? DataService.myParseFloat(prip.Koef) : 1);
+                        povrsinaPD += ls.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(prip.Koef) : 1);
                     });
                     //console.log('povrsinaPD ' + povrsinaPD);
                     //console.log(DataService.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno));
-                    pricuvaZaMaster = parseFloat(povrsinaPD / DataService.myParseFloat(CalcService.povrsinaZgrade($scope.PricuvaRezijeZaMjesec)) * DataService.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno));
+                    pricuvaZaMaster = parseFloat(povrsinaPD / ls.myParseFloat(CalcService.povrsinaZgrade($scope.PricuvaRezijeZaMjesec)) * ls.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno));
 5                }
                 else if ($scope.PricuvaRezijeZaMjesec.NacinObracunaPricuva == 2) {
                     // cijena za svaki pdMaster
                     //pricuvaZaMaster = parseFloat(DataService.myParseFloat(pdMaster.ObracunPricuvaCijenaSlobodanUnos));
                     // zaduzenje za svakog = cijena ulupno / posto za PD * 100
-                    var cijenUkupno = DataService.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupno);
-                    pricuvaZaMaster = cijenUkupno / DataService.myParseFloat(pdMaster.ObracunPricuvaPostoSlobodanUnos) * 100;
+                    var cijenUkupno = ls.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaUkupnoZaPostotak);
+                    pricuvaZaMaster = cijenUkupno / ls.myParseFloat(pdMaster.ObracunPricuvaPostoSlobodanUnos) * 100;
                     // CalcService
                 }
 
@@ -235,28 +251,28 @@
                     // ukupno za zgradu, raspodjela ovisno o povrisni
                     var povrsinaPD = 0;
                     pdMaster.PricuvaRezijePosebniDioMasterPovrsine.forEach(function (povrsina) {
-                        povrsinaPD += DataService.myParseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? DataService.myParseFloat(povrsina.Koef) : 1);
+                        povrsinaPD += ls.myParseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(povrsina.Koef) : 1);
                         // console.log('PricuvaRezije, povrsine ' + pricuvaZaMaster);
                     });
                     pdMaster.PricuvaRezijePosebniDioMasterPripadci.forEach(function (prip) {
-                        povrsinaPD += DataService.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? DataService.myParseFloat(prip.Koef) : 1);
+                        povrsinaPD += ls.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(prip.Koef) : 1);
                     });
                     //console.log('$scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno ' + $scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno);
                     //console.log('povrsinaPD ' + povrsinaPD);
                     //console.log('povrsinaZgrade ' + povrsinaZgrade());
-                    rezijeZaMaster = parseFloat(povrsinaPD / DataService.myParseFloat(CalcService.povrsinaZgrade($scope.PricuvaRezijeZaMjesec)) * DataService.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno));
+                    rezijeZaMaster = parseFloat(povrsinaPD / ls.myParseFloat(CalcService.povrsinaZgrade($scope.PricuvaRezijeZaMjesec)) * ls.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijeCijenaUkupno));
                     //console.log('PricuvaRezije, rezije raspodjela od ukupno: ' + rezijeZaMaster);
                 }
                 else if ($scope.PricuvaRezijeZaMjesec.NacinObracunaRezije == 1) {
                     // po broju clanova
                     var povrsinaPD = 0;
                     //console.log('pdMaster.ObracunRezijeBrojClanova ' + pdMaster.ObracunRezijeBrojClanova);
-                    rezijeZaMaster = parseFloat(parseInt(pdMaster.ObracunRezijeBrojClanova) / parseInt(ukupanBrojLjudi()) * DataService.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijaCijenaUkupnoPoBrojuClanova));
+                    rezijeZaMaster = parseFloat(parseInt(pdMaster.ObracunRezijeBrojClanova) / parseInt(ukupanBrojLjudi()) * ls.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunRezijaCijenaUkupnoPoBrojuClanova));
                     //console.log('PricuvaRezije, Rezije po bruju clanova: ' + rezijeZaMaster);
                 }
                 else if ($scope.PricuvaRezijeZaMjesec.NacinObracunaRezije == 2) {
                     // cijena za svaki pd
-                    rezijeZaMaster = DataService.myParseFloat(pdMaster.ObracunRezijeCijenaSlobodanUnos);
+                    rezijeZaMaster = ls.myParseFloat(pdMaster.ObracunRezijeCijenaSlobodanUnos);
                 }
 
                 //pdMaster.Zaduzenje = parseFloat(pricuvaZaMaster + rezijeZaMaster).toFixed(2);
@@ -268,20 +284,16 @@
 
 
                 // Uplaceno  se vuse iz Prihoda - suma prihoda za pdMasterId za ovaj mjesec
-                var uplaceno = 0;
-                $scope.zgradaObj.PrihodiRashodi.forEach(function (prihodiRashodi) {
-                    if (prihodiRashodi.Godina == $scope.godina) {
-                        //console.log('CP1');
-                        prihodiRashodi.PrihodiRashodi_Prihodi.forEach(function (prihodi) {
-                            //console.log('CP1');
-                            //console.log(prihodi.Mjesec == $scope.mjesec);
-                            //console.log(prihodi.PosebniDioMasterId == pdMaster.Id);
-                            if (prihodi.Mjesec == $scope.mjesec && prihodi.PosebniDioMasterId == pdMaster.PosebniDioMasterId) {
-                                uplaceno += parseFloat(DataService.myParseFloat(prihodi.Iznos));
-                            }
-                        });
-                    }
-                });
+                
+                //$scope.zgradaObj.PrihodiRashodi.forEach(function (prihodiRashodi) {
+                //    if (prihodiRashodi.Godina == $scope.godina) {
+                //        prihodiRashodi.PrihodiRashodi_Prihodi.forEach(function (prihodi) {
+                //            if (prihodi.Mjesec == $scope.mjesec && prihodi.PosebniDioMasterId == pdMaster.PosebniDioMasterId) {
+                //                uplaceno += parseFloat(ls.myParseFloat(prihodi.Iznos));
+                //            }
+                //        });
+                //    }
+                //});
 
 
 
@@ -293,16 +305,16 @@
                 // Dug/Pretplata = Uplaceno + StanjeOd - Zaduzenje - PocetnoStanje
                 var ps = 0;
                 if (pdMaster.PocetnoStanje != null)
-                    ps = DataService.myParseFloat(pdMaster.PocetnoStanje);
+                    ps = ls.myParseFloat(pdMaster.PocetnoStanje);
 
-                pdMaster.Uplaceno = uplaceno;
+                pdMaster.Uplaceno = getUplaceno(pdMaster.PosebniDioMasterId);
 
                 pdMaster.DugPretplata = parseFloat(
-                    DataService.myParseFloat(pdMaster.Uplaceno) +
-                    DataService.myParseFloat(pdMaster.StanjeOd) -
-                    DataService.myParseFloat(pdMaster.ZaduzenjePricuva) -
-                    DataService.myParseFloat(pdMaster.ZaduzenjeRezije) +
-                    DataService.myParseFloat(ps));
+                    ls.myParseFloat(pdMaster.Uplaceno) +
+                    ls.myParseFloat(pdMaster.StanjeOd) -
+                    ls.myParseFloat(pdMaster.ZaduzenjePricuva) -
+                    ls.myParseFloat(pdMaster.ZaduzenjeRezije) +
+                    ls.myParseFloat(ps));
                 //pdMaster.DugPretplata = DataService.toHrDecimal(pdMaster.DugPretplata);
 
                 //pdMaster.Uplaceno = DataService.toHrDecimal(uplaceno);
@@ -323,7 +335,18 @@
         }
 
 
-
+        function getUplaceno(masterId) {
+            var uplaceno = 0;
+            $scope.zgradaObj.PrihodiRashodi.forEach(function (prihodiRashodi) {
+                if (prihodiRashodi.Godina == $scope.godina) {
+                    prihodiRashodi.PrihodiRashodi_Prihodi.forEach(function (prihodi) {
+                        if (prihodi.Mjesec == $scope.mjesec && prihodi.PosebniDioMasterId == masterId) {
+                            uplaceno += prihodi.IznosUplacen != null ? parseFloat(ls.myParseFloat(prihodi.IznosUplacen)) : 0;
+                        }
+                    });
+                }
+            });
+        }
         
 
         //var povrsinaZgrade = function () {

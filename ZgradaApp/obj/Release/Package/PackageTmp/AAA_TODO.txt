@@ -1,4 +1,18 @@
-﻿+ modal za dodavanje oglasa u oglasnoj
+﻿- povlacenje napomene i opisa za racuna
+- kreiranje uplatnice i napomena
+- slanje maila (obavijet) - imate neki kurac
+- kreiranje uplatnica pdf
+- download uplatnica i racuna za stanara
+- stanar sa pravom pisanja po ploci i dbevniku ne mora editirati (dati mu obavijet), ne moze posttat dok mu se ne odgovori
+
+---------------------------
+- slanje slike u dnevniku
+- slanje slike u oglasnoj
+- download zona
+
+
+
++ modal za dodavanje oglasa u oglasnoj
 + gasenje notifikacija ne radi
 + modal za zajednicke uredjaje
 + modal za zajednicke uredjaje, datepicker se ne binda kad se povuce iz db-a

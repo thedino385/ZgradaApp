@@ -18,6 +18,8 @@
                     $scope.user = user;
                 }
             });
+            $scope.user.Password = 'dummy'; // ako je postojeci nece se snimati, samo da frm bude validan
+            $scope.passwordAgain = 'dummy';
             $scope.msg = 'Uredi korisnika';
         }
 

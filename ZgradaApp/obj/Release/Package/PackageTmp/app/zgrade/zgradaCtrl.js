@@ -32,38 +32,11 @@
         // _________________________________________________________
         //              Modal stanar
         // _________________________________________________________
-        $scope.openModalStanar = function (id) {
+        $scope.openModalStanar = function (id, ev) {
             $('nav').fadeOut();
             $mdDialog.show({
                 controller: 'zgradaStanariModalCtrl',
                 templateUrl: 'app/zgrade/zgradaStanariModal.html?p=' + new Date().getTime() / 1000,
-                //parent: angular.element(document.body),
-                //targetEvent: ev,
-                clickOutsideToClose: false,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-                , locals: {
-                    id: id,
-                    zgradaObj: $scope.zgradaObj
-                }
-            }).then(function (zgradaObj) {
-                // save (hide)
-                $scope.zgradaObj = zgradaObj;
-            }, function (zgradaObj) {
-                // cancel
-                console.log(zgradaObj);
-                $scope.zgradaObj = zgradaObj;
-            });
-        };
-
-
-        // _________________________________________________________
-        //              Modal posebni dio
-        // _________________________________________________________
-        $scope.openModalPosebniDio = function (id, ev) {
-            $('nav').fadeOut();
-            $mdDialog.show({
-                controller: 'zgradaPosebniDijeloviMasterModalCtrl',
-                templateUrl: 'app/zgrade/zgradaPosebniDijeloviMasterModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -81,7 +54,6 @@
                 $scope.zgradaObj = zgradaObj;
             });
         };
-
 
         $scope.save = function () {
             $rootScope.loaderActive = true;

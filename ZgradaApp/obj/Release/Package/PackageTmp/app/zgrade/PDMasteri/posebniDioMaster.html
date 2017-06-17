@@ -1,0 +1,289 @@
+﻿<div class="container-grid">
+    <div class="col-lg-12 whiteShadow">
+        <form name="frm" ng-submit="save()">
+            <md-toolbar class="md-hue-2">
+                <div class="md-toolbar-tools">
+                    <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                        <md-icon md-svg-icon="/Content/icons/menu.svg"></md-icon>
+                    </md-button>
+
+                    <h3 flex md-truncate>{{msg}}</h3>
+
+                    <md-checkbox ng-click="nePrikazujZatvorene = !nePrikazujZatvorene" ng-model="cb" aria-label="Ne prikazuj zatvorene">
+                        Ne prikazuj zatvorene
+                    </md-checkbox>
+
+                    <!--<md-button class="md-raised" ng-disabled="pdMaster.Zatvoren == true" aria-label="Dodaj posebni dio" ng-click="openModalPosebniDioChild(0)">
+                        Dodaj posebni dio
+                    </md-button>-->
+                    <md-button class="md-raised" ng-disabled=dodajVlasnikeBtnDisabled aria-label="Dodaj vlasnike" ng-click="openModalVlasnici(0)">
+                        Dodaj vlasnike
+                    </md-button>
+
+                    <md-button ng-click="killMaster($event)" class="md-icon-button" aria-label="Zatvori posebni dio" title="Zatvori poseban dio {{pdMaster.Naziv}}">
+                        <md-icon md-svg-icon="/Content/icons/delete.svg"></md-icon>
+                    </md-button>
+
+                    <md-button class="md-icon-button" aria-label="More">
+                        <md-icon md-svg-icon="/Content/icons/more_vert.svg"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <br />
+
+            <a href="" class="btn btn-primary dropdown-toggle" style="padding-bottom: 10px; padding-top: 10px;" ng-click="general.Visible = !general.Visible">
+                &nbsp;&nbsp;&nbsp;<b>Općeniti podaci</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+            </a>
+            
+            <br /><br />
+
+            <div uib-collapse="general.Visible">
+                <div class="form-group row">
+                    <div layout="column" ng-cloak class="md-inline-form">
+                        <md-content layout-padding>
+                            <div layout-gt-sm="row">
+                                <div class="col-sm-1"></div>
+                                <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                    <label>Naziv</label>
+                                    <input required type="text" name="naziv" ng-model="pdMaster.Naziv">
+                                    <div ng-messages="frm.naziv.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                    <label>Broj stana</label>
+                                    <input required type="text" name="broj" ng-model="pdMaster.Broj">
+                                    <div ng-messages="frm.broj.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div layout-gt-sm="row">
+                                <div class="col-sm-1"></div>
+                                <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                    <label>Vrijedi od godina</label>
+                                    <input required type="text" name="vrijediOdGod" ng-model="pdMaster.VrijediOdGodina">
+                                    <div ng-messages="frm.vrijediOdGod.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container class="md-block col-sm-3" flex-gt-sm>
+                                    <label>Vrijedi od mjesec</label>
+                                    <input required type="text" name="vrijediOdMj" ng-model="pdMaster.VrijediOdMjesec">
+                                    <div ng-messages="frm.vrijediOdMj.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <div class="col-sm-1"></div>
+                            </div>
+                        </md-content>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <textarea rows="3" cols="150" style="min-width: 100%" placeholder="Napomena" ng-model="pdMaster.Napomena"></textarea>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+
+            <div ng-show="pdMaster.Zatvoren == true">
+                <md-whiteframe class="md-whiteframe-9dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+                    <span style="color: crimson"><br>Posebni dio je zatvoren, vrijedi do: {{pdMaster.ZatvorenMjesec}}/{{pdMaster.ZatvorenGodina}}<br></span>
+                </md-whiteframe>
+            </div>
+
+
+            <!--Vlasnici card-->
+            <!--<button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 10px; padding-top: 10px" ng-click="isVlasniciCollapsed = !isVlasniciCollapsed"><b>Vlasnici</b><span class="caret pull-right"></span></button>-->
+
+            <a href="" class="btn btn-primary dropdown-toggle" style="width: 100%; padding-bottom: 10px; padding-top: 10px;" ng-click="isVlasniciCollapsed = !isVlasniciCollapsed">
+                &nbsp;&nbsp;&nbsp;<b>Vlasnici</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+            </a>
+
+            <div uib-collapse="isVlasniciCollapsed">
+                <md-card md-theme-watch>
+                    <!--table posebniDijeloviChild sa kolecijema: povrsine, pripadci-->
+                    <md-card-title>
+                        <md-card-title-text>
+                            <!--<span class="md-headline indigoColor">Vlasnici</span>-->
+                            <!--table Vlasnici-->
+                            <div ng-repeat="period in pdMaster.Zgrade_PosebniDijeloviMaster_VlasniciPeriod">
+                                <table class="table table-hover table-responsive table-condensed" ng-hide="period.Zatvoren == nePrikazujZatvorene">
+                                    <thead style="color: {{period.Zatvoren == true ? 'gray' : 'initial'}}">
+                                        <tr>
+                                            <th colspan="5" style="vertical-align: middle; text-align: start; color: {{period.Zatvoren == true ? 'gray' : 'initial'}}">
+                                                Vrijedi Od: {{period.VrijediOdMjesec}}/{{period.VrijediOdGodina}}
+                                            </th>
+                                            <th style="vertical-align: middle; width: 200px">
+                                                <md-button ng-show="period.Zatvoren != true" class="md-icon-button" ng-click="openModalVlasnici(period.Id, $event)" title="Uredi vlasnike">
+                                                    <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                                                </md-button>
+                                                <md-button ng-show="period.Zatvoren != true" class="md-icon-button" ng-click="killVlasniciPeriod(period.Id, $event)" title="Zatvori vlasnike">
+                                                    <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
+                                                </md-button>
+                                                <div ng-show="period.Zatvoren == true">Zatvoreno: {{period.VrijediDoMjesec}}/{{period.VrijediDoGodina}}</div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="vertical-align: middle; text-align: start">Ime</th>
+                                            <th style="vertical-align: middle; text-align: start; padding-right: 30px">Prezime</th>
+                                            <th style="vertical-align: middle; text-align: start; padding-right: 30px">Udio</th>
+                                            <th style="vertical-align: middle; text-align: start; padding-right: 30px">Vlasnik</th>
+                                            <th style="vertical-align: middle; text-align: start; padding-right: 30px">Korisnik</th>
+                                            <!--<th style="vertical-align: middle; text-align: start; padding-right: 30px">Upl.glasi na vlasnika</th>-->
+
+                                            <th style="vertical-align: middle"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="vlasnik in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici" style="color: {{period.Zatvoren == true ? 'gray' : 'initial'}}">
+
+                                            <!--<td style="vertical-align: middle; text-align: start">{{getVlasnik(vlasnik.Id).ime}}</td>-->
+                                            <td ng-repeat="s in stanari | filter: { Id: vlasnik.StanarId }" style="vertical-align: middle; text-align: start">
+                                                {{s.Ime}}
+                                            </td>
+                                            <td ng-repeat="s in stanari | filter: { Id: vlasnik.StanarId }" style="vertical-align: middle; text-align: start">
+                                                {{s.Prezime}}
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: start; padding-right: 30px">{{vlasnik.Udio}}</td>
+                                            <td style="vertical-align: middle; text-align: center">
+                                                <md-checkbox ng-disabled="true" aria-label="Disabled checkbox" ng-model="vlasnik.Vlasnik">
+                                                </md-checkbox>
+                                            </td>
+                                            <td style="vertical-align: middle; text-align: center">
+                                                <md-checkbox ng-disabled="true" aria-label="Disabled checkbox" ng-model="vlasnik.Korisnik">
+                                                </md-checkbox>
+                                            </td>
+                                            <td style="vertical-align: middle;"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end of Vlasnici -->
+                        </md-card-title-text>
+                    </md-card-title>
+                </md-card>
+                <!--End of vlasnici card-->
+            </div>
+
+            <!--<div ng-repeat="povr in pdMaster.Zgrade_PosebniDijeloviMaster_Povrsine">-->
+            <md-card md-theme-watch>
+                <md-card-title>
+                    <md-card-title-text>
+                        <!--<button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 10px; padding-top: 10px" ng-click="povr.Expanded = !povr.Expanded"><b>Površine</b><span class="caret pull-right"></span></button>-->
+                        <a href="" class="btn btn-primary dropdown-toggle" style="width: 100%; padding-bottom: 10px; padding-top: 10px;" ng-click="povr.Expanded = !povr.Expanded">
+                            &nbsp;&nbsp;&nbsp;<b>Površine</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+                        <div uib-collapse="povr.Expanded">
+                            <table class="table table-hover table-responsive table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align: middle; text-align: start">Naziv površine</th>
+                                        <th style="vertical-align: middle; text-align: right; padding-right: 30px">Površina</th>
+                                        <th style="vertical-align: middle; text-align: right; padding-right: 30px">Koeficijent</th>
+                                        <th style="vertical-align: middle; width: 200px">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="povr in pdMaster.Zgrade_PosebniDijeloviMaster_Povrsine" style="color: {{povr.Zatvoren == true ? 'gray' : 'initial'}}" ng-hide="povr.Zatvoren == nePrikazujZatvorene">
+                                        <td style="vertical-align: middle; text-align: start">{{povr.Naziv}}</td>
+                                        <td style="vertical-align: middle; text-align: right; padding-right: 30px">{{povr.Povrsina}}</td>
+                                        <td style="vertical-align: middle; text-align: right; padding-right: 30px">{{povr.Koef}}</td>
+                                        <td style="vertical-align: middle; text-align: end">
+                                            <md-button ng-hide="povr.Zatvoren == true" class="md-icon-button" ng-click="openModalPovrsina(povr.Id, $event)" title="Uredi površinu">
+                                                <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                                            </md-button>
+                                            <md-button ng-hide="povr.Zatvoren == true" class="md-icon-button" ng-click="killPovrsina(povr.Id, $event)" title="Zatvori površinu">
+                                                <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
+                                            </md-button>
+                                            <div ng-show="povr.Zatvoren == true">Zatvoreno: {{povr.ZatvorenMjesec}}/{{povr.ZatvorenGodina}}</div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-card-title-text>
+                    <md-card-title-media style="width: 172px">
+                        <div class="md-media-sm card-media">
+                            <md-button class="md-icon-button" ng-click="openModalPovrsina(0, $event)" title="Dodaj površinu">
+                                <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: blue; width: 32px; height: 32px"></md-icon>
+                            </md-button>
+                        </div>
+                    </md-card-title-media>
+                </md-card-title>
+            </md-card>
+
+            <md-card md-theme-watch>
+                <md-card-title>
+                    <md-card-title-text>
+                        <!--<button type="button" class="btn btn-primary" style="width: 100%; padding-bottom: 10px; padding-top: 10px" ng-click="prip.Expanded = !prip.Expanded"><b>Pripadci<span class="caret pull-right"></span></b></button>-->
+
+                        <a href="" class="btn btn-primary dropdown-toggle" style="width: 100%; padding-bottom: 10px; padding-top: 10px;" ng-click="prip.Expanded = !prip.Expanded">
+                            &nbsp;&nbsp;&nbsp;<b>Pripadci</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+
+                        <div uib-collapse="prip.Expanded">
+                            <table class="table table-hover table-responsive table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align: middle; text-align: start">Naziv Pripadka</th>
+                                        <th style="vertical-align: middle; text-align: right; padding-right: 30px">Površina</th>
+                                        <th style="vertical-align: middle; text-align: right; padding-right: 30px">Koeficijent</th>
+                                        <th style="vertical-align: middle; width: 200px">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="prip in pdMaster.Zgrade_PosebniDijeloviMaster_Pripadci" style="color: {{prip.Zatvoren == true ? 'gray' : 'initial'}}" ng-hide="prip.Zatvoren == nePrikazujZatvorene">
+                                        <td style="vertical-align: middle; text-align: start">{{prip.Naziv}}</td>
+                                        <td style="vertical-align: middle; text-align: right; padding-right: 30px">{{prip.Povrsina}}</td>
+                                        <td style="vertical-align: middle; text-align: right; padding-right: 30px">{{prip.Koef}}</td>
+                                        <td style="vertical-align: middle; text-align: end">
+                                            <md-button ng-hide="prip.Zatvoren == true" class="md-icon-button" ng-click="openModalPrip(prip.Id, $event)" title="Uredi površinu">
+                                                <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
+                                            </md-button>
+                                            <md-button ng-hide="povr.Zatvoren == true" class="md-icon-button" ng-click="killPrip(prip.Id, $event)" title="Zatvori površinu">
+                                                <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
+                                            </md-button>
+                                            <div ng-show="prip.Zatvoren == true">Zatvoreno: {{prip.ZatvorenMjesec}}/{{prip.ZatvorenGodina}}</div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-card-title-text>
+                    <md-card-title-media style="width: 172px">
+                        <div class="md-media-sm card-media">
+                            <md-button class="md-icon-button" ng-click="openModalPrip(0, $event)" title="Dodaj pripadak">
+                                <md-icon md-svg-icon="/Content/icons/plus.svg" style="fill: blue; width: 32px; height: 32px"></md-icon>
+                            </md-button>
+                        </div>
+                    </md-card-title-media>
+                </md-card-title>
+            </md-card>
+
+            <hr />
+            <div>
+                <md-button class="md-raised md-warn pull-right" ng-click="goBack()">
+                    Odustani
+                </md-button>
+                <md-button class="md-raised md-primary pull-right" type="submit" ng-disabled="frm.$invalid">Spremi</md-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

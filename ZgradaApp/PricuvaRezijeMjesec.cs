@@ -32,6 +32,7 @@ namespace ZgradaApp
         public Nullable<decimal> ObracunRezijeCijenaUkupno { get; set; }
         public Nullable<decimal> ObracunRezijaCijenaUkupnoPoBrojuClanova { get; set; }
         public Nullable<decimal> OrocenaSredstva { get; set; }
+        public Nullable<decimal> ObracunPricuvaCijenaUkupnoZaPostotak { get; set; }
     
         public virtual PricuvaRezijeGodina PricuvaRezijeGodina { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

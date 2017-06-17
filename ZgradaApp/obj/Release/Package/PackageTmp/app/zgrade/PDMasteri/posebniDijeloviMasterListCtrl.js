@@ -36,7 +36,7 @@
 
         $scope.edit = function (posebniDioMasterId) {
             DataService.currZgrada = $scope.zgrada;
-            $location.path('/posebniDioChildren/' + posebniDioMasterId);
+            $location.path('/posebniDioMaster/' + posebniDioMasterId);
         }
 
         //$scope.goToPrihodiRashodi = function () {
@@ -57,10 +57,10 @@
         //    $location.path('/popisUredjaja');
         //}
 
-        $scope.goToDnevnik = function () {
-            DataService.currZgrada = $scope.zgrada;
-            $location.path('/dnevnik/' + $scope.zgrada.Id);
-        }
+        //$scope.goToDnevnik = function () {
+        //    DataService.currZgrada = $scope.zgrada;
+        //    $location.path('/dnevnik/' + $scope.zgrada.Id);
+        //}
 
 
         // _________________________________________________________

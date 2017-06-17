@@ -62,13 +62,26 @@
             })
                 .then(function (o) {
                     if (o.Id == 0) {
-                        if (o.Poruka != '')
+                        if (o.Poruka != '') {
+                            maxId = 0;
+                            $scope.obj.Zgrade_DnevnikRadaDetails.forEach(function (rec) {
+                                if (rec.Id > maxId) {
+                                    maxId = rec.Id;
+                                }
+                            });
+                            o.Id = maxId + 1;
+                            o.Status = 'a';
                             $scope.obj.Zgrade_DnevnikRadaDetails.push(o);
+                        }
+                            
                     }
                     else {
                         $scope.obj.Zgrade_DnevnikRadaDetails.forEach(function (m) {
-                            if (m.Id == id)
-                                m = o;
+                            if (m.Id == id) {
+                                o.Status = 'u';
+                                m.Poruka = o.Poruka;
+                            }
+                                
                         });
                     }
 

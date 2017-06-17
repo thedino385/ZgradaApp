@@ -75,7 +75,7 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
+                templateUrl: 'app/zgrade/PDMasteri/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
