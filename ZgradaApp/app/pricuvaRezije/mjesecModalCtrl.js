@@ -36,7 +36,7 @@
                             if (pdMaster.PocetnoStanje != null)
                                 ps = ls.myParseFloat(pdMaster.PocetnoStanje);
 
-                            pdMaster.DugPretplata = parseFloat(
+                            pdMaster.DugPretplata = ls.toHrDecimalCalc(
                                 ls.myParseFloat(pdMaster.Uplaceno) +
                                 ls.myParseFloat(pdMaster.StanjeOd) -
                                 ls.myParseFloat(pdMaster.ZaduzenjePricuva) -
@@ -74,9 +74,9 @@
         function pretify(PricuvaRezijeZaMjesec) {
             //return x.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
             PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (rec) {
-                rec.Uplaceno = ls.toHrDecimal(rec.Uplaceno);
-                rec.ZaduzenjeRezije = ls.toHrDecimal(rec.ZaduzenjeRezije);
-                rec.ZaduzenjePricuva = ls.toHrDecimal(rec.ZaduzenjePricuva);
+                rec.Uplaceno = ls.toHrDecimalCalc(rec.Uplaceno);
+                rec.ZaduzenjeRezije = ls.toHrDecimalCalc(rec.ZaduzenjeRezije);
+                rec.ZaduzenjePricuva = ls.toHrDecimalCalc(rec.ZaduzenjePricuva);
                 console.log('rec.ZaduzenjeRezije ' + rec.ZaduzenjeRezije);
                 console.log('rec.ZaduzenjePricuva ' + rec.ZaduzenjePricuva);
             });
@@ -198,7 +198,7 @@
                         DataService.decimalToHr(result.data.Zgrada, 'prihodiRashodi');
                     2. proracuni (samo za racunanje):
                             DataService.myParseFloat(hrDecimal)
-                    3. ako se rezultat proracuna ispisuje u UI, DataService.toHrDecimal(jsDecimal)
+                    3. ako se rezultat proracuna ispisuje u UI, DataService.toHrDecimalCalc(jsDecimal)
                         DataService.myParseFloat(decimal_with_commas)
                     4. slanje/snimanje na server:
                         (DataService.decimalToEng($scope.zgradaObj, 'prihodiRashodi')
@@ -218,7 +218,7 @@
                         // console.log('PricuvaRezije, povrsine ' + pricuvaZaMaster);
                     });
                     pdMaster.PricuvaRezijePosebniDioMasterPripadci.forEach(function (prip) {
-                        pricuvaZaMaster += DataSlservice.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(prip.Koef) : 1);
+                        pricuvaZaMaster += ls.myParseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? ls.myParseFloat(prip.Koef) : 1);
                     });
                     pricuvaZaMaster = parseFloat(parseFloat(pricuvaZaMaster) * ls.myParseFloat($scope.PricuvaRezijeZaMjesec.ObracunPricuvaCijenaM2));
                     //console.log('pricuvaZaMaster Pricuva po m2: ' + pricuvaZaMaster);
@@ -300,7 +300,7 @@
                 console.log('Uplaceno: ' + pdMaster.Uplaceno);
                 console.log('Rezije ' + pdMaster.ZaduzenjeRezije);
 
-                //pdMaster.ZaduzenjeRezije = DataService.toHrDecimal(pdMaster.ZaduzenjeRezije);
+                //pdMaster.ZaduzenjeRezije = DataService.toHrDecimalCalc(pdMaster.ZaduzenjeRezije);
 
                 // Dug/Pretplata = Uplaceno + StanjeOd - Zaduzenje - PocetnoStanje
                 var ps = 0;
@@ -315,13 +315,13 @@
                     ls.myParseFloat(pdMaster.ZaduzenjePricuva) -
                     ls.myParseFloat(pdMaster.ZaduzenjeRezije) +
                     ls.myParseFloat(ps));
-                //pdMaster.DugPretplata = DataService.toHrDecimal(pdMaster.DugPretplata);
+                //pdMaster.DugPretplata = DataService.toHrDecimalCalc(pdMaster.DugPretplata);
 
-                //pdMaster.Uplaceno = DataService.toHrDecimal(uplaceno);
+                //pdMaster.Uplaceno = DataService.toHrDecimalCalc(uplaceno);
                 //if (pricuvaZaMaster != null && pricuvaZaMaster != undefined)
-                //    pdMaster.ZaduzenjePricuva = DataService.toHrDecimal(pricuvaZaMaster);
+                //    pdMaster.ZaduzenjePricuva = DataService.toHrDecimalCalc(pricuvaZaMaster);
                 //if (rezijeZaMaster != null && rezijeZaMaster != undefined)
-                //    pdMaster.ZaduzenjeRezije = DataService.toHrDecimal(rezijeZaMaster);
+                //    pdMaster.ZaduzenjeRezije = DataService.toHrDecimalCalc(rezijeZaMaster);
 
                 //pdMaster.DugPretplata = pdMaster.Uplaceno;
                 //console.log('uplaceno' + parseFloat(pdMaster.Uplaceno));
@@ -330,7 +330,7 @@
                 //console.log('ZaduzenjeRezije' + parseFloat(pdMaster.ZaduzenjeRezije));
                 //console.log('ps' + ps);
             });
-            DataService.decimalToHr(zgradaObj, 'pricuva');
+            ls.decimalToHr(zgradaObj, 'pricuva');
             $scope.obracunKreiran = true;
         }
 
@@ -346,6 +346,7 @@
                     });
                 }
             });
+            return ls.toHrDecimalCalc(uplaceno);
         }
         
 
@@ -410,7 +411,7 @@
         }
 
         //$scope.toDecimalHrFn = function (x) {
-        //    alert(DataService.toHrDecimal(x));
+        //    alert(DataService.toHrDecimalCalc(x));
         //    if (x != null && x != undefined)
         //        return x.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
         //}

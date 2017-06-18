@@ -80,8 +80,8 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu1.ZaduzenjeRezije != null ? (decimal)masterUmjesecu1.ZaduzenjeRezije : 0;
                                             //saldoListMj1.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
                                             saldoListMj1.Add(0 - zaduzenjeMjesecPricuva);
-                                            saldoListMj1.Add(0 - zaduzenjeMjesecPricuva);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu1.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije; // u saldu pocetno stanje ne treba jer je uracunato u zaduzenje prilikom obracuna
+                                            saldoListMj1.Add(0 - zaduzenjeMjesecRezije);
+                                            decimal saldo = pocetno + uplataMj1 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije; // u saldu pocetno stanje ne treba jer je uracunato u zaduzenje prilikom obracuna
                                             saldoListMj1.Add(saldo);
                                         }
                                         break;
@@ -107,7 +107,7 @@ namespace ZgradaApp
                                             //saldoListMj2.Add(zaduzenjeMjesecPricuva + zaduzenjeMjesecRezije);
                                             saldoListMj2.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj2.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu2.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj2 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj2.Add(saldo);
                                         }
                                         break;
@@ -132,7 +132,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu3.ZaduzenjeRezije != null ? (decimal)masterUmjesecu3.ZaduzenjeRezije : 0;
                                             saldoListMj3.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj3.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu3.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj3 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj3.Add(saldo);
                                         }
                                         break;
@@ -157,7 +157,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu4.ZaduzenjeRezije != null ? (decimal)masterUmjesecu4.ZaduzenjeRezije : 0;
                                             saldoListMj4.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj4.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu4.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj4 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj4.Add(saldo);
                                         }
                                         break;
@@ -182,7 +182,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu5.ZaduzenjeRezije != null ? (decimal)masterUmjesecu5.ZaduzenjeRezije : 0;
                                             saldoListMj5.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj5.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu5.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj5 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj5.Add(saldo);
                                         }
                                         break;
@@ -207,7 +207,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu6.ZaduzenjeRezije != null ? (decimal)masterUmjesecu6.ZaduzenjeRezije : 0;
                                             saldoListMj6.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj6.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu6.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj6 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj6.Add(saldo);
                                         }
                                         break;
@@ -232,7 +232,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu7.ZaduzenjeRezije != null ? (decimal)masterUmjesecu7.ZaduzenjeRezije : 0;
                                             saldoListMj7.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj7.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu7.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj7 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj7.Add(saldo);
                                         }
                                         break;
@@ -257,7 +257,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu8.ZaduzenjeRezije != null ? (decimal)masterUmjesecu8.ZaduzenjeRezije : 0;
                                             saldoListMj8.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj8.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu8.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj8 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj8.Add(saldo);
                                         }
                                         break;
@@ -282,7 +282,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu9.ZaduzenjeRezije != null ? (decimal)masterUmjesecu9.ZaduzenjeRezije : 0;
                                             saldoListMj9.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj9.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu9.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj9 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj9.Add(saldo);
                                         }
                                         break;
@@ -307,7 +307,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu10.ZaduzenjeRezije != null ? (decimal)masterUmjesecu10.ZaduzenjeRezije : 0;
                                             saldoListMj10.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj10.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu10.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj10 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj10.Add(saldo);
                                         }
                                         break;
@@ -332,7 +332,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu11.ZaduzenjeRezije != null ? (decimal)masterUmjesecu11.ZaduzenjeRezije : 0;
                                             saldoListMj11.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj11.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu11.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj11 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj11.Add(saldo);
                                         }
                                         break;
@@ -357,7 +357,7 @@ namespace ZgradaApp
                                             zaduzenjeMjesecRezije = masterUmjesecu12.ZaduzenjeRezije != null ? (decimal)masterUmjesecu12.ZaduzenjeRezije : 0;
                                             saldoListMj12.Add(0 - zaduzenjeMjesecPricuva);
                                             saldoListMj12.Add(0 - zaduzenjeMjesecRezije);
-                                            decimal saldo = pocetno + (decimal)masterUmjesecu12.Uplaceno - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
+                                            decimal saldo = pocetno + uplataMj12 - zaduzenjeMjesecPricuva - zaduzenjeMjesecRezije;
                                             saldoListMj12.Add(saldo);
                                         }
                                         break;

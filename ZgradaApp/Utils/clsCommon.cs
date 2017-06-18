@@ -140,12 +140,25 @@ namespace ZgradaApp
             set { val = value; }
         }
 
+        public List<platitelji> platitelji
+        {
+            get { return new List<ZgradaApp.platitelji>(); }
+        }
+
         public bool displayLine { get; set; }
         public bool displayBtnAdd { get; set; }
         public string Status { get; set; }
         public bool DetailsVisible { get; set; }
+        public int index { get; set; }
+        public decimal IznosRezijeOrig { get; set; }
+        public decimal IznosPricuvaOrig { get; set; }
     }
 
+    public class platitelji
+    {
+        public string Naziv { get; set; }
+        public int Id { get; set; }
+    }
 
     //public class RacunPdf
     //{

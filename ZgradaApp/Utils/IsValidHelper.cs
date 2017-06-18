@@ -34,6 +34,7 @@ namespace ZgradaApp
                         ZaduzenjeRezije = 0,
                         PeriodId = 0,
                         PocetnoStanje = null,
+                        BrojStana = pdMaster.Broj,
                         //Saldo = 0,
                         //DugPretplataProsliMjesec = 0,
                         //PricuvaRezijePosebniDioChildren = new List<PricuvaRezijePosebniDioChildren>(),

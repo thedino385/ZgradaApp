@@ -33,7 +33,7 @@
                         DataService.decimalToHr(result.data.Zgrada, 'prihodiRashodi');
                     2. proracuni (samo za racunanje):
                             DataService.myParseFloat(hrDecimal)
-                    3. ako se rezultat proracuna ispisuje u UI, DataService.toHrDecimal(jsDecimal)
+                    3. ako se rezultat proracuna ispisuje u UI, DataService.toHrDecimalCalc(jsDecimal)
                         DataService.myParseFloat(decimal_with_commas)
                     4. slanje/snimanje na server:
                         (DataService.decimalToEng($scope.zgradaObj, 'prihodiRashodi')

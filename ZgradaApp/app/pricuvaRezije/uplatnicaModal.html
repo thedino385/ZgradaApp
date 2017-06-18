@@ -17,7 +17,7 @@
 
                 <md-button class="md-raised md-primary" type="submit" ng-click="saveAndKreraj()" ng-disabled="frm.$invalid || isInvalid">Kreiraj uplatnice i račune</md-button>
 
-                <md-button class="md-icon-button" ng-click="cancel()">
+                <md-button class="md-icon-button" ng-click="zatvori()">
                     <md-icon md-svg-src="/Content/icons/ic_close_24px.svg" aria-label=""></md-icon>
                 </md-button>
             </div>
@@ -125,7 +125,7 @@
                             <td style="background-color: {{rec.tdColorPricuva}}">
                                 <input type="text" readonly class="form-control" size="10" ng-model="rec.IznosPricuva" placeholder="Iznos režija" />
                             </td>
-                            <td><a href="{{rec.url}}" ng-show="rec.url != null">Pdf</a></td>
+                            <td><a href="{{rec.PdfUrl}}" class="btn btn-primary" target="_blank" ng-show="rec.PdfUrl != ''">Pdf</a></td>
                             <td>
                                 <button ng-show="rec.TipPlacanja == 'r'" class="btn btn-primary dropdown-toggle" style="padding-bottom: 0px;" ng-click="rec.DetailsVisible = !rec.DetailsVisible">
                                     <span class="caret"></span>

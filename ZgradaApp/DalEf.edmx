@@ -76,7 +76,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PricuvaRezijeMjesecId" Type="int" />
           <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
           <Property Name="PlatiteljId" Type="int" Nullable="false" />
@@ -87,7 +87,6 @@
           <Property Name="UdioRezije" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IznosRezije" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IznosPricuva" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Uplatnica" Type="varchar" MaxLength="128" />
           <Property Name="BrojRacuna" Type="varchar" MaxLength="30" />
           <Property Name="DatumRacuna" Type="datetime" />
           <Property Name="DatumIsporuke" Type="datetime" />
@@ -98,6 +97,7 @@
           <Property Name="Kolicina" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Ukupno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Napomena" Type="varchar" MaxLength="500" />
+          <Property Name="PdfUrl" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="PricuvaRezijePosebniDioMasteri">
           <Key>
@@ -117,6 +117,7 @@
           <Property Name="PeriodId" Type="int" />
           <Property Name="PocetnoStanje" Type="decimal" Precision="18" Scale="2" />
           <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BrojStana" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="PricuvaRezijePosebniDioMasterPovrsine">
           <Key>
@@ -1385,6 +1386,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <NavigationProperty Name="PricuvaRezijePosebniDioMasterVlasnici" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterVlasnici_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioMasterVlasnici" />
           <NavigationProperty Name="PricuvaRezijePosebniDioMasterPovrsine" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterPovrsine_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioMasterPovrsine" />
           <NavigationProperty Name="PricuvaRezijePosebniDioMasterPripadci" Relationship="ZgradaDbModel.FK_PricuvaRezijePosebniDioMasterPripadci_PricuvaRezijePosebniDioMasteri" FromRole="PricuvaRezijePosebniDioMasteri" ToRole="PricuvaRezijePosebniDioMasterPripadci" />
+          <Property Name="BrojStana" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PrihodiRashodi">
           <Key>
@@ -2023,7 +2025,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="UdioRezije" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IznosRezije" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IznosPricuva" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Uplatnica" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PricuvaRezijeMjesec" Relationship="ZgradaDbModel.FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec" FromRole="PricuvaRezijeMjesec_Uplatnice" ToRole="PricuvaRezijeMjesec" />
           <Property Name="DatumRacuna" Type="DateTime" Precision="3" />
           <Property Name="DatumIsporuke" Type="DateTime" Precision="3" />
@@ -2035,6 +2036,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="Ukupno" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Napomena" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="BrojRacuna" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PdfUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
           <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="0..1" />
@@ -2267,6 +2269,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PricuvaRezijePosebniDioMasteri">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasteri">
               <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasteri">
+                <ScalarProperty Name="BrojStana" ColumnName="BrojStana" />
                 <ScalarProperty Name="ObracunPricuvaPostoSlobodanUnos" ColumnName="ObracunPricuvaPostoSlobodanUnos" />
                 <ScalarProperty Name="ZaduzenjeRezije" ColumnName="ZaduzenjeRezije" />
                 <ScalarProperty Name="ZaduzenjePricuva" ColumnName="ZaduzenjePricuva" />
@@ -2681,6 +2684,7 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PricuvaRezijeMjesec_Uplatnice">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice">
               <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_Uplatnice">
+                <ScalarProperty Name="PdfUrl" ColumnName="PdfUrl" />
                 <ScalarProperty Name="BrojRacuna" ColumnName="BrojRacuna" />
                 <ScalarProperty Name="Napomena" ColumnName="Napomena" />
                 <ScalarProperty Name="Ukupno" ColumnName="Ukupno" />
@@ -2691,7 +2695,6 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
                 <ScalarProperty Name="DatumDospijeca" ColumnName="DatumDospijeca" />
                 <ScalarProperty Name="DatumIsporuke" ColumnName="DatumIsporuke" />
                 <ScalarProperty Name="DatumRacuna" ColumnName="DatumRacuna" />
-                <ScalarProperty Name="Uplatnica" ColumnName="Uplatnica" />
                 <ScalarProperty Name="IznosPricuva" ColumnName="IznosPricuva" />
                 <ScalarProperty Name="IznosRezije" ColumnName="IznosRezije" />
                 <ScalarProperty Name="UdioRezije" ColumnName="UdioRezije" />

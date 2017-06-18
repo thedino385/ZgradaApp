@@ -25,7 +25,6 @@ namespace ZgradaApp
         public Nullable<decimal> UdioRezije { get; set; }
         public Nullable<decimal> IznosRezije { get; set; }
         public Nullable<decimal> IznosPricuva { get; set; }
-        public string Uplatnica { get; set; }
         public Nullable<System.DateTime> DatumRacuna { get; set; }
         public Nullable<System.DateTime> DatumIsporuke { get; set; }
         public Nullable<System.DateTime> DatumDospijeca { get; set; }
@@ -36,6 +35,7 @@ namespace ZgradaApp
         public Nullable<decimal> Ukupno { get; set; }
         public string Napomena { get; set; }
         public string BrojRacuna { get; set; }
+        public string PdfUrl { get; set; }
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
     }

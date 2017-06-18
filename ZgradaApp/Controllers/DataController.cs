@@ -709,22 +709,29 @@ namespace ZgradaApp.Controllers
 
         [HttpPost]
         [Route("api/data/snimiKreirajUplatniceRacune")]
-        public async Task<IHttpActionResult> SnimiKreirajUplatniceRacune(PricuvaRezijeMjesec prMj)
+        public async Task<IHttpActionResult> SnimiKreirajUplatniceRacune(List<PricuvaRezijeMjesec_Uplatnice> data)
         {
             try
             {
+                if (data.Count == 0)
+                    return InternalServerError();
+
+
                 // ovdje snimiti i pozvati PRUplatniceRacuniGeneretor** -vratit ce guid uplatnice ili racuna
                 string path = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download/racuniUplatnice");
                 var identity = (ClaimsIdentity)User.Identity;
                 var companyId = Convert.ToInt32(identity.FindFirstValue("Cid"));
                 var company = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == companyId);
+                int prMjesecId = (int)data.First().PricuvaRezijeMjesecId; 
+                var prMj = await _db.PricuvaRezijeMjesec.FirstOrDefaultAsync(p => p.Id == prMjesecId);
                 var prGod = await _db.PricuvaRezijeGodina.FirstOrDefaultAsync(p => p.Id == prMj.PrivuvaRezijeGodId);
-                var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == prGod.ZgradaId);
+                var zgrada = await _db.Zgrade.FirstOrDefaultAsync(p => p.Id == prGod.ZgradaId && p.CompanyId == companyId);
                 var prihodiRashodiGod = await _db.PrihodiRashodi.FirstOrDefaultAsync(p => p.ZgradaId == zgrada.Id && p.Godina == prGod.Godina);
 
-                prMj = new PRUplatniceRacuniGeneretor().PRUplatniceRacuniGeneretorGenerate(prMj, zgrada, company, path);
-                foreach (var item in prMj.PricuvaRezijeMjesec_Uplatnice)
+                foreach (var item in data)
                 {
+                    if (item.PdfUrl == "")
+                        item.PdfUrl = Guid.NewGuid().ToString() + ".pdf";
                     if (item.Id == 0)
                         _db.PricuvaRezijeMjesec_Uplatnice.Add(item);
                     else
@@ -733,13 +740,14 @@ namespace ZgradaApp.Controllers
                         _db.Entry(item).State = EntityState.Modified;
                     }
                 }
+                var uplatniceRacuni = new PRUplatniceRacuniGeneretor().PRUplatniceRacuniGeneretorGenerate(data, zgrada, company, path, (int)prMj.Mjesec, (int)prGod.Godina);
                 // nakon snimanja, kreirati prihode za mjesec (ako postoje za mjesec, brisi)
-                var dbPrihodiZaMjesec = await _db.PrihodiRashodi_Prihodi.Where(p => p.PrihodiRashodiGodId == prGod.Id && p.Mjesec == prMj.Mjesec).ToListAsync();
-                foreach (var prihod in dbPrihodiZaMjesec)
+                //var dbPrihodiZaMjesec = await _db.PrihodiRashodi_Prihodi.Where(p => p.PrihodiRashodiGodId == prGod.Id && p.Mjesec == prMj.Mjesec).ToListAsync();
+                foreach (var prihod in prihodiRashodiGod.PrihodiRashodi_Prihodi.Where(p => p.Mjesec == prMj.Mjesec).ToList())
                 {
                     _db.PrihodiRashodi_Prihodi.Remove(prihod);
                 }
-                foreach (var item in prMj.PricuvaRezijeMjesec_Uplatnice.OrderBy(p => p.PosebniDioMasterId))
+                foreach (var item in data.OrderBy(p => p.PosebniDioMasterId))
                 {
                     _db.PrihodiRashodi_Prihodi.Add(new PrihodiRashodi_Prihodi {
                         PrihodiRashodiGodId = prihodiRashodiGod.Id, PosebniDioMasterId = item.PosebniDioMasterId,
@@ -752,7 +760,7 @@ namespace ZgradaApp.Controllers
                 await _db.SaveChangesAsync();
                 
 
-                return Ok(prMj);
+                return Ok(data);
             }
             catch (Exception ex) { return InternalServerError(); }
         }

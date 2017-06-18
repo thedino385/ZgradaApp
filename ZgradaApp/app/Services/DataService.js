@@ -170,6 +170,7 @@
     }
 
     var snimiKreirajUplatniceRacune = function (PricuvaRezijeZaMjesec) {
+        console.log(PricuvaRezijeZaMjesec);
         return $http.post('../api/data/snimiKreirajUplatniceRacune', PricuvaRezijeZaMjesec);
     }
 

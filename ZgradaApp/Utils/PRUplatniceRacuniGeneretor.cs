@@ -17,32 +17,33 @@ namespace ZgradaApp
         }
 
 
-        public PricuvaRezijeMjesec PRUplatniceRacuniGeneretorGenerate(PricuvaRezijeMjesec prMj, Zgrade zgrada, Kompanije company, string path)
+        public bool PRUplatniceRacuniGeneretorGenerate(List<PricuvaRezijeMjesec_Uplatnice> uplatnice, Zgrade zgrada, Kompanije company, string path, int mjesec, int godina)
         {
             // primatelj je IBAN zgrade
 
 
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
-            if (!Directory.Exists(Path.Combine(path, zgrada.CompanyId.ToString())))
-            {
-                System.IO.Directory.CreateDirectory(Path.Combine(path, zgrada.CompanyId.ToString()));
-            }
-            if (!Directory.Exists(Path.Combine(path, prMj.Mjesec.ToString())))
-            {
-                System.IO.Directory.CreateDirectory(Path.Combine(path, prMj.Mjesec.ToString()));
-            }
+            string path1 = Path.Combine(path, zgrada.CompanyId.ToString());
+            if (!Directory.Exists(path1))
+                System.IO.Directory.CreateDirectory(path1);
+            string path11 = Path.Combine(path1, godina.ToString());
+            if (!Directory.Exists(path11))
+                System.IO.Directory.CreateDirectory(path11);
+            string path2 = Path.Combine(path11, mjesec.ToString());
+            if (!Directory.Exists(path2))
+                System.IO.Directory.CreateDirectory(path2);
 
-            foreach (var item in prMj.PricuvaRezijeMjesec_Uplatnice)
+            foreach (var item in uplatnice)
             {
                 if(item.TipPlacanja == "r")
                 {
                     #region racun
                     var doc = new Document(PageSize.A4, 30, 30, 25, 25);
-                    string pdf = Guid.NewGuid().ToString() + ".pdf";
-                    if (item.Uplatnica == null)
-                        pdf = item.Uplatnica;
-                    var output = new FileStream(Path.Combine(path, pdf), FileMode.Create);
+                    //string pdf = Guid.NewGuid().ToString() + ".pdf";
+                    //if (item.Uplatnica == null)
+                    string pdf = item.PdfUrl;
+                    var output = new FileStream(Path.Combine(path2, pdf), FileMode.Create);
                     var writer = PdfWriter.GetInstance(doc, output);
 
                     doc.Open();
@@ -65,7 +66,9 @@ namespace ZgradaApp
                     //tbl.SetWidths(new int[] { 2, 1, 2 });
 
                     //var logo = iTextSharp.text.Image.GetInstance(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/logo/logo.png"));
-                    var logo = iTextSharp.text.Image.GetInstance(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/logo/") + company.Logo);
+                   
+
+                    var logo = iTextSharp.text.Image.GetInstance(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/download/logo/") + company.Logo);
 
                     PdfPCell cell = new PdfPCell(logo, true);
                     cell.Rowspan = 5;
@@ -299,7 +302,7 @@ namespace ZgradaApp
             }
 
 
-            return prMj;
+            return true;
 
         }
     }

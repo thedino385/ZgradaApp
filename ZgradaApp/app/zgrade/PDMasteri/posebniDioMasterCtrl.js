@@ -1,5 +1,5 @@
-﻿angularApp.controller('posebniDioMasterCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('posebniDioMasterCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', 'LocalizationService', '$mdDialog',
+    function ($scope, $routeParams, $location, $rootScope, toastr, DataService, ls, $mdDialog) {
 
         _isDirty = false;
         $scope.msg = '';
@@ -28,7 +28,7 @@
         else {
             DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
                 if (pdMaster.Id == $routeParams.id) {
-                    $scope.pdMaster = DataService.decimalToHr(pdMaster, 'ZgradaStanovi');
+                    $scope.pdMaster = ls.decimalToHr(pdMaster, 'ZgradaStanovi');
                     $scope.msg = pdMaster.Naziv;
 
                     // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one

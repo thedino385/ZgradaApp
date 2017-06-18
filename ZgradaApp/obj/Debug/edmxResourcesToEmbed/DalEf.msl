@@ -76,6 +76,7 @@
     <EntitySetMapping Name="PricuvaRezijePosebniDioMasteri">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijePosebniDioMasteri">
         <MappingFragment StoreEntitySet="PricuvaRezijePosebniDioMasteri">
+          <ScalarProperty Name="BrojStana" ColumnName="BrojStana" />
           <ScalarProperty Name="ObracunPricuvaPostoSlobodanUnos" ColumnName="ObracunPricuvaPostoSlobodanUnos" />
           <ScalarProperty Name="ZaduzenjeRezije" ColumnName="ZaduzenjeRezije" />
           <ScalarProperty Name="ZaduzenjePricuva" ColumnName="ZaduzenjePricuva" />
@@ -490,6 +491,7 @@
     <EntitySetMapping Name="PricuvaRezijeMjesec_Uplatnice">
       <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice">
         <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_Uplatnice">
+          <ScalarProperty Name="PdfUrl" ColumnName="PdfUrl" />
           <ScalarProperty Name="BrojRacuna" ColumnName="BrojRacuna" />
           <ScalarProperty Name="Napomena" ColumnName="Napomena" />
           <ScalarProperty Name="Ukupno" ColumnName="Ukupno" />
@@ -500,7 +502,6 @@
           <ScalarProperty Name="DatumDospijeca" ColumnName="DatumDospijeca" />
           <ScalarProperty Name="DatumIsporuke" ColumnName="DatumIsporuke" />
           <ScalarProperty Name="DatumRacuna" ColumnName="DatumRacuna" />
-          <ScalarProperty Name="Uplatnica" ColumnName="Uplatnica" />
           <ScalarProperty Name="IznosPricuva" ColumnName="IznosPricuva" />
           <ScalarProperty Name="IznosRezije" ColumnName="IznosRezije" />
           <ScalarProperty Name="UdioRezije" ColumnName="UdioRezije" />

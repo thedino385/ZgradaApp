@@ -171,7 +171,7 @@
                     mjesec: mjesec,
                     godina: $scope.selectedGodina
                 }
-            }).then(function () {
+            }).then(function (PricuvaRezijeZaMjesec) {
             }, function (tempObj) {
                 $scope.zgradaObj = tempObj;
             });

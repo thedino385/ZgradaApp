@@ -71,7 +71,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PricuvaRezijeMjesecId" Type="int" />
     <Property Name="PosebniDioMasterId" Type="int" Nullable="false" />
     <Property Name="PlatiteljId" Type="int" Nullable="false" />
@@ -82,7 +82,6 @@
     <Property Name="UdioRezije" Type="decimal" Precision="18" Scale="2" />
     <Property Name="IznosRezije" Type="decimal" Precision="18" Scale="2" />
     <Property Name="IznosPricuva" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Uplatnica" Type="varchar" MaxLength="128" />
     <Property Name="BrojRacuna" Type="varchar" MaxLength="30" />
     <Property Name="DatumRacuna" Type="datetime" />
     <Property Name="DatumIsporuke" Type="datetime" />
@@ -93,6 +92,7 @@
     <Property Name="Kolicina" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Ukupno" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Napomena" Type="varchar" MaxLength="500" />
+    <Property Name="PdfUrl" Type="varchar" MaxLength="300" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioMasteri">
     <Key>
@@ -112,6 +112,7 @@
     <Property Name="PeriodId" Type="int" />
     <Property Name="PocetnoStanje" Type="decimal" Precision="18" Scale="2" />
     <Property Name="StanjeOd" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="BrojStana" Type="varchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="PricuvaRezijePosebniDioMasterPovrsine">
     <Key>
