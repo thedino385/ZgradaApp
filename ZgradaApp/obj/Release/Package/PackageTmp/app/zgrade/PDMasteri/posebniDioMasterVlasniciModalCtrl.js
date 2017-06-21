@@ -33,7 +33,7 @@
                     maxId = vlasnik.Id;
             });
 
-            var vlasnikObj = { Id: maxId + 1, VlasniciPeriodId: $scope.vlasniciPeriod.Id, StanarId: 0, Udio: 0, UplatnicaGlasiNaVlasnika: false };
+            var vlasnikObj = { Id: maxId + 1, VlasniciPeriodId: $scope.vlasniciPeriod.Id, StanarId: 0, Udio: 0, UplatnicaGlasiNaVlasnika: false, Status: 'a' };
             $scope.vlasniciPeriod.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.push(vlasnikObj);
         }
 

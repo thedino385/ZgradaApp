@@ -125,52 +125,55 @@
                             <td style="background-color: {{rec.tdColorPricuva}}">
                                 <input type="text" readonly class="form-control" size="10" ng-model="rec.IznosPricuva" placeholder="Iznos režija" />
                             </td>
-                            <td><a href="{{rec.PdfUrl}}" class="btn btn-primary" target="_blank" ng-show="rec.PdfUrl != ''">Pdf</a></td>
+                            <td><a href="{{pdfUriTeplate}}/{{rec.PdfUrl}}" class="btn btn-primary" target="_blank" ng-show="rec.PdfUrl != ''">Pdf</a></td>
                             <td>
                                 <button ng-show="rec.TipPlacanja == 'r'" class="btn btn-primary dropdown-toggle" style="padding-bottom: 0px;" ng-click="rec.DetailsVisible = !rec.DetailsVisible">
+                                    <span class="caret"></span>
+                                </button>
+                                <button ng-show="rec.TipPlacanja == 'u'" class="btn btn-danger dropdown-toggle" style="padding-bottom: 0px;" ng-click="rec.DetailsVisible = !rec.DetailsVisible">
                                     <span class="caret"></span>
                                 </button>
                             </td>
                             
                         </tr>
                         <tr uib-collapse="!rec.DetailsVisible" ng-show="rec.TipPlacanja == 'r'">
-                            <td colspan="3">
+                            <td style="vertical-align: middle" colspan="3">
                                 <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
                                     <label>Broj računa</label>
                                     <input ng-model="rec.BrojRacuna">
                                 </md-input-container>
                             </td>
-                            <td>
+                            <td style="vertical-align: middle">
                                 <label>Datum računa</label>
                                 <md-datepicker ng-model="rec.DatumRacuna" md-placeholder="Datum računa"></md-datepicker>
                             </td>
-                            <td colspan="2">
+                            <td style="vertical-align: middle" colspan="2">
                                 <label>Datum isporuke</label>
                                 <md-datepicker ng-model="rec.DatumIsporuke" md-placeholder="Datum isporuke"></md-datepicker>
                             </td>
-                            <td colspan="2">
+                            <td style="vertical-align: middle" colspan="2">
                                 <label>Datum dospjeća</label>
                                 <md-datepicker ng-model="rec.DatumDospijeca" md-placeholder="Datum dospjeća"></md-datepicker>
                             </td>
-                            <td>
+                            <td style="vertical-align: middle">
                                 <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
                                     <label>Jed. mjera</label>
                                     <input ng-model="rec.JedMjera">
                                 </md-input-container>
                             </td>
-                            <td>
+                            <td style="vertical-align: middle">
                                 <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
                                     <label>Jed. cijena</label>
                                     <input my-directive-decimal ng-model="rec.JedCijena">
                                 </md-input-container>
                             </td>
-                            <td>
+                            <td style="vertical-align: middle">
                                 <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
                                     <label>Količina</label>
                                     <input my-directive-decimal ng-model="rec.Kolicina">
                                 </md-input-container>
                             </td>
-                            <td>
+                            <td style="vertical-align: middle">
                                 <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
                                     <label>Ukupno</label>
                                     <input ng-model="rec.Ukupno">
@@ -181,7 +184,7 @@
                         </tr>
                         <tr uib-collapse="!rec.DetailsVisible" ng-show="rec.TipPlacanja == 'r'">
                             <td></td>
-                            <td colspan="6">
+                            <td colspan="5">
                                 <div>Opis</div>
                                 <textarea rows="5" style="min-width: 90%" placeholder="Napomena" ng-model="rec.Opis"></textarea>
                             </td>
@@ -190,8 +193,71 @@
                                 <div class="summernote" ng-bind-html="rec.Napomena"></div>
                             </td>
                         </tr>
+
+                        <tr uib-collapse="!rec.DetailsVisible" ng-show="rec.TipPlacanja == 'u'">
+                            <td style="vertical-align: middle" colspan="3">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
+                                    <label>Poziv na broj</label>
+                                    <input ng-model="rec.UplatnicaPozivNaBroj">
+                                </md-input-container>
+                            </td>
+                            <td style="vertical-align: middle" colspan="2">
+                                <label>Datum uplatnice</label>
+                                <md-datepicker ng-model="rec.UplatnicaDatumUplatnice" md-placeholder="Datum uplatnice"></md-datepicker>
+                            </td>
+                           
+                            <td style="vertical-align: middle" colspan="2">
+                                <label>Datum dospjeća</label>
+                                <md-datepicker ng-model="rec.UplatnicaDatumDospijeca" md-placeholder="Datum dospjeća"></md-datepicker>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
+                                    <label>Model</label>
+                                    <input ng-model="rec.UplatnicaModel">
+                                </md-input-container>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
+                                    <label>Šifra namjene</label>
+                                    <input my-directive-decimal ng-model="rec.UplatnicaSifraNamjene">
+                                </md-input-container>
+                            </td>
+                            <td></td>
+                            <!--<td style="vertical-align: middle">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
+                                    <label>Količina</label>
+                                    <input my-directive-decimal ng-model="rec.Kolicina">
+                                </md-input-container>
+                            </td>-->
+                            <td style="vertical-align: middle">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-top: 11px">
+                                    <label>Za platiti</label>
+                                    <input ng-model="rec.UplatnicaZaPlatiti">
+                                </md-input-container>
+                            </td>
+                            <!--<td colspan="3">
+                                <div>Opis</div>
+                                <div class="summernote" ng-bind-html="rec.Napomena"></div>
+
+                            </td>-->
+                            <!--<td><button class="btn, btn-primary" ng-click="createRacun(rec)">Kreiraj</button></td>-->
+
+                        </tr>
+                        <tr uib-collapse="!rec.DetailsVisible" ng-show="rec.TipPlacanja == 'u'">
+                            <td></td>
+                            <td colspan="11">
+                                <div>Opis</div>
+                                <!--<div class="summernote" ng-bind-html="rec.UplatnicaOpis"></div>-->
+                                <textarea rows="5" style="min-width: 90%" placeholder="Napomena" ng-model="rec.UplatnicaOpis"></textarea>
+                            </td>
+                            <!--<td colspan="6">
+                                <div>Opis</div>
+                                <div class="summernote" ng-bind-html="rec.UplatnicaOpis"></div>
+                            </td>-->
+                        </tr>
+
                         <tr ng-show="rec.displayLine == true">
-                            <td colspan="13"><hr /></td>
+                            <td colspan="12"><hr /></td>
                         </tr>
 
                     </tbody>

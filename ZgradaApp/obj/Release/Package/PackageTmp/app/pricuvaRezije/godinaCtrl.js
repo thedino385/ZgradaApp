@@ -1,5 +1,5 @@
-﻿angularApp.controller('godinaCtrl', ['$scope', '$routeParams', '$location', '$route', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $routeParams, $location, $route, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('godinaCtrl', ['$scope', '$routeParams', '$location', '$route', '$rootScope', 'toastr', 'DataService', 'LocalizationService', '$mdDialog',
+    function ($scope, $routeParams, $location, $route, $rootScope, toastr, DataService, ls, $mdDialog) {
 
         $scope.msg = '';
         $scope.selectedGodina = null;
@@ -8,16 +8,56 @@
             return;
         }
 
+        $scope.uplatniceVisible1 = false;
+        $scope.uplatniceVisible2 = false;
+        $scope.uplatniceVisible3 = false;
+        $scope.uplatniceVisible4 = false;
+        $scope.uplatniceVisible5 = false;
+        $scope.uplatniceVisible6 = false;
+        $scope.uplatniceVisible7 = false;
+        $scope.uplatniceVisible8 = false;
+        $scope.uplatniceVisible9 = false;
+        $scope.uplatniceVisible10 = false;
+        $scope.uplatniceVisible11 = false;
+        $scope.uplatniceVisible12 = false;
 
         //if ($routeParams) {
         $rootScope.loaderActive = true;
         DataService.getZgrada(DataService.selZgradaId, false, false).then(
             function (result) {
                 // on success
-                $scope.zgradaObj = DataService.decimalToHr(result.data.Zgrada, 'pricuva');
+                $scope.zgradaObj = ls.decimalToHr(result.data.Zgrada, 'pricuva');
                 var godineList = [];
                 $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                     godineList.push(pr.Godina);
+
+                    pr.PricuvaRezijeMjesec.forEach(function (prMj) {
+                        if (prMj.Mjesec == 1)
+                            $scope.uplatniceVisible1 = true;
+                        if (prMj.Mjesec == 2)
+                            $scope.uplatniceVisible2 = true;
+                        if (prMj.Mjesec == 3)
+                            $scope.uplatniceVisible3 = true;
+                        if (prMj.Mjesec == 4)
+                            $scope.uplatniceVisible4 = true;
+                        if (prMj.Mjesec == 5)
+                            $scope.uplatniceVisible5 = true;
+                        if (prMj.Mjesec == 6)
+                            $scope.uplatniceVisible6 = true;
+                        if (prMj.Mjesec == 7)
+                            $scope.uplatniceVisible7 = true;
+                        if (prMj.Mjesec == 8)
+                            $scope.uplatniceVisible8 = true;
+                        if (prMj.Mjesec == 9)
+                            $scope.uplatniceVisible9 = true;
+                        if (prMj.Mjesec == 10)
+                            $scope.uplatniceVisible10 = true;
+                        if (prMj.Mjesec == 11)
+                            $scope.uplatniceVisible11 = true;
+                        if (prMj.Mjesec == 12)
+                            $scope.uplatniceVisible12 = true;
+                    });
+
                 });
                 //$scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
                 $scope.godine = godineList;
@@ -44,7 +84,7 @@
             DataService.getPricuvaRezijeGodinaTable($scope.zgradaObj.Id, godina).then(
                 function (result) {
                     // success
-                    $scope.godinaTable = DataService.decimalToHr(result.data, 'pricuvaGodTable');
+                    $scope.godinaTable = ls.decimalToHr(result.data, 'pricuvaGodTable');
                     $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                         if (pr.Godina == godina) {
                             $scope.selectedGodina = godina;
@@ -105,6 +145,7 @@
                 templateUrl: 'app/pricuvaRezije/mjesecModal.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
+                escapeToClose: false,
                 clickOutsideToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -136,6 +177,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     zgradaObj: $scope.zgradaObj,
@@ -161,6 +203,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 skipHide: true,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
@@ -168,7 +211,7 @@
                     mjesec: mjesec,
                     godina: $scope.selectedGodina
                 }
-            }).then(function () {
+            }).then(function (PricuvaRezijeZaMjesec) {
             }, function (tempObj) {
                 $scope.zgradaObj = tempObj;
             });
@@ -186,6 +229,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     zgradaObj: $scope.zgradaObj,
@@ -215,7 +259,7 @@
         function save() {
             $rootScope.loaderActive = true;
             console.log($scope.zgradaObj);
-            DataService.pricuvaRezijeCreateOrUpdate(DataService.decimalToEng($scope.zgradaObj, 'pricuva')).then(
+            DataService.pricuvaRezijeCreateOrUpdate(ls.decimalToEng($scope.zgradaObj, 'pricuva')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;
@@ -351,6 +395,8 @@
                     return { color: "darkred" };
             }
         }
+
+      
 
     }])
     //.config(function ($mdThemingProvider) {

@@ -3,7 +3,7 @@
     ViewBag.Title = "StanarView";
 }
 <link href="~/Content/toastr.css" rel="stylesheet" />
-<h2 id="title"></h2>
+
 
 @section scripts
 {
@@ -96,7 +96,7 @@
                 html += '</div></div>';
             });
             $('#oglasnaDiv').html(html);
-            $('#title').html('Oglasna ploča');
+            //$('#title').html('Oglasna ploča');
             $('#loader').fadeOut();
             //$('#dnevnikContainer').fadeOut(function () {
             //    $('#oglasnaContainer').fadeIn('slow');
@@ -120,7 +120,7 @@
             btns += '</div>';
             $('#btns').html(btns);
         });
-        $('#title').html('Dnevnik rada');
+        //$('#title').html('Dnevnik rada');
         $('#loader').fadeOut();
         //$('#oglasnaContainer').fadeOut(function () {
         //    $('#dnevnikContainer').fadeIn('slow');
@@ -224,7 +224,7 @@
 
     function saveMsg() {
         if ($('#summernoteDnevnik').summernote('code').length == 0) {
-            toastr["warning"]('porula je obavezna');
+            toastr["warning"]('poruka je obavezna');
             return;
         }
         var o = { Id: 0, DnevnikRadaId: _selectedDnevnikRadaId, Datum: new Date(), Poruka: $('#summernoteDnevnik').summernote('code') };
@@ -279,73 +279,51 @@
 
         function getUplatnice() {
             var url = '@Url.Action("GetUplatnice", "Home")';
+            $('#loader').fadeIn();
             $.post(url, function (result) {
                 if (result.success == true) {
                     drawGodine(result.list);
-                }
-                else
-                    toastr["error"]("Pogreška kod snimanja poruke", result.msg);
-
-            });
-        }
-
-        var _list = [];
-        function drawGodine(list) {
-            _list = list;
-            console.log(list);
-            var godine = [];
-            list.forEach(function (g) {
-                if (godine.indexOf(g.Godina))
-                    godine.push(g.Godina);
-            });
-
-            var btns = '<div class="btn-group">';
-            godine.forEach(function (g) {
-                btns += ' <button type="button" onclick=showGodinaUplatnice(' + g + ') class="btn btn-primary">' + g + '</button>'
-            });
-            $('#btnGodine').html(btns);
-        }
-
-
-
-        function showGodinaUplatnice(g) {
-            var html = '<table class="table table-condensed" style="width: 500px"><thead><tr><th>Godina</th>';
-            //html += '<th></th>';
-            html += '<th>' + g + '</th></tr>';
-
-            html += '<tr><th>Mjesec</th><th>Rashodi</th></tr></thead>';
-            html += '<tbody>';
-            _list.forEach(function (mj) {
-                html += '<tr>';
-                if (mj.UplatnicePosebniDijeloviMaster != null && mj.UplatnicePosebniDijeloviMaster.length > 0) {
-                    var pdCount = mj.UplatnicePosebniDijeloviMaster.length;
-                    if (pdCount == 0)
-                        pdCount = 1;
-                    html += '<td rowspan=' + pdCount + '>' + mj.Mjesec + '.</td>';
-                    mj.UplatnicePosebniDijeloviMaster.forEach(function (pd) {
-                        if (pdCount > 1)
-                            html += '<tr>';
-                        if (pd.Url != "")
-                            html += '<td><a href="' + pd.Url + '" target="_blank">' + pd.PosebniDio + '</a></td>';
-                        else
-                            html += '<td></td>';
-                        //html += '<td>' + pd.Url + '</td>';
-                        if (pdCount > 1)
-                            html += '</tr>';
-                    });
+                    $('#loader').fadeOut();
                 }
                 else {
-                    html += '<td>' + mj.Mjesec + '.</td>';
-                    //html += '<td></td>';
-                    html += '<td></td>';
+                    $('#loader').fadeOut();
+                    toastr["error"]("Pogreška kod snimanja poruke", result.msg);
                 }
-
-                html += '</tr>';
             });
+        }
 
-            html += '</tbody>';
+        function drawGodine(list) {
+            console.log(list);
+            var html = '<table class="table table-condensed table-hover"><thead><tr><th>Godina</th><th>Mjesec</th><th>Stan</th><th>Ime i prezime</th><th>Vrsta zaduženja</th><th>Pdf</th></tr></thead>';
+            html += '<tbody>';
+            list.forEach(function (god) {
+                //var rowspan = god.Uplatnice_Mjesec.length;
+                //alert(rowspan);
+                html += '<tr><td>' + god.Godina + '.</td>';
+                //god.Uplatnice_Mjesec.forEach(function (mj) {
+                    //var rowSpan = 1;
+                    //if (mj.Uplatnice_Mjesec_Data != null && mj.Uplatnice_Mjesec_Data != undefined)
+                    //    rowSpan = mj.Uplatnice_Mjesec_Data.length;
+
+                    //mj.Uplatnice_Mjesec_Data.forEach(function (u) {
+
+                var url = '<a href="' + god.Url + '" download>Snimi uplatnicu</a>';
+
+                html += '<td>' + god.Mjesec + '.</td><td>' + god.PosebniDioNaziv + '</td><td>' + god.ImePrezime + '</td>';
+                html += '<td>' + god.TipZaduzenja + '</td><td>' + url + '</td></tr>';
+                    //});
+                    //mj.Uplatnice_Mjesec_Data.forEach(function (u) {
+                    //    html += '<td>' + u.ImePrezime + '</td><td>' + u.TipZaduzenja + '</td><td>' + u.Url + '</td></tr>'
+                    //});
+                //});
+            });
+            html += '</tbody></table>'
             $('#tbl').html(html);
         }
+
+
+
+      
 
     </script>
 }

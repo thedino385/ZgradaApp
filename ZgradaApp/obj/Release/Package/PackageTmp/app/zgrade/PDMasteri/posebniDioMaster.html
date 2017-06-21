@@ -256,7 +256,7 @@
                                             <md-button ng-hide="prip.Zatvoren == true" class="md-icon-button" ng-click="openModalPrip(prip.Id, $event)" title="Uredi površinu">
                                                 <md-icon md-svg-icon="/Content/icons/table-edit.svg" style="fill: blue"></md-icon>
                                             </md-button>
-                                            <md-button ng-hide="povr.Zatvoren == true" class="md-icon-button" ng-click="killPrip(prip.Id, $event)" title="Zatvori površinu">
+                                            <md-button ng-hide="prip.Zatvoren == true" class="md-icon-button" ng-click="killPrip(prip.Id, $event)" title="Zatvori površinu">
                                                 <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
                                             </md-button>
                                             <div ng-show="prip.Zatvoren == true">Zatvoreno: {{prip.ZatvorenMjesec}}/{{prip.ZatvorenGodina}}</div>

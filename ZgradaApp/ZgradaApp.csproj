@@ -522,6 +522,7 @@
     <Content Include="Content\icons\trending-up.svg" />
     <Content Include="Content\images\60.jpeg" />
     <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\smallLoader.gif" />
     <Content Include="Content\plus.svg" />
     <Content Include="Content\ripples.css" />
     <Content Include="Content\toastr.css" />

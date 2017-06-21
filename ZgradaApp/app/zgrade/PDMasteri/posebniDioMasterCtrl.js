@@ -403,7 +403,7 @@
 
         $scope.save = function () {
             $rootScope.loaderActive = true;
-            DataService.posebniDioChildrenCreateOrUpdate(DataService.decimalToEng($scope.pdMaster, 'ZgradaStanovi')).then(
+            DataService.posebniDioChildrenCreateOrUpdate(ls.decimalToEng($scope.pdMaster, 'ZgradaStanovi')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;

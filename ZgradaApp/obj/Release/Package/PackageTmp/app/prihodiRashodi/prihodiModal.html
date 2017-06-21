@@ -29,7 +29,7 @@
                     <tbody>
                         <tr ng-repeat="pr in prihodRashodZaGodinu.PrihodiRashodi_Prihodi | filter:{ Mjesec: mjesec} | filter: { PrijenosIzProlse: '!true' } | filter: { Status: '!d' }" style="vertical-align: middle">
 
-                            <td style="vertical-align: middle">
+                            <!--<td style="vertical-align: middle">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Opis</label>
                                     <input required type="text" size="250" name="opis" ng-model="pr.Opis">
@@ -39,19 +39,7 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-                            </td>
-                            <td style="vertical-align: middle">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Iznos</label>
-                                    <input required my-directive-decimal size="75" type="text" name="iznos" ng-model="pr.Iznos">
-                                    <div ng-messages="frm.iznos.$error" role="alert">
-                                        <div ng-message-exp="['required']">
-                                            Obavezno polje
-                                        </div>
-                                    </div>
-                                </md-input-container>
-                            </td>
-
+                            </td>-->
                             <td style="vertical-align: middle; text-align: end">
 
                                 <md-input-container class="md-block" flex-gt-gt style="padding-bottom: 17px">
@@ -68,10 +56,28 @@
                                     </div>
                                 </md-input-container>
                             </td>
-
-
-
-
+                            <td style="vertical-align: middle">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Zaduženje</label>
+                                    <input required my-directive-decimal size="75" type="text" name="iznos" ng-model="pr.Iznos">
+                                    <div ng-messages="frm.iznos.$error" role="alert">
+                                        <div ng-message-exp="['required']">
+                                            Obavezno polje
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Uplaćeno </label>
+                                    <input my-directive-decimal size="75" type="text" name="iznos" ng-model="pr.IznosUplacen">
+                                </md-input-container>
+                            </td>
+                            <td style="vertical-align: middle">
+                                    <label ng-show="pr.UplataVrsta == 'p'">Pričuva</label>
+                                    <label ng-show="pr.UplataVrsta == 'r'">Režije</label>
+                            </td>
+                        
                             <td style="vertical-align: middle; text-align: end">
                                 <md-input-container class="md-block" flex-gt-gt style="padding-top: 11px">
                                     <label>Datum uplate</label>
@@ -95,21 +101,17 @@
                                     </div>
                                 </md-input-container>
                             </td>
-
                             <td style="vertical-align: middle">
-                                <!--<button type="button" class="btn btn-default btn-sm" title="Obriši dio" ng-click="delete(pr.Id)">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>-->
-
+                                <label ng-show="pr.UplataVrsta == 'p'">Pričuva</label>
+                                <label ng-show="pr.UplataVrsta == 'r'">Režije</label>
+                            </td>
+                            <!--<td style="vertical-align: middle">
                                 <md-button class="md-icon-button" ng-click="delete(pr.Id)" title="Obriši">
                                     <md-icon md-svg-icon="/Content/icons/delete.svg" style="fill: red"></md-icon>
                                 </md-button>
-                            </td>
+                            </td>-->
                         </tr>
-                        <!--<tr>
-                            <td colspan="2" style="vertical-align: middle; text-align: end"><b>Ukupno</b></td>
-                            <td style="vertical-align: middle; text-align: end">{{total}}</td>
-                        </tr>-->
+                       
                     </tbody>
                 </table>
                 <!--<table class="table table-hover">

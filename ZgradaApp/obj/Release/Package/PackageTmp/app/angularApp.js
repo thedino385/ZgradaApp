@@ -44,24 +44,23 @@ angularApp.directive('myDirectiveDecimal', function () {
                 if (value != null && value != undefined) {
                     var v = value.toString();
                     //if (v.indexOf('.') == -1 && (v.split(",").length - 1 == 1 || v.split(",").length - 1 <= 0)) {
-                    if (v.indexOf('.') == -1 && v.split(",").length - 1 <= 0) {
+                    if (v.indexOf('.') == -1 && v.split(",").length - 1 >= 0) {
                         if (v.indexOf(',') != -1) {
                             var v1 = v.split(',')[0];
                             var v2 = v.split(',')[1];
                             if (!isNaN(parseInt(v1)) && isFinite(v1) && !isNaN(parseInt(v2)) && isFinite(v2)) {
                                 valid = true;
-                                value = parseFloat(v).toFixed(2).toLocaleString('hr-HR', { minimumFractionDigits: 2 });
+                                value = v.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
                             }
                         }
                         else if (!isNaN(parseInt(v)) && isFinite(v)) {
                             valid = true;
-                            value = parseFloat(v).toFixed(2).toLocaleString('hr-HR', { minimumFractionDigits: 2 });
+                            value = v.toLocaleString('hr-HR', { minimumFractionDigits: 2 });
                         }
                     }
                 }
                 //alert(valid);
                 mCtrl.$setValidity('decimalhr', valid);
-                alert(value);
                 return value;
             }
             mCtrl.$parsers.push(myValidation);
@@ -78,7 +77,7 @@ angularApp.directive('myDirectiveDecimalPosto', function () {
                 var valid = false;
                 if (value != null && value != undefined) {
                     var v = value.toString();
-                    if (v.indexOf('.') == -1 && (v.split(",").length - 1 == 1 || v.split(",").length - 1 <= 0)) {
+                    if (v.indexOf('.') == -1 && (v.split(",").length - 1 == 1 || v.split(",").length - 1 >= 0)) {
                         if (v.indexOf(',') != -1) {
                             var v1 = v.split(',')[0];
                             var v2 = v.split(',')[1];
@@ -99,7 +98,7 @@ angularApp.directive('myDirectiveDecimalPosto', function () {
                     }
                 }
                 //alert(valid);
-                mCtrl.$setValidity('decimalhr', valid);
+                mCtrl.$setValidity('decimalhrposto', valid);
                 return value;
             }
             mCtrl.$parsers.push(myValidation);

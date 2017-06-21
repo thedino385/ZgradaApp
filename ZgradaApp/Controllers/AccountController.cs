@@ -85,8 +85,6 @@ namespace ZgradaApp.Controllers
                 return View(model);
             }
 
-
-
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -101,8 +99,13 @@ namespace ZgradaApp.Controllers
                     string userType = col["userType"];
                     if (userType == "voditelj")
                     {
-                        var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId);
-                        if (u.Active == true || u == null)
+                        var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId && p.Stanarid == null);
+                        if(u == null || u.Active != true)
+                        {
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View(model);
+                        }
+                        else if (u.Active == true)
                         {
                             var comp = await _db.Kompanije.FirstOrDefaultAsync(p => p.Id == u.CompanyId);
                             if (comp.Active != true)
@@ -111,32 +114,33 @@ namespace ZgradaApp.Controllers
                                 ModelState.AddModelError("", "Invalid login attempt.");
                                 return View(model);
                             }
+                            else
+                                return RedirectToAction("Index", "Home");
                         }
-                        else
+                    }
+                    else if (userType == "stanar")
+                    {
+                        var u = await _db.KompanijeUseri.FirstOrDefaultAsync(p => p.UserGuid == userId && p.Stanarid != null);
+                        if(u == null || u.Active != true)
                         {
                             ModelState.AddModelError("", "Invalid login attempt.");
-                            return View(model);
+                            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                            return View("Login", model);
                         }
-                        return RedirectToAction("Index", "Home");
+                        else
+                            return RedirectToAction("StanarView", "Home");
                     }
                     else
                     {
-                        var u = await _db.Zgrade_Stanari.FirstOrDefaultAsync(p => p.UserGuid == userId);
-                        if (u.Active == true)
-                        {
-                            // This doesn't count login failures towards account lockout
-                            // To enable password failures to trigger account lockout, change to shouldLockout: true
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("", "Invalid login attempt.");
-                            return View("LoginStanar", model);
-                        }
-                        return RedirectToAction("StanarView", "Home");
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        return View("Login", model);
                     }
                     #endregion
-
-                    ///return RedirectToAction("Index", "Home");  //RedirectToLocal(returnUrl);
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return View("Login", model);
+                ///return RedirectToAction("Index", "Home");  //RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -146,13 +150,6 @@ namespace ZgradaApp.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
-
-
-
-            
-                
-           
-            
             
         }
 
@@ -348,7 +345,7 @@ namespace ZgradaApp.Controllers
                                 //await UserManager.AddClaimAsync(company.Naziv, new Claim("Comp", company.Naziv));
                                 //await UserManager.AddClaimAsync(s.Ime + " " + s.Prezime, new Claim("imePrezime", company.Naziv));
                                 UserManager.AddToRole(user.Id, "Stanar");
-                                var u = new KompanijeUseri { ZgradaId = zgradaId, CompanyId = company.Id, Stanarid = s.Id, MasterAcc = false, UserGuid = user.Id };
+                                var u = new KompanijeUseri { ZgradaId = zgradaId, CompanyId = company.Id, Stanarid = s.Id, MasterAcc = false, UserGuid = user.Id, Active = true };
                                 _db.KompanijeUseri.Add(u);
                                 s.UserGuid = user.Id;
                                 s.Pass = pass;

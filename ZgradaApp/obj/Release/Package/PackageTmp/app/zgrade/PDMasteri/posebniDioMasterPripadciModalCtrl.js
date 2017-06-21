@@ -9,8 +9,8 @@
         angular.copy(pdMaster, tempObj);
         if (pripadakId == 0) {
             $scope.pripadakObj = {
-                Id: 0, ZgradaPosDioMasterId: pdMaster.Id, Naziv: '', Oznaka: '', Povrsina: 0,
-                Napomena: '', Status: '', VrijediOdGodina: new Date().getFullYear(), VrijediOdMjesec: parseInt(new Date().getMonth() + 1)
+                Id: 0, ZgradaPosDioMasterId: pdMaster.Id, Naziv: '', Oznaka: '', Povrsina: '0,00',
+                Koef: '1,00', Napomena: '', Status: '', VrijediOdGodina: new Date().getFullYear(), VrijediOdMjesec: parseInt(new Date().getMonth() + 1)
             };
             $scope.msg = 'Novi pripadak';
         }

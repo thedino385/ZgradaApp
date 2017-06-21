@@ -8,6 +8,18 @@
             return;
         }
 
+        $scope.uplatniceVisible1 = false;
+        $scope.uplatniceVisible2 = false;
+        $scope.uplatniceVisible3 = false;
+        $scope.uplatniceVisible4 = false;
+        $scope.uplatniceVisible5 = false;
+        $scope.uplatniceVisible6 = false;
+        $scope.uplatniceVisible7 = false;
+        $scope.uplatniceVisible8 = false;
+        $scope.uplatniceVisible9 = false;
+        $scope.uplatniceVisible10 = false;
+        $scope.uplatniceVisible11 = false;
+        $scope.uplatniceVisible12 = false;
 
         //if ($routeParams) {
         $rootScope.loaderActive = true;
@@ -18,6 +30,34 @@
                 var godineList = [];
                 $scope.zgradaObj.PricuvaRezijeGodina.forEach(function (pr) {
                     godineList.push(pr.Godina);
+
+                    pr.PricuvaRezijeMjesec.forEach(function (prMj) {
+                        if (prMj.Mjesec == 1)
+                            $scope.uplatniceVisible1 = true;
+                        if (prMj.Mjesec == 2)
+                            $scope.uplatniceVisible2 = true;
+                        if (prMj.Mjesec == 3)
+                            $scope.uplatniceVisible3 = true;
+                        if (prMj.Mjesec == 4)
+                            $scope.uplatniceVisible4 = true;
+                        if (prMj.Mjesec == 5)
+                            $scope.uplatniceVisible5 = true;
+                        if (prMj.Mjesec == 6)
+                            $scope.uplatniceVisible6 = true;
+                        if (prMj.Mjesec == 7)
+                            $scope.uplatniceVisible7 = true;
+                        if (prMj.Mjesec == 8)
+                            $scope.uplatniceVisible8 = true;
+                        if (prMj.Mjesec == 9)
+                            $scope.uplatniceVisible9 = true;
+                        if (prMj.Mjesec == 10)
+                            $scope.uplatniceVisible10 = true;
+                        if (prMj.Mjesec == 11)
+                            $scope.uplatniceVisible11 = true;
+                        if (prMj.Mjesec == 12)
+                            $scope.uplatniceVisible12 = true;
+                    });
+
                 });
                 //$scope.posedbiDijelovi = $scope.zgradaObj.Zgrade_PosebniDijeloviMaster;
                 $scope.godine = godineList;
@@ -355,6 +395,8 @@
                     return { color: "darkred" };
             }
         }
+
+      
 
     }])
     //.config(function ($mdThemingProvider) {

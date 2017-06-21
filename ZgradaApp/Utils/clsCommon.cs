@@ -61,6 +61,10 @@ namespace ZgradaApp
         public string Status { get; set; }
     }
 
+    public partial class Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici
+    {
+        public string Status { get; set; }
+    }
     public partial class SifarnikRashoda
     {
         public string Status { get; set; }

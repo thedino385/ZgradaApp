@@ -98,6 +98,16 @@
           <Property Name="Ukupno" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Napomena" Type="varchar" MaxLength="500" />
           <Property Name="PdfUrl" Type="varchar" MaxLength="300" />
+          <Property Name="UplatnicaPlatiteljPodaci" Type="varchar" MaxLength="200" />
+          <Property Name="UplatnicaPrimateljPodaci" Type="varchar" MaxLength="200" />
+          <Property Name="UplatnicaZaPlatiti" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UplatnicaIBANPrimatelja" Type="varchar" MaxLength="50" />
+          <Property Name="UplatnicaModel" Type="varchar" MaxLength="10" />
+          <Property Name="UplatnicaPozivNaBroj" Type="varchar" MaxLength="50" />
+          <Property Name="UplatnicaSifraNamjene" Type="varchar" MaxLength="10" />
+          <Property Name="UplatnicaOpis" Type="varchar" MaxLength="2000" />
+          <Property Name="UplatnicaDatumUplatnice" Type="datetime" />
+          <Property Name="UplatnicaDatumDospijeca" Type="datetime" />
         </EntityType>
         <EntityType Name="PricuvaRezijePosebniDioMasteri">
           <Key>
@@ -2037,6 +2047,16 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <Property Name="Napomena" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="BrojRacuna" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="PdfUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaPlatiteljPodaci" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaPrimateljPodaci" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaZaPlatiti" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UplatnicaIBANPrimatelja" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaModel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaPozivNaBroj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaSifraNamjene" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaOpis" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="UplatnicaDatumUplatnice" Type="DateTime" Precision="3" />
+          <Property Name="UplatnicaDatumDospijeca" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_PricuvaRezijeMjesec_Uplatnice_PricuvaRezijeMjesec">
           <End Type="ZgradaDbModel.PricuvaRezijeMjesec" Role="PricuvaRezijeMjesec" Multiplicity="0..1" />
@@ -2684,6 +2704,16 @@ warning 6002: The table/view 'ZgradaDb2.dbo.vZgrade' does not have a primary key
           <EntitySetMapping Name="PricuvaRezijeMjesec_Uplatnice">
             <EntityTypeMapping TypeName="ZgradaDbModel.PricuvaRezijeMjesec_Uplatnice">
               <MappingFragment StoreEntitySet="PricuvaRezijeMjesec_Uplatnice">
+                <ScalarProperty Name="UplatnicaDatumDospijeca" ColumnName="UplatnicaDatumDospijeca" />
+                <ScalarProperty Name="UplatnicaDatumUplatnice" ColumnName="UplatnicaDatumUplatnice" />
+                <ScalarProperty Name="UplatnicaOpis" ColumnName="UplatnicaOpis" />
+                <ScalarProperty Name="UplatnicaSifraNamjene" ColumnName="UplatnicaSifraNamjene" />
+                <ScalarProperty Name="UplatnicaPozivNaBroj" ColumnName="UplatnicaPozivNaBroj" />
+                <ScalarProperty Name="UplatnicaModel" ColumnName="UplatnicaModel" />
+                <ScalarProperty Name="UplatnicaIBANPrimatelja" ColumnName="UplatnicaIBANPrimatelja" />
+                <ScalarProperty Name="UplatnicaZaPlatiti" ColumnName="UplatnicaZaPlatiti" />
+                <ScalarProperty Name="UplatnicaPrimateljPodaci" ColumnName="UplatnicaPrimateljPodaci" />
+                <ScalarProperty Name="UplatnicaPlatiteljPodaci" ColumnName="UplatnicaPlatiteljPodaci" />
                 <ScalarProperty Name="PdfUrl" ColumnName="PdfUrl" />
                 <ScalarProperty Name="BrojRacuna" ColumnName="BrojRacuna" />
                 <ScalarProperty Name="Napomena" ColumnName="Napomena" />

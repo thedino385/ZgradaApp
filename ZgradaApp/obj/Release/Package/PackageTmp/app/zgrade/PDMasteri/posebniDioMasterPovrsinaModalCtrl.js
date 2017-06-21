@@ -9,8 +9,8 @@
         angular.copy(pdMaster, tempObj);
         if (povrsinaId == 0) {
             $scope.povrsinaObj = {
-                Id: 0, ZgradaPosDioMasterId: pdMaster.Id, Naziv: '', Oznaka: '', Povrsina: 0,
-                Koef: 0, Status: '', VrijediOdGodina: new Date().getFullYear(), VrijediOdMjesec: parseInt(new Date().getMonth() + 1)
+                Id: 0, ZgradaPosDioMasterId: pdMaster.Id, Naziv: '', Oznaka: '', Povrsina: '0,00',
+                Koef: '1,00', Status: '', VrijediOdGodina: new Date().getFullYear(), VrijediOdMjesec: parseInt(new Date().getMonth() + 1)
             };
             $scope.msg = 'Nova površina';
         }
@@ -50,6 +50,9 @@
                     }
                 });
             }
+            //console.clear();
+            //console.log(pdMaster);
+            //console.log($scope.povrsinaObj);
             $mdDialog.hide(pdMaster);
         };
 

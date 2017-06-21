@@ -193,8 +193,14 @@ namespace ZgradaApp.Controllers
                                 target.VrijediOdMjesec = period.VrijediOdMjesec;
                                 foreach (var vlasnik in period.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici)
                                 {
-                                    _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Attach(vlasnik);
-                                    _db.Entry(vlasnik).State = EntityState.Modified;
+                                    vlasnik.VlasniciPeriodId = period.Id;
+                                    if (vlasnik.Status == "a")
+                                        _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Add(vlasnik);
+                                    else
+                                    {
+                                        _db.Zgrade_PosebniDijeloviMaster_VlasniciPeriod_Vlasnici.Attach(vlasnik);
+                                        _db.Entry(vlasnik).State = EntityState.Modified;
+                                    }
                                 }
                                 break;
                         }
@@ -730,17 +736,50 @@ namespace ZgradaApp.Controllers
 
                 foreach (var item in data)
                 {
-                    if (item.PdfUrl == "")
+                    if (item.PdfUrl == "" || item.PdfUrl == null)
                         item.PdfUrl = Guid.NewGuid().ToString() + ".pdf";
                     if (item.Id == 0)
                         _db.PricuvaRezijeMjesec_Uplatnice.Add(item);
                     else
                     {
-                        _db.PricuvaRezijeMjesec_Uplatnice.Attach(item);
-                        _db.Entry(item).State = EntityState.Modified;
+                        var target = await _db.PricuvaRezijeMjesec_Uplatnice.FirstOrDefaultAsync(p => p.Id == item.Id);
+                        target.BrojRacuna = item.BrojRacuna;
+                        target.DatumDospijeca = item.DatumDospijeca;
+                        target.DatumIsporuke = item.DatumIsporuke;
+                        target.DatumRacuna = item.DatumRacuna;
+                        target.IznosPricuva = item.IznosPricuva;
+                        target.IznosRezije = item.IznosRezije;
+                        target.JedCijena = item.JedCijena;
+                        target.JedMjera = item.JedMjera;
+                        target.Kolicina = item.Kolicina;
+                        target.Napomena = item.Napomena;
+                        target.Opis = item.Opis;
+                        target.PdfUrl = item.PdfUrl;
+                        target.PlatiteljId = item.PlatiteljId;
+                        target.PosebniDioMasterId = item.PosebniDioMasterId;
+                        target.PricuvaRezijeMjesecId = item.PricuvaRezijeMjesecId;
+                        target.PrimateljId = item.PrimateljId;
+                        target.TipDuga = item.TipDuga;
+                        target.TipPlacanja = item.TipPlacanja;
+                        target.UdioPricuva = item.UdioPricuva;
+                        target.UdioRezije = item.UdioRezije;
+                        target.Ukupno = item.Ukupno;
+                        target.UplatnicaDatumDospijeca = item.UplatnicaDatumDospijeca;
+                        target.UplatnicaDatumUplatnice = item.UplatnicaDatumUplatnice;
+                        target.UplatnicaIBANPrimatelja = item.UplatnicaIBANPrimatelja;
+                        target.UplatnicaModel = item.UplatnicaModel;
+                        target.UplatnicaOpis = item.UplatnicaOpis;
+                        target.UplatnicaPlatiteljPodaci = item.UplatnicaPlatiteljPodaci;
+                        target.UplatnicaPozivNaBroj = item.UplatnicaPozivNaBroj;
+                        target.UplatnicaPrimateljPodaci = item.UplatnicaPrimateljPodaci;
+                        target.UplatnicaSifraNamjene = item.UplatnicaSifraNamjene;
+                        target.UplatnicaZaPlatiti = item.UplatnicaZaPlatiti;
+
+                        //_db.PricuvaRezijeMjesec_Uplatnice.Attach(item);
+                       // _db.Entry(item).State = EntityState.Modified;
                     }
                 }
-                var uplatniceRacuni = new PRUplatniceRacuniGeneretor().PRUplatniceRacuniGeneretorGenerate(data, zgrada, company, path, (int)prMj.Mjesec, (int)prGod.Godina);
+                var uplatniceRacuni = await new PRUplatniceRacuniGeneretor().PRUplatniceRacuniGeneretorGenerate(data, zgrada, company, path, (int)prMj.Mjesec, (int)prGod.Godina, _db);
                 // nakon snimanja, kreirati prihode za mjesec (ako postoje za mjesec, brisi)
                 //var dbPrihodiZaMjesec = await _db.PrihodiRashodi_Prihodi.Where(p => p.PrihodiRashodiGodId == prGod.Id && p.Mjesec == prMj.Mjesec).ToListAsync();
                 foreach (var prihod in prihodiRashodiGod.PrihodiRashodi_Prihodi.Where(p => p.Mjesec == prMj.Mjesec).ToList())

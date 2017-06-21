@@ -1,4 +1,7 @@
-﻿- povlacenje napomene i opisa za racuna
+﻿- upload logo-a, snimiti extenziju
+
+
+- povlacenje napomene i opisa za racuna
 - kreiranje uplatnice i napomena
 - slanje maila (obavijet) - imate neki kurac
 - kreiranje uplatnica pdf
@@ -30,7 +33,7 @@
                         DataService.decimalToHr(result.data.Zgrada, 'prihodiRashodi');
                     2. proracuni (samo za racunanje):
                             DataService.myParseFloat(hrDecimal)
-                    3. ako se rezultat proracuna ispisuje u UI, DataService.toHrDecimal(jsDecimal)
+                    3. ako se rezultat proracuna ispisuje u UI, DataService.toHrDecimalCalc(jsDecimal)
                         DataService.myParseFloat(decimal_with_commas)
                     4. slanje/snimanje na server:
                         (DataService.decimalToEng($scope.zgradaObj, 'prihodiRashodi')

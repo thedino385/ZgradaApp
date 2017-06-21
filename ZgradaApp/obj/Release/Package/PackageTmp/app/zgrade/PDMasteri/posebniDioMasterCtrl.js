@@ -1,9 +1,9 @@
-﻿angularApp.controller('posebniDioMasterCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', '$mdDialog',
-    function ($scope, $routeParams, $location, $rootScope, toastr, DataService, $mdDialog) {
+﻿angularApp.controller('posebniDioMasterCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'toastr', 'DataService', 'LocalizationService', '$mdDialog',
+    function ($scope, $routeParams, $location, $rootScope, toastr, DataService, ls, $mdDialog) {
 
         _isDirty = false;
         $scope.msg = '';
-       
+
         if (DataService.selZgradaId == null) {
             $location.path('/zgrade');
             return;
@@ -25,11 +25,10 @@
             $scope.pdMaster = m;
             $scope.msg = "Novi posebni dio";
         }
-        else
-        {
+        else {
             DataService.currZgrada.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
                 if (pdMaster.Id == $routeParams.id) {
-                    $scope.pdMaster = DataService.decimalToHr(pdMaster, 'ZgradaStanovi');
+                    $scope.pdMaster = ls.decimalToHr(pdMaster, 'ZgradaStanovi');
                     $scope.msg = pdMaster.Naziv;
 
                     // da li se mogu dodati vlasnici, ne smije biti aktivan period, there can be only one
@@ -40,41 +39,41 @@
                 }
             });
         }
-        
+
         //$scope.stanari = DataService.zgradaUseri;
         $scope.stanari = DataService.currZgrada.Zgrade_Stanari;
         $rootScope.loaderActive = false;
 
-       
+
         $scope.$on('$routeChangeStart', function (event) {
             //alert(_isDirty);
             //alert($scope.frm.$dirty);
             //event.preventDefault();
             //$scope.cancel = function (isPristine, ev) {
-        //    console.log(isPristine);
-        //    if (!isPristine) {
-        //        // Appending dialog to document.body to cover sidenav in docs app
-        //        var confirm = $mdDialog.confirm()
-        //            .title('Promjene nisu snimljene!')
-        //            .textContent('Želite li odustati i NE SNIMITI PROMJENE?')
-        //            .ariaLabel('Lucky day')
-        //            .targetEvent(ev)
-        //            .ok('Ne želim snimiti')
-        //            .cancel('Ostajem na stranici');
+            //    console.log(isPristine);
+            //    if (!isPristine) {
+            //        // Appending dialog to document.body to cover sidenav in docs app
+            //        var confirm = $mdDialog.confirm()
+            //            .title('Promjene nisu snimljene!')
+            //            .textContent('Želite li odustati i NE SNIMITI PROMJENE?')
+            //            .ariaLabel('Lucky day')
+            //            .targetEvent(ev)
+            //            .ok('Ne želim snimiti')
+            //            .cancel('Ostajem na stranici');
 
-        //        $mdDialog.show(confirm).then(function () {
-        //            //$scope.status = 'You decided to get rid of your debt.';
-        //            toastr.info("Promjene nisu spremljene");
-        //            $route.reload();
-        //        }, function () {
-        //            // ok, ostavljamo ga tamo gdje je
-        //        });
-        //    }
-        //    else {
-        //        toastr.info("Promjene nisu spremljene");
-        //        $route.reload();
-        //    }
-        //}
+            //        $mdDialog.show(confirm).then(function () {
+            //            //$scope.status = 'You decided to get rid of your debt.';
+            //            toastr.info("Promjene nisu spremljene");
+            //            $route.reload();
+            //        }, function () {
+            //            // ok, ostavljamo ga tamo gdje je
+            //        });
+            //    }
+            //    else {
+            //        toastr.info("Promjene nisu spremljene");
+            //        $route.reload();
+            //    }
+            //}
         });
 
         // _________________________________________________________
@@ -88,6 +87,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     periodId: periodId,
@@ -117,6 +117,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     povrsinaId: povrsinaId,
@@ -145,6 +146,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     pripadakId: pripadakId,
@@ -179,6 +181,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     title: title,
@@ -198,20 +201,15 @@
                         $scope.pdMaster.Zatvoren = true;
                         $scope.pdMaster.ZatvorenGodina = o.godina;
                         $scope.pdMaster.ZatvorenMjesec = o.mjesec;
-                        $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (child) {
+                        $scope.pdMaster.PricuvaRezijePosebniDioMasterPovrsine.forEach(function (child) {
                             child.Zatvoren = true;
                             child.ZatvorenGodina = o.godina;
                             child.ZatvorenMjesec = o.mjesec;
 
-                            child.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
+                            child.PricuvaRezijePosebniDioMasterPripadci.forEach(function (povrsina) {
                                 povrsina.Zatvoren = true;
                                 povrsina.ZatvorenGodina = o.godina;
                                 povrsina.ZatvorenMjesec = o.mjesec;
-                            });
-                            child.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
-                                prip.Zatvoren = true;
-                                prip.ZatvorenGodina = o.godina;
-                                prip.ZatvorenMjesec = o.mjesec;
                             });
                         });
 
@@ -229,7 +227,7 @@
         }
 
 
-        
+
         // __________________________________________________________
         //          Kill / Zatvori povrsinu
         // __________________________________________________________
@@ -239,18 +237,15 @@
             // u suprotnom, gasi je
             var brisanjeOk = false;
             var povrsina = {};
-            $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
-                if (pdChild.Id == pdChildId && pdChild.Status == 'a')
-                    brisanjeOk = true;
-                pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
-                    if (povrsina.Id == povrsinaId) {
-                        if (povrsina.Status == 'a')
-                            brisanjeOk = true;
-                        povrsinaNaziv = povrsina.Naziv;
-                        povrsina = povrsina;
-                    }
-                });
+            $scope.pdMaster.Zgrade_PosebniDijeloviMaster_Povrsine.forEach(function (p) {
+                if (p.Id == povrsinaId) {
+                    //brisanjeOk = true;
+                    povrsinaNaziv = p.Naziv;
+                    povrsina = p.Povrsina;
+                }
             });
+
+
             var title = brisanjeOk ? 'Želite li obrisati površinu?' : 'Želite li zatvoriti površinu?';
             var textContent = 'Odabrana površina: ' + povrsinaNaziv;
             var desc = "Odabrana površina ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
@@ -258,10 +253,11 @@
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
+                templateUrl: 'app/zgrade/PDMasteri/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
+                escapeToClose: false,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
                 , locals: {
                     title: title,
@@ -273,21 +269,12 @@
             })
                 .then(function (o) {
                     $('nav').fadeIn();
-                    $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
-                        if (pdChild.Id == pdChildId) {
-                            pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
-                                if (povrsina.Id == povrsinaId) {
-                                    if (brisanjeOk) {
-                                        var index = pdChild.Zgrade_PosebniDijeloviChild_Povrsine.indexOf(povrsina)
-                                        pdChild.Zgrade_PosebniDijeloviChild_Povrsine.splice(index, 1);
-                                    }
-                                    else {
-                                        povrsina.Zatvoren = true;
-                                        povrsina.ZatvorenGodina = o.godina;
-                                        povrsina.ZatvorenMjesec = o.mjesec;
-                                    }
-                                }
-                            });
+                    $scope.pdMaster.Zgrade_PosebniDijeloviMaster_Povrsine.forEach(function (p) {
+                        if (p.Id == povrsinaId) {
+                            alert('match');
+                            p.Zatvoren = true;
+                            p.ZatvorenGodina = o.godina;
+                            p.ZatvorenMjesec = o.mjesec;
                         }
                     });
                 }
@@ -299,32 +286,27 @@
         // __________________________________________________________
         //          Kill / Zatvori pripadak
         // __________________________________________________________
-        $scope.killPripadak = function (pripadakId, ev) {
+        $scope.killPrip = function (pripadakId, ev) {
             $('nav').fadeOut();
             // ako je Status pdChilda 'a' ili ako je status povrsine 'a' - mozes brisati povrsinu
             // u suprotnom, gasi je
             var brisanjeOk = false;
             var pripadak = {};
-            $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
-                if (pdChild.Id == pdChildId && pdChild.Status == 'a')
-                    brisanjeOk = true;
-                pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
-                    if (prip.Id == pripadakId) {
-                        if (prip.Status == 'a')
-                            brisanjeOk = true;
-                        pripadakNaziv = prip.Naziv;
-                        pripadak = prip;
-                    }
-                });
+            $scope.pdMaster.Zgrade_PosebniDijeloviMaster_Pripadci.forEach(function (p) {
+                if (p.Id == pripadakId ) {
+                    //brisanjeOk = true;
+                    pripadakNaziv = p.Naziv;
+                    pripadak = p;
+                }
             });
             var title = brisanjeOk ? 'Želite li obrisati pripadak?' : 'Želite li zatvoriti pripadak?';
             var textContent = 'Odabrani pripadak: ' + pripadakNaziv;
-            var desc = "Odabrani pripadak ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
+            var desc = "Odabrani period ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
             var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
+                templateUrl: 'app/zgrade/PDMasteri/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -339,21 +321,11 @@
             })
                 .then(function (o) {
                     $('nav').fadeIn();
-                    $scope.pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
-                        if (pdChild.Id == pdChildId) {
-                            pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
-                                if (prip.Id == pripadakId) {
-                                    if (brisanjeOk) {
-                                        var index = pdChild.Zgrade_PosebniDijeloviChild_Pripadci.indexOf(prip)
-                                        pdChild.Zgrade_PosebniDijeloviChild_Pripadci.splice(index, 1);
-                                    }
-                                    else {
-                                        prip.Zatvoren = true;
-                                        prip.ZatvorenGodina = o.godina;
-                                        prip.ZatvorenMjesec = o.mjesec;
-                                    }
-                                }
-                            });
+                    $scope.pdMaster.Zgrade_PosebniDijeloviMaster_Pripadci.forEach(function (p) {
+                        if (p.Id == pripadakId) {
+                            p.Zatvoren = true;
+                            p.ZatvorenGodina = o.godina;
+                            p.ZatvorenMjesec = o.mjesec;
                         }
                     });
                 }
@@ -385,12 +357,12 @@
                 }
             });
 
-            var desc = "Odabrani pripadak ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
+            var desc = "Odabrani period ulazi u obračun zaključno sa godinom i mjesecom koji ćete definirati (uključujući godinu i mjesec)!";
             var okBtnCaption = brisanjeOk ? 'Obriši' : 'Zatvori';
 
             $mdDialog.show({
                 controller: confirmController,
-                templateUrl: 'app/zgrade/PDChild/confirmDialog.html?p=' + new Date().getTime() / 1000,
+                templateUrl: 'app/zgrade/PDMasteri/confirmDialog.html?p=' + new Date().getTime() / 1000,
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -431,7 +403,7 @@
 
         $scope.save = function () {
             $rootScope.loaderActive = true;
-            DataService.posebniDioChildrenCreateOrUpdate(DataService.decimalToEng($scope.pdMaster, 'ZgradaStanovi')).then(
+            DataService.posebniDioChildrenCreateOrUpdate(ls.decimalToEng($scope.pdMaster, 'ZgradaStanovi')).then(
                 function (result) {
                     // on success
                     $rootScope.loaderActive = false;

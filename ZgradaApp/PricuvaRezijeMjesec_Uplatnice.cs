@@ -36,6 +36,16 @@ namespace ZgradaApp
         public string Napomena { get; set; }
         public string BrojRacuna { get; set; }
         public string PdfUrl { get; set; }
+        public string UplatnicaPlatiteljPodaci { get; set; }
+        public string UplatnicaPrimateljPodaci { get; set; }
+        public Nullable<decimal> UplatnicaZaPlatiti { get; set; }
+        public string UplatnicaIBANPrimatelja { get; set; }
+        public string UplatnicaModel { get; set; }
+        public string UplatnicaPozivNaBroj { get; set; }
+        public string UplatnicaSifraNamjene { get; set; }
+        public string UplatnicaOpis { get; set; }
+        public Nullable<System.DateTime> UplatnicaDatumUplatnice { get; set; }
+        public Nullable<System.DateTime> UplatnicaDatumDospijeca { get; set; }
     
         public virtual PricuvaRezijeMjesec PricuvaRezijeMjesec { get; set; }
     }

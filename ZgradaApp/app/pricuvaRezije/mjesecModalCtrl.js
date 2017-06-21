@@ -309,7 +309,7 @@
 
                 pdMaster.Uplaceno = getUplaceno(pdMaster.PosebniDioMasterId);
 
-                pdMaster.DugPretplata = parseFloat(
+                pdMaster.DugPretplata = ls.toHrDecimalCalc(
                     ls.myParseFloat(pdMaster.Uplaceno) +
                     ls.myParseFloat(pdMaster.StanjeOd) -
                     ls.myParseFloat(pdMaster.ZaduzenjePricuva) -
@@ -349,26 +349,6 @@
             return ls.toHrDecimalCalc(uplaceno);
         }
         
-
-        //var povrsinaZgrade = function () {
-        //    var total = 0;
-        //    $scope.zgradaObj.Zgrade_PosebniDijeloviMaster.forEach(function (pdMaster) {
-        //        pdMaster.Zgrade_PosebniDijeloviChild.forEach(function (pdChild) {
-        //            pdChild.Zgrade_PosebniDijeloviChild_Povrsine.forEach(function (povrsina) {
-        //                //total += parseFloat(povrsina.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(povrsina.Koef) : 1);
-        //                total += parseFloat(povrsina.Povrsina);
-        //            });
-        //            pdChild.Zgrade_PosebniDijeloviChild_Pripadci.forEach(function (prip) {
-        //                //total += parseFloat(prip.Povrsina) * ($scope.PricuvaRezijeZaMjesec.SaKoef == true ? parseFloat(prip.Koef) : 1);
-        //                total += parseFloat(prip.Povrsina);
-        //            });
-        //        });
-        //    });
-        //    console.log('Povrisna zgrade: ' + total);
-        //    return total;
-        //}
-
-
         var ukupanBrojLjudi = function () {
             var total = 0;
             $scope.PricuvaRezijeZaMjesec.PricuvaRezijePosebniDioMasteri.forEach(function (pdMaster) {
